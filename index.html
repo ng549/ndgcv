@@ -3,150 +3,274 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nicolas Goureau — Retail, Sourcing &amp; Margin</title>
-  <meta name="description" content="Nicolas Goureau is a retail operator and founder helping suppliers and retailers increase profitability through assortment, sourcing, inventory, and space." />
+  <title>Nicolas Goureau — Operator</title>
+  <meta name="description" content="Nicolas Goureau — retail operator. Assortment, sourcing, space, systems, and AI-powered tools for margin." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-view="interactive">
   <header class="site-header">
     <a class="mark" href="#top">NG</a>
-    <nav>
-      <a href="#now">Now</a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="#top">Top</a>
+      <a href="#ai">AI</a>
       <a href="#experience">Experience</a>
-      <a href="#work">Work</a>
+      <a href="#fitbox">FitBox</a>
+      <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
+
+    <div class="view-toggle" role="group" aria-label="Site view">
+      <button type="button" data-view-btn="interactive" class="is-active" aria-pressed="true">Interactive</button>
+      <button type="button" data-view-btn="simple" aria-pressed="false">Simple</button>
+    </div>
   </header>
 
   <main id="top">
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero" id="hero">
       <p class="eyebrow">Atlanta · Retail operator</p>
       <h1>Nicolas Goureau</h1>
-      <p class="lede">I help suppliers and retailers make more money from the same shelf — stronger assortments, higher-margin sourcing, tighter inventory, and better use of space.</p>
+      <p class="lede interactive-only">
+        I build and fix the systems that turn assortment, space, and sourcing into margin —
+        including the AI-powered tools that make those decisions faster and more accurate.
+      </p>
+      <p class="lede simple-only">
+        Retail operator and founder. Assortment, sourcing, inventory, space, and operating systems for multi-unit retail and consumer businesses.
+      </p>
+      <p class="hero-meta">More Margin Co. · Founder · 2025–Present</p>
     </section>
 
-    <section id="now" class="now">
-      <div class="section-label">Now</div>
-      <div class="now-body">
-        <h2>MORE MARGIN CO.</h2>
-        <p class="role">Founder / Consultant <span>· Atlanta · Jan 2025 – Present</span></p>
-        <p>Consulting practice built around one problem: most retailers and suppliers leave margin on the table. I work both sides of the aisle — assortment and space with retailers; positioning, pricing, channel, and private-label with suppliers.</p>
-        <ul class="compact">
-          <li>Retailers: assortment evaluation, category performance, margin opportunities, selling-space optimization</li>
-          <li>Suppliers: retail readiness, product positioning, pricing, channel strategy, assortment planning, vendor partnerships</li>
-        </ul>
+    <!-- AI CAPABILITY (front and center) -->
+    <section id="ai" class="section ai-section">
+      <div class="section-label">AI-powered solutions</div>
+      <h2 class="section-title">Tools, data, integration, execution.</h2>
+      <p class="section-intro interactive-only">
+        Separate from the operating history below. This is how work gets structured now:
+        decision tools, data that can be trusted, systems that talk to each other, and follow-through.
+      </p>
+      <div class="ai-grid interactive-only">
+        <article class="ai-card" data-placeholder="ai-build">
+          <h3>Build &amp; fix</h3>
+          <p>Portals, SKU databases, planogram logic, ordering tools — the operating stack, not the slide deck.</p>
+        </article>
+        <article class="ai-card" data-placeholder="ai-data">
+          <h3>Analyze</h3>
+          <p>Assortment and space decisions grounded in data instead of habit.</p>
+        </article>
+        <article class="ai-card" data-placeholder="ai-integrate">
+          <h3>Integrate</h3>
+          <p>Vendors, channels, inventory, and merchandising on one map.</p>
+        </article>
+        <article class="ai-card" data-placeholder="ai-execute">
+          <h3>Execute</h3>
+          <p>From concept to store prototype — ownership through the last mile.</p>
+        </article>
       </div>
+      <ul class="simple-list simple-only">
+        <li>Build decision tools and operating systems</li>
+        <li>Analyze assortment, margin, and space productivity</li>
+        <li>Integrate sourcing, inventory, and channels</li>
+        <li>Execute from plan to floor</li>
+      </ul>
     </section>
 
-    <section id="experience" class="experience">
-      <div class="section-label">Experience</div>
-      <ol class="timeline">
-        <li>
-          <div class="when">2021 – 2024</div>
-          <div>
+    <!-- EXPERIENCE — story shells -->
+    <section id="experience" class="section experience-section">
+      <div class="section-label">Operating history</div>
+      <h2 class="section-title">Nine roles. Twenty years.</h2>
+      <p class="section-intro interactive-only">
+        Each role opens as a short story. Situation → move → result → operator insight.
+        Content will fill in as stories are written.
+      </p>
+
+      <div class="story-list interactive-only">
+        <article class="story-card" id="role-more-margin" data-role="more-margin">
+          <header class="story-head">
+            <span class="story-years">2025 – Present</span>
+            <h3>More Margin Co.</h3>
+            <p class="role">Founder / Consultant · Atlanta</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters (Situation / What I did / Result / Insight) — pending.</p>
+          </div>
+        </article>
+
+        <article class="story-card" id="role-fun-town" data-role="fun-town">
+          <header class="story-head">
+            <span class="story-years">2021 – 2024</span>
             <h3>Fun Town RV</h3>
-            <p class="role">Director of Sourcing, Retail, Aftermarket &amp; E-Commerce <span>· Fort Worth</span></p>
-            <p>Led sourcing, aftermarket retail, e-commerce, product development, logistics, vendor management, merchandising, and the operational stack behind it.</p>
-            <ul>
-              <li>Built e-commerce infrastructure, internal ordering portal, logistics foundation, POS structure, and a 30,000+ SKU database</li>
-              <li>Created a sourcing business projected at $1M+ sales and 65%+ margin</li>
-              <li>Wrote the first store planograms and merchandising standards; opened four prototype locations</li>
-            </ul>
+            <p class="role">Director of Sourcing, Retail, Aftermarket &amp; E-Commerce · Fort Worth</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending. SKU database, e-com, planograms, four prototypes.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2019 – 2021</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-big-box" data-role="big-box">
+          <header class="story-head">
+            <span class="story-years">2019 – 2021</span>
             <h3>Big Box Group</h3>
-            <p class="role">Partner / Consultant <span>· Miami</span></p>
-            <p>Consulting, sourcing, product development, sales strategy, logistics, and operational restructuring for retail, e-commerce, and CPG clients.</p>
-            <ul>
-              <li>Built a network of 150+ international vendors</li>
-              <li>Restructured a client’s sales and logistics for roughly $1M in annual efficiency</li>
-            </ul>
+            <p class="role">Partner / Consultant · Miami</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Includes FitBox case study — see section below.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2017 – 2018</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-camping-world" data-role="camping-world">
+          <header class="story-head">
+            <span class="story-years">2017 – 2018</span>
             <h3>Camping World</h3>
-            <p class="role">VP, Product and Business Development <span>· Chicago</span></p>
-            <p>Partnered with the CEO on strategy, product development, acquisition integration, merchandising, and retail growth. Supported acquisition and rebranding of four retail brands and initiated the Gander RV express dealership model.</p>
+            <p class="role">VP, Product and Business Development · Chicago</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2015 – 2016</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-lemonis" data-role="lemonis">
+          <header class="story-head">
+            <span class="story-years">2015 – 2016</span>
             <h3>Marcus Lemonis LLC</h3>
-            <p class="role">COO / VP of Business Development <span>· Chicago</span></p>
-            <p>Designed and developed 15+ retail concepts across retail, food, manufacturing, and consumer products — full brand and product packages including concept, logo, packaging, sourcing, and shelf-ready programs.</p>
+            <p class="role">COO / VP of Business Development · Chicago</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2008 – 2018</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-courage" data-role="courage">
+          <header class="story-head">
+            <span class="story-years">2008 – 2018</span>
             <h3>Courage b Fashion</h3>
-            <p class="role">Founder / Owner <span>· New York</span></p>
-            <p>Seven stores in high-net-worth markets. $6.5M revenue at 75% gross margin, ~90% private label. Built a global vendor network across Asia, Europe, and the Americas and ran the product pipeline end to end.</p>
+            <p class="role">Founder / Owner · New York</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2006 – 2008</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-sharper" data-role="sharper">
+          <header class="story-head">
+            <span class="story-years">2006 – 2008</span>
             <h3>The Sharper Image</h3>
-            <p class="role">Director of Product Development <span>· San Francisco</span></p>
-            <p>Worked with the CEO on vision, product strategy, and merchandising across 150 stores. 100+ vendors on unique and private-label product. Negotiated co-op and multi-channel programs worth ~$1M annually and helped build the licensing division.</p>
+            <p class="role">Director of Product Development · San Francisco</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending.</p>
           </div>
-        </li>
-        <li>
-          <div class="when">2005 – 2006</div>
-          <div>
+        </article>
+
+        <article class="story-card" id="role-kbp" data-role="kbp">
+          <header class="story-head">
+            <span class="story-years">2005 – 2006</span>
             <h3>KBP Advertising</h3>
-            <p class="role">New Business Development <span>· New York</span></p>
-            <p>New-client work including Priceline.com, Mrs. Butterworth’s, The Sharper Image, Diageo, Edward Jones, and Snapple.</p>
+            <p class="role">New Business Development · New York</p>
+          </header>
+          <div class="story-body">
+            <p class="placeholder">Story chapters pending.</p>
           </div>
-        </li>
+        </article>
+      </div>
+
+      <!-- Simple View: compact timeline -->
+      <ol class="simple-timeline simple-only">
+        <li><span>2025–</span><strong>More Margin Co.</strong> — Founder / Consultant, Atlanta</li>
+        <li><span>2021–24</span><strong>Fun Town RV</strong> — Director, Sourcing / Retail / E-Com, Fort Worth</li>
+        <li><span>2019–21</span><strong>Big Box Group</strong> — Partner / Consultant, Miami</li>
+        <li><span>2017–18</span><strong>Camping World</strong> — VP Product &amp; Business Development, Chicago</li>
+        <li><span>2015–16</span><strong>Marcus Lemonis LLC</strong> — COO / VP Business Development, Chicago</li>
+        <li><span>2008–18</span><strong>Courage b Fashion</strong> — Founder / Owner, New York</li>
+        <li><span>2006–08</span><strong>The Sharper Image</strong> — Director of Product Development, San Francisco</li>
+        <li><span>2005–06</span><strong>KBP Advertising</strong> — New Business Development, New York</li>
       </ol>
     </section>
 
-    <section id="work" class="work">
-      <div class="section-label">How I work</div>
-      <div class="grid">
-        <article>
-          <h3>Assortment</h3>
-          <p>What belongs on the floor, what doesn’t, and what the mix should earn. Category performance before catalog theater.</p>
-        </article>
-        <article>
-          <h3>Sourcing</h3>
-          <p>Vendor networks, private label, and landed cost that actually protect margin — not just a cheaper unit.</p>
-        </article>
-        <article>
-          <h3>Space</h3>
-          <p>Planograms, prototypes, and selling-space decisions that turn square footage into a P&amp;L lever.</p>
-        </article>
-        <article>
-          <h3>Systems</h3>
-          <p>SKU databases, POS, portals, and logistics so the assortment can actually be bought, stocked, and sold.</p>
-        </article>
+    <!-- FITBOX CASE STUDY SHELL -->
+    <section id="fitbox" class="section fitbox-section">
+      <div class="section-label">Case study</div>
+      <h2 class="section-title">FitBox — vacant box → shared operators</h2>
+      <p class="section-intro">
+        At Big Box Group: mid-size vacant retail is too big for independents and too small for consolidators.
+        FitBox shrinks each lease to revenue rooms only, centralizes commons, and stacks operators who share a customer.
+      </p>
+      <div class="fitbox-shell interactive-only">
+        <div class="fitbox-panel" data-placeholder="fitbox-problem">
+          <h3>Problem</h3>
+          <p class="placeholder">Empty boxes + independents crushed by capex, marketing, and labor. Prototype site: Ashford Dunwoody, ~38k sf bay.</p>
+        </div>
+        <div class="fitbox-panel" data-placeholder="fitbox-model">
+          <h3>Model</h3>
+          <p class="placeholder">Airport logic: one desk, one locker core, managed retail, marketing fund, profit-share credits.</p>
+        </div>
+        <div class="fitbox-panel" data-placeholder="fitbox-media">
+          <h3>Media</h3>
+          <p class="placeholder">Walkthrough / commercial + plan stills — to be embedded.</p>
+        </div>
       </div>
+      <p class="simple-only simple-note">Concept developed at Big Box Group. Tenants and investors engaged; COVID stopped the build. Full interactive case study in Interactive view.</p>
     </section>
 
-    <section id="contact" class="contact">
+    <!-- SKILLS SHELL -->
+    <section id="skills" class="section skills-section">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title">How the work gets done</h2>
+      <div class="skills-grid interactive-only">
+        <article class="skill-card" data-placeholder="skill-unconventional">
+          <h3>Unconventional problem solving</h3>
+          <p class="placeholder">Expand later — finding non-obvious paths through retail and ops constraints.</p>
+        </article>
+        <article class="skill-card" data-placeholder="skill-tools">
+          <h3>Tool building</h3>
+          <p class="placeholder">Systems that make decisions more accurate and work more efficient.</p>
+        </article>
+        <article class="skill-card" data-placeholder="skill-assortment">
+          <h3>Assortment &amp; margin</h3>
+          <p class="placeholder">What earns its place on the floor.</p>
+        </article>
+        <article class="skill-card" data-placeholder="skill-space">
+          <h3>Space &amp; merchandising</h3>
+          <p class="placeholder">Planograms, prototypes, selling-space as a P&amp;L lever.</p>
+        </article>
+        <article class="skill-card" data-placeholder="skill-sourcing">
+          <h3>Sourcing &amp; vendors</h3>
+          <p class="placeholder">Networks, private label, landed cost.</p>
+        </article>
+        <article class="skill-card" data-placeholder="skill-ops">
+          <h3>Operating systems</h3>
+          <p class="placeholder">SKU data, POS, portals, logistics.</p>
+        </article>
+      </div>
+      <ul class="simple-list simple-only">
+        <li>Unconventional problem solving</li>
+        <li>Tool building &amp; decision systems</li>
+        <li>Assortment, margin, category performance</li>
+        <li>Space productivity &amp; merchandising</li>
+        <li>Sourcing, private label, vendor networks</li>
+        <li>Operating systems (SKU, POS, logistics)</li>
+      </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact-section">
       <div class="section-label">Contact</div>
-      <h2>Atlanta</h2>
-      <p>MORE MARGIN CO. — assortment, sourcing, and space for retailers and suppliers.</p>
+      <h2 class="section-title">Atlanta</h2>
+      <p>More Margin Co. — assortment, sourcing, space, and the tools behind them.</p>
       <p class="links">
-        <a href="https://github.com/ng549">GitHub</a>
+        <a href="https://github.com/ng549/ndgcv">GitHub · ndgcv</a>
       </p>
     </section>
   </main>
 
   <footer>
     <span>Nicolas Goureau</span>
-    <span>ndgcv</span>
+    <span class="view-indicator" data-view-label>Interactive view</span>
   </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
