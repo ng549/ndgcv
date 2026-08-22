@@ -26,7 +26,6 @@
     });
   });
 
-  /* ---------- Story engine ---------- */
   function el(tag, cls, html) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -34,7 +33,14 @@
     return n;
   }
 
-  function buildCard(story) {
+  function firstImage(story) {
+    for (var i = 0; i < story.chapters.length; i++) {
+      if (story.chapters[i].image) return story.chapters[i].image;
+    }
+    return null;
+  }
+
+  function buildCard(story, index) {
     var card = el("article", "story-card");
     card.id = "role-" + story.id;
     card.setAttribute("data-role", story.id);
@@ -42,15 +48,29 @@
     var head = el("button", "story-head");
     head.type = "button";
     head.setAttribute("aria-expanded", "false");
+
+    var previewSrc = firstImage(story);
+    var previewHtml = previewSrc
+      ? '<div class="story-preview"><img src="' + previewSrc + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'is-fallback\')" /></div>'
+      : '<div class="story-preview is-fallback"></div>';
+
     head.innerHTML =
-      '<span class="story-years">' + story.years + "</span>" +
-      "<h3>" + story.company + "</h3>" +
-      '<p class="role">' + story.title + " · " + story.location + "</p>" +
-      '<p class="story-summary">' + story.summary + "</p>" +
-      '<span class="story-toggle" aria-hidden="true">Open story</span>';
+      '<div class="story-head-main">' +
+        '<span class="story-index">' + String(index + 1).padStart(2, "0") + "</span>" +
+        '<div class="story-head-text">' +
+          '<span class="story-years">' + story.years + "</span>" +
+          "<h3>" + story.company + "</h3>" +
+          '<p class="role">' + story.title + " · " + story.location + "</p>" +
+          '<p class="story-summary">' + story.summary + "</p>" +
+        "</div>" +
+        '<span class="story-toggle" aria-hidden="true"><span class="toggle-label">Open</span><span class="toggle-icon">+</span></span>' +
+      "</div>" +
+      previewHtml;
 
     var panel = el("div", "story-panel");
     panel.hidden = true;
+
+    var layout = el("div", "story-layout");
 
     var stage = el("div", "story-stage");
     var img = el("img", "story-image");
@@ -62,8 +82,33 @@
     frame.appendChild(caption);
     stage.appendChild(frame);
 
+    var film = el("div", "story-film");
+    story.chapters.forEach(function (ch, i) {
+      var thumb = el("button", "film-thumb");
+      thumb.type = "button";
+      thumb.setAttribute("data-i", String(i));
+      var tImg = ch.image
+        ? '<span class="film-media"><img src="' + ch.image + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'is-fallback\')" /></span>'
+        : '<span class="film-media is-fallback"></span>';
+      thumb.innerHTML =
+        tImg +
+        '<span class="film-meta"><span class="film-num">' + String(i + 1).padStart(2, "0") + "</span>" +
+        '<span class="film-label">' + ch.label.replace(/^\d+\s/, "") + "</span></span>";
+      film.appendChild(thumb);
+    });
+    stage.appendChild(film);
+
+    var narrative = el("div", "story-narrative");
     var chapterNav = el("div", "chapter-nav");
     chapterNav.setAttribute("role", "tablist");
+    story.chapters.forEach(function (ch, i) {
+      var tab = el("button", "chapter-tab");
+      tab.type = "button";
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("data-i", String(i));
+      tab.textContent = ch.label;
+      chapterNav.appendChild(tab);
+    });
 
     var chapterBody = el("div", "chapter-body");
     var chapterLabel = el("p", "chapter-label");
@@ -77,35 +122,21 @@
     var prev = el("button", "chap-btn");
     prev.type = "button";
     prev.textContent = "← Prev";
+    var progress = el("span", "chap-progress");
     var next = el("button", "chap-btn");
     next.type = "button";
     next.textContent = "Next →";
     controls.appendChild(prev);
+    controls.appendChild(progress);
     controls.appendChild(next);
 
-    var film = el("div", "story-film");
-    story.chapters.forEach(function (ch, i) {
-      var thumb = el("button", "film-thumb");
-      thumb.type = "button";
-      thumb.setAttribute("data-i", String(i));
-      thumb.innerHTML =
-        '<span class="film-num">' + String(i + 1).padStart(2, "0") + "</span>" +
-        '<span class="film-label">' + ch.label.replace(/^\d+\s/, "") + "</span>";
-      film.appendChild(thumb);
+    narrative.appendChild(chapterNav);
+    narrative.appendChild(chapterBody);
+    narrative.appendChild(controls);
 
-      var tab = el("button", "chapter-tab");
-      tab.type = "button";
-      tab.setAttribute("role", "tab");
-      tab.setAttribute("data-i", String(i));
-      tab.textContent = ch.label;
-      chapterNav.appendChild(tab);
-    });
-
-    panel.appendChild(stage);
-    panel.appendChild(chapterNav);
-    panel.appendChild(chapterBody);
-    panel.appendChild(controls);
-    panel.appendChild(film);
+    layout.appendChild(stage);
+    layout.appendChild(narrative);
+    panel.appendChild(layout);
 
     var state = { i: 0 };
 
@@ -116,11 +147,15 @@
       chapterTitle.textContent = ch.title;
       chapterText.textContent = ch.body;
       caption.textContent = ch.caption || "";
+      progress.textContent = (state.i + 1) + " / " + story.chapters.length;
       if (ch.image) {
+        img.style.opacity = "0";
+        img.onload = function () { img.style.opacity = "0.95"; };
         img.src = ch.image;
         img.onerror = function () {
           frame.classList.add("is-fallback");
           img.removeAttribute("src");
+          img.style.opacity = "1";
         };
         frame.classList.remove("is-fallback");
       } else {
@@ -138,14 +173,21 @@
       card.classList.add("is-open");
       panel.hidden = false;
       head.setAttribute("aria-expanded", "true");
-      head.querySelector(".story-toggle").textContent = "Close";
+      var tl = head.querySelector(".toggle-label");
+      var ti = head.querySelector(".toggle-icon");
+      if (tl) tl.textContent = "Close";
+      if (ti) ti.textContent = "–";
       show(state.i);
+      try { card.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
     }
     function close() {
       card.classList.remove("is-open");
       panel.hidden = true;
       head.setAttribute("aria-expanded", "false");
-      head.querySelector(".story-toggle").textContent = "Open story";
+      var tl = head.querySelector(".toggle-label");
+      var ti = head.querySelector(".toggle-icon");
+      if (tl) tl.textContent = "Open";
+      if (ti) ti.textContent = "+";
     }
 
     head.addEventListener("click", function () {
@@ -158,8 +200,10 @@
           var h = c.querySelector(".story-head");
           if (h) {
             h.setAttribute("aria-expanded", "false");
-            var t = h.querySelector(".story-toggle");
-            if (t) t.textContent = "Open story";
+            var lab = h.querySelector(".toggle-label");
+            var ic = h.querySelector(".toggle-icon");
+            if (lab) lab.textContent = "Open";
+            if (ic) ic.textContent = "+";
           }
         });
         open();
@@ -181,8 +225,8 @@
 
   if (list && window.NDG_STORIES) {
     list.innerHTML = "";
-    window.NDG_STORIES.forEach(function (s) {
-      list.appendChild(buildCard(s));
+    window.NDG_STORIES.forEach(function (s, i) {
+      list.appendChild(buildCard(s, i));
     });
   }
 })();
