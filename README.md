@@ -1,34 +1,45 @@
 # ndgcv
 
-Personal CV site for Nicolas Goureau — dual-view architecture.
+Personal CV site for Nicolas Goureau — dual-view + **uniform interactive role stories**.
 
 ## Views
 
-- **Interactive** (default): story shells for each role, AI capability block, FitBox case-study panels, skill cards.
-- **Simple**: compact timeline + lists. Toggle in the header; preference saved in `localStorage`.
+- **Interactive** (default): each role opens as a story — Situation → Move → Result → Insight, with filmstrip + stage frame.
+- **Simple**: compact timeline. Toggle in the header (`localStorage`).
 
-## Structure
+## Stories
+
+All roles share one interaction model (`stories.js` + `app.js`):
+
+1. Click a role card to expand (only one open at a time).
+2. Use chapter tabs, filmstrip thumbs, or Prev/Next to move through four beats.
+3. The stage image and caption change with the chapter.
 
 | File | Role |
 |---|---|
-| `index.html` | Shell: nav, hero, AI, experience, FitBox, skills, contact |
-| `styles.css` | Tokens, dual-view visibility, layout |
-| `app.js` | View toggle |
-| `story-questionnaire.md` | Q&A for filling role stories |
+| `index.html` | Shell |
+| `styles.css` | Layout + story UI |
+| `stories.js` | Role data + chapter copy + image paths |
+| `app.js` | View toggle + story engine |
 
-Placeholders mark content still to write (stories, FitBox media, skill copy).
+## Story images
+
+Place web-optimized JPGs here (referenced in `stories.js`):
+
+```
+assets/stories/empty-box.jpg      # vacant big-box (Big Box / FitBox)
+assets/stories/shared-desk.jpg    # shared reception / BOX model
+assets/stories/systems-desk.jpg   # tools / data / ops
+assets/stories/boutique.jpg       # specialty / private label
+assets/stories/merch-wall.jpg     # merchandising / aftermarket
+```
+
+If an image is missing, the stage falls back to a gradient frame — the story still works.
 
 ## Local
 
-Open `index.html` in a browser, or serve the folder.
+Open `index.html` or serve the folder. Add the `assets/stories/` images for full visuals.
 
 ## GitHub Pages
 
-Settings → Pages → Deploy from branch `main` / root.
-
-## Next
-
-1. Hero + AI copy polish  
-2. Role stories (start with Big Box / FitBox)  
-3. FitBox media + plan  
-4. Skills expansion  
+Settings → Pages → Deploy from `main` / root.
