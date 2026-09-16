@@ -12,3 +12,6 @@ Validation: build/source checks pass; desktop sourcing controls and visual layou
 
 ## September 16 review corrections
 The current operator request supersedes the earlier duplicate-portrait and chronological-order choices above. Keep the portrait only in the hero; career cards run newest to oldest. Citizenship appears once in the personal narrative. Preserve the original 23 capability descriptions. Opportunity positioning follows About Me. Product sourcing and systems use the same detailed playbook, with method, handoff and organizational value. Restore supplied imagery without repeated photographs or image footers; company context lives in the About popover only. Each tool explains why Nicolas uses it on hover, focus and tap. New background illustrations are faceless and use more realistic lighting and material detail.
+
+## Job card image placement
+Preserve the original four labeled story tabs in every job card. Each tab pairs its own relevant image(s) with its complete passage; supporting client examples pair their own images with their text. Do not replace these with numbered text columns or detached photo galleries. Keep all 32 career passages and 12 client examples. Tabs must work with mouse, touch and keyboard.

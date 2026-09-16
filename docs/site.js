@@ -110,3 +110,10 @@ function closeTools(except){toolItems.forEach(item=>{if(item===except)return;ite
 toolItems.forEach(item=>{const button=item.querySelector('button'),tip=item.querySelector('.tool-tooltip');const show=()=>{closeTools(item);button.setAttribute('aria-expanded','true');tip.hidden=false};item.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')show()});item.addEventListener('pointerleave',()=>closeTools());button.addEventListener('focus',show);button.addEventListener('click',()=>{show()});item.addEventListener('focusout',e=>{if(!item.contains(e.relatedTarget))closeTools()})});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTools()});
 document.addEventListener('click',e=>{if(!e.target.closest('.tool-item'))closeTools()});
+
+// Each career section keeps its own image and copy, matching the original story tabs.
+document.querySelectorAll('.career-tabs').forEach(list=>{
+ const tabs=[...list.querySelectorAll('[role="tab"]')];
+ const select=tab=>{tabs.forEach(t=>{const selected=t===tab;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!selected})};
+ tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>select(tab));tab.addEventListener('keydown',event=>{let index;if(event.key==='ArrowRight')index=(i+1)%tabs.length;if(event.key==='ArrowLeft')index=(i+tabs.length-1)%tabs.length;if(event.key==='Home')index=0;if(event.key==='End')index=tabs.length-1;if(index!==undefined){event.preventDefault();select(tabs[index]);tabs[index].focus()}})});
+});
