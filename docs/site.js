@@ -6,6 +6,91 @@ addEventListener('hashchange',openHash);if(location.hash)openHash();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-gallery]').forEach(g=>g.querySelectorAll('[data-shot]').forEach(b=>b.addEventListener('click',()=>{const img=g.querySelector('img');img.src=b.dataset.shot;img.alt=b.dataset.alt;g.querySelector('a').href=b.dataset.shot;g.querySelector('figcaption').textContent=b.dataset.alt;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))})));
 const motion=matchMedia('(prefers-reduced-motion: reduce)'),small=matchMedia('(max-width: 760px)');let pending=false;
-function paint(){pending=false;document.querySelectorAll('[data-parallax]').forEach(el=>{if(motion.matches||small.matches){el.style.transform='';return}const y=el.closest('section').getBoundingClientRect().top;if(Math.abs(y)<innerHeight*2)el.style.transform=`translateY(${-y*Number(el.dataset.parallax)}px)`})}
+function paint(){pending=false;document.querySelectorAll('[data-parallax]').forEach(el=>{if(motion.matches||small.matches){el.style.transform='';return}const rect=el.closest('section').getBoundingClientRect();if(rect.bottom>0&&rect.top<innerHeight){const y=el.closest('section').id==='profile'?-rect.top:innerHeight/2-(rect.top+rect.height/2);el.style.transform=`translate3d(0,${Math.max(-160,Math.min(160,y*Number(el.dataset.parallax)))}px,0)`}})}
 addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(paint)}},{passive:true});motion.addEventListener('change',paint);small.addEventListener('change',paint);
 const form=document.querySelector('#reference-form');form?.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form);const body=`Hello Nicolas,\n\nI'd like to request references.\n\nName: ${d.get('name')}\nCompany / role: ${d.get('company')}\nEmail: ${d.get('email')}\n\nOpportunity and what I'd like to discuss:\n${d.get('story')}\n`;location.href='mailto:ngoureau@mac.com?subject='+encodeURIComponent('Reference request — '+d.get('name'))+'&body='+encodeURIComponent(body);document.querySelector('#reference-status').textContent='Your email app will open with the request. Send it there to reach Nicolas.'});
+
+// Capability descriptions work with a mouse, keyboard, or touch.
+const capabilityButtons = [...document.querySelectorAll('[data-capability]')];
+function selectCapability(button) {
+  capabilityButtons.forEach(item => {
+    const selected = item === button;
+    item.setAttribute('aria-expanded', String(selected));
+    document.getElementById(item.dataset.capability).hidden = !selected;
+  });
+}
+capabilityButtons.forEach(button => {
+  button.addEventListener('pointerenter', event => {
+    if (event.pointerType === 'mouse') selectCapability(button);
+  });
+  button.addEventListener('focus', () => selectCapability(button));
+  button.addEventListener('click', () => selectCapability(button));
+});
+if (capabilityButtons.length) selectCapability(capabilityButtons[0]);
+
+const sections = {
+  about: 'About me', build: 'The work', value: 'Results',
+  'product-journey': 'From idea to sale', experience: 'Experience',
+  ai: 'Systems, tools & AI', contact: 'Let’s talk'
+};
+Object.entries(sections).forEach(([id, title]) => {
+  const section = document.getElementById(id);
+  section.dataset.collapsible = '';
+  const bar = document.createElement('div');
+  bar.className = 'section-bar';
+  const label = document.createElement('span');
+  label.textContent = title;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'section-toggle';
+  button.textContent = 'Minimize −';
+  button.setAttribute('aria-expanded', 'true');
+  button.setAttribute('aria-label', `Minimize ${title}`);
+  button.addEventListener('click', () => {
+    const closed = section.classList.toggle('is-minimized');
+    button.textContent = closed ? 'Expand +' : 'Minimize −';
+    button.setAttribute('aria-expanded', String(!closed));
+    button.setAttribute('aria-label', `${closed ? 'Expand' : 'Minimize'} ${title}`);
+  });
+  bar.append(label, button);
+  section.prepend(bar);
+});
+function revealSection(target) {
+  for (let parent = target; parent; parent = parent.parentElement) {
+    if (parent.tagName === 'DETAILS') parent.open = true;
+    if (parent.matches('[data-collapsible]')) {
+      parent.classList.remove('is-minimized');
+      const button = parent.querySelector(':scope > .section-bar button');
+      button.textContent = 'Minimize −';
+      button.setAttribute('aria-expanded', 'true');
+      button.setAttribute('aria-label', `Minimize ${sections[parent.id]}`);
+    }
+  }
+}
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', () => {
+    const target = document.getElementById(link.hash.slice(1));
+    if (target) {
+      revealSection(target);
+      requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+    }
+  });
+});
+addEventListener('hashchange', () => {
+  const target = document.getElementById(location.hash.slice(1));
+  if (target) revealSection(target);
+});
+const initialTarget = document.getElementById(location.hash.slice(1));
+if (initialTarget) revealSection(initialTarget);
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    nav.querySelectorAll('a').forEach(a => {
+      if (a.hash === '#' + entry.target.id) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+  });
+}, { rootMargin: '-10% 0px -65% 0px' });
+document.querySelectorAll('section[id]').forEach(section => navObserver.observe(section));
+
+paint();

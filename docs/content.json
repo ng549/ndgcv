@@ -854,43 +854,50 @@
       "n": "01",
       "t": "Find the gap",
       "d": "Category where a national brand takes the margin. Define customer, price tier, and the brand it has to beat.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "A clear customer, price point, and gap to fill"
     },
     {
       "n": "02",
       "t": "Build the brand",
       "d": "Name, logo suite, color standards, typography, packaging, hangtags, and usage rules.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "A brand identity and packaging direction"
     },
     {
       "n": "03",
       "t": "Develop the product",
       "d": "Specs, materials, and features written on our side. Samples, testing, and revisions until it beats the incumbent.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "An agreed specification and tested sample"
     },
     {
       "n": "04",
       "t": "Source and negotiate",
       "d": "Factory-direct through a twenty-year vendor network. Cost, tooling, minimums, and terms settled before commitment.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "A supplier, cost, minimum order, and terms"
     },
     {
       "n": "05",
       "t": "Import",
       "d": "Freight, customs, compliance, and labeling. Landed cost modeled before a unit ships.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "A landed cost and shipment plan"
     },
     {
       "n": "06",
       "t": "Warehouse and allocate",
       "d": "Receive, allocate, and replenish across distribution centers and a national store fleet.",
-      "arrow": "→"
+      "arrow": "→",
+      "output": "Stock in the right locations and a replenishment plan"
     },
     {
       "n": "07",
       "t": "Sell four ways",
       "d": "Own site, marketplaces, wholesale, and the retail floor — four ways to sell the same assortment.",
-      "arrow": ""
+      "arrow": "",
+      "output": "A connected offer across four sales channels"
     }
   ],
   "aiProjectsData": [
@@ -1615,44 +1622,54 @@
   ],
   "aiFlowData": [
     {
-      "name": "Business problem",
-      "desc": "Every build starts from a real business need — never technology looking for a use."
+      "name": "Define the business problem",
+      "desc": "Talk through where time is lost, what people need, and what would make the work easier.",
+      "output": "A problem worth solving"
     },
     {
-      "name": "Research",
-      "desc": "AI agents research the market, prior art, and constraints before anything is built."
+      "name": "Research what already exists",
+      "desc": "Look at existing tools, previous work, and the constraints before deciding what needs to be built.",
+      "output": "A reuse, connect, or build decision"
     },
     {
-      "name": "Product definition",
-      "desc": "A written spec fixes scope, screens, and what \"done\" means."
+      "name": "Agree what the tool must do",
+      "desc": "Write down the users, the steps, the screens, and what a useful result looks like.",
+      "output": "A clear brief"
     },
     {
-      "name": "Architecture",
-      "desc": "The system is designed and documented before the first line of code."
+      "name": "Map the system",
+      "desc": "Work through how information moves, which tools connect, and where people make decisions.",
+      "output": "A system map"
     },
     {
-      "name": "Parallel AI agents",
-      "desc": "Multiple AI agents build separate parts at the same time, each in its own lane."
+      "name": "Give each AI a clear job",
+      "desc": "Use separate agents for defined tasks, with shared instructions and clear handoffs.",
+      "output": "Work that can move in parallel"
     },
     {
-      "name": "Code and decisions",
-      "desc": "Every decision, handoff, and line of code lands in one repository."
+      "name": "Keep the work in one place",
+      "desc": "Save the code, decisions, and handoffs in GitHub so the next person can follow what happened.",
+      "output": "A shared record"
     },
     {
-      "name": "Build & integration",
-      "desc": "Work is built in small pieces and integrated deliberately, not all at once."
+      "name": "Build and connect in small pieces",
+      "desc": "Put one useful part in place, check it, and connect it to the next.",
+      "output": "A working version"
     },
     {
-      "name": "Tests / review",
-      "desc": "Automated tests and reviews check every piece before it counts."
+      "name": "Test the actual work",
+      "desc": "Check the numbers, the steps, and what happens when something goes wrong.",
+      "output": "Evidence it behaves as intended"
     },
     {
-      "name": "My review",
-      "desc": "I review important decisions before release."
+      "name": "Review before release",
+      "desc": "I review the important decisions and the result before it goes into use.",
+      "output": "A reviewed release"
     },
     {
-      "name": "Learn and improve",
-      "desc": "Release, learn, improve — then the loop starts again."
+      "name": "Use it and improve it",
+      "desc": "Learn from the people using it, remove friction, and carry that learning into the next version.",
+      "output": "A better next version"
     }
   ],
   "aiStoryData": [
@@ -1733,7 +1750,7 @@
           "logoAlt": "Claude mark"
         },
         {
-          "name": "CODEX",
+          "name": "Codex",
           "role": "Code generation",
           "logo": "ndgcv/assets/ai-portfolio/tool-logos/openai.svg",
           "logoAlt": "OpenAI mark"
@@ -1793,7 +1810,7 @@
           "logoAlt": "ByteDance Seed family mark"
         },
         {
-          "name": "Seadance",
+          "name": "Seedance",
           "role": "Video generation",
           "logo": "ndgcv/assets/ai-portfolio/tool-logos/bytedance.svg",
           "logoAlt": "ByteDance family mark"
