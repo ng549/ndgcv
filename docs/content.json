@@ -121,13 +121,13 @@
         {
           "k": "What I worked on",
           "img": "https://drive.google.com/thumbnail?id=1fehpO5s4frcoRPTbzXgiO5xx6LCxXFYt&sz=w1200",
-          "text": "That became the FitBox concept: lease the larger space and divide it into smaller shops, with independent businesses sharing facilities such as reception, lockers, and showers. The idea was to lower the cost of opening for each operator and bring businesses with overlapping customers together. Rent, common-area charges, and the fee for managing shared facilities all had to support the larger lease.",
+          "text": "That became the FitBox concept: lease the larger space and divide it into smaller shops, with independent businesses sharing facilities such as reception, lockers, and showers. The idea was to lower the cost of opening for each operator and bring businesses with overlapping customers together. Rent, common-area charges, and the fee for managing shared facilities all had to support the larger lease. The shared facilities meant each operator did not have to build and pay for the same amenities separately. The master lease, smaller leases, and common-area fees had to work together financially.",
           "cap": "FitBox: smaller businesses sharing a larger space."
         },
         {
           "k": "What came of it",
           "img": "https://drive.google.com/thumbnail?id=1tPdRdBKAGhC87AHdWwebws4M6UIKpG4H&sz=w1200",
-          "text": "The model spread the dependence across different businesses, so one tenant leaving would not empty the entire property. Alongside that work, I restructured a key client’s sales and logistics operations, improving labor efficiency and cash flow by roughly $1M per year.",
+          "text": "The model spread the dependence across different businesses, so one tenant leaving would not empty the entire property. Alongside that work, I restructured a key client’s sales and logistics operations, improving labor efficiency and cash flow by roughly $1M per year. The mix mattered: fitness, recovery, food, and everyday services could bring different customers and different patterns of demand. The property would not depend on one tenant, franchise, or fitness trend.",
           "cap": "Spreading the dependence across several tenants."
         },
         {
@@ -441,7 +441,7 @@
         {
           "k": "What stayed with me",
           "img": "https://drive.google.com/thumbnail?id=1jrutJIgttzVptUm99eE9JnswT_nJSbz2&sz=w1200",
-          "text": "Producing our own range also meant dealing with stock that needed to sell at a discount. We created a separate outlet channel, keeping markdowns out of the core stores. It became the strongest channel by revenue, with net margin close to the full-price stores. The business sold to private equity and continued under ML Fashion Group, which added another eleven locations before it became part of a larger group.",
+          "text": "Producing our own range also meant dealing with stock that needed to sell at a discount. We created a separate outlet channel, keeping markdowns out of the core stores. It became the strongest channel by revenue, with net margin close to the full-price stores. The business sold to private equity and continued under ML Fashion Group, which added another eleven locations before it became part of a larger group. The processes and strategy continued to be used after the sale.",
           "cap": "The outlet channel — markdown revenue that protected core margin."
         }
       ]
@@ -497,19 +497,19 @@
         {
           "k": "Where I started",
           "img": "https://image.cnbcfm.com/api/v1/image/101168029-priceline_2_r.jpg?v=1425047653&w=1200&h=675",
-          "text": "I joined the new-business development group, working with senior executives to win clients and develop work for existing accounts. I was the point person on a group of accounts we won, starting with Priceline.com. I helped build the pitch by working through the positioning, the competition, and how to explain the opportunity.",
+          "text": "I joined the new-business development group, working with senior executives to win clients and develop work for existing accounts. I was the point person on a group of accounts we won, starting with Priceline.com. I helped build the pitch by working through the positioning, the competition, and how to explain the opportunity. Online travel was still proving it could retain customers without a storefront. Priceline’s “name your own price” proposition needed to feel like a smart choice rather than a gamble; the pitch had to make that clear.",
           "cap": "Priceline.com — the pitch that opened the run."
         },
         {
           "k": "What I worked on",
           "img": "https://i5.walmartimages.com/asr/17e73dfc-a3c4-4371-a961-d9c828dd50ab.50a595381da5433f8cc007ce82f70874.jpeg",
-          "text": "Mrs. Butterworth’s brought a different kind of question. It was already a recognizable brand, so the pitch had to show how it could stay relevant alongside private label and lower-priced alternatives. I worked on connecting the creative thinking with the retail questions: what sells, what earns margin, and what deserves shelf space.",
+          "text": "Mrs. Butterworth’s brought a different kind of question. It was already a recognizable brand, so the pitch had to show how it could stay relevant alongside private label and lower-priced alternatives. I worked on connecting the creative thinking with the retail questions: what sells, what earns margin, and what deserves shelf space. Recognition alone would not protect its place on the shelf. Grocery buyers needed a case built around sales velocity and margin per facing, as well as a strong creative idea.",
           "cap": "Mrs. Butterworth's — the first major consumer products win."
         },
         {
           "k": "What came of it",
           "img": "https://www.asktraders.com/wp-content/uploads/2023/09/Diageo-drinks.jpg",
-          "text": "The wins also included Diageo, Edward Jones, and Snapple. Moving between travel, consumer products, financial services, and spirits meant getting to understand a different business each time. That variety was a big part of what I enjoyed about the work.",
+          "text": "The wins also included Diageo, Edward Jones, and Snapple. Moving between travel, consumer products, financial services, and spirits meant getting to understand a different business each time. That variety was a big part of what I enjoyed about the work. For Diageo, the question was how a challenger agency could handle a portfolio of brands competing for attention in a crowded spirits market. The idea had to distinguish the brands, rather than depend only on spending more on advertising.",
           "cap": "Diageo — one of the new-business accounts we won."
         },
         {
@@ -605,8 +605,8 @@
     },
     {
       "n": "04 — Systems, digital & AI",
-      "name": "Systems and software",
-      "how": "I work on the systems behind daily retail operations: product databases, POS, ordering, logistics, marketplaces, and reporting. I also build software with AI so the company can move without waiting on IT.",
+      "name": "Systems and tools",
+      "how": "I start with the work: where information gets lost, where people repeat steps, and what slows the team down. At Fun Town RV, that meant connecting product data, POS, ordering, logistics, marketplaces, and reporting. I use AI to build and connect useful tools so the company can move faster.",
       "proof": [
         {
           "num": "30k+",
@@ -679,23 +679,23 @@
       "items": [
         {
           "name": "Retail Operations",
-          "story": "I look at what happens in the store each day, listen to the people doing the work, and check the numbers. Then I work with the team on changes they can understand and use."
+          "story": "I look at what happens in the store each day, listen to the people doing the work, and check the numbers. Then I work with the team on changes they can understand and use. Performance measures and customer feedback help me decide what needs attention. Clear daily routines give the people on the floor a way to put those decisions into practice, and tell us whether the changes are helping."
         },
         {
           "name": "Multi-Unit Strategy",
-          "story": "Across several locations, I look for what should be consistent and what needs to stay local. Training, clear communication, and shared reporting help store teams put those decisions into practice."
+          "story": "Across several locations, I look for what should be consistent and what needs to stay local. Training, clear communication, and shared reporting help store teams put those decisions into practice. The detail is in the rollout: shared merchandising standards, useful performance comparisons, and ongoing training. I want each manager to understand the common approach and have room to respond to the customers in that location."
         },
         {
           "name": "Operational Turnaround",
-          "story": "I start with where the business is losing margin and where work gets stuck. I work with the team on a few clear priorities, simpler routines, and tighter financial control."
+          "story": "I start with where the business is losing margin and where work gets stuck. I work with the team on a few clear priorities, simpler routines, and tighter financial control. That means understanding the reasons behind weak performance before changing the routine. Frontline knowledge matters: changes need to make sense to the people expected to carry them out, with clear communication and a way to track progress."
         },
         {
           "name": "Space Management",
-          "story": "I use product performance to plan floor space, fixtures, and product placement. The aim is to make the store easier to shop and make better use of the space."
+          "story": "I use product performance to plan floor space, fixtures, and product placement. The aim is to make the store easier to shop and make better use of the space. I look at sales per square foot, planograms, and how customers move through the store. A layout has to give important products the right exposure while remaining practical for the team to merchandise and replenish."
         },
         {
           "name": "Inventory Control",
-          "story": "I look at what sells, what sits, and where stock is running short. I work on purchasing, replenishment, and stock routines so teams can serve demand without tying up more cash than needed."
+          "story": "I look at what sells, what sits, and where stock is running short. I work on purchasing, replenishment, and stock routines so teams can serve demand without tying up more cash than needed. Sales trends guide the buying, but the daily routines matter too: accurate tracking, clear stock procedures, and attention to shrink. I want fewer missed sales and less money sitting in products that are not moving."
         }
       ]
     },
@@ -704,23 +704,23 @@
       "items": [
         {
           "name": "Sourcing",
-          "story": "I work with domestic and international suppliers on product, cost, quality, and delivery. Clear requirements and lasting relationships matter when the product has to arrive as agreed."
+          "story": "I work with domestic and international suppliers on product, cost, quality, and delivery. Clear requirements and lasting relationships matter when the product has to arrive as agreed. I pay attention to supplier vetting, clear standards, quality control, and delivery commitments. Those conversations are easier when the relationship has been built over time and both sides know what is expected."
         },
         {
           "name": "Private Label",
-          "story": "I look for gaps in the assortment where an owned brand can offer the customer a useful choice and improve margin. The work runs from product and sourcing through packaging and placement in the store."
+          "story": "I look for gaps in the assortment where an owned brand can offer the customer a useful choice and improve margin. The work runs from product and sourcing through packaging and placement in the store. The range needs a clear place beside the national brands, with quality that earns repeat purchases. I work through the product, factory, packaging, and shelf position together because a better buying price alone does not create a brand."
         },
         {
           "name": "Product Development",
-          "story": "I work through what the customer needs, how the product fits the brand, and what it must cost. That includes testing, design changes, and working with manufacturers on production and timing."
+          "story": "I work through what the customer needs, how the product fits the brand, and what it must cost. That includes testing, design changes, and working with manufacturers on production and timing. Samples and revisions are part of the work, not an afterthought. I stay close to the manufacturer on quality, timing, and cost so the finished product reflects the original brief."
         },
         {
           "name": "Brand Development",
-          "story": "I connect the product, packaging, and marketing around a clear reason for the customer to choose the brand. My work includes new concepts and updates to existing brands."
+          "story": "I connect the product, packaging, and marketing around a clear reason for the customer to choose the brand. My work includes new concepts and updates to existing brands. The same promise needs to come through on the product, the package, the website, and the retail floor. I work through those details so a customer can understand what the brand stands for and why it belongs in their basket."
         },
         {
           "name": "Assortment Strategy",
-          "story": "I look at what customers buy, what earns margin, and what no longer belongs in the range. Then I work through what to keep, add, or remove."
+          "story": "I look at what customers buy, what earns margin, and what no longer belongs in the range. Then I work through what to keep, add, or remove. I weigh dependable sellers against margin opportunities and changing customer demand. Category performance, competitors, and the customer base help guide that balance; the assortment needs regular editing as the business changes."
         }
       ]
     },
@@ -729,27 +729,27 @@
       "items": [
         {
           "name": "Margin Improvement",
-          "story": "I look across product costs, pricing, supplier terms, sales mix, and stock turnover. The work is to find where margin is being lost and make practical changes without compromising quality."
+          "story": "I look across product costs, pricing, supplier terms, sales mix, and stock turnover. The work is to find where margin is being lost and make practical changes without compromising quality. A lower unit cost is only part of the answer. I also look at waste, operating costs, and the cash tied up in slow stock, then work with the teams responsible for pricing, purchasing, and replenishment."
         },
         {
           "name": "Pricing Strategy",
-          "story": "I compare costs, competitor prices, customer demand, and stock levels. Then I work through price tiers and promotions, with regular reviews as those conditions change."
+          "story": "I compare costs, competitor prices, customer demand, and stock levels. Then I work through price tiers and promotions, with regular reviews as those conditions change. The decision needs to account for where the item sits in the range and what a promotion will do to margin. I keep reviewing the relationship between price, demand, and inventory rather than treating the first price as permanent."
         },
         {
           "name": "Vendor Negotiation",
-          "story": "I prepare around what the business needs and what the supplier can deliver. The conversation includes price, shipping, returns, and marketing support, with the longer relationship in mind."
+          "story": "I prepare around what the business needs and what the supplier can deliver. The conversation includes price, shipping, returns, and marketing support, with the longer relationship in mind. I go into the discussion knowing the terms that matter beyond the invoice price. A useful agreement has to work through delivery, returns, and support as well as cost, and leave both sides able to do business again."
         },
         {
           "name": "E-Commerce",
-          "story": "I connect the online store with inventory, orders, and fulfillment. I use sales and customer data to work through how the site and its marketing can improve."
+          "story": "I connect the online store with inventory, orders, and fulfillment. I use sales and customer data to work through how the site and its marketing can improve. The sale is only one step: stock accuracy and fulfillment have to hold up behind it. I look at the customer experience and channel performance alongside the operating work needed to get the order out."
         },
         {
           "name": "Acquisition Integration",
-          "story": "I look at how both businesses work and what each does well. I work with the teams to keep useful knowledge, agree on shared routines, and continue serving customers through the change."
+          "story": "I look at how both businesses work and what each does well. I work with the teams to keep useful knowledge, agree on shared routines, and continue serving customers through the change. Keeping experienced people and their knowledge is part of the integration. I look for the best practices in both businesses, make the decisions clear, and work through the transition without losing sight of the customer."
         },
         {
           "name": "Portfolio Optimization",
-          "story": "I assess the performance and potential of each business or location. That helps frame decisions about where to invest, where a turnaround is needed, and where to consider an exit."
+          "story": "I assess the performance and potential of each business or location. That helps frame decisions about where to invest, where a turnaround is needed, and where to consider an exit. I weigh the numbers alongside market position and the role each business plays in the wider group. The aim is to put people and investment where they can make the most useful difference."
         }
       ]
     },
@@ -758,31 +758,31 @@
       "items": [
         {
           "name": "AI Research & Analysis",
-          "story": "I use different AI systems to research markets, compare evidence, and challenge findings. I check the results against business information before using them to make decisions."
+          "story": "I use different AI systems to research markets, compare evidence, and challenge findings. I check the results against business information before using them to make decisions. I give models different jobs: independent research, comparison, and challenging each other’s conclusions. That helps turn a broad search into a decision we can examine, with research completed before the build begins."
         },
         {
           "name": "AI Integrated Tools",
-          "story": "I build software around retail and business problems, including margin and daily work. I define the business rules and system design, then use AI to help build and review the software."
+          "story": "I build systems and tools around retail and business problems, including margin and daily work. I define the business rules and system design, then use AI to help build and review the software. The business rules come first: what information is needed, what the next step should be, and where a person must decide. I use AI as a development team to translate that into systems and tools that reduce repeated work."
         },
         {
           "name": "Workflow Automation",
-          "story": "I map the work first: what repeats, where it slows down, and which tools are involved. Then I work on automating routine communication, reporting, and task management."
+          "story": "I map the work first: what repeats, where it slows down, and which tools are involved. Then I work on automating routine communication, reporting, and task management. I work through the handoffs as well as the individual tasks. Connecting existing tools can remove repeated entry and make a report or update available when the next person needs it."
         },
         {
           "name": "Content Development",
-          "story": "I start with who needs the information and what they need to understand. I develop content for digital channels and stores, keeping the product and brand message consistent."
+          "story": "I start with who needs the information and what they need to understand. I develop content for digital channels and stores, keeping the product and brand message consistent. A presentation, a product page, and a store sign do different jobs. I adapt the explanation to the format while keeping the product information and reason to buy consistent."
         },
         {
           "name": "Shopify & POS Development",
-          "story": "I work on connecting sales, inventory, and customer information across the online store and the shop floor. Staff need systems they can use, and management needs reporting it can trust."
+          "story": "I work on connecting sales, inventory, and customer information across the online store and the shop floor. Staff need systems they can use, and management needs reporting it can trust. I pay attention to the people using the system on a busy day, as well as the information management needs afterward. Connected data and usable screens matter more than adding another tool to the counter."
         },
         {
           "name": "Databases & Reporting",
-          "story": "I organize product and operating data into reports and dashboards people can use. The purpose is to make the numbers clear enough to support a decision."
+          "story": "I organize product and operating data into reports and dashboards people can use. The purpose is to make the numbers clear enough to support a decision. I start with how the information is structured and whether it can be trusted. Then I build reporting around the questions the team needs to answer, so the dashboard points toward a decision rather than just displaying numbers."
         },
         {
           "name": "Adobe, Canva & Office",
-          "story": "I use Adobe, Canva, and Microsoft Office for presentations, marketing materials, merchandising guides, financial models, and project work. The tool depends on what needs to be explained or managed."
+          "story": "I use Adobe, Canva, and Microsoft Office for presentations, marketing materials, merchandising guides, financial models, and project work. The tool depends on what needs to be explained or managed. The work includes visual merchandising guides, financial models, and project materials as well as presentations. I use the format that makes the idea clear enough for someone else to act on."
         }
       ]
     }

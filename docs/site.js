@@ -94,3 +94,12 @@ const navObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('section[id]').forEach(section => navObserver.observe(section));
 
 paint();
+
+// Process details remain readable while a visitor moves from the diagram into the explanation.
+const journeyButtons=[...document.querySelectorAll('[data-journey]')];
+function selectJourney(button){journeyButtons.forEach(item=>{const active=item===button;item.setAttribute('aria-expanded',String(active));document.getElementById(item.dataset.journey).hidden=!active})}
+journeyButtons.forEach(button=>{button.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')selectJourney(button)});button.addEventListener('focus',()=>selectJourney(button));button.addEventListener('click',()=>selectJourney(button))});
+const companyAbout=[...document.querySelectorAll('.company-about')];
+function setAbout(wrap,open){wrap.querySelector('button').setAttribute('aria-expanded',String(open));wrap.querySelector('.company-card').hidden=!open}
+companyAbout.forEach(wrap=>{const button=wrap.querySelector('button');wrap.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')setAbout(wrap,true)});wrap.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'&&!wrap.contains(document.activeElement))setAbout(wrap,false)});button.addEventListener('focus',()=>setAbout(wrap,true));wrap.addEventListener('focusout',event=>{if(!wrap.contains(event.relatedTarget))setAbout(wrap,false)});button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();setAbout(wrap,true)});wrap.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();setAbout(wrap,false)}})});
+document.addEventListener('click',event=>companyAbout.forEach(wrap=>{if(!wrap.contains(event.target))setAbout(wrap,false)}));
