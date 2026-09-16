@@ -168,3 +168,5 @@ main>section{position:relative;isolation:isolate}
 .brand-intro img{width:auto;max-width:100%;margin:auto}.brand-intro figure{background:transparent!important;display:flex;align-items:center}
 @media(max-width:760px){.section-art img{height:950px;opacity:.13}.personal-notes{grid-template-columns:1fr 1fr}.personal-notes strong{font-size:14px}.language-row{flex-wrap:wrap;gap:4px}.brand-intro img{max-height:280px}}
 .step-evidence{width:100%;max-height:280px;object-fit:contain;margin:5px 0 24px;background:#ffffff0c}
+
+.site-header nav a.button:hover{color:#f3efe6;background:#3b5161}
