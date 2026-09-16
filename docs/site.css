@@ -305,3 +305,6 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 /* Center the divider on the actual copy width and the sidebar bullet centers. */
 @media(min-width:1100px){#experience>.journey-overview{grid-template-columns:minmax(0,72ch) max-content;justify-content:start}}
 @media(min-width:761px){#experience .journey-overview>.career-route:before{left:calc(var(--journey-gap) / -2 + 1.25px)}}
+
+/* A shorter divider frames the main content without reaching the eyebrow. */
+@media(min-width:761px){#experience .journey-overview>.career-route:before{top:48px;bottom:24px;left:calc(var(--journey-gap) / -2 + .75px)}}
