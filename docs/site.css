@@ -318,3 +318,4 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #role-moremargin .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:65ch}
 #role-moremargin .chapter-copy p:last-child{margin-bottom:0}
 @media(max-width:760px){#role-moremargin .career-chapter{grid-template-columns:1fr;gap:22px}#role-moremargin .chapter-media{position:static}#role-moremargin .chapter-copy p{font-size:17px}#role-moremargin .career-headline{font-size:28px}#role-moremargin .career-tabs{gap:6px}#role-moremargin .career-tabs button{padding:9px 10px}}
+#role-moremargin .about-trigger,#role-moremargin .role-title>span:last-child,#role-moremargin .disclosure{color:#52616a}
