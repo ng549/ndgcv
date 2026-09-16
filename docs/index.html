@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<title>Nicolas Goureau — Executive Operator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&amp;family=Archivo:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#22262B; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:#D99A45; color:#22262B; }
+  a{ color:#EFEDE6; }
+  a:hover{ color:#D99A45; }
+</style>
+<style>body { background:#22262B; margin:0; }</style>
+</helmet>
+
+<div style="display:flex; background:#22262B; color:#EFEDE6;">
+
+  <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+    <nav style="position:fixed; top:0; left:0; bottom:0; width:236px; z-index:30; overflow-y:auto; background:#1C2024; padding:2.2rem 1.6rem; display:flex; flex-direction:column; gap:2.4rem; box-sizing:border-box;">
+      <a href="#profile" aria-label="Navigate" style="text-decoration:none; color:#D99A45; display:inline-flex; align-items:center; gap:0.6rem; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;" style-hover="color:#EFEDE6;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"></circle><circle cx="12" cy="12" r="2.2"></circle><line x1="12" y1="1.5" x2="12" y2="5.5"></line><line x1="12" y1="18.5" x2="12" y2="22.5"></line><line x1="1.5" y1="12" x2="5.5" y2="12"></line><line x1="18.5" y1="12" x2="22.5" y2="12"></line><line x1="4.6" y1="4.6" x2="7.4" y2="7.4"></line><line x1="16.6" y1="16.6" x2="19.4" y2="19.4"></line><line x1="19.4" y1="4.6" x2="16.6" y2="7.4"></line><line x1="7.4" y1="16.6" x2="4.6" y2="19.4"></line></svg>Navigate</a>
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.1rem; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.06em;">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+          <li>
+            <a href="{{ n.href }}" onClick="{{ n.go }}" style="display:flex; align-items:baseline; gap:0.5rem; text-decoration:none; padding:0.45rem 0.5rem; padding-left:calc(0.5rem + {{ n.indent }}); border-left:2px solid {{ n.borderColor }}; color:{{ n.color }}; transition:color .15s ease, border-color .15s ease;" style-hover="color:#EFEDE6;">
+              <span onClick="{{ n.pmToggle }}" style="color:#D99A45; cursor:pointer; width:1rem; display:inline-block; text-align:center; font-size:0.85rem; user-select:none; flex:0 0 auto;" style-hover="color:#EFEDE6;">{{ n.pmOrGlyph }}</span><span style="display:flex; flex-direction:column; gap:0.15rem; min-width:0;"><span>{{ n.label }}</span><span style="color:#7E8790;">{{ n.sub }}</span></span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+      
+    </nav>
+  </sc-if>
+
+  <div style="flex:1; min-width:0; margin-left:{{ mainOffset }};">
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="position:sticky; top:0; z-index:20; background:rgba(28,32,36,0.96); backdrop-filter:blur(10px); padding:0.8rem 5vw; display:flex; align-items:center; justify-content:space-between; gap:0.8rem; flex-wrap:wrap;">
+        <a href="#profile" style="text-decoration:none; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.15rem; color:#EFEDE6;" style-hover="color:#EFEDE6;">NICOLAS GOUREAU<span style="color:#D99A45;">.</span></a>
+        <div style="display:flex; gap:0.2rem; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:0.68rem;">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <a href="{{ n.href }}" onClick="{{ n.go }}" style="text-decoration:none; padding:0.7rem 0.6rem; color:{{ n.color }};" style-hover="color:#EFEDE6;">{{ n.label }}</a>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    
+
+    
+
+    
+
+    <section id="profile" data-screen-label="Profile" style="padding:3rem 5vw 0.5rem; display:flex; flex-wrap:wrap; gap:2rem 4rem; align-items:stretch; box-sizing:border-box;">
+      <div style="flex:1 1 460px; min-width:0; display:flex; flex-direction:column;">
+        <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:clamp(2.2rem,4.6vw,4.4rem); line-height:1; letter-spacing:0.02em; text-transform:uppercase; white-space:nowrap;"><br>Nicolas Goureau</h1>
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:clamp(1.3rem,2.4vw,1.8rem); color:#8FB0D8; margin:1.1rem 0 0; line-height:1.25;">Retail <span style="color:#EFEDE6;">&amp;</span> Consumer Businesses, Built and Rebuilt for Margin.</p>
+        <p style="font-size:1rem; color:#9AA0A8; max-width:52ch; margin:1.4rem 0 0; line-height:1.7; text-wrap:pretty;">Entrepreneurial executive, founder, and operator with 20+ years building, scaling, acquiring, and integrating customer-facing retail, service, and consumer product businesses — from single-store startups to 150-store chains.</p>
+        
+        <div style="display:flex; flex-wrap:wrap; gap:0.9rem 1.8rem; margin-top:2.2rem; font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:#9AA0A8;">
+          <div>Based in <strong style="color:#EFEDE6; font-weight:500;">Atlanta, GA</strong></div>
+          <div>Currently <strong style="color:#EFEDE6; font-weight:500;">Founder, More Margin Co.</strong></div>
+          <div><strong style="color: rgb(239, 237, 230); font-weight: 500;">8</strong> operating roles / 30+ yrs</div>
+        </div><p style="font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:#9AA0A8; margin:1rem 0 0;">Fluent French / English · Conversational Hebrew</p>
+        <div id="contact" data-screen-label="Contact" style="margin-top:1rem;">
+        <div style="height:1px; background:rgba(239,237,230,0.14); margin-top:1rem;"></div>
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:2rem 3rem; flex-wrap:wrap; margin-top:2rem;">
+          <div style="flex:1 1 320px; min-width:0; display:flex; flex-direction:column;">
+            <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:clamp(1.7rem,2.6vw,2.4rem); line-height:1.05; white-space:nowrap;">Let's talk about what's next.</h2>
+            <p style="color:#9AA0A8; font-size:0.92rem; margin:0.8rem 0 0; max-width:46ch;">Available for senior operating roles — VP / SVP / COO-level, multi-unit retail, service, or consumer product organizations.</p>
+          </div>
+          <div style="flex:0 0 auto; margin-left:auto; display:flex; flex-direction:column; gap:0.7rem; font-family:'IBM Plex Mono',monospace; font-size:0.85rem;">
+            <a href="mailto:ngoureau@mac.com" style="text-decoration:none; color:#EFEDE6; border-bottom:1px solid rgba(239,237,230,0.28); padding-bottom:3px; width:fit-content;" style-hover="border-color:#D99A45; color:#D99A45;">ngoureau@mac.com</a>
+            <a href="tel:9175356425" style="text-decoration:none; color:#EFEDE6; border-bottom:1px solid rgba(239,237,230,0.28); padding-bottom:3px; width:fit-content;" style-hover="border-color:#D99A45; color:#D99A45;">917-535-6425</a>
+            <a href="https://www.linkedin.com/in/nicolas-goureau-6ab3237/" target="_blank" rel="noopener" style="text-decoration:none; color:#EFEDE6; border-bottom:1px solid rgba(239,237,230,0.28); padding-bottom:3px; width:fit-content;" style-hover="border-color:#D99A45; color:#D99A45;">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+      
+      <div id="aboutnic" data-screen-label="About Nicolas" style="margin-top:2.4rem; color:#EFEDE6;">
+      <div style="height:1px; background:rgba(239,237,230,0.14); margin-bottom:1.6rem; "></div>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:1.05rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:0; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secNicToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secNicBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span><span style="min-width:14rem;">About Nicolas</span></p>
+    </div>
+      </div>
+      
+      <div style="flex:1 1 340px; min-width:0; position:relative; align-self:stretch; min-height:calc(56vh + 0.8rem); background:radial-gradient(58% 58% at 50% 42%, rgba(239,237,230,0.13), transparent 72%);">
+        <img src="assets/img-00-tight.png" alt="Nicolas Goureau portrait" data-parallax="-0.12" style="will-change:transform; position:absolute; left:0; right:0; top:-2.4rem; width:100%; height:calc(56vh + 3.2rem); object-fit:contain; object-position:center top; display:block; filter:saturate(0.94) contrast(1.04); -webkit-mask-image:linear-gradient(#000 86%, transparent 99%); mask-image:linear-gradient(#000 86%, transparent 99%);">
+      </div>
+      
+    </section>
+    <sc-if value="{{ secNicOpen }}" hint-placeholder-val="{{ true }}"><div>
+<section id="about" data-screen-label="The Person" style="padding:{{ secAboutPad }} 5vw;">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:0 0 1rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secAboutToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secAboutBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span><span style="min-width:14rem;">The person</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:clamp(1.1rem,2.2vw,2.3rem); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; line-height:1.1;">Before the operator, the person.</h2>
+        <sc-if value="{{ secAboutOpen }}" hint-placeholder-val="{{ true }}"><div>
+      <p style="color:#D6D1C6; font-size:1rem; max-width:116ch; line-height:1.75; margin:1.4rem 0 0; text-align:justify; text-wrap:pretty;">Raised across three cultures with three passports — American, French, and Israeli — and the languages to go with them. Add decades of travel across Europe, Asia, and South America, and the result is someone genuinely open to new ideas and comfortable in any room: a factory floor in Asia, a boardroom in New York, a market stall anywhere. That range built an unusual skill — finding things no one else can find, whether it's a supplier, a product, a deal, or the one insight buried in the data. The other defining trait is relentlessness: when something needs to be figured out, it gets figured out, no matter how many iterations it takes. It's the same pattern that runs through the career — build the thing yourself, from the first store lease to a fashion company founded and run for a decade on nights and weekends alongside full-time executive roles, and now a portfolio of AI-native products built hands-on with the same stubborn curiosity. Off the clock, the energy goes to family, the kitchen, and anything with an engine.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0; border:1px solid rgba(239,237,230,0.14); margin-top:2.4rem; max-width:116ch;">
+        <div style="background:#262B31; padding:1.8rem 1.6rem;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#D99A45;">Languages</div>
+          <div style="margin-top:0.5rem; font-size:0.92rem; color:#D6D1C6; line-height:1.55; display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>English, French (Fluent)</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Hebrew (Conversational)</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Spanish (Basic)</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>American, French, and Israeli citizenships</span></div>
+          </div>
+        </div>
+        <div style="background:#262B31; padding:1.8rem 1.6rem;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#D99A45;">Geography</div>
+          <div style="margin-top:0.5rem; font-size:0.92rem; color:#D6D1C6; line-height:1.55; display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Based in Atlanta, GA</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>New York, San Francisco, Chicago, Miami, Fort Worth</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Networks in Europe, Asia, South America</span></div>
+          </div>
+        </div>
+        <div style="background:#262B31; padding:1.8rem 1.6rem;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#D99A45;">Off the clock</div>
+          <div style="margin-top:0.5rem; font-size:0.92rem; color:#D6D1C6; line-height:1.55; display:flex; flex-direction:column;">
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Cook, artist, and self-confessed gearhead</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Golf and pickleball for the competitive streak</span></div>
+            <div style="display:grid; grid-template-columns:1rem 1fr; gap:0; padding:0.55rem 0; align-items:start; min-height:2.5rem;"><span style="color:#D99A45;">•</span><span>Exploring and researching for the curious one — the rest belongs to family and friends</span></div>
+          </div>
+        </div>
+      </div>
+            </div></sc-if>
+</section>
+
+
+    <section id="build" data-screen-label="What I Build" style="padding:{{ secBuildPad }} 5vw; color:#EFEDE6;">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:0 0 1rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secBuildToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secBuildBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span><span style="min-width:14rem;">What I build</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0 0 0.9rem; font-size:clamp(1.1rem,2.2vw,2.3rem); line-height:1.1;">I build it myself, end to end.</h2>
+      <p style="color:#D6D1C6; font-size:1rem; max-width:80ch; line-height:1.8; margin:0; text-wrap:pretty;">Not a strategy deck handed to somebody else to execute. Four disciplines, run hands-on across dealerships, specialty chains, big-box, and my own stores: find the product, design the brand, build the store, and fix what the P&amp;L is hiding.</p>
+      <sc-if value="{{ secBuildOpen }}" hint-placeholder-val="{{ true }}"><div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1px; background:rgba(239,237,230,0.14); border:1px solid rgba(239,237,230,0.14); margin-top:2.6rem;">
+        <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="4">
+          <div style="background:#262B31; padding:1.8rem 1.7rem 1.9rem; display:flex; flex-direction:column; gap:0.9rem;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.16em; text-transform:uppercase; color:#8FB0D8;">{{ t.n }}</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.9rem; color:#EFEDE6; line-height:1.05;">{{ t.name }}</div>
+            <p style="font-size:0.92rem; color:#D6D1C6; line-height:1.75; margin:0; text-wrap:pretty;">{{ t.how }}</p>
+            <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:0.3rem;">
+              <sc-for list="{{ t.proof }}" as="p" hint-placeholder-count="3">
+                <div style="display:grid; grid-template-columns:minmax(5.5rem, max-content) 1fr; gap:0.8rem; align-items:baseline; border-top:1px solid rgba(239,237,230,0.12); padding-top:0.7rem;">
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.35rem; color:#D99A45; line-height:1;">{{ p.num }}</div>
+                  <div>
+                    <div style="font-size:0.86rem; color:#EFEDE6; line-height:1.55; text-wrap:pretty;">{{ p.what }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:#9AA0A8; margin-top:0.25rem;">{{ p.where }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </div></sc-if>
+    </section>
+
+    <section id="value" data-screen-label="Value Created" style="padding:{{ secValuePad }} 5vw; color:#EFEDE6;">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:0 0 1rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secValueToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secValueBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span><span style="min-width:14rem;">Value created</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:clamp(1.1rem,2.2vw,2.3rem); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; line-height:1.1;">Highlights across sourcing, retail, and portfolio work.</h2>
+        <sc-if value="{{ secValueOpen }}" hint-placeholder-val="{{ true }}"><div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1px; background:rgba(239,237,230,0.14); border:1px solid rgba(239,237,230,0.14); margin-top:2.6rem;">
+        <sc-for list="{{ highlights }}" as="h" hint-placeholder-count="6">
+          <div style="background:#262B31; padding:2rem 1.7rem;">
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.5rem; color:#D99A45; line-height:1;">{{ h.num }}<small style="font-size:1rem; font-family:'IBM Plex Mono',monospace; color:#8FB0D8; margin-left:2px;">{{ h.unit }}</small></div>
+            <div style="margin-top:0.9rem; font-size:0.9rem; color:#9AA0A8; line-height:1.6; text-wrap:pretty;">{{ h.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:3rem 0 0; display:flex; align-items:center; gap:0.6rem;"><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span>Capabilities — hover for my methodology</p>
+      <div style="display:flex; flex-direction:column; gap:0.7rem; margin-top:1.4rem;">
+        <sc-for list="{{ compGroups }}" as="g" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:9.5rem 1fr; gap:0.8rem; align-items:start;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.64rem; letter-spacing:0.1em; text-transform:uppercase; color:#8FB0D8; padding-top:0.45rem;">{{ g.label }}</div>
+            <div style="display:flex; flex-wrap:wrap; gap:0.35rem;">
+              <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="5">
+                <div onMouseEnter="{{ i.onHover }}" onClick="{{ i.onHover }}" style="cursor:pointer; user-select:none; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; padding:0.4rem 0.7rem; border:1px solid {{ i.border }}; border-left:3px solid {{ i.leftBorder }}; color:{{ i.color }}; transition:border-color .15s ease, color .15s ease; white-space:nowrap;" style-hover="border-color:#D99A45; color:#FFFFFF;">{{ i.name }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div data-pl-anchor="1" style="margin-top:1.2rem; border:1px solid rgba(239,237,230,0.18); border-left:3px solid #D99A45; background:#262B31; padding:1rem 1.3rem; min-height:64px; box-sizing:border-box;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#D99A45;">{{ compTitle }}</span>
+        <span style="margin-left:0.8rem; font-size:0.92rem; color:#EDEAE1; line-height:1.6; text-wrap:pretty;">{{ compStory }}</span>
+      </div>
+
+      <div style="margin-top:3rem; border-top:1px solid rgba(239,237,230,0.14); padding-top:1.8rem;">
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:#D99A45; margin:0 0 1.2rem;">The Private Label Process</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); align-items:stretch; gap:0.5rem;">
+          <sc-for list="{{ plFlow }}" as="f" hint-placeholder-count="7">
+            <div style="min-width:0; display:flex; align-items:stretch;">
+              <div style="flex:1 1 auto; min-width:0; background:#262B31; border:1px solid rgba(239,237,230,0.14); border-top:2px solid #D99A45; padding:0.9rem 0.9rem 1rem; display:flex; flex-direction:column; gap:0.4rem;">
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; color:#8FB0D8;">{{ f.n }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:0.04em; color:#EFEDE6; line-height:1.3;">{{ f.t }}</div>
+                <p style="font-size:0.74rem; color:#9AA0A8; line-height:1.55; margin:0; text-wrap:pretty;">{{ f.d }}</p>
+              </div>
+
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+          <sc-if value="{{ showPLSection }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1 1 100%; min-width:0; margin-top:2.4rem; border-top:1px solid rgba(239,237,230,0.14); padding-top:2rem;">
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:#D99A45; margin:0 0 0.5rem;">Camping World — Private Label 2016</p>
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:#8FB0D8; margin:0 0 0.9rem;">Deep dive — building fifty brands from nothing</p>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.65rem; line-height:1.3; color:#EFEDE6; margin:0 0 1rem; max-width:34ch;">A shelf full of brands that did not exist two years earlier.</p>
+            <p style="font-size:0.98rem; color:#D6D1C6; line-height:1.8; margin:0 0 2.4rem; max-width:74ch; text-wrap:pretty;">Every one of them started as a gap on a planogram and ended as a product in a customer's hands — designed, sourced, imported, warehoused, and sold four different ways. This is how that actually happens.</p>
+
+            <sc-for list="{{ plStory }}" as="b" hint-placeholder-count="4">
+              <div style="display:flex; flex-wrap:wrap; gap:2rem; align-items:center; margin-bottom:2.6rem;">
+                <div style="flex:1 1 300px; min-width:0;">
+                  <div style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.16em; color:#8FB0D8; margin-bottom:0.5rem;">{{ b.n }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.7rem; color:#EFEDE6; line-height:1.15; margin-bottom:0.7rem;">{{ b.t }}</div>
+                  <p style="font-size:0.94rem; color:#D6D1C6; line-height:1.8; margin:0; text-wrap:pretty;">{{ b.d }}</p>
+                  <p style="font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:#9AA0A8; margin:0.9rem 0 0;">{{ b.brands }}</p>
+                </div>
+                <div style="flex:1 1 320px; min-width:0; background:radial-gradient(circle at 50% 35%, #F7F5EF 0%, #DFDBD1 100%); padding:1.4rem 1.2rem; display:flex; align-items:center; justify-content:center; gap:0.6rem; min-height:230px;">
+                  <sc-for list="{{ b.imgs }}" as="im" hint-placeholder-count="3">
+                    <div role="img" aria-label="{{ im.alt }}" style="flex:1 1 0; min-width:0; height:200px; background-image:url('{{ im.src }}'); background-size:contain; background-repeat:no-repeat; background-position:center; filter:drop-shadow(0 10px 18px rgba(0,0,0,0.28));"></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:#8FB0D8; margin:2.2rem 0 0.9rem;">The brand book</p>
+            <p style="font-size:0.9rem; color:#9AA0A8; line-height:1.7; margin:0 0 2.2rem; max-width:74ch; text-wrap:pretty;">The 2016 standards book covered fifty-plus brands across six categories — each with its logo suite, color, type, and a named national competitor so the customer always had a reason to choose it.</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:0.8rem;">
+              <sc-for list="{{ plCats }}" as="p" hint-placeholder-count="6">
+                <div style="border-top:1px solid rgba(239,237,230,0.18); padding:0.9rem 0 0; display:flex; flex-direction:column; gap:0.3rem;">
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.2rem; color:#EFEDE6; line-height:1.1;">{{ p.t }}</div>
+                  <p style="font-size:0.8rem; color:#D6D1C6; line-height:1.6; margin:0; text-wrap:pretty;">{{ p.d }}</p>
+                  <sc-if value="{{ p.vs }}" hint-placeholder-val="{{ true }}">
+                    <p style="font-size:0.75rem; color:#9AA0A8; line-height:1.5; margin:0.2rem 0 0;">Benchmarked against {{ p.vs }}</p>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+            </div></sc-if>
+</section>
+
+    <sc-if value="{{ showAiNative }}" hint-placeholder-val="{{ true }}">
+      <section id="ai" data-screen-label="AI-Native" style="padding:{{ secAiPad }} 5vw; color:#EFEDE6;">
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:0 0 1rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secAiToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secAiBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span><span style="min-width:14rem;">AI-native</span></p>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:clamp(1.1rem,2.2vw,2.3rem); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; line-height:1.1;">I use AI as a team, not a tool.</h2>
+        <sc-if value="{{ secAiOpen }}" hint-placeholder-val="{{ true }}"><div>
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:clamp(1.15rem,2vw,1.5rem); color:#8FB0D8; margin:0.8rem 0 0; line-height:1.3;">I am an operator who learned to turn AI into a development organization.</p>
+        <p style="color:#9AA0A8; font-size:0.95rem; max-width:60ch; line-height:1.7; margin:1.2rem 0 0; text-wrap:pretty;">My workflow evolved from individual AI productivity into a multi-agent development environment. Different systems handle research, architecture, implementation, review, QA, design, and coordination, while GitHub acts as the durable source of truth. I design the roles, rules, workflows, standards, and decision gates that keep the system coherent.</p>
+
+        <p id="process" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:2.4rem 0 0.9rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secProcToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secProcBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span>The process — ten steps, every project</p>
+        <sc-if value="{{ secProcOpen }}" hint-placeholder-val="{{ true }}"><div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0.6rem;">
+          <sc-for list="{{ aiFlow }}" as="f" hint-placeholder-count="10">
+            <div style="border:1px solid rgba(217,154,69,0.3); background:#262B31; padding:0.85rem 1rem 0.95rem;">
+              <div style="display:flex; align-items:baseline; gap:0.6rem;">
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:0.95rem; color:#D99A45;">{{ f.num }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.07em; text-transform:uppercase; color:#EFEDE6;">{{ f.name }}</span>
+                <span style="margin-left:auto; color:{{ f.arrowColor }}; font-size:0.95rem;">→</span>
+              </div>
+              <p style="margin:0.45rem 0 0; font-size:0.8rem; line-height:1.55; color:#9AA0A8; text-wrap:pretty;">{{ f.desc }}</p>
+            </div>
+          </sc-for>
+        </div>
+
+        </div></sc-if>
+        <p id="ecosystem" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:3.2rem 0 0.9rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secEcoToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secEcoBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span>AI / tool ecosystem — the story of a build</p>
+        <sc-if value="{{ secEcoOpen }}" hint-placeholder-val="{{ true }}"><div>
+        <p style="color:#9AA0A8; font-size:0.95rem; max-width:62ch; line-height:1.7; margin:0 0 1rem; text-wrap:pretty;">This is not a toolbar — it is a staffed team. Every build moves through the same chapters, and every tool below holds a specific job in one of them.</p>
+        <div style="border-bottom:1px solid rgba(239,237,230,0.14);">
+          <sc-for list="{{ aiStory }}" as="ch" hint-placeholder-count="7">
+            <div style="display:flex; flex-wrap:wrap; gap:1rem 2.5rem; border-top:1px solid rgba(239,237,230,0.14); padding:1.35rem 0; align-items:flex-start;">
+              <div style="flex:1 1 280px; min-width:250px; max-width:400px;">
+                <div style="display:flex; align-items:baseline; gap:0.7rem;"><span style="font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color:#D99A45;">{{ ch.num }}</span><strong style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.35rem; color:#EFEDE6;">{{ ch.title }}</strong></div>
+                <p style="margin:0.4rem 0 0 1.7rem; font-size:0.84rem; line-height:1.6; color:#9AA0A8; text-wrap:pretty;">{{ ch.lead }}</p>
+              </div>
+              <div style="flex:2 1 400px; display:flex; flex-wrap:wrap; gap:0.5rem; align-content:flex-start;">
+                <sc-for list="{{ ch.tools }}" as="t" hint-placeholder-count="3">
+                  <div style="flex:0 1 auto; min-width:175px; border:1px solid rgba(239,237,230,0.14); background:#262B31; padding:0.6rem 0.75rem; display:grid; grid-template-columns:auto 1fr; grid-template-rows:auto auto; column-gap:0.6rem; row-gap:0.05rem; align-items:center;" style-hover="background:#2A2F35;">
+                    <span role="img" aria-label="{{ t.logoAlt }}" style="grid-row:1 / span 2; width:1.9rem; height:1.9rem; background-color:#EFEDE6; background-image:{{ t.logoCss }}; background-size:1.15rem 1.15rem; background-position:center; background-repeat:no-repeat; filter:grayscale(1) contrast(1.05);"></span>
+                    <strong style="font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.06em; text-transform:uppercase; color:#EFEDE6; font-weight:500;">{{ t.name }}</strong>
+                    <span style="font-size:0.68rem; color:#9AA0A8;">{{ t.role }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        </div></sc-if>
+        <p id="products" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#D99A45; margin:3.2rem 0 0.4rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secProdToggle }}" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secProdBtn }}</span><span style="width:26px; height:1px; background:#D99A45; display:inline-block;"></span>Selected AI-built products — real work, honest status</p>
+        <sc-if value="{{ secProdOpen }}" hint-placeholder-val="{{ true }}"><div>
+        <div style="display:flex; flex-direction:column; gap:1.1rem; margin-top:1.2rem;">
+          <sc-for list="{{ aiProjects }}" as="p" hint-placeholder-count="3">
+            <div style="border:1px solid {{ p.panelBorder }}; background:{{ p.panelBg }};">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.8rem; flex-wrap:wrap; padding:1.1rem 1.3rem 0.8rem; border-bottom:1px solid {{ p.panelBorder }};">
+                <div>
+                  <sc-if value="{{ p.hasLogo }}" hint-placeholder-val="{{ false }}"><div style="display:inline-flex; align-items:center; gap:0.5rem; background:{{ p.logoBg }}; padding:{{ p.logoPad }};"><sc-if value="{{ p.hasMark }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="mark" style="height:72px; width:72px; background-image:url('{{ p.markSrc }}'); background-size:contain; background-position:center; background-repeat:no-repeat;"></div></sc-if><div style="display:grid; gap:0.3rem; justify-items:start;"><div role="img" aria-label="{{ p.name }}" style="height:53px; width:216px; background-image:url('{{ p.logoSrc }}'); background-size:contain; background-position:left center; background-repeat:no-repeat;"></div><p style="color:{{ p.roleColor }}; font-family:'IBM Plex Mono',monospace; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em; margin:0; line-height:1.35; max-width:340px;">{{ p.role }}</p></div></div></sc-if>
+                  <sc-if value="{{ p.noLogo }}" hint-placeholder-val="{{ true }}"><h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0; font-size:1.5rem; color:{{ p.headColor }};">{{ p.name }}</h3><p style="color:{{ p.roleColor }}; font-size:0.9rem; margin:0.15rem 0 0;">{{ p.role }}</p></sc-if>
+                </div>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:{{ p.statusColor }}; border:1px solid {{ p.statusBorder }}; padding:0.35rem 0.7rem; white-space:nowrap;">{{ p.status }}</span>
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:0; align-items:stretch;">
+                <div style="flex:1 1 380px; min-width:0; padding:1.1rem; background:{{ p.consoleBg }};">
+                  <sc-if value="{{ p.hasShots }}" hint-placeholder-val="{{ true }}">
+                    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ p.shotOk }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ p.shotAlt }}" style="aspect-ratio:16/10; background-color:{{ p.consoleBg }}; background-image:url('{{ p.shotSrc }}'); background-size:contain; background-repeat:no-repeat; background-position:center; border:1px solid rgba(239,237,230,0.14);"></div></sc-if><sc-if value="{{ p.shotPending }}" hint-placeholder-val="{{ false }}"><div style="aspect-ratio:16/10; border:1px dashed rgba(239,237,230,0.2); display:flex; align-items:center; justify-content:center; padding:1rem; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:{{ p.mutedColor }};">{{ p.shotAlt }}</div></sc-if></sc-if>
+                    <div style="display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:0.6rem;">
+                      <sc-for list="{{ p.shots }}" as="s" hint-placeholder-count="3">
+                        <div onClick="{{ s.onClick }}" style="cursor:pointer; user-select:none; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:{{ s.color }}; border:1px solid {{ s.border }}; background:{{ s.bg }}; padding:0.4rem 0.7rem;" style-hover="color:#EFEDE6;">{{ s.lab }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ p.isSystem }}" hint-placeholder-val="{{ false }}">
+                    <p style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:#EFEDE6; border:1px dashed rgba(217,154,69,0.45); padding:0.9rem 1rem; margin:0 0 0.9rem; display:grid; gap:0.2rem;">Canonical enterprise data model<span style="font-family:'Archivo',sans-serif; font-size:0.8rem; color:#9AA0A8;">one shared truth under every module — not isolated silos</span></p>
+                    <div style="display:flex; flex-wrap:wrap; gap:0.35rem;">
+                      <sc-for list="{{ p.domains }}" as="d" hint-placeholder-count="8">
+                        <span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.06em; text-transform:uppercase; color:#9AA0A8; border:1px solid rgba(239,237,230,0.18); padding:0.32rem 0.6rem;">{{ d }}</span>
+                      </sc-for>
+                    </div>
+                    <p style="margin:0.8rem 0 0; font-size:0.8rem; color:#9AA0A8;">21 planned functional domains — built on 20+ years of retail operating knowledge.</p>
+                  </sc-if>
+                </div>
+                <div style="flex:1 1 340px; min-width:0; padding:1.1rem 1.3rem 1.2rem; display:flex; flex-direction:column; gap:0.9rem;">
+                  <sc-if value="{{ p.hasBulletsHead }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 0.15rem; font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:{{ p.labelColor }};">{{ p.bulletsHead }}</p></sc-if>
+                  <ul style="list-style:none; display:grid; gap:0.55rem; margin:0; padding:0;">
+                    <sc-for list="{{ p.bullets }}" as="b" hint-placeholder-count="4">
+                      <li style="font-size:0.88rem; color:{{ p.bodyColor }}; line-height:1.5; padding-left:1rem; position:relative;"><span style="position:absolute; left:0; top:0.55em; width:0.35rem; height:0.35rem; background:{{ p.bulletColor }};"></span>{{ b }}</li>
+                    </sc-for>
+                  </ul>
+                  <sc-if value="{{ p.hasFlow }}" hint-placeholder-val="{{ false }}">
+                    <div style="border:1px solid {{ p.flowBorder }}; padding:0.8rem;"><span style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:{{ p.labelColor }}; margin-bottom:0.55rem;">Build flow</span><div style="display:flex; flex-wrap:wrap; gap:0.35rem; align-items:center;"><sc-for list="{{ p.flowSteps }}" as="f" hint-placeholder-count="6"><div style="flex:1 1 150px; min-width:140px; border:1px solid {{ f.borderCol }}; background:{{ p.flowStepBg }}; padding:0.6rem 0.7rem; display:grid; gap:0.3rem;"><span style="font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:{{ f.col }};">{{ f.name }}</span><span style="font-size:0.72rem; color:{{ p.mutedColor }}; line-height:1.4;">{{ f.desc }}</span></div><sc-if value="{{ f.hasArrow }}" hint-placeholder-val="{{ false }}"><span style="color:{{ p.mutedColor }}; font-size:0.85rem; flex:0 0 auto;">→</span></sc-if></sc-for></div></div>
+                  </sc-if>
+                  <p style="margin-top:auto; font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:{{ p.labelColor }}; border-top:1px solid {{ p.panelBorder }}; padding-top:0.8rem;">{{ p.label }}</p>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0.85rem; margin-top:1.4rem;">
+          <sc-for list="{{ aiMinis }}" as="m" hint-placeholder-count="6">
+            <div style="border:1px solid {{ m.border }}; background:#262B31;">
+              <div onClick="{{ m.onToggle }}" style="cursor:pointer; user-select:none; display:flex; flex-direction:column; gap:0.2rem; padding:1rem 1.1rem;" style-hover="background:#2A2F35;">
+                <span style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;"><span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:#EFEDE6;">{{ m.name }}</span><span style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:#D99A45;">{{ m.toggleIcon }}</span></span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:#D99A45;">{{ m.status }}</span>
+              </div>
+              <sc-if value="{{ m.isOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 1.1rem 1.1rem;">
+                  <sc-if value="{{ m.hasImg }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ m.alt }}" style="aspect-ratio:16/10; background-image:url('{{ m.img }}'); background-size:cover; background-position:center; border:1px solid rgba(239,237,230,0.14); margin-bottom:0.7rem;"></div></sc-if>
+                  <p style="font-size:0.86rem; color:#9AA0A8; line-height:1.55; margin:0; text-wrap:pretty;">{{ m.text }}</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+              </div></sc-if>
+        </div></sc-if>
+</section>
+    </sc-if>
+
+    <section id="experience" data-screen-label="Operating History" style="">
+      <div style="padding:{{ secExpPad }} 5vw {{ secExpPadB }};">
+        <p style="font-family:'IBM Plex Mono',monospace; font-size:1rem; letter-spacing:0.18em; text-transform:uppercase; color:{{ brass }}; margin:0 0 1rem; display:flex; align-items:center; gap:0.6rem;"><span onClick="{{ secExpToggle }}" data-om-move="1" style="cursor:pointer; user-select:none; display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:#D99A45; border:1px solid rgba(217,154,69,0.5); padding:0.55rem 1rem;" style-hover="background:rgba(217,154,69,0.12);">{{ secExpBtn }}</span><span style="width:26px; height:1px; background:{{ brass }}; display:inline-block;"></span><span style="min-width:14rem;">Operating history</span></p>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0 0 0.8rem; font-size:clamp(1.1rem,2.2vw,2.3rem); white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; line-height:1.1;">Where the work was done.</h2>
+        <p style="color:#9AA0A8; font-size:0.95rem; max-width:56ch; line-height:1.7; margin:0;">Thirty years of operating roles, newest first. Open any one for the full story.</p>
+      </div>
+
+        <sc-if value="{{ secExpOpen }}" hint-placeholder-val="{{ true }}"><div>
+      <sc-for list="{{ roles }}" as="c" hint-placeholder-count="8">
+        <div id="{{ c.anchor }}" data-screen-label="{{ c.company }}" style="padding:2.4rem 5vw; border-top:1px solid rgba(239,237,230,0.14); display:flex; flex-wrap:wrap; gap:2.5rem 3.5rem; align-items:flex-start;">
+          <div style="flex:1 1 440px; min-width:0;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap;">
+              <div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:{{ brass }};">{{ c.years }} · {{ c.location }}</div>
+                <div onMouseEnter="{{ c.onAboutEnter }}" onMouseLeave="{{ c.onAboutLeave }}" style="position:relative; display:inline-block; margin-top:0.55rem;">
+                  <span onClick="{{ c.onAboutEnter }}" style="cursor:help; font-family:'IBM Plex Mono',monospace; font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:#9AA0A8; border-bottom:1px dotted rgba(239,237,230,0.4); padding-bottom:1px;" style-hover="color:#D99A45; border-bottom-color:#D99A45;">About</span>
+                  <sc-if value="{{ c.aboutOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute; bottom:1.5rem; left:0; z-index:30; width:min(680px,90vw); background:#262B31; border:1px solid rgba(239,237,230,0.25); border-left:3px solid #D99A45; box-shadow:0 14px 34px rgba(0,0,0,0.5);">
+                      <div style="padding:0.9rem 1.1rem 1rem;">
+                        <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2rem; color:#EFEDE6; line-height:1.05; margin-bottom:0.6rem; white-space:nowrap; overflow:visible;">{{ c.company }}</div>
+                        <div style="display:flex; gap:1rem; align-items:stretch;">
+                          <sc-if value="{{ c.aboutImg }}" hint-placeholder-val="{{ false }}">
+                            <div role="img" aria-label="{{ c.company }}" style="width:150px; aspect-ratio:1/1; flex-shrink:0; align-self:flex-start; border:1px solid rgba(239,237,230,0.2); background-image:url('{{ c.aboutImg }}'); background-size:cover; background-position:center; background-repeat:no-repeat; background-color:#1E2226;"></div>
+                          </sc-if>
+                          <div style="flex:1; font-size:0.82rem; color:#D6D1C6; line-height:1.6; text-wrap:pretty;">{{ c.aboutText }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+                <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; margin:0.3rem 0 0.2rem; font-size:clamp(1.7rem,2.6vw,2.3rem); line-height:1.05;">{{ c.company }}</h3>
+                <p style="color:#8FB0D8; font-size:0.95rem; margin:0.3rem 0 0; font-weight:500;">{{ c.role }}</p>
+              </div>
+              <div onClick="{{ c.onToggle }}" style="cursor:pointer; user-select:none; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.05em; padding:0.7rem 1rem; border:1px solid rgba(239,237,230,0.28); color:#EFEDE6; white-space:nowrap;" style-hover="border-color:{{ brass }}; color:{{ brass }};">{{ c.toggleLabel }}</div>
+            </div>
+            <sc-if value="{{ c.isOpen }}" hint-placeholder-val="{{ false }}">
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:#9AA0A8; margin:1rem 0 1.6rem; line-height:1.6;">{{ c.context }}</p>
+            <div style="display:flex; gap:0.2rem; border-bottom:1px solid rgba(239,237,230,0.16); flex-wrap:wrap;">
+              <sc-for list="{{ c.tabs }}" as="t" hint-placeholder-count="4">
+                <div onClick="{{ t.onClick }}" style="cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.05em; padding:0.75rem 0.9rem; color:{{ t.color }}; border-bottom:2px solid {{ t.borderColor }}; margin-bottom:-1px; user-select:none;" style-hover="color:#EFEDE6;">{{ t.num }} {{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="min-height:150px; padding-top:1.4rem;">
+              <p style="font-size:0.98rem; line-height:1.75; color:#D6D1C6; margin:0; max-width:58ch; text-wrap:pretty;">{{ c.chText }}<sc-if value="{{ c.chHasHi }}" hint-placeholder-val="{{ false }}"> <span style="background:#F2DE5C; color:#241C12; padding:0 4px;">{{ c.chHi }}</span></sc-if></p>
+            </div>
+            </sc-if>
+          </div>
+          <sc-if value="{{ c.isOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1 1 300px; min-width:0; max-width:420px; background:#1C2024; padding:0.9rem 0.9rem 0.8rem;">
+            <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ c.chAlt }}" style="width:100%; aspect-ratio:4/3; background-image:url('{{ c.chImg }}'); background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#15181B; filter:saturate(0.9) contrast(1.03);"></div></sc-if>
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#9AA0A8; line-height:1.6; margin:0.6rem 0 0; text-align:center;">{{ c.chCap }}</p>
+          </div>
+          </sc-if>
+          <sc-if value="{{ c.showClients }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1 1 100%; min-width:0; margin-top:0.4rem;">
+            <p style="font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:#D99A45; margin:0 0 0.4rem;">Selected client work</p>
+            <p style="font-size:0.9rem; color:#9AA0A8; line-height:1.65; margin:0 0 1.2rem; max-width:80ch; text-wrap:pretty;">{{ c.clientsIntro }}</p>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem;">
+              <sc-for list="{{ c.clients }}" as="cl" hint-placeholder-count="4">
+                <div style="background:#1C2024; border:1px solid rgba(239,237,230,0.12); display:flex; flex-direction:column;">
+                  <sc-if value="{{ cl.img }}" hint-placeholder-val="{{ false }}">
+                    <div role="img" aria-label="{{ cl.name }}" style="width:100%; aspect-ratio:16/9; background-image:url('{{ cl.img }}'); background-size:contain; background-repeat:no-repeat; background-position:center; filter:saturate(0.9) contrast(1.03); background-color:#15181B;"></div>
+                  </sc-if>
+                  <div style="padding:0.9rem 1rem 1rem; display:flex; flex-direction:column; gap:0.4rem; flex:1;">
+                    <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.25rem; color:#EFEDE6; line-height:1.1;">{{ cl.name }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.64rem; letter-spacing:0.08em; text-transform:uppercase; color:#8FB0D8;">{{ cl.kind }}</div>
+                    <p style="font-size:0.82rem; color:#D6D1C6; line-height:1.6; margin:0.2rem 0 0; text-wrap:pretty;">{{ cl.did }}</p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+        </div>
+      </sc-for>
+            </div></sc-if>
+</section>
+
+    </div></sc-if>
+
+    <section data-screen-label="Footer" style="padding:0 5vw 2.5rem; color:#EFEDE6;">
+      <div style="margin-top:2rem; padding-top:1.4rem; border-top:1px solid rgba(239,237,230,0.14); font-family:'IBM Plex Mono',monospace; font-size:0.66rem; color:#9AA0A8; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+        <span>© 2026 Nicolas Goureau — Executive Operator</span>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+
+    
+
+    
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8FB0D8&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#8FB0D8&quot;,&quot;#7FA3CC&quot;,&quot;#A8C3E3&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;brassColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#D99A45&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#D99A45&quot;,&quot;#C1802F&quot;,&quot;#E5AE5C&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;imageSource&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;drive&quot;,&quot;options&quot;:[&quot;drive&quot;,&quot;local&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Images&quot;},&quot;showAiNative&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+
+class Component extends DCLogic {
+  state = { secOpen: {}, active: 'profile', activeRole: '', ch: {}, open: {}, shot: {}, mini: {}, comp: 'Retail Operations', aboutId: '', isMobile: (typeof window !== 'undefined' && window.innerWidth < 880), driveOk: false, probed: false, screensOk: false };
+
+  // Drive Photos folder (CV Assets/Photos), ordered by upload time. [0]=hero slot, [1..32]=chapter images.
+  driveIds = ['1JrJn6YWIyL2Y2lLN64ZLe0GWFXQplwuC','1sqcDZm6UWa3py4utRaugFIxZqz_b18dH','1-TydtFGOLCHHdwgqmt-WR81lXiCAq02c','1Gac63jjn1gITMkQ9gRQHd1eh-l0KJuVH','1gIFo_lawOW7W8Z7zL9PnU93lUOm65ugv','1LzFk8u4ZGgYrF6Zm-mWHOfYCKJWgAJq7','1_pKA-kdt2ZeerNgpzzv0fNs5zKA8qZ_b','1UhBSWgb9-Qh_ZoC-nQ4WqISAXRp1oFfK','1PpT6qu7OEZnENtfu5B9OJV-JpzldNhd1','1nA7yzV_gOAWKHmQTSP5I1W3Qjyu3GC_w','1DSisPQpcOFhbCjWC9CZutuKI0Q56OVq2','1WwFY_YLUySGAUnvd0DjCkRPLGAGUNba-','18k8ibY2VDS5zTNXVF5cst9fWHWhFThK5','1ynUsQUTdXlpcGaFWZlPM8oXbtX3Y-cWr','1_RgLk3vqrYXy6akSYH6nwlzpyUr8K-Nu','1amEuJ9DHhFEn2CElSmKHFyCH4H7pUJLE','1OQZWPeJVa0EO5GwlsmC604baWxnAOhwo','1dvmvQHNIH_zgARMg2S9PB2buuIKhzQch','1Wyxusa7mlRbrxpgr5IM8-2F5OdJf1g50','13d4uomKrphS3FMloWPcvRftPbS7EV-9Q','1Nu2MqPG7NPBtgbIc3MiKYniY8s89ZVY2','1Ek2FjCznVgygG1s2Ep_niJK2OtiU1JEd','1Bsfb05x2KViX4tKlfaFQc4iVv2xHH5qk','1ElMTUyokeSUkVsezOjaWS64PRg-h7Sap','1jrutJIgttzVptUm99eE9JnswT_nJSbz2','1w20JiUN3kO-d72LR5Y9zZJCVOYKSrStb','1ouxzxImFH6vgyXurlDvKjI1iUdRe_aZ4','1avwMSRXFu5ArzGyH3V8KlIKZPLL2DfkA','18gWGEaWMOza35W8442pgfNjQvsxpSfm6','1CEuZ4E2NQx4NUVWXJGBz76_rxgrSHpGo','1DyyBextJdv7VZ_VJ8iaqDN37AFaiq7t_','1bFgkHw0nDnJy2ta0i1vd5T_cveih7eqY','1R3EldMMJIo76qlfWZYxRoMnct02w1BS8'];
+
+  navMeta = [
+    { id: 'profile', depth: 0, label: 'Profile' },
+    { id: 'aboutnic', depth: 0, label: 'About Nicolas' },
+    { id: 'about', depth: 1, label: 'The Person' },
+    { id: 'build', depth: 1, label: 'What I Build' },
+    { id: 'value', depth: 1, label: 'Value Created' },
+    { id: 'ai', depth: 1, label: 'AI-Native' },
+    { id: 'process', depth: 2, label: 'The Process' },
+    { id: 'ecosystem', depth: 2, label: 'AI / Tool Ecosystem' },
+    { id: 'products', depth: 2, label: 'AI-Built Products' },
+    { id: 'experience', depth: 1, label: 'Operating History' },
+    { id: 'role-moremargin', depth: 2, label: '2025— · Founder / Consultant' },
+    { id: 'role-funtown', depth: 2, label: '2021—24 · Director' },
+    { id: 'role-bigbox', depth: 2, label: '2019—21 · Partner / Consultant' },
+    { id: 'role-campingworld', depth: 2, label: '2017—18 · VP, Product & Biz Dev' },
+    { id: 'role-lemonis', depth: 2, label: '2015—16 · COO / VP Biz Dev' },
+    { id: 'role-courageb', depth: 2, label: '2008—18 · Founder / Owner' },
+    { id: 'role-sharperimage', depth: 2, label: '2006—08 · Director, Product Dev' },
+    { id: 'role-kbp', depth: 2, label: '2005—06 · New Business Dev' }
+  ];
+
+  highlightsData = [
+    { num: '$4.5', unit: 'M', desc: 'Sourcing business built from scratch at an additional 40% margin rate, with an automated e-commerce solution to sell direct.' },
+    { num: '$15', unit: 'M+', desc: 'In PPE delivered with global partners to US Foods, Amazon sellers, and 200+ independent operators during the early pandemic.' },
+    { num: '7.5', unit: 'M sq ft', desc: 'Of retail space activated for the Gander Outdoors grand opening — space planning, procurement, merchandising, and product.' },
+    { num: '50', unit: '+ brands', desc: 'Private-label brands designed, sourced, imported, and launched across six categories — sold through their own sites, marketplaces, wholesale, and 80+ stores.' },
+    { num: '33', unit: 'stores', desc: 'Added to a pet retail chain via new builds and acquisitions; unit opening cost cut from $80K to $25K through standardization.' },
+    { num: '75', unit: '% margin', desc: '$6.5M in revenue generated at 75% gross margin, ~90% private label, through owned retail operations.' },
+    { num: '28→79', unit: '% margin', desc: 'Margin lift on the top 60 sellers at a national RV group, achieved by sourcing direct from the factory under two house brands.' },
+    { num: '80', unit: '+ stores', desc: 'Rebuilt, merchandised, and trained in under 18 months while integrating four acquired retail banners into one operating business.' }
+  ];
+
+  compGroupsData = [
+    { label: 'Retail & Operations', items: [
+      { name: 'Retail Operations', story: 'Over the past 30+ years, I have dedicated my career to refining retail operations by creating seamless, customer-focused environments that drive profitability. My hands-on methodology bridges high-level executive strategy with the realities of day-to-day store execution. I believe that true operational excellence stems from empowering frontline teams and establishing clear, scalable processes that everyone can understand. By consistently evaluating performance metrics and listening closely to customer feedback, I am able to identify practical, actionable opportunities for improvement. Ultimately, my winning process focuses on building resilient operational foundations that support sustainable growth and consistently enhance the overall brand experience.' },
+      { name: 'Multi-Unit Strategy', story: 'Managing multiple locations effectively requires a delicate balance between standardized processes and nuanced, localized execution. Throughout my 30+ years in the industry, I have successfully scaled operations by developing robust frameworks that ensure consistency across all units without stifling local initiative. My process involves rigorous, ongoing training, establishing clear communication channels, and utilizing centralized performance tracking to maintain high standards. I focus heavily on reducing operational complexities and streamlining workflows, allowing store teams to concentrate on genuine customer engagement. This disciplined, supportive approach ensures that each location contributes effectively and sustainably to the broader organizational goals.' },
+      { name: 'Operational Turnaround', story: 'Navigating an operational turnaround requires a clear-eyed, objective assessment paired with decisive, empathetic action. Drawing on over 30 years of experience, I start by identifying the root causes of underperformance, focusing heavily on margin opportunities and process bottlenecks. My strategy involves simplifying complex operations, aligning the entire team around a few core objectives, and implementing strict financial discipline. I believe in working shoulder-to-shoulder with frontline staff to rebuild company culture and ensure that changes are practical, understood, and sustainable. By executing targeted, well-communicated improvements, I help businesses stabilize, regain their footing, and return to a path of profitable growth.' },
+      { name: 'Space Management', story: 'Effective space management is critical for maximizing sales per square foot and enhancing the customer\'s journey through the store. Over my 30+ year career, I have approached floor planning and visual merchandising with a data-driven mindset, carefully analyzing product performance to optimize layouts. In my experience, even small, thoughtful adjustments to planograms and product placement can significantly impact overall profitability and customer satisfaction. I focus on creating intuitive, inviting shopping experiences that highlight key items while maintaining a clean, accessible environment. This methodical, customer-centric approach ensures that every inch of retail space is utilized efficiently and effectively.' },
+      { name: 'Inventory Control', story: 'Maintaining optimal inventory levels is a foundational element of a healthy, profitable retail business. With over 30 years of hands-on experience, my process involves implementing rigorous tracking systems and data-driven replenishment strategies to prevent costly overstocks and frustrating out-of-stocks. I have consistently focused on improving inventory productivity by deeply analyzing sales trends and carefully aligning purchasing with actual consumer demand. By establishing clear, easily executable standard operating procedures for inventory management, I help teams reduce shrink and significantly improve cash flow. This careful, continuous balancing act ensures that the right products are available at the right time without tying up excess capital.' }
+    ] },
+    { label: 'Product & Sourcing', items: [
+      { name: 'Sourcing', story: 'Building a reliable, cost-effective sourcing network is essential for driving sustainable margin expansion. Over the past 30+ years, I have cultivated strong, enduring relationships with both international and domestic vendors across a wide variety of product categories. My approach involves thorough vetting, crystal-clear communication of standards, and a focus on building long-term partnerships rather than chasing purely transactional deals. I prioritize transparency and strict quality control throughout the entire supply chain to mitigate risks and ensure consistent, timely product delivery. This strategic, relationship-driven sourcing process consistently yields high-quality products at competitive costs, benefiting both the business and the end consumer.' },
+      { name: 'Private Label', story: 'Developing robust private label programs is a powerful way to differentiate a brand and significantly improve gross margins. Drawing on over 30 years of industry experience, I approach private label development by identifying strategic gaps in the current assortment and designing products that offer clear, undeniable value to the customer. My expertise spans the entire product lifecycle, from initial concept and strategic sourcing to final packaging and optimal shelf placement. I focus intently on maintaining high quality standards that build enduring customer trust and loyalty over time. By carefully and thoughtfully managing these proprietary lines, I help businesses create unique, compelling offerings that drive both revenue and long-term profitability.' },
+      { name: 'Product Development', story: 'Successful product development requires a deep, empathetic understanding of consumer needs paired with a keen awareness of market trends. Over my 30+ year career, I have brought a creative yet highly commercial perspective to the development process, ensuring that new items align perfectly with the brand identity and financial goals. My methodology involves rigorous consumer testing, iterative design, and close, collaborative relationships with manufacturing partners. I am passionate about bringing innovative, practical concepts to life while maintaining strict, disciplined control over costs and timelines. This balanced approach consistently results in compelling products that resonate deeply with customers and perform exceptionally well at retail.' },
+      { name: 'Brand Development', story: 'Building a strong, enduring brand goes far beyond a logo; it requires a cohesive, authentic narrative that connects with consumers across all touchpoints. Over the last 30+ years, I have approached brand development by clearly defining the core value proposition and ensuring it is consistently communicated through product, packaging, and marketing. My experience includes successfully launching new concepts and thoughtfully revitalizing existing brands by aligning their messaging with evolving customer expectations. I believe in creating genuine, memorable brand experiences that foster deep loyalty and drive long-term enterprise value. This holistic, customer-focused strategy ensures that the brand stands out meaningfully in a crowded, competitive marketplace.' },
+      { name: 'Assortment Strategy', story: 'A well-crafted assortment strategy is the essential engine that drives consistent retail profitability. With 30+ years of experience, I focus on curating product mixes that carefully balance proven volume drivers with high-margin opportunities and emerging trends. My process involves deep, continuous analysis of category performance, customer demographics, and shifting competitive landscapes to identify the optimal product balance. I believe in rigorous, ongoing refinement, regularly editing the assortment to remove underperforming items and thoughtfully introduce fresh concepts. This dynamic, data-informed approach ensures that the product offering remains relevant, compelling, and financially sound year after year.' }
+    ] },
+    { label: 'Commercial & Growth', items: [
+      { name: 'Margin Improvement', story: 'Driving meaningful margin improvement requires a comprehensive, holistic view of the entire business, from the cost of goods to overall operational efficiency. Over my 30+ year career, I have systematically analyzed every component of the product lifecycle to identify areas where costs can be responsibly reduced without ever compromising quality. My approach includes collaboratively renegotiating vendor terms, optimizing pricing strategies, and strategically shifting the sales mix toward higher-margin items. I also focus intently on reducing operational waste and improving inventory turnover to free up crucial working capital. By implementing these targeted, practical strategies, I consistently help businesses enhance their overall profitability and financial health.' },
+      { name: 'Pricing Strategy', story: 'An effective pricing strategy must delicately balance market competitiveness with the absolute need to protect and grow margins. Drawing on over 30 years of experience, I utilize a highly data-informed approach to pricing, carefully analyzing market trends, competitor positioning, and customer price sensitivity. My process involves establishing clear, logical pricing tiers and targeted promotional strategies that drive volume while maintaining overall organizational profitability. I believe in regular, rigorous reviews and timely adjustments to respond to shifting market dynamics and fluctuating inventory levels. This strategic, proactive management of pricing ensures that the business maximizes revenue while consistently delivering perceived value to the customer.' },
+      { name: 'Vendor Negotiation', story: 'Successful vendor negotiation is built on meticulous preparation, clear strategic objectives, and the genuine pursuit of mutually beneficial outcomes. Over the past 30+ years, I have approached negotiations by thoroughly understanding the vendor\'s capabilities and carefully aligning them with our specific strategic needs. My experience has taught me that the most valuable agreements go well beyond unit cost to include favorable terms on shipping, returns, and comprehensive marketing support. I focus on building long-term, resilient partnerships based on mutual trust and shared success rather than seeking short-term, transactional gains. This collaborative yet firm approach consistently secures robust programs that drive significant, lasting value for the business.' },
+      { name: 'E-Commerce', story: 'Building a successful, profitable e-commerce operation requires seamlessly integrating digital capabilities with robust, reliable backend logistics. Over my 30+ year career adapting to retail evolution, I have led the development of online platforms that provide intuitive customer experiences while ensuring highly efficient order fulfillment. My process involves carefully selecting the right technology stack, rigorously optimizing the user interface for conversion, and establishing flawless inventory syncing. I focus heavily on deep data analytics to truly understand online shopping behaviors and continuously refine our digital marketing strategies. This comprehensive, customer-first approach ensures that the e-commerce channel serves as a strong, sustainable engine for growth and acquisition.' },
+      { name: 'Acquisition Integration', story: 'Successfully integrating acquired businesses requires incredibly careful planning to realize synergies while fiercely preserving the core value of the acquired asset. With 30+ years of experience, I approach integration by focusing heavily on cultural alignment, operational standardization, and exceptionally clear communication across all teams. My process involves objectively identifying best practices from both organizations and implementing them systematically to improve overall enterprise performance. I prioritize retaining key talent and vital institutional knowledge to ensure a smooth, stable transition and maintain seamless business continuity. This structured, empathetic approach minimizes operational disruption and significantly accelerates the realization of strategic goals.' },
+      { name: 'Portfolio Optimization', story: 'Optimizing a complex portfolio of businesses or locations involves making objective, highly data-driven decisions about resource allocation. Over the last 30+ years, I have assessed the performance and potential of each unit, focusing intensely on profitability, market position, and long-term strategic fit. My approach includes decisively identifying underperforming assets for turnaround or divestiture while strategically directing investment toward high-growth opportunities. I believe in maintaining a carefully balanced portfolio that thoughtfully mitigates risk while maximizing overall financial returns. This disciplined, strategic management approach ensures that the organization remains sharply focused on its most valuable and promising assets.' }
+    ] },
+    { label: 'Tools & AI', items: [
+      { name: 'AI Research & Analysis', story: 'Leveraging AI for research and analysis goes beyond simple queries; it requires orchestrating AI as a collaborative team rather than a single tool. I utilize a multi-agent approach, deploying specialized models for independent research, adversarial QA, and deep market discovery. This structured methodology rapidly synthesizes complex datasets and technical documentation into clear, actionable business intelligence. By enforcing a strict research-before-build discipline, I ensure that all AI-generated findings are rigorously validated against real-world operational data. Ultimately, this advanced analytical framework accelerates strategic decision-making and uncovers margin-enhancing opportunities that traditional methods overlook.' },
+      { name: 'AI Integrated Tools', story: 'Developing effective AI tools requires more than just technical skill; it demands deep, practical business logic. Rather than relying on generic off-the-shelf software, I build custom AI-integrated solutions that draw directly from my 20-plus years of hands-on retail and operational experience. By treating AI as a collaborative development team rather than a simple utility, I am able to translate complex, real-world margin and workflow challenges into structured, automated systems. I personally design the architecture and operating rules for these tools, ensuring they execute decisions exactly how an experienced executive would. This hands-on, logic-driven approach allows me to create highly tailored applications that drive immediate operational efficiency and sustainable enterprise value.' },
+      { name: 'Workflow Automation', story: 'Implementing intelligent workflow automation is essential for scaling operations efficiently and drastically reducing manual errors. Over my 30+ year career, I have approached automation by first meticulously mapping out existing processes to identify repetitive tasks and frustrating bottlenecks. My strategy involves carefully selecting and seamlessly integrating the right software tools to streamline communication, reporting, and overall task management. I focus on creating intuitive, user-friendly systems that empower teams to work more efficiently and focus their energy on high-value, strategic activities. This unwavering commitment to operational efficiency consistently improves team productivity and significantly reduces administrative overhead.' },
+      { name: 'Content Development', story: 'Effective, engaging content development is key to capturing customer attention and clearly communicating core brand value. With over 30 years of experience in brand messaging, I approach content creation with a deep, nuanced understanding of the target audience and the strategic objectives of the campaign. My process involves developing cohesive, compelling narratives that translate seamlessly across various mediums, from digital platforms to impactful in-store signage. I believe in producing high-quality, highly relevant content that educates, inspires, and ultimately drives consumer action. This strategic, audience-focused approach ensures that all communications strengthen the brand identity and directly support overarching business goals.' },
+      { name: 'Shopify & POS Development', story: 'Developing robust, reliable Shopify and POS systems is absolutely foundational for seamless, modern retail operations. Over my 30+ year career adapting to technological shifts, I have gained extensive experience configuring these platforms to perfectly integrate inventory, sales, and customer data across all channels. My approach focuses on creating highly user-friendly interfaces for frontline staff while ensuring accurate, real-time reporting for executive management. I prioritize building scalable, flexible architectures that can easily adapt to rapid business growth and new operational requirements. This technical proficiency ensures that the technological infrastructure actively supports and significantly enhances the overall retail experience.' },
+      { name: 'Databases & Reporting', story: 'Accurate databases and highly insightful reporting are the indispensable backbone of truly informed decision-making. Drawing on 30+ years of analytical experience, I specialize in structuring complex product and operational databases that absolutely ensure data integrity and accessibility. My process involves designing custom, intuitive reports and dashboards that clearly highlight key performance indicators and actionable business trends. I focus on translating complex, dense data into clear, concise formats that empower teams at all levels to make better, faster decisions. This unwavering analytical rigor ensures that both high-level strategy and daily execution are always guided by reliable, up-to-date information.' },
+      { name: 'Adobe, Canva & Office', story: 'Proficiency in design and productivity software is essential for flawlessly executing strategy and communicating complex ideas clearly. Over my 30+ year career, I have utilized tools like Adobe Creative Suite and Canva to develop highly professional presentations, compelling marketing materials, and clear visual merchandising guides. My deep expertise in Microsoft Office allows for complex, rigorous financial modeling, deep data analysis, and comprehensive, organized project management. I approach these tools not merely as software, but as powerful enablers of crystal-clear communication and highly efficient workflow. This versatile, hands-on skill set ensures that ideas are presented compellingly and projects are managed exceptionally well.' }
+    ] }
+  ];
+
+  tracksData = [
+    { n: '01 — Sourcing & private label', name: 'Find the product, own the margin',
+      how: 'Twenty years of factory relationships across Asia, Europe, and the Americas, used the same way every time: identify what a category is overpaying a national brand for, source it direct, put a brand on it that customers actually want, and keep the spread.',
+      proof: [
+        { num: '50+', what: 'Private label brands created, each with its own identity, tier, and sales channels', where: 'Camping World' },
+        { num: '28→79%', what: 'Margin on the top 60 sellers, sourced factory-direct under two house brands', where: 'Fun Town RV' },
+        { num: '~90%', what: 'Of the assortment made private label, manufactured across seven countries', where: 'COURAGE. b' },
+        { num: '$3M', what: 'Sourcing business built from nothing in under a year', where: 'Fun Town RV' }
+      ] },
+    { n: '02 — Store design & builds', name: 'Draw the store, then build it',
+      how: 'Floorplans, fixtures, planograms, and merchandising standards written from scratch — then rolled out across a fleet fast enough to matter, with the crews trained to hold the standard after I leave.',
+      proof: [
+        { num: '80+', what: 'Stores rebuilt, merchandised, and trained in under 18 months across four acquired banners', where: 'Camping World' },
+        { num: '20+', what: 'Category shop-in-shops designed for the outdoor space', where: 'Camping World' },
+        { num: '65k', what: 'Square-foot prototype store — the largest the company had built', where: 'Fun Town RV' },
+        { num: '9', what: 'Stores opened in under six months on crisis-era leases', where: 'COURAGE. b' }
+      ] },
+    { n: '03 — Turnarounds & integration', name: 'Take the broken thing and make it run',
+      how: 'Bankrupt chains, acquired banners, vacant real estate, and businesses leaking margin through a hundred small holes nobody owns. The work is unglamorous: find the leaks, rebuild the process, keep the knowledge that walked in with the acquisition.',
+      proof: [
+        { num: '80+', what: 'Gander Mountain stores reopened out of bankruptcy on a compressed clock', where: 'Camping World' },
+        { num: '80+', what: 'Operators advised across every category of retail, embedded or supporting', where: 'Marcus Lemonis LLC' },
+        { num: '$1M', what: 'Annual labor efficiency and cash flow gain from restructuring sales and logistics', where: 'Big Box Group' },
+        { num: '$100K→$25K', what: 'Store fixture package re-engineered, enabling growth from under 20 to 100+ stores', where: 'Bentley\'s Pet Stuff' }
+      ] },
+    { n: '04 — Systems, digital & AI', name: 'Build the machine that runs it',
+      how: 'Retail operations fail on plumbing, not strategy. SKU databases, POS, ordering portals, 3PL, marketplaces, dashboards — and now AI-built tools I design and ship myself rather than wait in a development queue for.',
+      proof: [
+        { num: '30k+', what: 'SKU database, new POS, mobile checkout, and e-commerce built from scratch', where: 'Fun Town RV' },
+        { num: '6', what: 'Marketplaces fulfilled from the retail floor — own site, Amazon, eBay, Walmart, Target', where: 'Fun Town RV' },
+        { num: '3PL', what: 'Logistics move plus an internal ordering and auto-replenishment portal', where: 'Fun Town RV' },
+        { num: '6', what: 'AI-native products designed and built hands-on, end to end', where: 'More Margin Co.' }
+      ] }
+  ];
+
+  plWallData = [
+    { name: 'Nepallo', cat: 'Fishing · sun protection apparel', src: 'assets/cwpl-nepallo-hangtag.png' },
+    { name: 'Outfitta', cat: 'Active performance apparel', src: 'assets/cwpl-outfitta-tee.png' },
+    { name: 'Temp360', cat: 'Heated apparel technology', src: 'assets/cwpl-temp360-baselayer.png' },
+    { name: 'Forge', cat: 'Fishing headwear', src: 'assets/cwpl-forge-cap.png' },
+    { name: 'Grill World', cat: 'Grilling · outdoor cooking', src: 'assets/cwpl-grillworld-topper.png' },
+    { name: 'Tow Center', cat: 'Towing · RV exterior', src: 'assets/cwpl-towcenter-hitchlock.png' },
+    { name: 'Simple Nest', cat: 'RV interior décor', src: 'assets/cwpl-simplenest-wallart.png' },
+    { name: 'Dockmate', cat: 'Marine docking hardware', src: 'assets/cwpl-dockmate-light.png' },
+    { name: 'Covermate', cat: 'Boat · pontoon covers', src: 'assets/cwpl-covermate-pontoon.png' },
+    { name: 'Gladiator', cat: 'Towables · watersports', src: 'assets/cwpl-gladiator-tube.png' },
+    { name: 'Trophy Boss', cat: 'Deer hunting gear', src: 'assets/cwpl-trophyboss-tripod.png' },
+    { name: 'Flex', cat: 'Watches · watersports lifestyle', src: 'assets/cwpl-flex-box.png' }
+  ];
+
+  plFlowData = [
+    { n: '01', t: 'Find the gap', d: 'Category where a national brand takes the margin. Define customer, price tier, and the brand it has to beat.', arrow: '→' },
+    { n: '02', t: 'Build the brand', d: 'Name, logo suite, color standards, typography, packaging, hangtags, and usage rules.', arrow: '→' },
+    { n: '03', t: 'Develop the product', d: 'Specs, materials, and features written on our side. Samples, testing, and revisions until it beats the incumbent.', arrow: '→' },
+    { n: '04', t: 'Source and negotiate', d: 'Factory-direct through a twenty-year vendor network. Cost, tooling, minimums, and terms settled before commitment.', arrow: '→' },
+    { n: '05', t: 'Import', d: 'Freight, customs, compliance, and labeling. Landed cost modeled before a unit ships.', arrow: '→' },
+    { n: '06', t: 'Warehouse and allocate', d: 'Receive, allocate, and replenish across distribution centers and a national store fleet.', arrow: '→' },
+    { n: '07', t: 'Sell four ways', d: 'Own site, marketplaces, wholesale, and the retail floor — one assortment, four go-to-market motions.', arrow: '' }
+  ];
+
+  rolesData = [
+    { id: 'moremargin', aboutImg: '1SssUNecwVE6rbhdruRshG7GrGieWYKQS', post: 'POST 08', years: '2025—', company: 'More Margin Co.', location: 'Atlanta, GA', role: 'Founder / Consultant',
+      context: 'Independent consultancy helping retailers and suppliers find margin in assortments, sourcing, inventory, and selling space.',
+      about: 'A retail and consumer-products consulting firm helping retailers and suppliers improve profitability through stronger assortments, sourcing strategy, inventory productivity, and space optimization. The approach pairs executive-level strategy with hands-on retail execution, turning complex commercial challenges into measurable improvements in performance.',
+      chapters: [
+        { k: 'Context', img: 'https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2024/03/DJI-NYC_5thAve_Exterior_01.jpg?resize=720%2C900&ssl=1', text: 'While waiting to embark on the next big project, I work with ongoing career contacts to make them more effective at selling to retailers, help retailers with their assortments, and build stores. One of those engagements ran with DJI\'s home office in China, setting the standard for their stores in order to open their US flagship on Fifth Avenue in New York.', cap: 'DJI Fifth Avenue — the US flagship, built to a new store standard.' },
+        { k: 'The Work', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwsDhCO2tGq0SxBLTGPGWTKh107N22dhqIIoEJfXwycw&s=10', text: 'On the supplier side, the work is channel access: taking a product that sells in one place and making it sellable everywhere else. With NuvoMed that meant getting the line into the active sports retail market — positioning, assortment fit, and the buyer conversations that come with it.', cap: 'NuvoMed — into the active sports retail market.' },
+        { k: 'Outcome', img: 'https://agmgolf.org/wp-content/uploads/2024/05/Atlanta-small.jpg', text: 'On the retailer side, a number of clients come for assortment planning: what to carry, at what tier, at what price, and what to cut. It is the same discipline that built the private label portfolios, applied to somebody else\'s shelf.', cap: 'Assortment planning across a roster of clients.' },
+        { k: 'Takeaway', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZExiI6RcdIcxxIzKb_zVPE7lLRWmosD66P0kZOJ-4VA&s=10', text: 'A number of clients also ask for dashboards to better run their businesses. Most operators do not lack data; they lack a view of it they can act on before the month closes.', cap: 'Dashboards built so operators can act on their own numbers.' }
+      ] },
+    { id: 'funtown', aboutImg: '1iXCCYselwhSvDOxjvfS8V3B_Jq48Vbff', post: 'POST 07', years: '2021—24', company: 'Fun Town RV', location: 'Fort Worth, TX', role: 'Director of Sourcing, Retail, Aftermarket & E-Commerce',
+      context: 'Family-owned Texas RV dealership group, among the largest in the U.S.',
+      clientsIntro: 'Tasked with creating private label product and redesigning and merchandising the stores — and took it well beyond that, building a digital revenue stream, streamlining logistics, and improving margins.',
+      clients: [
+        { name: 'Planning the new stores', kind: 'Concept and store design', img: 'https://drive.google.com/thumbnail?id=1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po&sz=w800',
+          did: 'Drew on a long-standing vendor network to create a newly branded Fun Town RV store with a large retail footprint, built to complement the RVs on the lot.' },
+        { name: 'First newly branded store', kind: 'Flagship retail · 65,000 sq ft', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnFl55qEW80HSuz4Q5Kt4E5GdaIJAKripnWRWIB-ZTneoHhoauG2whEdsRMolGgM-mSPhPwHAZiZ7zhBZCrheSh9Xunr3qRtOzswOj0izL1xY9RUOtAVgahFfFLevMxDNIA8Fvl=s1600',
+          did: 'All-new merchandising plan, new POS, and SKU database, plus a mobile checkout system and website. The store doubled as a fulfillment center, shipping for our own site, Amazon, eBay, Walmart, Target, and other marketplaces.' },
+        { name: 'Private label products', kind: 'Sourcing · Two house brands', img: 'https://drive.google.com/thumbnail?id=1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA&sz=w800',
+          did: 'Identified the top 60 best-selling items and sourced them directly from the factory, creating two private label brands for the stores. Margins on those products went from 28% to 79%.' },
+        { name: 'Logistics', kind: 'Supply chain · 3PL and internal portal', img: 'https://drive.google.com/thumbnail?id=1wmZaFE6IgHc_g8B8d_LJgLRoShMELeOD&sz=w800',
+          did: 'Moved products into third-party logistics and built an internal web portal so stores could order for themselves, the main office could order on their behalf, and auto-replenishment could run in the background. Overhead and mistakes dropped, and accounting got much easier.' }
+      ],
+      about: 'One of the largest privately held RV dealership groups in the United States, with a rapidly expanding multi-state network. Sells new and pre-owned RVs alongside parts, accessories, service, financing, and e-commerce — a high-volume retail model that has made it one of the nation\'s leading towable RV dealers.',
+      chapters: [
+        { k: 'Context', img: 'https://drive.google.com/thumbnail?id=1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po&sz=w1200', text: 'Hired to create the store of the future — a 65,000 sq ft prototype, the largest the company had ever built — spanning branding, floorplan, visual merchandising, product assortment, POS, and inventory management. Drew on a long-standing vendor network to design a newly branded Fun Town RV store with a large retail footprint built to complement the RVs on the lot. The starting point: retail sold through an RV dealer financing platform, a unique parts catalog at every location, distributor-only buying compressing margin, and products invisible online.', cap: 'The mandate: a 65,000 sq ft store of the future, built from fragmented foundations.', img: '1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po' },
+        { k: 'The Work', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnFl55qEW80HSuz4Q5Kt4E5GdaIJAKripnWRWIB-ZTneoHhoauG2whEdsRMolGgM-mSPhPwHAZiZ7zhBZCrheSh9Xunr3qRtOzswOj0izL1xY9RUOtAVgahFfFLevMxDNIA8Fvl=s1600', text: 'Moved the company onto a unified, digital-first platform: a 30,000+ SKU database, new POS and mobile checkout, an internal ordering portal, a website, and the company\'s first planograms and merchandising standards — built from scratch, fast. The new flagship doubled as a fulfillment center, shipping orders from the sales floor to our own site, Amazon, eBay, Walmart, Target, and other marketplaces.', cap: 'The first newly branded store — retail floor and fulfillment center in one.' },
+        { k: 'Outcome', img: '1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA', text: 'Identified the 60 best-selling items and sourced them directly from the factory under two private label brands built for the stores. Margin on those products went from 28% to 79%. A $3M sourcing business was created in under a year, and four prototype stores opened on the new layouts and standards.', cap: 'Private label: two house brands, 28% to 79% margin.' },
+        { k: 'Takeaway', img: '1wmZaFE6IgHc_g8B8d_LJgLRoShMELeOD', text: 'Moving inventory into third-party logistics with an internal web portal — store-level ordering, head-office ordering, and auto-replenishment — cut overhead and errors and made accounting far simpler. The mandate was private label and store design; the work became a full retail operating system. Top-down direction lagged it, so most of it had to be driven solo. The lasting lesson: a good team is key to any big project.', cap: 'Logistics: 3PL plus an internal ordering and replenishment portal.' }
+      ] },
+    { id: 'bigbox', aboutImg: '1deEaWbWs3siBNILG0cgUnp0n_V4bvxIo', post: 'POST 06', years: '2019—21', company: 'Big Box Group', location: 'Miami, FL', role: 'Partner / Consultant',
+      context: 'Miami-based retail consultancy reimagining vacant big-box real estate for owners and lease holders.',
+      about: 'A retail, e-commerce, and consumer-products consulting and operating firm working across the full product lifecycle — connecting international manufacturing and vendor networks with practical retail and go-to-market strategy. Combines strategic consulting with hands-on execution to improve margins, strengthen supply chains, and accelerate growth.',
+      chapters: [
+        { k: 'Context', img: 'https://drive.google.com/thumbnail?id=1VSqU_whs35hz52NAMxt0SyMWuIbt01bt&sz=w1200', text: 'I began working with my own resources and past partners to get their products into new sales channels. Moving through those markets I kept seeing the same thing: big-box retail stores sitting empty. A junior box that lost its retailer is the wrong size for almost everyone. A boutique wants two thousand feet. A gym or an off-price wants the whole thing, or they pass. So the landlord sits on 35,000 dark feet and waits for one whale — and that is also one lease: when that tenant leaves, the asset is empty again.', cap: 'Dark big-box space, the wrong size for almost every tenant.' },
+        { k: 'The Work', img: 'https://drive.google.com/thumbnail?id=1fehpO5s4frcoRPTbzXgiO5xx6LCxXFYt&sz=w1200', text: 'FitBox is the use that matches the size. Master-lease the dark box at vacant-box rent, then cut it into shops. The operators can open because they are not each building lockers, showers, and a front rail on a lonely pad. You collect many small PSFs plus CAM on the remainder. The bet is that those doors, plus the fee for running the shared layer, clear the master rent and leave a spread.', cap: 'FitBox: master-lease the box, cut it into shops.' },
+        { k: 'Outcome', img: 'https://drive.google.com/thumbnail?id=1tPdRdBKAGhC87AHdWwebws4M6UIKpG4H&sz=w1200', text: 'It is more profitable because it is less fragile. Cycle misses a year and stretch, chiro, food, and the cleaner still pay. One franchise system sours and the floor still has other flags. One workout fad fades and recovery and the errand trip are still there. A single-tenant box does not get that. A standalone studio does not get that. Restructuring a key client\'s sales and logistics operations alongside the model improved labor efficiency and cash flow by roughly $1M per year.', cap: 'Many small leases instead of one large risk.' },
+        { k: 'Takeaway', img: 'https://drive.google.com/thumbnail?id=1PKr0yZOi9vWKJR-FbXefDJCK8Ai7CzQ7&sz=w1200', text: 'Failure is a 2,000-foot problem, not a 35,000-foot hole. That is the real-estate product. The challenges are always the same — integration and inflexibility — and so is the approach: let\'s just do it.', cap: 'The model, in one line.' }
+      ] },
+    { id: 'campingworld', aboutImg: '1SJpTUmbIQgqxOUNjKQrs4lj7IIJJQQCy', post: 'POST 05', years: '2017—18', company: 'Camping World', location: 'Chicago, IL', role: 'VP, Product and Business Development',
+      context: 'NYSE-listed; the nation\'s largest RV and outdoor retailer.',
+      about: 'One of the largest RV and outdoor-lifestyle companies in the United States, operating a national network of dealerships, service centers, and retail. Its scale, acquisition strategy, and vertically integrated ecosystem have made it one of the most recognizable and influential businesses in the RV industry.',
+      plStory: [
+        { n: '01 — The gap', t: 'It starts as a hole in the assortment',
+          d: 'Every brand began the same way: a category where we were selling somebody else\'s label at somebody else\'s margin. Nepallo came out of fishing and sun protection, aimed squarely at Columbia PFG and Huk. Outfitta came out of active apparel. Before a single sample existed there was a customer, a price tier, a competitor, and a reason to exist — then the identity, the color standards, the hangtag, and the fabric story that had to survive being held in a customer\'s hand.',
+          brands: 'Nepallo · Outfitta · Ultimate Terrain',
+          imgs: [ { src: 'assets/cwpl-nepallo-hangtag.png', alt: 'Nepallo hangtag' }, { src: 'assets/cwpl-nepallo-rack.png', alt: 'Nepallo fishing apparel line' }, { src: 'assets/cwpl-outfitta-tee.png', alt: 'Outfitta performance tee packaging' } ] },
+        { n: '02 — The product', t: 'Then it has to beat the brand it replaced',
+          d: 'A house label only works if the product is genuinely better or genuinely cheaper. Temp360 was the clearest case: rechargeable heated base layers, socks, and glove liners, built around a technology story a customer could understand in three seconds on a shelf. That meant specs written on our side, factory samples, testing, and packaging that sold the feature before the price.',
+          brands: 'Temp360 — heated apparel',
+          imgs: [ { src: 'assets/cwpl-temp360-baselayer.png', alt: 'Temp360 heated base layer' }, { src: 'assets/cwpl-temp360-socks.png', alt: 'Temp360 heated socks' }, { src: 'assets/cwpl-temp360-gloves.png', alt: 'Temp360 heated glove liners' } ] },
+        { n: '03 — The journey', t: 'Then it has to physically arrive',
+          d: 'Design is the easy part. Each line was sourced factory-direct through a vendor network built over twenty years, negotiated, imported, cleared, labeled, warehoused, and allocated across a national fleet of stores. Landed cost was modeled before a single unit shipped, because the margin only exists if the freight math works.',
+          brands: 'Grill World · Tow Center of America · camping hardlines',
+          imgs: [ { src: 'assets/cwpl-grillworld-topper.png', alt: 'Grill World barbecue topper' }, { src: 'assets/cwpl-towcenter-hitchlock.png', alt: 'Tow Center hitch lock' }, { src: 'assets/cwpl-camping-tent-pkg.png', alt: 'Tent packaging' } ] },
+        { n: '04 — The breadth', t: 'Then you do it again, in categories you have never sold',
+          d: 'The portfolio kept widening. Marine brought Dockmate for docking hardware, lighting and ladders, Covermate for boat and pontoon covers, a pontoon furniture and hardware line, and Gladiator for towables and watersports. Fishing ran from value combos up to an angler tier of rods and reels. Hunting added value and best-tier fieldwear, Trophy Boss for deer gear, waterfowl and archery labels, and two tactical brands for the shooting customer. Flex came in from the other direction — a West Coast watch and watersports lifestyle brand. Each one needed its own identity, tiering, sourcing, and shelf logic.',
+          brands: 'Dockmate · Covermate · Gladiator · Trophy Boss · Flex',
+          imgs: [ { src: 'assets/cwpl-dockmate-ladder.png', alt: 'Dockmate pontoon ladder packaging' }, { src: 'assets/cwpl-covermate-pontoon.png', alt: 'Covermate pontoon boat cover' }, { src: 'assets/cwpl-gladiator-tube.png', alt: 'Gladiator towable tube packaging' }, { src: 'assets/cwpl-trophyboss-tripod.png', alt: 'Trophy Boss tripod stick packaging' }, { src: 'assets/cwpl-flex-box.png', alt: 'Flex brand packaging' } ] },
+        { n: '05 — The sale', t: 'Then it sells in four places at once',
+          d: 'Each brand ran its own site, its own marketplace listings, wholesale accounts, and the retail floor — one assortment, four go-to-market motions, each with different pricing rules and content needs. Margin on private label ran far above national brands, and because the label existed nowhere else, there was nothing for a customer to price-shop against.',
+          brands: 'Forge · Simple Nest · Dockmate · 50+ brands in total',
+          imgs: [ { src: 'assets/cwpl-forge-cap.png', alt: 'Forge fishing cap' }, { src: 'assets/cwpl-angler-reel.png', alt: 'Private label angler reel' }, { src: 'assets/cwpl-simplenest-wallart.png', alt: 'Simple Nest RV wall art' }, { src: 'assets/cwpl-dockmate-light.png', alt: 'Dockmate solar dock light packaging' } ] }
+      ],
+      plCats: [
+        { t: 'Outdoor apparel and footwear', d: 'Everyday camp and hike wear, performance active apparel, fishing and sun protection, loungewear, heated and cooled technical apparel, and value sun-and-water goods.', vs: 'L.L.Bean, Eddie Bauer, Under Armour, Columbia PFG' },
+        { t: 'Camping hardlines', d: 'Tents, sleeping bags, chairs, cots, canopies, and camp accessories across an opening-price tier, a family good/better tier, and a specialty best tier.', vs: 'Coleman, Kelty, Marmot, REI' },
+        { t: 'Coolers and outdoor cooking', d: 'Hard and soft-sided coolers, tumblers, and insulated drinkware, plus a full grilling and outdoor cooking line.', vs: 'Pelican, Coleman' },
+        { t: 'RV parts and accessories', d: 'RV interior and home accessories for kitchen, living, bedroom and bath, towing and exterior products including hitches, chocks and levelling blocks, and an unbranded utility line.', vs: 'Dometic, Camco, Lippert' },
+        { t: 'Fishing and marine', d: 'Rods, reels, combos, bait, tackle and bags across value and angler tiers, plus docking, biminis, boat covers, pontoon, and watersports lines.', vs: 'St. Croix, Shimano, 13 Fishing' },
+        { t: 'Hunting and shooting', d: 'Value and best-tier fieldwear, hunting gear, waterfowl and deer-specific brands, archery, and two tactical shooting brands.', vs: 'Cabela\'s, Browning, 5.11, Propper' }
+      ],
+      chapters: [
+        { k: 'Context', img: 'https://sgbonline.com/wp-content/uploads/2018/03/GM.jpg', text: 'Hired to oversee the acquisition of Gander Mountain after it went bankrupt, and then to reopen over 80 of its stores. It was a very unusual process — the speed, the complexity, and a heavily reduced labor force all at once — with four acquired brands entering the fold, institutional knowledge at risk, merchandising direction unsettled, and no house brands to protect margin.', cap: 'A bankrupt chain, 80+ stores, and a compressed clock.' },
+        { k: 'The Work', img: 'https://visitlakeville.org/wp-content/uploads/2021/02/Gander-Outdoors-Visit-Lakeville-Attractions.jpg', text: 'Partnered directly with the CEO on business strategy, acquisition integration, rebranding, product development, and merchandising direction. Created over 50 private label brands, each with its own identity and sales channels, and built more than 20 category shop-in-shops for the outdoor space. Over 80 stores were rebuilt, merchandised, and trained up in under 18 months.', cap: '50+ house brands and 20+ shop-in-shops across 80 stores.' },
+        { k: 'Outcome', img: 'https://drive.google.com/thumbnail?id=1CQHtlD4q2yszO6Ea_6_KRJMphboXYFNu&sz=w1200', text: 'The Gander Outdoors grand opening activated 7.5M+ sq ft of retail space. By the 50th store, the company took up the idea of putting RVs inside the retail boxes — reducing merchandise exposure and refocusing on the core business. Those stores became the blueprint Camping World has built on ever since.', cap: 'RVs in the box — the format that became the blueprint.' },
+        { k: 'Takeaway', img: 'https://s3-media0.fl.yelpcdn.com/bphoto/erqc3fjtjvfPwUZbDItXrg/348s.jpg', text: 'With RV sales inside the stores, every Gander Outdoors location was rebranded to Camping World so the company ran under one name. Integration works when the format earns the sign, not the other way round.', cap: 'One brand: Gander Outdoors rebranded to Camping World.' }
+      ] },
+    { id: 'lemonis', aboutImg: '12mYTCNf-tKL0qTaXX2kBrkLO9cmuvJIY', post: 'POST 04',
+      clientsIntro: 'Worked with over 80 operators and companies — embedded in some, providing resources, knowledge, and integrations to others. A sample:',
+      clients: [
+        { name: 'Red Beard Coffee Traders', kind: 'Specialty coffee', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s680-w680-h510-rw',
+          did: 'Built out the retail program — new fixtures, floor plans, branding, logistics, assortment, pricing, and technology — and worked the other side of the ledger too: construction management and real estate lease negotiations.' },
+        { name: 'Sweet Pete\'s Candy', kind: 'Confectionery retail · Jacksonville, FL', img: 'assets/lemonis-sweetpetes.png',
+          did: 'Rebuilt the store experience end to end — new fixtures, floor plans, and branding, backed by logistics, assortment, pricing, and technology upgrades that let a destination candy shop operate like a scaled retailer.' },
+        { name: 'Bentley\'s Pet Stuff', kind: 'Pet specialty chain', img: 'assets/lemonis-bentleys.png',
+          did: 'Reworked fixtures, floor plans, branding, logistics, assortment, pricing, and technology — including re-engineering the store fixture package from over $100K to under $25K per location, a cost structure that helped the chain expand from under 20 to over 100 stores.' },
+        { name: 'Bowery Kitchen Supply', kind: 'Kitchen supply · New York, NY', img: 'https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg',
+          did: 'Brought structure to a beloved Chelsea Market institution — full store redesign, SKU management, and proper reporting, plus new layout and fixtures to make a dense assortment shoppable.' },
+        { name: 'W82', kind: 'Active sports · Chicago, IL', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s680-w680-h510-rw',
+          did: 'Complete redesign, remerchandising, and rebranding of an 8,000 sq ft Chicago build-out — organized as seven distinct shops-in-shop under one roof, each with its own merchandising logic.' },
+        { name: 'Denim & Soul', kind: 'High-end apparel chain', img: 'https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg',
+          did: 'Created the entire concept and rebrand of the acquisition — a chain of high-end denim and apparel shops for men and women — covering technology, store builds, and remerchandising, then handed the finished operation off to ML Fashion.' },
+        { name: 'American Tea & Coffee', kind: 'Café concept · Texas', img: 'assets/lemonis-americantea.png',
+          did: 'Created the concept from scratch and opened the first store in Texas — assortment, store design, and build-out, end to end.' },
+        { name: 'The Simple Greek', kind: 'QSR franchise', img: 'assets/lemonis-simplegreek.png',
+          did: 'Tightened operating processes and built the retail assortment program across the fast-casual franchise system.' }
+      ], years: '2015—16', company: 'Marcus Lemonis LLC', location: 'Chicago, IL', role: 'COO / VP of Business Development',
+      context: 'Family office of the Camping World CEO and host of CNBC\'s The Profit.',
+      about: 'A business development, investment, and operating platform focused on creating, acquiring, and improving businesses across retail, food, manufacturing, and consumer products. Developed new concepts from the ground up — brand positioning, product development, packaging, sourcing, private label, and go-to-market strategy.',
+      chapters: [
+        { k: 'Context', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s1600', text: 'A portfolio of over 80 operators and companies — coffee shops, candy stores, pet chains, boutiques, QSR, active sports, kitchen supply — each needing new retail concepts at television pace, for portfolio companies and prospective acquisitions alike.', cap: 'Red Beard Coffee Traders — one of 80+ operators.' },
+        { k: 'The Work', img: 'assets/lemonis-americantea.png', text: 'Embedded with some operators and armed others with resources, knowledge, and integrations. Designed and developed 15+ concepts end to end — business concept, logo, packaging, fixtures, floor plans, sourcing, and shelf-ready product programs — including creating American Tea & Coffee from scratch and opening its first Texas store. Worked with The Profit\'s production team to execute new builds for upcoming episodes.', cap: 'American Tea & Coffee: concept to first store.' },
+        { k: 'Outcome', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s1600', text: 'A library of go-to-market-ready concepts, several executed as physical builds for the show and portfolio companies — and structural wins like Bentley\'s Pet Stuff, where a fixture package re-engineered from over $100K to under $25K helped the chain grow from under 20 to over 100 stores.', cap: 'W82: seven shops-in-shop, one Chicago build.' },
+        { k: 'Takeaway', img: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnvMpBtVcAo9XaEMsKfmnEMWvkWDm_kvJqNvc5w_2ZMWCF6ZjNA91Y3L0JRRnfZMhXAjX9-N_EqwmlKKIEc3F8JFGd7F7t48vPrjxLjq0furqYhrVl25t-YxybqybHC7bAiiUo5=s1600', text: 'Speed is a forcing function. A concept that can\'t sell itself in one storefront rendering isn\'t ready — and the discipline of building at television pace made every later build faster.', cap: 'Concepts that had to sell themselves on sight.' }
+      ] },
+    { id: 'courageb', aboutImg: '1VZ7rT_2CAONgeiFgZ7KR0rpE9A-GSvNB', post: 'POST 03', years: '2008—18', company: 'COURAGE. b / ML Fashion Group', location: 'New York, NY', role: 'Founder / Owner',
+      context: 'Founder-owned women\'s fashion boutique chain in high-net-worth Northeast markets.',
+      about: 'A vertically integrated fashion retail and apparel business combining product design, private-label development, international sourcing, merchandising, and multi-unit retail operations. Grew to nine stores in under six months on a high-margin, predominantly private-label assortment, then sold to private equity and continued under ML Fashion Group, which added another eleven locations before the business was folded into a larger group.',
+      chapters: [
+        { k: 'Context', img: 'https://drive.google.com/thumbnail?id=1Gac63jjn1gITMkQ9gRQHd1eh-l0KJuVH&sz=w1200', text: 'Started with my sister in 2008, and in that year it took a lot of courage to open a new business. We grew up with our mother in this business; she taught us well, and we wanted to take it to the next level — on our own terms: source our own products and keep the margin that came with it. That became COURAGE. b.', cap: 'COURAGE. b — a new brand, opened in the worst year to open one.' },
+        { k: 'The Work', img: 'https://drive.google.com/thumbnail?id=1ynUsQUTdXlpcGaFWZlPM8oXbtX3Y-cWr&sz=w1200', text: 'When the crisis hit, landlords in strong markets suddenly became negotiable. We took very good leases in great markets at a discount and opened nine stores in under six months — all of it run alongside full-time executive roles, covering finance, staffing, merchandising, marketing, production, vendors, leases, and store development.', cap: 'Nine stores in under six months, on crisis-era leases.' },
+        { k: 'Outcome', img: 'https://drive.google.com/thumbnail?id=1LzFk8u4ZGgYrF6Zm-mWHOfYCKJWgAJq7&sz=w1200', text: 'Rather than buy a wholesale line, we built a global production pipeline — manufacturing in France, Italy, China, India, Vietnam, New York, and Los Angeles, matching each product to the country that made it best. The assortment reached roughly 90% private label, and margins were explosive.', cap: 'Product made in seven countries, sold under one label.' },
+        { k: 'Takeaway', img: 'https://drive.google.com/thumbnail?id=1jrutJIgttzVptUm99eE9JnswT_nJSbz2&sz=w1200', text: 'Owning the product brings economies of scale, which means some of it has to sell at a discount. We built a separate outlet channel so markdowns never touched gross margin in the core stores — it became our strongest channel by revenue, with net margin close to the full-price stores. The business sold to private equity and continued under ML Fashion Group, which grew it by another eleven locations before folding it into a larger group. The processes and strategy that made it work are still in use today.', cap: 'The outlet channel — markdown revenue that protected core margin.' }
+      ] },
+    { id: 'sharperimage', aboutImg: '1STTLsZb5CjfZ5NwXoxcLycHr2oXfTzAM', post: 'POST 02', years: '2006—08', company: 'The Sharper Image', location: 'San Francisco, CA', role: 'Director of Product Development',
+      context: 'Iconic multi-channel specialty retailer — roughly 150 stores plus catalog and web.',
+      about: 'An iconic American consumer-products brand known for bringing innovative electronics, gadgets, and lifestyle merchandise to the mass market through specialty stores, catalogs, and direct marketing. At its peak it operated nearly 200 stores at the intersection of technology, product innovation, gifting, and lifestyle retail.',
+      chapters: [
+        { k: 'Context', img: 'https://preview.redd.it/the-sharper-image-store-v0-fdlaf36vomhe1.jpg?width=640&crop=smart&auto=webp&s=973dcbd793bcc4ca59cd58d3b9433f10b705043a', text: 'An iconic brand that had lost its way. A new board of directors hired a Manager for Trend Analysis — a fancy name for Director of Cool — to find the products no one had seen yet and put the surprise back on the shelves of a 150-store chain.', cap: 'The Sharper Image floor — a brand built on surprise.' },
+        { k: 'The Work', img: 'https://i5.walmartimages.com/asr/922490c3-47b3-43fb-9ee4-85b71dd5b03e.9088273ed6b447c3827dca6f73469509.jpeg', text: 'Tapped a network of suppliers and blogs to source products the market hadn\'t seen, then moved up to Director of Product Development — building new and exciting products, creating store displays, working the omnichannel experience across stores, catalog, and web, and collaborating directly with the CEO on vision and merchandising priorities.', cap: 'New products, built from trend signal to shelf.' },
+        { k: 'Outcome', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRib5LdkMYNrkHVxZfMLnmqvd78rdAeag42Qkn17f36ZA&s=10', text: 'Negotiated co-op funds and developed multi-channel strategies across website, catalog, and retail, generating approximately $1M annually — and helped develop the brand\'s licensing business, a stream that long outlived the stores.', cap: 'The catalog — one channel of a multi-channel engine.' },
+        { k: 'Takeaway', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5G5oqMDlNQ30-WeD2aoMCYVukktDfBjm-xInULbjLvwZ6qILo4EDWjkk&s=10', text: 'In multi-channel retail, the product is the marketing. The right product markets itself across every channel; everything else is distribution.', cap: 'The licensing business still carries the brand today.' }
+      ] },
+    { id: 'kbp', aboutImg: '1POgtI-d2YzYSmf8wD_IO4DwuDTzZlSIV', post: 'POST 01', years: '2005—06', company: 'KBP Advertising', location: 'New York, NY', role: 'New Business Development Group',
+      context: 'New York advertising agency; new-business development group.',
+      about: 'Kirshenbaum Bond + Partners — a New York agency founded in 1987 that grew into one of the largest independent advertising firms in the U.S., known for disruptive creative, guerrilla marketing, and media innovation for brands including BMW, Target, Citi, Tommy Hilfiger, and Delta Air Lines.',
+      chapters: [
+        { k: 'Context', img: 'https://image.cnbcfm.com/api/v1/image/101168029-priceline_2_r.jpg?v=1425047653&w=1200&h=675', text: 'Hired into the new business development group — the team that worked alongside the top executives to win new clients and grow offerings for existing ones. I was the point person on a set of accounts, and we won all of them. Priceline.com was the first. Online travel was still proving it could hold customers without a storefront, and the brand carried an unusually literal proposition — name your own price — that had to be made to feel like a smart choice rather than a gamble. Deeply involved in building the pitch that took the account: the positioning, the competitive read, and the story the room actually bought.', cap: 'Priceline.com — the pitch that opened the run.' },
+        { k: 'The Work', img: 'https://i5.walmartimages.com/asr/17e73dfc-a3c4-4371-a961-d9c828dd50ab.50a595381da5433f8cc007ce82f70874.jpeg', text: 'Mrs. Butterworth\'s followed — one of the group\'s first major clients in the consumer products category, and a different discipline entirely from travel. Here the brand already had eighty years of recognition and a shape people could identify across an aisle; the job was not to explain it but to keep it relevant against private label and cheaper syrups, and to earn the shelf space that recognition alone no longer guaranteed. Grocery buyers judge on velocity and margin per facing, so the pitch had to speak retail economics, not just creative.', cap: 'Mrs. Butterworth\'s — the first major consumer products win.' },
+        { k: 'Outcome', img: 'https://www.asktraders.com/wp-content/uploads/2023/09/Diageo-drinks.jpg', text: 'Then Diageo: a marketing-heavy industry in a crowded space, where every competitor spends heavily, distribution is controlled by regulation, and the differentiation has to come from the idea rather than the media weight. Winning there meant showing a challenger agency could handle a portfolio of brands that compete with each other on the same back bar. We won that account too, alongside Edward Jones and Snapple — a financial advisory network, a beverage brand, a spirits portfolio, and a travel disruptor inside the same year.', cap: 'Diageo — won in the most crowded category on the roster.' },
+        { k: 'Takeaway', img: 'https://www.gordonbrothers.com/wp-content/uploads/2021/11/the-sharper-image_projects_square.jpg', text: 'The Sharper Image was the last of them, and the one that changed the path. Working the account meant getting deep into their actual problem — a brand that lived or died on its next product, sold through stores, a catalog, and a website at once. They eventually hired me directly, on account of the work and the insights I had for their business. That was the first step out of advertising and into operating: from recommending what a retailer should do to being responsible for doing it.', cap: 'The Sharper Image — the client that became the next job.' }
+      ] }
+  ];
+
+  // Drive "CV Assets / AI Portfolio / Project Screens" file ids (used when the folder is link-shared; local placeholders otherwise)
+  screenIds = { 'PARKOUR-01': '11I4NT2nbjhWQB8f4B0xJ4obzQHF7ms7t', 'PARKOUR-02': '13ogJCrPg5klMV65VWX_PMMsGa8rpaBoT', 'PARKOUR-03': '107TOZXrgapZqQjGJTab1WkTlimLrXUyO', 'PARKOUR-04': '1QU993Mc2as_WzquAOzc-Zm2nq8wtC_7P', 'PARKOUR-05': '1B_vSv3OhojiQeB46umHaqPM20RNsEtrG', 'ATOMIK-01': '1UcRN1045VJuS4CXSyzIhhvn-szPAQqVw', 'XDJ-01': '1fS0mZbVSYWUI9JBBEvMNdD-Hny6fsybN', 'XDJ-02': '1FVOeKueTVnkJAZN_voCgDxXdUBRo_Yys', 'VIDEO': '1OtM7ZB0iRLnbwfX9LgukzgSzcV1U248M', 'BROKER': '1GNhHIa6R3HqBluDU44SEsucO5SPqSmHr', 'UNIT': '10fh_oW3ky2lgWY1eCq1c7oT8nBR9wmKo', 'EDUK8': '1Z6A0pEfuJU74BGpJmrvLRd-wKu8Xy4h9', 'FOUNDRY': '1S-iWyJ8Jn-qdLx0uON-bp-4cqLGd30Fh' };
+
+  aiSrc(local) {
+    if (!this.state.screensOk || !local) return local;
+    let key = '';
+    const m1 = local.match(/PARKOUR-(\d\d)/); const m2 = local.match(/XDJ-MIXER-(\d\d)/);
+    if (m1) key = 'PARKOUR-' + m1[1];
+    else if (m2) key = 'XDJ-' + m2[1];
+    else if (local.includes('ATOMIK')) key = 'ATOMIK-01';
+    else if (local.includes('VIDEO-PIPELINE')) key = 'VIDEO';
+    else if (local.includes('BROKER')) key = 'BROKER';
+    else if (local.includes('UNIT-POS')) key = 'UNIT';
+    else if (local.includes('EDUK8')) key = 'EDUK8';
+    else if (local.includes('FOUNDRY')) key = 'FOUNDRY';
+    if (this.screenIds[key]) return 'https://drive.google.com/thumbnail?id=' + this.screenIds[key] + '&sz=w1200';
+    return local;
+  }
+
+  aiFlowData = [
+    { name: 'Business problem', desc: 'Every build starts from a real business need — never technology looking for a use.' },
+    { name: 'Research', desc: 'AI agents research the market, prior art, and constraints before anything is built.' },
+    { name: 'Product definition', desc: 'A written spec fixes scope, screens, and what "done" means.' },
+    { name: 'Architecture', desc: 'The system is designed and documented before the first line of code.' },
+    { name: 'Parallel AI agents', desc: 'Multiple AI agents build separate parts at the same time, each in its own lane.' },
+    { name: 'GitHub — source of truth', desc: 'Every decision, handoff, and line of code lands in one repository.' },
+    { name: 'Build & integration', desc: 'Work is built in small pieces and integrated deliberately, not all at once.' },
+    { name: 'Tests / review', desc: 'Automated tests and reviews check every piece before it counts.' },
+    { name: 'Human gates', desc: 'I personally approve anything important before it ships.' },
+    { name: 'Iteration / product', desc: 'Release, learn, improve — then the loop starts again.' }
+  ];
+
+  aiStoryData = [
+    { title: 'It starts with a working session', lead: 'Every build opens as a conversation about a real business problem. One AI shapes the architecture and product direction; another pressure-tests the reasoning before anything is committed.', tools: [
+      { name: 'ChatGPT', role: 'Architecture · Synthesis · Product direction · Review', logo: 'ndgcv/assets/ai-portfolio/tool-logos/chatgpt-parent-openai.svg', logoAlt: 'OpenAI mark' },
+      { name: 'Claude', role: 'Reasoning · collaboration', logo: 'ndgcv/assets/ai-portfolio/tool-logos/claude.svg', logoAlt: 'Claude mark' },
+      { name: 'Grok', role: 'Challenge · Discovery', logo: 'ndgcv/assets/ai-portfolio/tool-logos/grok.svg', logoAlt: 'Grok mark' }
+    ] },
+    { title: 'The research goes wide', lead: 'Independent agents scan the market, the competition, and the evidence from different angles — so no single model\'s blind spots decide anything.', tools: [
+      { name: 'Grok', role: 'Independent research · Challenge · Discovery', logo: 'ndgcv/assets/ai-portfolio/tool-logos/grok.svg', logoAlt: 'Grok mark' },
+      { name: 'Perplexity', role: 'Source discovery · Research · Validation', logo: 'ndgcv/assets/ai-portfolio/tool-logos/perplexity.svg', logoAlt: 'Perplexity mark' },
+      { name: 'Gemini', role: 'Provider diversity · Research · Analysis', logo: 'ndgcv/assets/ai-portfolio/tool-logos/gemini.svg', logoAlt: 'Gemini mark' }
+    ] },
+    { title: 'Design becomes working prototypes', lead: 'Interfaces are designed as real, clickable prototypes — not static mockups — then packaged into clear communication for stakeholders.', tools: [
+      { name: 'Claude Design', role: 'Product design · Interfaces · Interactive prototypes', logo: 'ndgcv/assets/ai-portfolio/tool-logos/claude-design-parent-claude.svg', logoAlt: 'Claude mark' },
+      { name: 'Canva', role: 'Design · communication', logo: 'ndgcv/assets/ai-portfolio/tool-logos/canva-mono.png', logoAlt: 'Canva mark' }
+    ] },
+    { title: 'Several builders work at once', lead: 'Implementation runs in parallel: multiple coding agents build separate parts of the system in their own lanes, under one set of standards.', tools: [
+      { name: 'Claude Code', role: 'Engineering · Repository implementation · Testing', logo: 'ndgcv/assets/ai-portfolio/tool-logos/claude-code-parent-claude.svg', logoAlt: 'Claude mark' },
+      { name: 'CODEX', role: 'Code generation', logo: 'ndgcv/assets/ai-portfolio/tool-logos/openai.svg', logoAlt: 'OpenAI mark' },
+      { name: 'Grok Build', role: 'Rapid app builds', logo: 'ndgcv/assets/ai-portfolio/tool-logos/grok.svg', logoAlt: 'Grok mark' },
+      { name: 'Open Claw', role: 'Agent operations', logo: 'ndgcv/assets/ai-portfolio/tool-logos/openclaw-mono.png', logoAlt: 'Open Claw mark' },
+      { name: 'Apps Script', role: 'Integration layer', logo: 'ndgcv/assets/ai-portfolio/tool-logos/google-apps-script.svg', logoAlt: 'Google Apps Script mark' }
+    ] },
+    { title: 'Everything lands in one place', lead: 'GitHub is the durable source of truth. Every branch, decision record, handoff, and automated check lives in the repository — nothing important stays in a chat window.', tools: [
+      { name: 'GitHub', role: 'Durable source of truth · Branches · Handoffs', logo: 'ndgcv/assets/ai-portfolio/tool-logos/github.svg', logoAlt: 'GitHub mark' },
+      { name: 'GitHub Actions', role: 'CI / workflows', logo: 'ndgcv/assets/ai-portfolio/tool-logos/github-actions.svg', logoAlt: 'GitHub Actions mark' }
+    ] },
+    { title: 'Images and video, produced in-house', lead: 'Visual assets are generated, upscaled, and finished at production quality without leaving the workflow.', tools: [
+      { name: 'Nano Banana Pro', role: 'Image generation', logo: 'ndgcv/assets/ai-portfolio/tool-logos/nano-banana-pro-parent-gemini.svg', logoAlt: 'Gemini family mark' },
+      { name: 'Seedream', role: 'Image generation', logo: 'ndgcv/assets/ai-portfolio/tool-logos/seedream-parent-bytedance.svg', logoAlt: 'ByteDance Seed family mark' },
+      { name: 'Seadance', role: 'Video generation', logo: 'ndgcv/assets/ai-portfolio/tool-logos/bytedance.svg', logoAlt: 'ByteDance family mark' },
+      { name: 'Magnific', role: 'Upscaling · enhancement', logo: 'ndgcv/assets/ai-portfolio/tool-logos/magnific-mono.png', logoAlt: 'Magnific mark' },
+      { name: 'Topaz Gigapixel', role: 'Upscaling', logo: 'ndgcv/assets/ai-portfolio/tool-logos/topaz-gigapixel.svg', logoAlt: 'Topaz Gigapixel neutral mark' }
+    ] },
+    { title: 'The business runs on live data', lead: 'Operational data stays in systems the whole team — human and AI — can read and write: sheets, shared files, and executive dashboards.', tools: [
+      { name: 'Google Sheets', role: 'Operational data', logo: 'ndgcv/assets/ai-portfolio/tool-logos/google-sheets.svg', logoAlt: 'Google Sheets mark' },
+      { name: 'Google Drive', role: 'Asset delivery', logo: 'ndgcv/assets/ai-portfolio/tool-logos/google-drive.svg', logoAlt: 'Google Drive mark' },
+      { name: 'Domo', role: 'BI · dashboards', logo: 'ndgcv/assets/ai-portfolio/tool-logos/domo-mono.png', logoAlt: 'Domo mark' },
+      { name: 'Power BI', role: 'Business analytics', logo: 'ndgcv/assets/ai-portfolio/tool-logos/power-bi.svg', logoAlt: 'Power BI neutral mark' }
+    ] }
+  ];
+
+  aiProjectsData = [
+    { id: 'parkour', name: 'PARKOUR', role: 'AI Agent Operations & Orchestration Console', status: 'INTERACTIVE PROTOTYPE — DESIGN FREEZE V1',
+      label: 'Product Design · Systems Architecture · AI Orchestration · Prototyping',
+      logo: 'uploads/parkour/images/brand/wordmark.svg', mark: 'uploads/parkour/images/brand/mark.svg',
+      accent: '#00E5FF', statusBorder: 'rgba(0,229,255,0.45)', bulletColor: '#00E5FF',
+      panelBg: '#0B0C0F', panelBorder: 'rgba(0,229,255,0.28)', consoleBg: '#12141A',
+      roleColor: '#00E5FF', labelColor: '#9AA6B2', tabActiveText: '#0B0C0F', bodyColor: '#CBD5DE',
+      flowCols: ['#00E5FF', '#A78BFA', '#F43F5E'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'One console to run, watch, and audit multiple AI agents' },
+        { name: 'Research', desc: 'Surveyed multi-agent orchestration and cost-control patterns via live research' },
+        { name: 'Product definition', desc: 'PRODUCT_SPEC set five screens, budgets, approvals, emergency stop' },
+        { name: 'Architecture', desc: 'ARCHITECTURE.md canonical models mirrored in replaceable mock adapters' },
+        { name: 'Parallel AI agents', desc: 'ChatGPT, Grok, and Claude collaborate through Grand Central Connections' },
+        { name: 'GitHub — source of truth', desc: 'Specs, ADRs, and sync receipts live on agent/control-tower-v1' },
+        { name: 'Build & integration', desc: 'Five screens wired to five mock adapters with documented attach points' },
+        { name: 'Tests / review', desc: 'Verifier passes; truthful NOT CONFIGURED and AUTH FAILED states enforced' },
+        { name: 'Human gates', desc: 'Approval queue, layered budgets, and emergency stop guard agent actions' },
+        { name: 'Iteration / product', desc: 'Population pass, readability pass, then design freeze at V1' }
+      ],
+      bullets: [
+        'Five operations screens in one console: Control Tower, Grand Central, Communications, Costs, Integrations.',
+        'Grand Central runs AI-to-AI Connections (ChatGPT and Grok) with purpose, budget, and stop conditions declared upfront.',
+        'Every screen reads from a replaceable mock-data adapter, so a real backend attaches without UI changes.',
+        'Cost intelligence attributes spend per agent, provider, and project, with layered budgets and an emergency stop.',
+        'Work products publish back to GitHub as Issues, ADRs, and tasks on branch agent/control-tower-v1.'
+      ],
+      shots: [
+        { lab: 'Control Tower', src: 'uploads/parkour/images/product/00-control-tower.png', alt: 'Live agent dashboard with fleet metrics, project cards, and activity stream' },
+        { lab: 'Grand Central', src: 'uploads/parkour/images/product/01-grand-central.png', alt: 'AI-to-AI message exchange with Connections, Bullpen, and containment zones' },
+        { lab: 'Communications', src: 'uploads/parkour/images/product/02-communications.png', alt: 'Multi-provider communications console with conversation threads and composer' },
+        { lab: 'Costs', src: 'uploads/parkour/images/product/03-costs.png', alt: 'AI cost intelligence with per-agent spend attribution and layered budgets' },
+        { lab: 'Integrations', src: 'uploads/parkour/images/product/04-integrations.png', alt: 'Provider integrations with schema-driven forms and credential status states' }
+      ] },
+    { id: 'atomiq', name: 'ATOMIQ', role: 'Adaptive Audio Engine', status: 'LIVE 1.0 · ADAPTIVE AUDIO ENGINE',
+      flow: [
+        { name: 'Business problem', desc: 'DJs needed audio that adapts to the music without taking away control' },
+        { name: 'Research', desc: 'Studied existing DJ software, browser audio limits, and MIDI hardware standards' },
+        { name: 'Product definition', desc: 'Scoped LIVE 1.0: four decks, stems, hardware link, and the CORE engine' },
+        { name: 'Architecture', desc: 'Designed the Adaptive Audio Engine as one shared clock for every surface' },
+        { name: 'Parallel AI agents', desc: 'Grok and Claude built decks, mixer, library, and visuals side by side' },
+        { name: 'GitHub — source of truth', desc: 'Every module, test log, and handoff lived in one repo' },
+        { name: 'Build & integration', desc: 'Combined decks, sampler, sequencer, and mobile into one live booth' },
+        { name: 'Tests / review', desc: '400/400 hardware, 489/489 interface, 433/433 intelligence checks passed' },
+        { name: 'Human gates', desc: 'Nothing shipped until it felt right on real hardware, by hand' },
+        { name: 'Iteration / product', desc: 'Shipped LIVE 1.0; mix scoring proven against a 5,000-track library' }
+      ],
+      label: 'Real-Time Audio · Adaptive Audio Engine · Hardware Link · AI-Assisted Build',
+      logo: 'uploads/atomiq-wordmark.png', mark: 'assets/atomiq-nucleus-tight.png',
+      accent: '#18BEF0', statusBorder: 'rgba(236,19,128,0.55)', bulletColor: '#18BEF0',
+      panelBg: '#04070A', panelBorder: 'rgba(24,190,240,0.28)', consoleBg: '#080D13',
+      roleColor: '#18BEF0', labelColor: '#8FD4E8', tabActiveText: '#04070A', defaultShot: 1,
+      bulletsHead: 'The Product',
+      bullets: [
+        'Started as a real DJ app running in the browser — four decks, real audio, MIDI hardware support, track analysis, and saved libraries — and grew into ATOMIQ LIVE 1.0, a complete performance system.',
+        'The Adaptive Audio Engine is the system\'s shared clock: decks, waveforms, stems, hardware lights, and visuals all stay in time with the music\'s phrase, key, and energy. The software spots the moment; the DJ makes the call.',
+        'Tested like serious software: hardware control passed 400/400 checks three runs in a row, the interface 489/489, and the intelligence layer 433/433 — with mix scoring proven against a 5,000-track library.',
+        'The intelligence picks the best next track, explains exactly how to mix into it, and can even mix on its own — but the moment the DJ touches a fader, control snaps back instantly. It helps the performer, never replaces them.',
+        'The product site, the live browser booth (desktop and phone), hardware connections, video output for the crowd, and one unified music library were all built with AI as the tools (Grok + Claude) — directed like a product team, not generated as a mockup.'
+      ],
+      shots: [
+        { lab: 'Live', src: 'uploads/ATOMIQ-UI-Main-Performance-Core.png', alt: 'Working browser booth — decks, mixer, library, CORE' },
+        { lab: 'Performance Core', src: 'uploads/atomiq-performance-core.png', alt: 'ATOMIQ Performance Core — library, dual decks, four-channel mixer, stems, CORE, mix queue' },
+        { lab: 'Sampler', src: 'uploads/atomiq-sampler.png', alt: 'ATOMIQ Sampler — session grid, clip editor, banks, CORE' },
+        { lab: 'Sequencer', src: 'uploads/atomiq-sequencer.png', alt: 'ATOMIQ Step Sequencer — pattern bank, step grid, scenes, CORE' },
+        { lab: 'Mobile', src: 'uploads/atomiq-mobile.png', alt: 'ATOMIQ Stems / Remix — dual-deck stem mixing, transition builder, CORE' }
+      ] },
+    { id: 'merchantpro', name: 'MERCHANT PRO', role: 'Retail OTB, Sourcing & Private-Label Intelligence Platform', status: 'IN DEVELOPMENT',
+      label: 'Retail Strategy · Sourcing · Product Architecture · AI Workflow',
+      logo: 'assets/merchantpro-wordmark.svg', mark: 'assets/merchantpro-mark.svg',
+      accent: '#2DD4BF', statusBorder: 'rgba(45,212,191,0.5)', bulletColor: '#2DD4BF',
+      panelBg: '#0B0E12', panelBorder: 'rgba(45,212,191,0.3)', consoleBg: '#12161C',
+      roleColor: '#2DD4BF', labelColor: '#9AA6B2', tabActiveText: '#0B0E12', bodyColor: '#CBD5DE',
+      flowCols: ['#2DD4BF', '#38BDF8', '#A78BFA'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'Framed margin, OTB, cash, and sourcing decisions as one workflow' },
+        { name: 'Research', desc: 'Benchmarked retail planning, sourcing, freight, tariff, and data providers' },
+        { name: 'Product definition', desc: 'Narrowed 21-module vision to standalone OTB and sourcing intelligence' },
+        { name: 'Architecture', desc: 'Separated native decision logic from swappable external provider adapters' },
+        { name: 'Parallel AI agents', desc: 'Grok researched; ChatGPT synthesized; Claude implemented repository-aware increments' },
+        { name: 'GitHub — source of truth', desc: 'Branches, ADRs, PRs, research packs, backlog live in GitHub' },
+        { name: 'Build & integration', desc: 'Landed Money/Quantity kernel; staged Sheets, ERP, provider adapters' },
+        { name: 'Tests / review', desc: 'Ran 36 kernel tests plus lint and strict TypeScript checks' },
+        { name: 'Human gates', desc: 'Architecture and phase changes required explicit owner review before merge' },
+        { name: 'Iteration / product', desc: 'Pivoted broad platform into faster OTB/sourcing standalone product' }
+      ],
+      bullets: [
+        'Designed a 21-module retail operating platform, then narrowed the first standalone product to Open-to-Buy, sourcing, private label, landed cost, and product-opportunity analysis.',
+        'Defined an OTB model that separates retail OTB from cost OTB, including a 30%-to-75% margin scenario that releases $4,500 of purchasing capacity on $10,000 of sales.',
+        'Built the TypeScript/Node shared financial kernel with bigint Money and Quantity value objects plus 36 passing unit and property tests.',
+        'Researched a provider-agnostic Phase-1 stack for retail price, supplier discovery, freight, and HTS/duty data using SerpApi, ImportYeti, Freightos, USITC, and optional commercial adapters.',
+        'Established Google Sheets/CSV/XLSX as the low-friction data path while preserving later ERP/POS/API integration with Oracle, SAP, NetSuite, Dynamics, Shopify, Lightspeed, and Square.'
+      ],
+      shots: [
+        { lab: 'Product', src: 'assets/merchantpro/00-product-thesis.png', alt: 'Merchant PRO repository product thesis showing Plan, Source, Discover, and Opportunities' },
+        { lab: 'OTB Model', src: 'assets/merchantpro/01-otb-model.png', alt: 'Current branded SKU compared with private-label economics and $4,500 cost OTB released' },
+        { lab: 'Data Stack', src: 'assets/merchantpro/02-provider-stack.png', alt: 'Phase-1 provider research covering retail pricing, suppliers, freight, tariffs, and ingestion' },
+        { lab: 'Kernel', src: 'assets/merchantpro/03-money-kernel.png', alt: 'Merchant PRO shared-kernel evidence showing exact bigint money arithmetic and test controls' }
+      ] },
+    { id: 'nexus', name: 'NEXUS', role: 'Two-Operator AI Discovery Console', status: 'LIVE · PRIVATE DEPLOYMENT',
+      label: 'UX/UI Design · AI Orchestration · Cloudflare Workers · Google Workspace APIs',
+      logo: 'assets/nexus-console-wordmark.svg', mark: 'assets/nexus-console-mark.svg',
+      accent: '#2FB4B4', statusBorder: 'rgba(47,180,180,0.5)', bulletColor: '#2FB4B4',
+      panelBg: '#1E282D', panelBorder: 'rgba(47,180,180,0.3)', consoleBg: '#243036',
+      roleColor: '#2FB4B4', labelColor: '#9FB0B6', tabActiveText: '#1E282D', bodyColor: '#D2DCDE',
+      flowCols: ['#2FB4B4', '#B0A4FF', '#D9A441'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'Two operators needed one shared console for a discovery-phase venture' },
+        { name: 'Research', desc: 'Perplexity wired in for sourced market research; 12 findings logged' },
+        { name: 'Product definition', desc: 'Discovery 0.1 scope written to DISCOVERY-0.1.md; architecture deliberately locked' },
+        { name: 'Architecture', desc: 'Cloudflare Workers plus Google Drive and Sheets as the data layer' },
+        { name: 'Parallel AI agents', desc: 'Grok and Perplexity run as guardrailed agents inside the console' },
+        { name: 'GitHub — source of truth', desc: 'ng549/nexus holds specs, step docs and Worker source' },
+        { name: 'Build & integration', desc: 'OAuth, write APIs and Drive/Sheet mirroring shipped as staged steps' },
+        { name: 'Tests / review', desc: 'Every deploy verified live — token refresh, per-action sync, Vault round-trip' },
+        { name: 'Human gates', desc: 'Two seats only; architecture locked; Grok RUN gated behind approval' },
+        { name: 'Iteration / product', desc: 'Nine shipped steps from read-only HUD to full write-back console' }
+      ],
+      bullets: [
+        'A private two-operator workspace console deployed on Cloudflare Workers, gated by Google OAuth with 7-day auto-renewing sessions.',
+        'An action board that mirrors to a Google Sheet within seconds, with fuzzy row-matching per action and a one-click full push.',
+        'A live Google Drive browser reading the real project folder tree three levels deep, with thumbnail previews and drag-to-move.',
+        'A password-gated Vault that writes entries to a Sheet tab and Drive JSON, logging every unlock, view and copy.',
+        'Built-in Grok (ask / research / run) and Perplexity panels that answer with cited sources and log outputs to Drive.'
+      ],
+      shots: [
+        { lab: 'Command HUD', src: 'uploads/nexus/images/product/00-command-hud.png', alt: 'Main console board with KPI pulse, completion tracker, action board and live updates' },
+        { lab: 'Build Map', src: 'uploads/nexus/images/product/01-build-map.png', alt: 'Seven-module build map with per-module progress, AI tool picks and a locked architecture track' },
+        { lab: 'Drive Files', src: 'uploads/nexus/images/product/02-drive-files.png', alt: 'Live Google Drive directory of the project folder with file transfer and preview pane' },
+        { lab: 'Day Mode', src: 'uploads/nexus/images/product/03-day-mode.png', alt: 'The same console board in the light day theme with an action detail panel open' }
+      ] },
+    { id: 'pinpoint', name: 'PINPOINT', role: 'AI-Assisted Pickleball Intelligence & Training', status: 'EXPLORATION / PROTOTYPE',
+      label: 'Sports Intelligence · Interaction Design · AI-Assisted Coaching',
+      logo: 'assets/pinpoint-wordmark-tight.svg', mark: 'uploads/PINPOINT-CV-Claude-Design/images/brand/mark.svg',
+      accent: '#9CDD34', statusBorder: 'rgba(156,221,52,0.45)', bulletColor: '#9CDD34',
+      panelBg: '#07100D', panelBorder: 'rgba(156,221,52,0.28)', consoleBg: '#0E1A16',
+      roleColor: '#9CDD34', labelColor: '#91A098', tabActiveText: '#07100D', bodyColor: '#D9E2D8',
+      flowCols: ['#9CDD34', '#E9B44C', '#91A098'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'Players get match video but no idea why they lost the point' },
+        { name: 'Research', desc: 'Studied court geometry, positioning theory, and one-phone capture limits' },
+        { name: 'Product definition', desc: 'Picked Court IQ as the first build target with a clear success test' },
+        { name: 'Architecture', desc: 'Designed one loop: record, calibrate, analyze, explain, train' },
+        { name: 'Parallel AI agents', desc: 'AI built Court IQ scenarios, match analysis, and the player model in parallel' },
+        { name: 'GitHub — source of truth', desc: 'Concepts, prototypes, and the roadmap live in one repo' },
+        { name: 'Build & integration', desc: 'Interactive Court IQ trainer with live optimal-position zones' },
+        { name: 'Tests / review', desc: 'Every scenario checked against real positioning rules' },
+        { name: 'Human gates', desc: 'On-court sense decides what ships, not the model' },
+        { name: 'Iteration / product', desc: 'Prove Court IQ first, then extend to Match Intelligence' }
+      ],
+      bullets: [
+        'Connects match capture, court calibration, movement analysis, plain-language explanations, and targeted training in one improvement loop.',
+        'Uses Court IQ scenarios to teach positioning, recovery, spacing, shot geometry, and the reason a point changed.',
+        'Builds Match Intelligence from player location, shot patterns, kitchen-line behavior, partner spacing, winners, errors, and pressure moments.',
+        'Develops a multidimensional player model across serve, return, dink, volley, positioning, reaction, consistency, power, accuracy, strategy, and awareness.',
+        'Extends the same intelligence layer into player profiles, equipment guidance, combine testing, and repeatable practice scenarios.'
+      ],
+      shots: [
+        { lab: 'Platform', src: 'assets/pinpoint-00-concept-clean.png', alt: 'PinPoint concept overview — pickleball intelligence platform with Court IQ first build target' },
+        { lab: 'Court IQ', src: 'uploads/PINPOINT-CV-Claude-Design/images/product/01-court-iq.png', alt: 'Court IQ — interactive positioning and strategy trainer with live optimal-position zones' },
+        { lab: 'Match Intelligence', src: 'uploads/PINPOINT-CV-Claude-Design/images/product/02-match-intelligence.png', alt: 'Match Intelligence — one-phone match capture with player tracking and coaching feedback' },
+        { lab: 'Player Model', src: 'uploads/PINPOINT-CV-Claude-Design/images/product/03-player-model.png', alt: 'Player model — multidimensional skill profile across serve, return, positioning, strategy' },
+        { lab: 'Roadmap', src: 'uploads/PINPOINT-CV-Claude-Design/images/evidence/00-next-build.png', alt: 'PinPoint roadmap — deep dive on Court IQ, first build target and success test' }
+      ] },
+    { id: 'mediapipeline', name: 'MEDIA PRODUCTION PIPELINE', role: 'Client Production Operations & AI Workflow Tracker', status: 'INTERACTIVE PROTOTYPE',
+      label: 'Product Design · UX Systems · AI Workflow Ops · Front-End Prototyping',
+      logo: 'uploads/media-production/images/brand/wordmark.svg', mark: 'uploads/media-production/images/brand/mark.svg',
+      accent: '#5980A6', statusBorder: 'rgba(89,128,166,0.5)', bulletColor: '#7FA3C7',
+      panelBg: '#0B0E12', panelBorder: 'rgba(89,128,166,0.3)', consoleBg: '#12161C',
+      roleColor: '#7FA3C7', labelColor: '#9AA3AB', tabActiveText: '#0B0E12', bodyColor: '#CBD3DB',
+      flowCols: ['#7FA3C7', '#5980A6', '#9AA3AB'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'Agency jobs stalled across AI tools with no shared, client-safe status view' },
+        { name: 'Research', desc: 'Mapped ten real stages, owners, tools, time and cost into a tracker CSV' },
+        { name: 'Product definition', desc: 'One tracker; clients see only intake and delivery, all else internal' },
+        { name: 'Architecture', desc: 'Single-file component, local state, Apps Script sheet sync, Drive-hosted media' },
+        { name: 'Parallel AI agents', desc: 'Claude drafted stage checklists, prompts and four layout systems in parallel' },
+        { name: 'GitHub — source of truth', desc: 'No repo; versioned single-file sources and the tracker CSV are canonical' },
+        { name: 'Build & integration', desc: 'Wired sheet sync, image-generation proxy, Drive previews and CSV export' },
+        { name: 'Tests / review', desc: 'Exercised approvals, layout switching, sync failures and delete confirmations each pass' },
+        { name: 'Human gates', desc: 'Approve-to-delivery, pull-back and delete confirmations gate every irreversible action' },
+        { name: 'Iteration / product', desc: 'Two pipeline versions plus a standalone build iterated into the working prototype' }
+      ],
+      bullets: [
+        'Runs every client job through ten numbered stages, 01 Intake to 10 Delivery, and the client only ever sees those two.',
+        'A 12-service rate card (research through media buying) prices work once; clients tick services at intake without seeing rates.',
+        'One board tracks many projects at once, each with per-stage progress bars, due-date countdowns, a project ID convention and an archive.',
+        'The video variant budgets each stage in time and money — about $675 of AI generation per finished video across script, stills, motion, sound and up-res.',
+        'A Google Apps Script backend writes one sheet row per project and proxies image generation into Drive, so API keys never reach the browser.'
+      ],
+      shots: [
+        { lab: 'Portal', src: 'uploads/media-production/images/product/00-control-tower.png', alt: 'Ten-stage hub grid with client-visible flags and per-stage progress bars' },
+        { lab: 'Projects', src: 'uploads/media-production/images/product/01-projects-board.png', alt: 'Multi-project board with stage strips, completion percentages and due-date countdowns' },
+        { lab: 'Stage Detail', src: 'uploads/media-production/images/product/02-stage-detail.png', alt: 'Stage 05 Build checklist with handoffs, owner and time-and-money panel' },
+        { lab: 'Client View', src: 'uploads/media-production/images/product/03-client-view.png', alt: 'Stage 10 Delivery, the client\'s read-only progress view across all stages' },
+        { lab: 'Rate Card', src: 'uploads/media-production/images/product/04-rate-card.png', alt: 'Internal 12-service rate card with unit, rate and duration per service' }
+      ] },
+    { id: 'pos', name: 'UNIT POS', role: 'Unified Multi-Channel Point of Sale System', status: 'INTERACTIVE PROTOTYPE',
+      label: 'Product Design · UX Prototyping · Design Systems · Retail Ops',
+      logo: 'assets/pos-wordmark.svg', mark: 'assets/pos-mark.svg',
+      accent: '#5980A6', statusBorder: 'rgba(89,128,166,0.5)', bulletColor: '#8FA9C4',
+      panelBg: '#10151B', panelBorder: 'rgba(89,128,166,0.3)', consoleBg: '#171D25',
+      roleColor: '#8FA9C4', labelColor: '#9AA3AB', tabActiveText: '#10151B', bodyColor: '#CBD3DB',
+      flowCols: ['#8FA9C4', '#5980A6', '#C9D4DF'], bulletsHead: 'The Product',
+      flow: [
+        { name: 'Business problem', desc: 'POS modules — data, payments, e-commerce — never unify; design one ledger' },
+        { name: 'Research', desc: '13-question intake fixed devices, inputs, tenders, catalog scale, staff needs' },
+        { name: 'Product definition', desc: '9 screens scoped, from order entry to end-of-day report' },
+        { name: 'Architecture', desc: 'One state tree drives both iPad and phone shells' },
+        { name: 'Parallel AI agents', desc: 'Builder and background verifier agents ran concurrently per iteration' },
+        { name: 'GitHub — source of truth', desc: 'Not used; single-file prototype versioned inside the design workspace' },
+        { name: 'Build & integration', desc: 'Composed on the Industry design system — tokens, blueprint frames, Lucide icons' },
+        { name: 'Tests / review', desc: 'Automated verifier flagged icon and bundle-load defects; fixed same turn' },
+        { name: 'Human gates', desc: 'Owner approved scope answers and reviewed each shipped iteration' },
+        { name: 'Iteration / product', desc: 'Asset fixes shipped; sale-screen layout variations queued next' }
+      ],
+      bullets: [
+        'One register serves three business types — café, retail, bar — switched from a single home-screen dropdown, each with its own catalog and modifier sets.',
+        'Items enter an order five ways: tap grid, name/SKU search, barcode scan, PLU keypad, and weight scale, sized for catalogs of hundreds of items.',
+        'Payment covers card, cash with change calculation, gift card and house account, splits up to 4 ways, and 4 tip presets.',
+        'The product database syncs from a Google Sheet, and tabs, refunds and end-of-day treat counter and web-store sales as one ledger.',
+        'One codebase renders both target devices, iPad (1194×834) and phone (390×844), with a persistent sync strip for Sheet, payments, web store, kitchen and offline status.'
+      ],
+      shots: [
+        { lab: 'Register', src: 'uploads/pos/images/product/00-register.png', alt: 'Order entry on iPad — café catalog grid with live cart, modifiers and totals' },
+        { lab: 'Payment', src: 'uploads/pos/images/product/01-payment.png', alt: 'Payment screen with split options, tip presets, tender list and totals' },
+        { lab: 'Open Tabs', src: 'uploads/pos/images/product/02-tabs.png', alt: 'Held orders from counter, web store and invoice channels on one board' },
+        { lab: 'Catalog Sync', src: 'uploads/pos/images/product/03-catalog.png', alt: 'Inventory table synced from a Google Sheet with stock status tags' },
+        { lab: 'End of Day', src: 'uploads/pos/images/product/04-report.png', alt: 'Daily report unifying counter and web sales with tender breakdown and top items' }
+      ] }
+  ];
+
+  aiMinisData = [
+    { id: 'broker', name: 'FLOOR/DESK Broker Terminal', status: 'Interactive prototype', img: 'ndgcv/assets/ai-portfolio/screens/BROKER-TERMINAL-01-POSITION-HOME.png', alt: 'FLOOR/DESK broker terminal — position home with dollars at risk and recommended actions',
+      text: 'Perishable ticket inventory treated as a trading book: dollars at risk, sell-through pace, days-to-event, floor pricing, undercutting, and recommended repricing actions. Proves translation of inventory and margin judgment into decision-intelligence software.' },
+    { id: 'eduk8', name: 'EDU K8 DJ Pro', status: 'Functional prototype', img: 'ndgcv/assets/ai-portfolio/screens/EDUK8-01-HOME-IOS.png', alt: 'EDU K8 DJ Pro — child-friendly home screen on iOS',
+      text: 'A child-friendly DJ learning companion backed by a real Web Audio analysis engine, reusing the technical foundations of the larger performance program. Proves consumer-product range on serious technical footings.' },
+    { id: 'foundry', name: 'Foundry — Agent Ecosystem', status: 'Design', img: 'ndgcv/assets/ai-portfolio/screens/FOUNDRY-01-AGENT-ECOSYSTEM-OVERVIEW.png', alt: 'Foundry — six-agent e-commerce operating dashboard overview',
+      text: 'An AI-operated e-commerce model: six specialist agents own research, design, content, listings, scheduling, and analysis while the human retains approval and strategic control. The early expression of the agent thesis PARKOUR later formalized.' }
+  ];
+
+
+
+  async renderBrandBook() {
+    return;
+  }
+
+  componentDidUpdate() { this.renderBrandBook(); }
+
+  componentDidMount() {
+    setTimeout(() => this.renderBrandBook(), 400);
+    this.onScroll = () => {
+      const secs = this.navMeta.map(n => document.getElementById(n.id)).filter(Boolean);
+      let current = secs[0];
+      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 220) current = s; });
+      const roleEls = this.rolesData.map(r => document.getElementById('role-' + r.id)).filter(Boolean);
+      let curRole = '';
+      roleEls.forEach(el => { if (window.scrollY >= el.offsetTop - 260) curRole = el.id; });
+      if ((current && current.id !== this.state.active) || curRole !== this.state.activeRole) {
+        this.setState({ active: current ? current.id : 'profile', activeRole: curRole });
+      }
+    };
+    this.onResize = () => {
+      const m = window.innerWidth < 880;
+      if (m !== this.state.isMobile) this.setState({ isMobile: m });
+    };
+    this.onParallax = () => {
+      if (this._pRaf) return;
+      this._pRaf = requestAnimationFrame(() => {
+        this._pRaf = null;
+        document.querySelectorAll('[data-parallax]').forEach(el => {
+          const speed = parseFloat(el.dataset.parallax) || 0;
+          const r = el.getBoundingClientRect();
+          const center = r.top + r.height / 2 - window.innerHeight / 2;
+          el.style.transform = 'translateY(' + (center * speed).toFixed(1) + 'px)';
+        });
+      });
+    };
+    window.addEventListener('scroll', this.onParallax, { passive: true });
+    this.onParallax();
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize);
+    this.onScroll();
+    // Probe one Drive thumbnail; use Drive images only if the folder is publicly shared
+    const probe = new Image();
+    probe.onload = () => this.setState({ driveOk: true, probed: true });
+    probe.onerror = () => this.setState({ driveOk: false, probed: true });
+    probe.src = 'https://drive.google.com/thumbnail?id=' + this.driveIds[1] + '&sz=w120';
+    const probe2 = new Image();
+    probe2.onload = () => this.setState({ screensOk: true });
+    probe2.onerror = () => this.setState({ screensOk: false });
+    probe2.src = 'https://drive.google.com/thumbnail?id=' + this.screenIds['PARKOUR-01'] + '&sz=w120';
+    this.aiProjectsData.forEach(p => {
+      if (!p.logo) return;
+      const im = new Image();
+      im.onload = () => this.setState(st => ({ logoOk: { ...(st.logoOk || {}), [p.id]: true } }));
+      im.src = p.logo;
+    });
+    this.aiProjectsData.forEach(p => (p.shots || []).forEach(s => {
+      if (!/^https?:/.test(s.src || '')) return;
+      const im2 = new Image();
+      im2.onload = () => this.setState(st => ({ imgOk: { ...(st.imgOk || {}), [s.src]: true } }));
+      im2.src = s.src;
+    }));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  imgSrc(k) {
+    // k = 0..31 global chapter index; Drive files 2..33 (index 1..32) per the folder mapping
+    const useDrive = (this.props.imageSource ?? 'drive') === 'drive' && this.state.driveOk;
+    if (useDrive) return 'https://drive.google.com/thumbnail?id=' + this.driveIds[k + 1] + '&sz=w1200';
+    return 'assets/img-' + String(k + 1).padStart(2, '0') + '.jpg';
+  }
+
+  renderVals() {
+    const accent = this.props.accentColor ?? '#8FB0D8';
+    const brass = this.props.brassColor ?? '#D99A45';
+    const so = k => !!(this.state.secOpen && this.state.secOpen[k]);
+    const sb = k => so(k) ? 'Minimize −' : 'Expand →';
+    const st = k => () => this.setState(x => ({ secOpen: { ...(x.secOpen || {}), [k]: !(x.secOpen && x.secOpen[k]) } }));
+
+    const navGo = (n) => (e) => {
+      if (e && e.preventDefault) e.preventDefault();
+      const need = { aboutnic: ['nic'], about: ['nic','about'], value: ['nic','value'], ai: ['nic','ai'], experience: ['nic','experience'], process: ['nic','ai','proc'], ecosystem: ['nic','ai','eco'], products: ['nic','ai','products'] }[n.id] || (n.id.indexOf('role-') === 0 ? ['nic','experience'] : []);
+      this.setState(x => {
+        const secOpen = { ...(x.secOpen || {}) };
+        need.forEach(k => { secOpen[k] = true; });
+        const navOpen = { ...(x.navOpen || { aboutnic: true, ai: true }) };
+        if (need.includes('nic')) navOpen.aboutnic = true;
+        if (need.includes('ai')) navOpen.ai = true;
+        return { secOpen, navOpen };
+      }, () => {
+        setTimeout(() => {
+          const el = document.getElementById(n.id);
+          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+        }, 60);
+      });
+    };
+    const navOpen = this.state.navOpen || { aboutnic: true, ai: true };
+    const parentOf = { about: 'aboutnic', value: 'aboutnic', ai: 'aboutnic', experience: 'aboutnic', process: 'ai', ecosystem: 'ai', products: 'ai' };
+    this.navMeta.forEach(n => { if (n.id.indexOf('role-') === 0) parentOf[n.id] = 'experience'; });
+    const hasKids = { aboutnic: true, ai: true, experience: true };
+    const navToggle = (id) => (e) => {
+      if (e && e.stopPropagation) e.stopPropagation(); if (e && e.preventDefault) e.preventDefault();
+      const secKey = { aboutnic: 'nic', ai: 'ai', experience: 'experience' }[id];
+      this.setState(x => {
+        const cur = x.navOpen || { aboutnic: true, ai: true };
+        const opening = !cur[id];
+        const secOpen = { ...(x.secOpen || {}) };
+        if (secKey) secOpen[secKey] = opening;
+        if ((id === 'ai' || id === 'experience') && opening) secOpen.nic = true;
+        return { navOpen: { ...cur, [id]: opening }, secOpen };
+      });
+    };
+    const navVisible = (n) => { let p = parentOf[n.id]; while (p) { if (!navOpen[p]) return false; p = parentOf[p]; } return true; };
+    const navItems = this.navMeta.filter(navVisible).map(n => ({
+      href: '#' + n.id,
+      label: n.id.indexOf('role-') === 0 ? n.label.split(' · ')[0] : n.label,
+      sub: n.id.indexOf('role-') === 0 ? (n.label.split(' · ')[1] || '') : '',
+      go: navGo(n),
+      indent: (n.depth || 0) * 0.9 + 'rem',
+      glyph: n.depth ? '└' : '',
+      pmOrGlyph: hasKids[n.id] ? (navOpen[n.id] ? '−' : '+') : (n.depth ? '└' : ''),
+      pmToggle: hasKids[n.id] ? navToggle(n.id) : undefined,
+      color: this.state.active === n.id ? '#EFEDE6' : '#9AA0A8',
+      borderColor: this.state.active === n.id ? '#D99A45' : 'transparent'
+    }));
+
+    const roleNav = this.rolesData.map(r => ({
+      href: '#role-' + r.id, label: r.company,
+      color: this.state.activeRole === 'role-' + r.id ? '#EFEDE6' : '#9AA0A8',
+      borderColor: this.state.activeRole === 'role-' + r.id ? brass : 'transparent'
+    }));
+
+    const roles = this.rolesData.map((r, ri) => {
+      const chIdx = this.state.ch[r.id] ?? 0;
+      const ch = r.chapters[chIdx];
+      const gk = ri * 4 + chIdx;
+      const isOpen = !!this.state.open[r.id];
+      return {
+        ...r,
+        anchor: 'role-' + r.id,
+        isOpen,
+        aboutOpen: this.state.aboutId === r.id,
+        onAboutEnter: () => { if (this.state.aboutId !== r.id) this.setState({ aboutId: r.id }); },
+        onAboutLeave: () => { if (this.state.aboutId === r.id) this.setState({ aboutId: '' }); },
+        aboutText: r.about ?? (r.context + ' (Draft — add final About copy in the action-items sheet.)'),
+        aboutImg: r.aboutImg ? ('https://drive.google.com/thumbnail?id=' + r.aboutImg + '&sz=w600') : '',
+        toggleLabel: isOpen ? '– Collapse' : '+ Expand story',
+        onToggle: () => this.setState(s => ({ open: { ...s.open, [r.id]: !s.open[r.id] } })),
+        tabs: r.chapters.map((c, i) => ({
+          num: '0' + (i + 1), label: c.k,
+          color: i === chIdx ? '#EFEDE6' : '#9AA0A8',
+          borderColor: i === chIdx ? brass : 'transparent',
+          onClick: () => this.setState(s => ({ ch: { ...s.ch, [r.id]: i } }))
+        })),
+        chText: ch.text,
+        chHasHi: !!ch.hi,
+        chHi: ch.hi || '',
+        chImg: (ch.img && /[\/.]/.test(ch.img)) ? ch.img : ((ch.img && this.state.driveOk) ? ('https://drive.google.com/thumbnail?id=' + ch.img + '&sz=w1200') : this.imgSrc(gk)),
+        chAlt: r.company + ' — ' + ch.k,
+        chCap: 'Ch. 0' + (chIdx + 1) + ' — ' + ch.cap,
+        showClients: isOpen && !!(r.clients && r.clients.length),
+        showPL: isOpen && !!(r.plStory && r.plStory.length),
+        plStory: r.plStory || [],
+        plCats: r.plCats || []
+      };
+    });
+
+    let activeComp = { name: '', story: '' };
+    const compGroups = this.compGroupsData.map(g => ({
+      label: g.label,
+      items: g.items.map(i => {
+        const on = this.state.comp === i.name;
+        if (on) activeComp = i;
+        return {
+          name: i.name,
+          onHover: () => { if (this.state.comp !== i.name) this.setState({ comp: i.name }); },
+          border: on ? 'rgba(217,154,69,0.7)' : 'rgba(239,237,230,0.18)',
+          leftBorder: on ? '#D99A45' : 'rgba(239,237,230,0.28)',
+          color: on ? '#FFFFFF' : '#DDD9CE'
+        };
+      })
+    }));
+
+    return {
+      accent, brass,
+      ready: this.state.probed,
+      isDesktop: !this.state.isMobile,
+      mainOffset: this.state.isMobile ? '0px' : '236px',
+      isMobile: this.state.isMobile,
+      showAiNative: this.props.showAiNative ?? true,
+      navItems, roleNav, roles,
+      highlights: this.highlightsData,
+      tracks: this.tracksData,
+      secBuildOpen: !!this.state.secOpen.build,
+      secBuildBtn: this.state.secOpen.build ? '– Minimize' : '+ Expand →',
+      secBuildPad: this.state.secOpen.build ? '4.5rem' : '3rem',
+      secBuildToggle: () => this.setState(s => ({ secOpen: { ...s.secOpen, build: !s.secOpen.build } })),
+      plFlow: this.plFlowData,
+      plWall: this.plWallData,
+      showPLSection: true,
+      plStory: (this.rolesData.find(r => r.id === 'campingworld') || {}).plStory || [],
+      plCats: (this.rolesData.find(r => r.id === 'campingworld') || {}).plCats || [],
+      compGroups, compTitle: activeComp.name, compStory: activeComp.story,
+      aiFlow: this.aiFlowData.map((f, i) => ({
+        num: String(i + 1).padStart(2, '0'), name: f.name, desc: f.desc,
+        arrowColor: i === this.aiFlowData.length - 1 ? 'transparent' : 'rgba(217,154,69,0.6)'
+      })),
+      secNicOpen: so('nic'), secNicBtn: sb('nic'), secNicToggle: st('nic'), secNicPad: so('nic') ? '2rem' : '1rem',
+      secValueOpen: so('value'), secValueBtn: sb('value'), secValueToggle: st('value'), secValuePad: so('value') ? '5.5rem' : '1.8rem',
+      secAboutPad: so('about') ? '2.6rem' : '1.8rem', secAiPad: so('ai') ? '5.5rem' : '1.8rem', secExpPad: so('experience') ? '5.5rem' : '1.8rem', secExpPadB: so('experience') ? '0' : '1.8rem',
+      secExpOpen: so('experience'), secExpBtn: sb('experience'), secExpToggle: st('experience'),
+      secAboutOpen: so('about'), secAboutBtn: sb('about'), secAboutToggle: st('about'),
+      secProcOpen: so('proc'), secProcBtn: sb('proc'), secProcToggle: st('proc'),
+      secEcoOpen: so('eco'), secEcoBtn: sb('eco'), secEcoToggle: st('eco'),
+      secProdOpen: so('products'), secProdBtn: sb('products'), secProdToggle: st('products'),
+      secAiOpen: so('ai'), secAiBtn: sb('ai'), secAiToggle: st('ai'),
+      aiProjects: this.aiProjectsData.map(p => {
+        const si = this.state.shot[p.id] ?? (p.defaultShot ?? 0);
+        const shots = p.shots || [];
+        const cur = shots[si] || {};
+        const ac = p.accent || '#D99A45';
+        return {
+          ...p,
+          hasShots: shots.length > 0,
+          isSystem: !!p.system,
+          domains: p.domains || [],
+          hasLogo: !!p.logo && !!this.state.logoOk?.[p.id], noLogo: !(p.logo && this.state.logoOk?.[p.id]), logoSrc: p.logo || '',
+          panelBg: p.panelBg || '#262B31', panelBorder: p.panelBorder || 'rgba(239,237,230,0.14)',
+          consoleBg: p.consoleBg || '#1C2024', roleColor: p.roleColor || '#8FB0D8',
+          statusColor: p.statusColor || ac, statusBorder: p.statusBorder || 'rgba(217,154,69,0.45)',
+          bulletColor: p.bulletColor || 'rgba(217,154,69,0.6)', labelColor: p.labelColor || ac,
+          bodyColor: p.bodyColor || '#D6D1C6', mutedColor: p.mutedColor || '#9AA0A8',
+          headColor: p.headColor || '#EFEDE6', flowBorder: p.flowBorder || (ac + '47'),
+          flowStepBg: p.flowStepBg || '#101C27',
+          hasFlow: !!(p.flow && p.flow.length), flowSteps: (p.flow || []).map((f, i, arr) => {
+            const cols = p.flowCols || ['#18BEF0', '#EC1380', '#1CDC82', '#8FD4E8'];
+            const col = cols[i % cols.length];
+            return { name: f.name || f, desc: f.desc || '', col, borderCol: col + '59', hasArrow: i < arr.length - 1 };
+          }),
+          hasMark: !!p.mark, markSrc: p.mark || '',
+          hasBulletsHead: !!p.bulletsHead, bulletsHead: p.bulletsHead || '',
+          logoBg: p.logoBg || 'transparent', logoPad: p.logoBg ? '0.5rem 0.8rem' : '0',
+          shotSrc: this.aiSrc(cur.src || ''), shotAlt: cur.alt || '',
+          shotOk: !/^https?:/.test(cur.src || '') || !!this.state.imgOk?.[cur.src],
+          shotPending: /^https?:/.test(cur.src || '') && !this.state.imgOk?.[cur.src],
+          shots: shots.map((s, i) => ({
+            lab: s.lab,
+            color: i === si ? (p.tabActiveText || '#22262B') : (p.tabIdleColor || '#9AA0A8'),
+            bg: i === si ? ac : 'transparent',
+            border: i === si ? ac : (p.tabIdleBorder || 'rgba(239,237,230,0.18)'),
+            onClick: () => this.setState(st => ({ shot: { ...st.shot, [p.id]: i } }))
+          }))
+        };
+      }),
+      aiMinis: this.aiMinisData.map(m => {
+        const isOpen = !!this.state.mini[m.id];
+        return {
+          ...m, isOpen,
+          img: this.aiSrc(m.img),
+          hasImg: !!m.img,
+          border: isOpen ? 'rgba(217,154,69,0.45)' : 'rgba(239,237,230,0.14)',
+          toggleIcon: isOpen ? '–' : '+',
+          onToggle: () => this.setState(st => ({ mini: { ...st.mini, [m.id]: !st.mini[m.id] } }))
+        };
+      }),
+      aiStory: this.aiStoryData.map((ch, i) => ({ num: '0' + (i + 1), title: ch.title, lead: ch.lead, tools: ch.tools.map(t => ({ ...t, logoCss: "url('" + t.logo + "')" })) }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>
