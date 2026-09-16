@@ -241,3 +241,22 @@ main>section{position:relative;isolation:isolate}
 #about .section-art img{height:115%;top:-5%;object-fit:cover;object-position:center center;opacity:.23;mask-image:none}
 #about .section-art:after{background:linear-gradient(90deg,#eee9dfd9 0%,#eee9dfb8 62%,#eee9df70 100%)}
 @media(max-width:760px){#about .section-art img{height:100%;top:0;opacity:.17;object-position:62% center}#about .section-art:after{background:#eee9dfb0}}
+/* My next chapter: one aligned content column and a quieter reading surface. */
+#opportunity{padding:56px 6% 64px}
+#opportunity>.shell,#opportunity>.section-bar{width:100%;max-width:1100px;margin-left:auto;margin-right:auto}
+#opportunity>.section-bar{padding:0 0 16px;margin-bottom:28px}
+#opportunity h2{margin-bottom:28px}
+#opportunity p{margin:0 0 20px}
+#opportunity p:last-child{margin-bottom:0}
+#opportunity.is-minimized{padding-top:24px;padding-bottom:12px}
+#opportunity.is-minimized>.section-bar{margin-bottom:0}
+#opportunity .section-art img{height:115%;top:-5%;opacity:.48;object-position:center}
+#opportunity .section-art:after{background:linear-gradient(90deg,#182731db 0%,#182731b3 58%,#18273140 100%)}
+@media(max-width:760px){#opportunity{padding:40px 6% 44px}#opportunity h2{margin-bottom:24px}#opportunity>.section-bar{margin-bottom:24px}#opportunity .section-art img{opacity:.3;object-position:65% center}}
+
+/* Shared section rail: labels, headings and content align with About. */
+main>section:is(#about,#opportunity,#experience,#build,#value,#product-journey,#ai,#contact,.introduction){padding-left:max(6%,calc((100% - 1100px)/2));padding-right:max(6%,calc((100% - 1100px)/2))}
+main>section.shell:not(.hero){width:100%}
+main>section:not(.hero)>.shell,main>section:not(.hero)>.section-bar{width:100%;margin-left:0;margin-right:0}
+main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
+#opportunity .section-art img{height:115%;top:-5%;mask-image:none}
