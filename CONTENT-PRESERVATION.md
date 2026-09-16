@@ -15,3 +15,6 @@ The current operator request supersedes the earlier duplicate-portrait and chron
 
 ## Job card image placement
 Preserve the original four labeled story tabs in every job card. Each tab pairs its own relevant image(s) with its complete passage; supporting client examples pair their own images with their text. Do not replace these with numbered text columns or detached photo galleries. Keep all 32 career passages and 12 client examples. Tabs must work with mouse, touch and keyboard.
+
+## Section naming and availability
+Use the operator-specified section name consistently in navigation, the visible section label, and minimize/expand controls. Editorial headlines can differ. My next chapter is the canonical name for Section 3. Do not automatically repeat the location, work arrangement, and travel line in each section; Section 3 omits it.
