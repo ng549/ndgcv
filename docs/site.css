@@ -295,3 +295,6 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #experience .career-route nav a:before{left:0;top:5px;width:5px;height:5px}
 #experience .career-route nav a .route-role{display:block;font-size:13px;line-height:1.45;color:#465761}
 @media(max-width:760px){#experience>.journey-overview{grid-template-columns:1fr;gap:28px}#experience .journey-overview>.career-route{padding-top:20px;border-top:1px solid #23313b33}#experience .journey-overview>.career-route:before{display:none}#experience .career-route nav{gap:18px}}
+
+/* Bring the journey sidebar slightly closer to the narrative. */
+@media(min-width:761px){#experience>.journey-overview{grid-template-columns:minmax(0,1fr) 284px}}
