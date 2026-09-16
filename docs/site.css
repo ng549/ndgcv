@@ -260,3 +260,12 @@ main>section.shell:not(.hero){width:100%}
 main>section:not(.hero)>.shell,main>section:not(.hero)>.section-bar{width:100%;margin-left:0;margin-right:0}
 main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #opportunity .section-art img{height:115%;top:-5%;mask-image:none}
+
+/* Approved My journey introduction: readable paragraphs and compact transitions. */
+#experience>.journey-introduction{max-width:880px;margin-bottom:28px}
+#experience>.journey-introduction .eyebrow{font-size:12px;letter-spacing:.12em;margin-bottom:18px}
+#experience>.journey-introduction h2{font-size:clamp(32px,3.4vw,48px);line-height:1.16;margin-bottom:28px;text-wrap:balance}
+#experience>.journey-introduction p{font-size:18px;line-height:1.75;max-width:72ch;margin:0 0 24px}
+#experience>.journey-introduction p:last-child{margin-bottom:0}
+#experience>.journey-introduction+.career-route{margin-top:28px;margin-bottom:32px}
+@media(max-width:760px){#experience>.journey-introduction h2{font-size:32px;margin-bottom:24px}#experience>.journey-introduction p{font-size:17px;line-height:1.7;margin-bottom:22px}}
