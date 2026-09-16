@@ -284,3 +284,14 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #experience .section-art img{height:1350px;opacity:.34;object-position:center top;mask-image:linear-gradient(#000 0%,#000 72%,transparent 100%)}
 #experience .section-art:after{background:linear-gradient(90deg,#eee9dfd9 0%,#eee9dfb3 65%,#eee9df66 100%)}
 @media(max-width:760px){#experience>.journey-overview{grid-template-columns:1fr;gap:28px;margin-bottom:28px}#experience .journey-overview>.career-route{padding:20px 0 0;border-left:0;border-top:1px solid #23313b33}#experience .journey-introduction h2{font-size:32px}#experience .section-art img{height:1600px;opacity:.2;object-position:58% top}}
+
+/* Career sidebar spans the introduction, with its divider centered in the gap. */
+#experience>.journey-overview{--journey-gap:clamp(48px,5vw,72px);grid-template-columns:minmax(0,1fr) 260px;gap:var(--journey-gap);align-items:stretch}
+#experience .journey-overview>.career-route{position:relative;display:flex;flex-direction:column;padding:0;border:0}
+#experience .journey-overview>.career-route:before{content:"";position:absolute;top:0;bottom:0;left:calc(var(--journey-gap) / -2);width:1px;background:#23313b33}
+#experience .career-route>.eyebrow{font-size:12px;margin:0 0 20px}
+#experience .career-route nav{flex:1;justify-content:space-between;gap:15px}
+#experience .career-route nav a{border:0;padding:0 0 0 14px;gap:3px}
+#experience .career-route nav a:before{left:0;top:5px;width:5px;height:5px}
+#experience .career-route nav a .route-role{display:block;font-size:13px;line-height:1.45;color:#465761}
+@media(max-width:760px){#experience>.journey-overview{grid-template-columns:1fr;gap:28px}#experience .journey-overview>.career-route{padding-top:20px;border-top:1px solid #23313b33}#experience .journey-overview>.career-route:before{display:none}#experience .career-route nav{gap:18px}}
