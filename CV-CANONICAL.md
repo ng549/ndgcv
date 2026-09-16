@@ -165,3 +165,6 @@ These standing rules supersede the earlier More Margin illustration placement an
 - These company identity, contrast and narrative-order rules apply to all subsequent sections. Keep image-source/style, four-tab, eyebrow and alignment rules already recorded.
 
 Implementation status: these latest corrections are saved but NOT yet implemented or published. The user requested a new-chat handoff because this conversation is lagging. The next chat should finish these authorized More Margin corrections first, verify live, and stop before Fun Town RV. Do not repeat the prior claim that all About presentation was verified: the description contrast and company image are known defects.
+
+## More Margin Co. date label — latest correction
+Display the ongoing role as **2025–Present** everywhere in the CV, including the My journey timeline and More Margin Co. card. This updates the open-ended role date only; the separate DJI engagement dates remain 2025–2026. Requested and authorized by Nicolas. Earlier pending company About/image-order corrections remain pending.
