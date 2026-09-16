@@ -262,10 +262,25 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #opportunity .section-art img{height:115%;top:-5%;mask-image:none}
 
 /* Approved My journey introduction: readable paragraphs and compact transitions. */
-#experience>.journey-introduction{max-width:880px;margin-bottom:28px}
-#experience>.journey-introduction .eyebrow{font-size:12px;letter-spacing:.12em;margin-bottom:18px}
-#experience>.journey-introduction h2{font-size:clamp(32px,3.4vw,48px);line-height:1.16;margin-bottom:28px;text-wrap:balance}
-#experience>.journey-introduction p{font-size:18px;line-height:1.75;max-width:72ch;margin:0 0 24px}
-#experience>.journey-introduction p:last-child{margin-bottom:0}
-#experience>.journey-introduction+.career-route{margin-top:28px;margin-bottom:32px}
-@media(max-width:760px){#experience>.journey-introduction h2{font-size:32px;margin-bottom:24px}#experience>.journey-introduction p{font-size:17px;line-height:1.7;margin-bottom:22px}}
+#experience .journey-introduction{max-width:880px;margin-bottom:28px}
+#experience .journey-introduction .eyebrow{font-size:12px;letter-spacing:.12em;margin-bottom:18px}
+#experience .journey-introduction h2{font-size:clamp(32px,3.4vw,48px);line-height:1.16;margin-bottom:28px;text-wrap:balance}
+#experience .journey-introduction p{font-size:18px;line-height:1.75;max-width:72ch;margin:0 0 24px}
+#experience .journey-introduction p:last-child{margin-bottom:0}
+#experience .journey-introduction+.career-route{margin-top:28px;margin-bottom:32px}
+@media(max-width:760px){#experience .journey-introduction h2{font-size:32px;margin-bottom:24px}#experience .journey-introduction p{font-size:17px;line-height:1.7;margin-bottom:22px}}
+
+/* My journey: company navigation beside the biography, in reading order. */
+#experience>.journey-overview{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:clamp(32px,4vw,60px);align-items:start;margin-bottom:36px}
+#experience .journey-introduction{margin-bottom:0;max-width:none}
+#experience .journey-introduction h2{font-size:clamp(30px,3vw,44px)}
+#experience .journey-overview>.career-route{margin:0;padding:0 0 0 24px;border:0;border-left:1px solid #23313b33}
+#experience .career-route>.eyebrow{font-size:11px;line-height:1.6;margin-bottom:14px}
+#experience .career-route nav{display:flex;flex-direction:column;overflow:visible;padding:0;gap:0}
+#experience .career-route nav a{min-width:0;max-width:none;width:100%;padding:11px 0 12px 16px;gap:3px;border-left:1px solid #52667666}
+#experience .career-route nav a:before{top:19px;width:7px;height:7px;left:-4px;background:#526676;box-shadow:none}
+#experience .career-route nav small{font-size:12px;line-height:1.4;color:#526676}
+#experience .career-route nav strong{font-size:14px;line-height:1.35;color:#23313b}
+#experience .section-art img{height:1350px;opacity:.34;object-position:center top;mask-image:linear-gradient(#000 0%,#000 72%,transparent 100%)}
+#experience .section-art:after{background:linear-gradient(90deg,#eee9dfd9 0%,#eee9dfb3 65%,#eee9df66 100%)}
+@media(max-width:760px){#experience>.journey-overview{grid-template-columns:1fr;gap:28px;margin-bottom:28px}#experience .journey-overview>.career-route{padding:20px 0 0;border-left:0;border-top:1px solid #23313b33}#experience .journey-introduction h2{font-size:32px}#experience .section-art img{height:1600px;opacity:.2;object-position:58% top}}

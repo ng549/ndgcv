@@ -16,7 +16,7 @@ export function editorial(html,d,e,img){
  html=html.replace(/<section class="results-section shell"[\s\S]*?(?=<section class="brand-story")/,result+'\n');
  const bg={about:'about-biography',opportunity:'opportunity',experience:'experience',build:'build',value:'value','product-journey':'product',ai:'systems',contact:'contact'};
  for(const [id,name] of Object.entries(bg)){
-  html=html.replace(new RegExp(`(<section[^>]*id="${id}"[^>]*>)`),`$1<div class="section-art" aria-hidden="true"><img src="illustrations/${name}${['about','opportunity'].includes(id)?'-v4':'-v3'}.webp" alt="" loading="lazy" data-parallax="0.16"></div>`);
+  html=html.replace(new RegExp(`(<section[^>]*id="${id}"[^>]*>)`),`$1<div class="section-art" aria-hidden="true"><img src="illustrations/${id==='experience'?'My-journey':name+(['about','opportunity'].includes(id)?'-v4':'-v3')}.webp" alt="" loading="lazy" data-parallax="0.16"></div>`);
  }
 
  // Keep each photograph in one editorial position; full-size links remain available.

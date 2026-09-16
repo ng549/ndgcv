@@ -18,3 +18,7 @@ Preserve the original four labeled story tabs in every job card. Each tab pairs 
 
 ## Section naming and availability
 Use the operator-specified section name consistently in navigation, the visible section label, and minimize/expand controls. Editorial headlines can differ. My next chapter is the canonical name for Section 3. Do not automatically repeat the location, work arrangement, and travel line in each section; Section 3 omits it.
+
+## Section imagery and career navigation — September 16
+For every section as it is revised, create a cohesive background illustration from its substantive content in the painterly skate-shop style of illustrations/43.webp. Keep layouts simple and informative; no faces, repeated photographs, image footers, or detached galleries. Use relevant source imagery and notes from NDG CV → Current → Jobs when revising the individual job cards. Resize images to their placements. Save section-named image masters in NDG CV → Current → Photos and Imagery (folder 1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S). Keep section names aligned with the preceding section and include an eyebrow.
+My journey uses My journey.png (Drive file 1p-nxho7SSmDKbDfl6McrFCczZeIk6mjs) and illustrations/My-journey.webp on the site. The eight career links form a vertical column to the right of the introduction on desktop and stack below it on narrow screens. Remove the separate COURAGE. b overlap footnote; preserve the ownership overlap in the approved narrative. Job card content is unchanged.
