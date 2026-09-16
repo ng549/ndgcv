@@ -1,0 +1,14 @@
+{
+  "name": "nicolas-goureau-cv",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs && node scripts/package.mjs",
+    "deploy:preview": "npm run build && wrangler deploy --config wrangler.preview.jsonc",
+    "test": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.132.0"
+  }
+}
