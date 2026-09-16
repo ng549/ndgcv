@@ -232,3 +232,7 @@ main>section{position:relative;isolation:isolate}
 @media(min-width:1001px){.hero-content{padding-top:85px;width:58%}.hero{height:auto;min-height:780px}.hero-content{padding-bottom:50px}}
 @media(min-width:761px) and (max-width:1000px){.hero{height:auto;min-height:850px}.hero-content{padding-bottom:45px}}
 @media(max-width:760px){.hero{height:auto;min-height:0}.hero-content{padding-top:125px;padding-bottom:410px}.hero-descriptor{font-size:14px;max-width:30ch}.hero h1{font-size:clamp(32px,7.3vw,48px)}.hero-lead{font-size:17px;line-height:1.6;max-width:54ch}.portrait-wrap{bottom:0;height:380px}.hero .availability{margin-bottom:0}}
+
+/* Restore the original skate-shop hero and bring the portrait toward the copy. */
+@media(min-width:1001px){.hero .portrait-wrap{right:5%}}
+.hero-background img{object-position:center center}

@@ -18,7 +18,7 @@ export function editorial(html,d,e,img){
  for(const [id,name] of Object.entries(bg)){
   html=html.replace(new RegExp(`(<section[^>]*id="${id}"[^>]*>)`),`$1<div class="section-art" aria-hidden="true"><img src="illustrations/${name}-v3.webp" alt="" loading="lazy" data-parallax="0.16"></div>`);
  }
- html=html.replace('src="illustrations/43.webp"','src="illustrations/hero-v3.webp"');
+
  // Keep each photograph in one editorial position; full-size links remain available.
  const used=new Set();
  html=html.replace(/<img\b[^>]*>/g,tag=>{const src=tag.match(/src="([^"]+)"/)?.[1];if(!src||/tool-logos/.test(src))return tag;const key=fs.existsSync('docs/'+src)?createHash('sha256').update(fs.readFileSync('docs/'+src)).digest('hex'):src;if(used.has(key))return '';used.add(key);return tag.replace('<img ', '<img title="'+(tag.match(/alt="([^"]*)"/)?.[1]||'')+'" ');});
