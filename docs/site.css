@@ -308,3 +308,13 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 
 /* A shorter divider frames the main content without reaching the eyebrow. */
 @media(min-width:761px){#experience .journey-overview>.career-route:before{top:48px;bottom:24px;left:calc(var(--journey-gap) / -2 + .75px)}}
+
+/* More Margin Co. — approved source-based story presentation. */
+#role-moremargin .role-body>.eyebrow{display:block;margin:22px 0 12px}
+#role-moremargin .career-headline{max-width:27ch;margin:0 0 24px}
+#role-moremargin .career-chapter{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start;gap:32px;padding-bottom:8px}
+#role-moremargin .chapter-media{position:sticky;top:32px}
+#role-moremargin .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-moremargin .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:65ch}
+#role-moremargin .chapter-copy p:last-child{margin-bottom:0}
+@media(max-width:760px){#role-moremargin .career-chapter{grid-template-columns:1fr;gap:22px}#role-moremargin .chapter-media{position:static}#role-moremargin .chapter-copy p{font-size:17px}#role-moremargin .career-headline{font-size:28px}#role-moremargin .career-tabs{gap:6px}#role-moremargin .career-tabs button{padding:9px 10px}}
