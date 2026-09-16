@@ -4,7 +4,7 @@ function openHash(){const id=decodeURIComponent(location.hash.slice(1));if(!id)r
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');const target=document.getElementById(a.hash.slice(1));if(target?.tagName==='DETAILS')target.open=true}));
 addEventListener('hashchange',openHash);if(location.hash)openHash();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false')}});
-document.querySelectorAll('[data-gallery]').forEach(g=>g.querySelectorAll('[data-shot]').forEach(b=>b.addEventListener('click',()=>{const img=g.querySelector('img');img.src=b.dataset.shot;img.alt=b.dataset.alt;g.querySelector('a').href=b.dataset.shot;g.querySelector('figcaption').textContent=b.dataset.alt;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))})));
+document.querySelectorAll('[data-gallery]').forEach(g=>g.querySelectorAll('[data-shot]').forEach(b=>b.addEventListener('click',()=>{const img=g.querySelector('img');img.src=b.dataset.shot;img.alt=b.dataset.alt;g.querySelector('a').href=b.dataset.shot;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))})));
 const motion=matchMedia('(prefers-reduced-motion: reduce)'),small=matchMedia('(max-width: 760px)');let pending=false;
 function paint(){pending=false;document.querySelectorAll('[data-parallax]').forEach(el=>{if(motion.matches||small.matches){el.style.transform='';return}const rect=el.closest('section').getBoundingClientRect();if(rect.bottom>0&&rect.top<innerHeight){const y=el.closest('section').id==='profile'?-rect.top:innerHeight/2-(rect.top+rect.height/2);el.style.transform=`translate3d(0,${Math.max(-160,Math.min(160,y*Number(el.dataset.parallax)))}px,0)`}})}
 addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(paint)}},{passive:true});motion.addEventListener('change',paint);small.addEventListener('change',paint);
@@ -29,7 +29,7 @@ capabilityButtons.forEach(button => {
 if (capabilityButtons.length) selectCapability(capabilityButtons[0]);
 
 const sections = {
-  about: 'About me', build: 'The work', value: 'Results',
+  about: 'About me', opportunity: 'My next chapter', build: 'The work', value: 'Results',
   'product-journey': 'From idea to sale', experience: 'Experience',
   ai: 'Systems, tools & AI', contact: 'Let’s talk'
 };
@@ -103,3 +103,10 @@ const companyAbout=[...document.querySelectorAll('.company-about')];
 function setAbout(wrap,open){wrap.querySelector('button').setAttribute('aria-expanded',String(open));wrap.querySelector('.company-card').hidden=!open}
 companyAbout.forEach(wrap=>{const button=wrap.querySelector('button');wrap.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')setAbout(wrap,true)});wrap.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'&&!wrap.contains(document.activeElement))setAbout(wrap,false)});button.addEventListener('focus',()=>setAbout(wrap,true));wrap.addEventListener('focusout',event=>{if(!wrap.contains(event.relatedTarget))setAbout(wrap,false)});button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();setAbout(wrap,true)});wrap.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();setAbout(wrap,false)}})});
 document.addEventListener('click',event=>companyAbout.forEach(wrap=>{if(!wrap.contains(event.target))setAbout(wrap,false)}));
+
+// Tool explanations use the same hover, focus and tap contract as company About.
+const toolItems=[...document.querySelectorAll('.tool-item')];
+function closeTools(except){toolItems.forEach(item=>{if(item===except)return;item.querySelector('button').setAttribute('aria-expanded','false');item.querySelector('.tool-tooltip').hidden=true})}
+toolItems.forEach(item=>{const button=item.querySelector('button'),tip=item.querySelector('.tool-tooltip');const show=()=>{closeTools(item);button.setAttribute('aria-expanded','true');tip.hidden=false};item.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')show()});item.addEventListener('pointerleave',()=>closeTools());button.addEventListener('focus',show);button.addEventListener('click',()=>{show()});item.addEventListener('focusout',e=>{if(!item.contains(e.relatedTarget))closeTools()})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTools()});
+document.addEventListener('click',e=>{if(!e.target.closest('.tool-item'))closeTools()});

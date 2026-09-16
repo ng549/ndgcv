@@ -9,3 +9,6 @@ All eight roles and 32 career passages remain, now presented chronologically wit
 The sourcing journey is a connected seven-step diagram with hover/focus/tap explanations, handoffs, four sales channels and a feedback return. Each company has a separate About control with an image and description. Parallax is unchanged from the working revision.
 
 Validation: build/source checks pass; desktop sourcing controls and visual layout checked. New company assets were recovered from the original About image IDs for KBP and The Sharper Image. No reference-contact data is published.
+
+## September 16 review corrections
+The current operator request supersedes the earlier duplicate-portrait and chronological-order choices above. Keep the portrait only in the hero; career cards run newest to oldest. Citizenship appears once in the personal narrative. Preserve the original 23 capability descriptions. Opportunity positioning follows About Me. Product sourcing and systems use the same detailed playbook, with method, handoff and organizational value. Restore supplied imagery without repeated photographs or image footers; company context lives in the About popover only. Each tool explains why Nicolas uses it on hover, focus and tap. New background illustrations are faceless and use more realistic lighting and material detail.
