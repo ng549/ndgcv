@@ -207,7 +207,7 @@ main>section{position:relative;isolation:isolate}
 #about .about-heading h2{font-size:clamp(32px,3.4vw,48px);line-height:1.16;margin:0;text-wrap:balance}
 #about .about-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:clamp(36px,5vw,72px);align-items:start}
 #about .about-narrative p{font-size:18px;line-height:1.75;margin:0 0 24px;max-width:64ch}
-#about .about-narrative p:first-child{font-size:20px;line-height:1.65;color:#23313b}
+#about .about-narrative p:first-child{font-size:18px;line-height:1.75;color:#23313b}
 #about .about-narrative p:last-child{margin-bottom:0}
 #about .personal-notes{display:grid;grid-template-columns:1fr;gap:0;margin:0;padding:4px 0 4px 28px;border-top:0;border-left:1px solid #23313b26}
 #about .personal-notes>div{padding:22px 0;border-top:1px solid #23313b20}
@@ -220,7 +220,7 @@ main>section{position:relative;isolation:isolate}
 #about .section-art img{opacity:.09;object-position:right top}
 #about .section-art:after{background:linear-gradient(90deg,#eee9dfeb 0%,#eee9dfb8 60%,#eee9df66 100%)}
 @media(max-width:1000px){#about .about-layout{grid-template-columns:minmax(0,1fr) 250px;gap:32px}#about .personal-notes{padding-left:22px}}
-@media(max-width:760px){#about>.section-bar{margin-bottom:28px}#about .about-heading{margin-bottom:28px}#about .about-heading h2{font-size:34px}#about .about-layout{grid-template-columns:1fr;gap:32px}#about .about-narrative p{font-size:17px;line-height:1.7;margin-bottom:22px}#about .about-narrative p:first-child{font-size:19px}#about .personal-notes{grid-template-columns:1fr 1fr;gap:24px 28px;padding:24px 0 0;border-left:0;border-top:1px solid #23313b26}#about .personal-notes>div{padding:0;border:0}#about .section-art img{opacity:.06}}
+@media(max-width:760px){#about>.section-bar{margin-bottom:28px}#about .about-heading{margin-bottom:28px}#about .about-heading h2{font-size:34px}#about .about-layout{grid-template-columns:1fr;gap:32px}#about .about-narrative p{font-size:17px;line-height:1.7;margin-bottom:22px}#about .about-narrative p:first-child{font-size:17px;line-height:1.7}#about .personal-notes{grid-template-columns:1fr 1fr;gap:24px 28px;padding:24px 0 0;border-left:0;border-top:1px solid #23313b26}#about .personal-notes>div{padding:0;border:0}#about .section-art img{opacity:.06}}
 @media(max-width:420px){#about .about-heading h2{font-size:30px}#about .personal-notes{grid-template-columns:1fr;gap:22px}#about .personal-notes>div+div{border-top:1px solid #23313b20;padding-top:20px}}
 
 /* Approved hero positioning; keep the existing portrait and visual treatment. */
@@ -236,3 +236,8 @@ main>section{position:relative;isolation:isolate}
 /* Restore the original skate-shop hero and bring the portrait toward the copy. */
 @media(min-width:1001px){.hero .portrait-wrap{right:5%}}
 .hero-background img{object-position:center center}
+
+/* Biography illustration remains visible throughout the full About narrative. */
+#about .section-art img{height:115%;top:-5%;object-fit:cover;object-position:center center;opacity:.23;mask-image:none}
+#about .section-art:after{background:linear-gradient(90deg,#eee9dfd9 0%,#eee9dfb8 62%,#eee9df70 100%)}
+@media(max-width:760px){#about .section-art img{height:100%;top:0;opacity:.17;object-position:62% center}#about .section-art:after{background:#eee9dfb0}}
