@@ -322,87 +322,111 @@
       "id": "lemonis",
       "aboutImg": "12mYTCNf-tKL0qTaXX2kBrkLO9cmuvJIY",
       "post": "POST 04",
-      "clientsIntro": "I worked with over 80 operators and companies, joining some inside the business and supporting others with specific projects. Here are a few examples:",
+      "clientsIntro": "Eight examples of the businesses, spaces, and operating changes behind the work.",
       "clients": [
         {
           "name": "Red Beard Coffee Traders",
-          "kind": "Specialty coffee",
-          "img": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s680-w680-h510-rw",
-          "did": "I worked through the retail program: fixtures, floorplans, branding, logistics, assortment, pricing, and technology. My work also included construction management and lease negotiations."
+          "kind": "Connecting the store with the operation",
+          "img": "assets/career/lemonis-redbeard-v1.webp",
+          "did": "I worked across fixtures, floorplans, branding, assortment, pricing, logistics, and technology, alongside construction and real-estate negotiations. My contribution connected the retail concept with the physical space and the practical requirements of getting it into use.",
+          "sourceImg": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s680-w680-h510-rw",
+          "adaptationSource": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm-HbSIeywgqp-PGZxgeSg38WjR0I3kcHBj71Q54NhPKNuX50fdLK7B7J_YUFDprMkB-q6LbKAg74LBmYd1hDsgWrwHcGnTHOp-_gXgYbUezqrt0IVZVC58yKlZ4m2fpU2b65Mehw=s680-w680-h510-rw"
         },
         {
           "name": "Sweet Pete's Candy",
-          "kind": "Confectionery retail · Jacksonville, FL",
-          "img": "assets/lemonis-sweetpetes.png",
-          "did": "I redesigned the store experience, including fixtures, floorplans, and branding, and worked on the logistics, assortment, pricing, and technology behind the candy shop."
+          "kind": "Bringing the retail experience together",
+          "img": "assets/career/lemonis-sweetpetes-v1.webp",
+          "did": "I worked on fixtures, floorplans, and branding alongside the assortment, pricing, logistics, and technology behind the candy shop. The assignment brought the customer-facing store and its operating requirements into the same body of work.",
+          "sourceImg": "assets/lemonis-sweetpetes.png",
+          "adaptationSource": "https://nicolasgoureau.com/assets/lemonis-sweetpetes.png"
         },
         {
           "name": "Bentley's Pet Stuff",
-          "kind": "Pet specialty chain",
-          "img": "assets/lemonis-bentleys.png",
-          "did": "I worked on fixtures, floorplans, branding, logistics, assortment, pricing, and technology. Reworking the fixture package from over $100K to under $25K per store helped the chain expand from under 20 to over 100 locations."
+          "kind": "Making expansion easier to repeat",
+          "img": "assets/career/lemonis-bentleys-v1.webp",
+          "did": "I replaced reliance on expensive custom fabrication with ready-made fixtures and a coordinated graphics package. Alongside the fixture work, I contributed to layouts, branding, assortment, pricing, logistics, and technology as the chain expanded through acquisitions and new openings.",
+          "sourceImg": "assets/lemonis-bentleys.png",
+          "adaptationSource": "https://braatzbuilding.com/wp-content/uploads/2017/11/bentleyspetstuff.jpg"
         },
         {
           "name": "Bowery Kitchen Supply",
-          "kind": "Kitchen supply · New York, NY",
-          "img": "https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg",
-          "did": "I redesigned the store and worked on product records and reporting. The layout and fixtures needed to make a large, varied kitchen assortment easier to shop."
+          "kind": "Connecting merchandise with usable information",
+          "img": "assets/career/lemonis-bowery-v1.webp",
+          "did": "I worked on the store redesign, layout, and fixtures, together with SKU management and reporting. The assignment connected how a varied kitchen assortment was presented with how its products were recorded and understood by the business.",
+          "sourceImg": "https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg",
+          "adaptationSource": "https://images.sideways.nyc/4eutt9TmHjoiPS50DMO746/bowery-kitchen-supplies-1.jpg?auto=format&fit=crop&w=768"
         },
         {
           "name": "W82",
-          "kind": "Active sports · Chicago, IL",
-          "img": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s680-w680-h510-rw",
-          "did": "I redesigned, remerchandised, and rebranded an 8,000 sq ft Chicago space as seven distinct shops-in-shop, each with its own product arrangement."
+          "kind": "Seven shops within one store",
+          "img": "assets/career/lemonis-w82-v1.webp",
+          "did": "I redesigned, rebranded, and remerchandised an approximately 8,000-square-foot Chicago active-sports space, including its buildout. Organizing seven shops within the store connected the wider concept with distinct product areas.",
+          "sourceImg": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s680-w680-h510-rw",
+          "adaptationSource": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s680-w680-h510-rw"
         },
         {
           "name": "Denim & Soul",
-          "kind": "High-end apparel chain",
-          "img": "https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg",
-          "did": "I created the concept and rebrand for the acquired denim and apparel chain, covering technology, store builds, and merchandising. I then handed the operation over to ML Fashion."
+          "kind": "Developing the concept through handoff",
+          "img": "assets/career/lemonis-denim-v1.webp",
+          "did": "I created the concept and rebrand for the acquired denim and apparel business, covering technology, store builds, and merchandising. I carried that development work through to the handoff to ML Fashion, separating the initial transformation from its subsequent operation.",
+          "sourceImg": "https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg",
+          "adaptationSource": "https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg"
         },
         {
           "name": "American Tea & Coffee",
-          "kind": "Café concept · Texas",
-          "img": "assets/lemonis-americantea.png",
-          "did": "I created the concept and opened the first store in Texas, working through the assortment, store design, and build."
+          "kind": "From concept to first location",
+          "img": "assets/career/lemonis-americantea-v1.webp",
+          "did": "I created the concept and opened the first store in Texas, working through the assortment, store design, and build.",
+          "sourceImg": "assets/lemonis-americantea.png",
+          "adaptationSource": "https://nicolasgoureau.com/assets/lemonis-americantea.png"
         },
         {
           "name": "The Simple Greek",
-          "kind": "QSR franchise",
-          "img": "assets/lemonis-simplegreek.png",
-          "did": "I improved operating routines and developed the retail assortment program across the fast-casual franchise."
+          "kind": "Supporting the operating offer",
+          "img": "assets/career/lemonis-simplegreek-v1.webp",
+          "did": "I worked on processes and retail assortments for the Greek quick-service business. My contribution focused on the practical routines and product offer supporting the operation.",
+          "sourceImg": "assets/lemonis-simplegreek.png",
+          "adaptationSource": "https://nicolasgoureau.com/assets/lemonis-simplegreek.png"
         }
       ],
-      "years": "2015—16",
+      "years": "2015–2016",
       "company": "Marcus Lemonis LLC",
       "location": "Chicago, IL",
       "role": "COO / VP of Business Development",
-      "context": "Family office of the Camping World CEO and host of CNBC's The Profit.",
-      "about": "A business development, investment, and operating platform focused on creating, acquiring, and improving businesses across retail, food, manufacturing, and consumer products. Developed new concepts from the first idea through branding, products, packaging, sourcing, and preparation for sale.",
+      "context": "Working with Marcus Lemonis, business owners, and television producers to develop plans, find resources, and carry transformations through to execution.",
+      "about": "Marcus Lemonis LLC was the family-office platform through which Marcus invested in and worked with businesses across several industries, including companies featured on CNBC’s The Profit. Its work connected investment decisions with business development and practical changes in products, retail environments, and operations.",
       "chapters": [
         {
           "k": "Context",
-          "img": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s1600",
-          "text": "I worked across more than 80 operators and companies, from coffee shops and candy stores to pet chains, clothing, restaurants, active sports, and kitchen supply. Each had its own questions to work through. Some were portfolio businesses, others prospective acquisitions, and projects for The Profit also had production deadlines to meet.",
-          "cap": "Red Beard Coffee Traders — one of 80+ operators."
+          "img": "assets/career/lemonis-context-v1.webp",
+          "text": "I worked on approximately 80% of the investments Marcus was making through his family office that were featured on CNBC’s The Profit. The businesses ranged from coffee shops and candy stores to pet retail, apparel, restaurants, active sports, and kitchen supply. Each brought different products, customers, personalities, and operating challenges.\n\nMy role was to connect Marcus, the businesses, the production team, and the people needed to get the work done. I developed plans with Marcus, coordinated builds for the show, and found the resources to make those transformations happen. The work had to serve both a television production and a business that would continue operating after filming.\n\nThe relationship depended on trust and practical contribution more than formal authority. I worked alongside owners and teams, sometimes becoming closely involved in a business and sometimes providing specific resources or solutions. Because I worked across industries, I could bring useful suppliers, ideas, and experience from one business into another. We did not have to start from scratch every time.",
+          "cap": "Red Beard Coffee Traders exterior — source-based sketch",
+          "sourceImg": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s1600",
+          "adaptationSource": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkS3vLFv_c65IZPb2Uz7TMzR2Yn8yCo1w6RX4BmIt6KgRwy2QCLntEQXcTbJ0KbDlAZdTacvHUK-rVO1xKMkWQYIF3za9XBLFKQSqX_yfc66rfeXceEITVCtEaSP_sIwz2rHv0KA=s680-w680-h510-rw"
         },
         {
           "k": "The Work",
-          "img": "assets/lemonis-americantea.png",
-          "text": "I worked inside some businesses and supported others with resources, knowledge, and connections between their operations. I developed more than 15 concepts, covering the business idea, brand, packaging, fixtures, floorplans, sourcing, and products. That included creating American Tea & Coffee and opening its first Texas store. I also worked with The Profit’s production team on builds for upcoming episodes.",
-          "cap": "American Tea & Coffee: concept to first store."
+          "img": "assets/career/lemonis-work-v1.webp",
+          "text": "At Bentley’s Pet Stuff, an expensive custom fixture package was making new stores harder to deliver economically. I assembled a package of ready-made fixtures with coordinated graphics, giving the stores a consistent presentation without having every component fabricated from scratch. It made openings cheaper and easier while the company grew through both acquisitions and new locations.\n\nThat approach ran through much of my work: understand what the business needed, identify what already existed, and bring the right pieces together. Depending on the assignment, that meant floorplans, products, assortments, pricing, branding, supplier relationships, logistics, construction, or technology. Technology was a substantial part of the work, and connecting it to the way the businesses actually operated was often difficult.\n\nThere was no predictable assignment schedule. I could receive a call on Sunday evening telling me to be in Texas the next morning, with little explanation beyond that I would understand when I arrived. Marcus trusted me to absorb the situation, identify what needed attention, and find a practical next step.\n\nFor television-related builds, I coordinated with producers and the businesses to turn the agreed direction into a completed transformation. I also connected businesses with one another, sharing resources across different industries instead of repeatedly rebuilding the same capabilities.",
+          "cap": "Pet retail fixture concept — adapted proposal, not an installed fixture",
+          "sourceImg": "assets/lemonis-americantea.png",
+          "adaptationSource": "https://nicolasgoureau.com/history/img-39.jpg"
         },
         {
           "k": "Outcome",
-          "img": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s1600",
-          "text": "Several concepts became physical stores for the show and portfolio companies. At Bentley’s Pet Stuff, I reworked the fixture package from over $100K to under $25K per location, helping make expansion from under 20 to over 100 stores possible. Those practical decisions mattered as much as the look of the stores.",
-          "cap": "W82: seven shops-in-shop, one Chicago build."
+          "img": "assets/career/lemonis-outcome-v1.webp",
+          "text": "At W82, I brought together the redesign, branding, buildout, and merchandising of an approximately 8,000-square-foot Chicago active-sports store, organized as seven shops within one space. The work connected the overall concept with the individual product areas and how customers moved through them.\n\nOther assignments produced different kinds of improvements. Bentley’s gained a less expensive, more repeatable fixture approach. Bowery Kitchen Supply received work on its layout, fixtures, SKU management, and reporting. For Denim & Soul, I developed the concept and rebrand, worked through technology, store builds, and merchandising, and then handed the operation to ML Fashion.\n\nMy contribution varied with the business. Sometimes the deliverable was a store transformation; sometimes it was a product arrangement, a supplier solution, a reporting improvement, or a practical way to repeat an opening. The connecting thread was moving the work from a decision into something the business could use.",
+          "cap": "W82 checkout and shop areas — source-based sketch",
+          "sourceImg": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl_tY4azlg7GTlQC0KELF4CSntvEYZfs0qpXHa4v3xVjJqa2XhRAkOZcQIM6SBKhXtlM9HMfjxUNDZmJsvpBagkST8C3TvdaIr8rCmqkEsfNT4DAtvVGimcaRlwIKg69ErD_D0E5g=s1600",
+          "adaptationSource": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkpHMvdggSEruPbz4SO7q53r9DEUZOQZfwINAzyhq-fdnu2b_oHFeGccc72hhnHB7mlQxypuMv5438X3dKTObyGZQ1LnvlYEZkT9Ixx1TMIJTPgkVQ3QJpqd8tnwfWiuB-Z8BYisw=s680-w680-h510-rw"
         },
         {
           "k": "Takeaway",
-          "img": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnvMpBtVcAo9XaEMsKfmnEMWvkWDm_kvJqNvc5w_2ZMWCF6ZjNA91Y3L0JRRnfZMhXAjX9-N_EqwmlKKIEc3F8JFGd7F7t48vPrjxLjq0furqYhrVl25t-YxybqybHC7bAiiUo5=s1600",
-          "text": "Working to television deadlines taught me to make an idea clear quickly and then work through what it would take to build it. A storefront drawing was a useful starting point for that conversation. The experience carried into how I approached later projects.",
-          "cap": "Making the idea clear enough to move into the build."
+          "img": "assets/career/lemonis-takeaway-v1.webp",
+          "text": "At Bowery Kitchen Supply, the work extended beyond how the store looked to the product records and reporting behind it. That reflects how I approach a business: the visible problem is a starting point, but the useful answer may involve the information, resources, or operating process underneath it.\n\nI absorb a great deal when I enter an unfamiliar situation—what people tell me, how the space works, what the products require, and where progress is getting stuck. Then I look for a practical path to the next step, and the step after that.\n\nWorking across these businesses strengthened my ability to contribute without needing every situation to fit the same structure. I could help develop the plan with Marcus, work through it with owners and producers, and bring in resources from elsewhere when they offered a useful answer. That combination of observation, connections, and hands-on execution is what I carry into new work.",
+          "cap": "Bowery Kitchen Supply knife display — source-based sketch",
+          "sourceImg": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnvMpBtVcAo9XaEMsKfmnEMWvkWDm_kvJqNvc5w_2ZMWCF6ZjNA91Y3L0JRRnfZMhXAjX9-N_EqwmlKKIEc3F8JFGd7F7t48vPrjxLjq0furqYhrVl25t-YxybqybHC7bAiiUo5=s1600",
+          "adaptationSource": "https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg"
         }
       ]
     },

@@ -422,3 +422,30 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #role-campingworld .career-tabs{gap:6px}
  #role-campingworld .career-tabs button{padding:9px 10px}
 }
+
+/* Marcus Lemonis: source-aligned stories and supporting examples. */
+#role-lemonis .role-body>.eyebrow{margin:22px 0 12px}
+#role-lemonis .career-headline{margin:0 0 24px;max-width:29ch}
+#role-lemonis .career-chapter{display:block;padding:28px 0 8px}
+#role-lemonis .career-chapter[hidden]{display:none}
+#role-lemonis .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-lemonis .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-lemonis .chapter-copy p:last-child{margin-bottom:0}
+#role-lemonis .chapter-media{position:static;margin:0}
+#role-lemonis .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-lemonis .about-trigger,#role-lemonis .disclosure{color:#52616a}
+#role-lemonis .company-card>img{object-fit:contain;height:auto;aspect-ratio:3/2}
+@media(max-width:760px){
+ #role-lemonis .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-lemonis .chapter-copy p{font-size:17px}
+ #role-lemonis .career-headline{font-size:28px}
+ #role-lemonis .career-tabs{gap:6px}
+ #role-lemonis .career-tabs button{padding:9px 10px}
+}
+
+#role-lemonis .client-story{display:block}
+#role-lemonis .example-heading{margin-bottom:20px}
+#role-lemonis .example-heading h5{margin:0 0 8px}
+#role-lemonis .example-heading .meta{display:block}
+#role-lemonis .company-card-copy>span{color:#23313b}
+#role-lemonis .client-stories{display:grid;grid-template-columns:1fr;gap:28px}
