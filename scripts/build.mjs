@@ -24,9 +24,9 @@ const moreMarginChapter=(c,j)=>{
  const a='assets/career/';
  const rows=[
  ()=>row([p[0]])+row([p[1]],a+'moremargin-work-v1.webp','DJI Fifth Avenue — adapted exterior reference'),
+ ()=>row(p.slice(0,2))+row(p.slice(2),a+'moremargin-context-v1.webp','Assortment planning — illustrative golf-shop reference, not verified client work'),
  ()=>row([p[0]])+row([p[1]],a+'moremargin-outcome-v1.webp','NuvoMed massager — adapted product reference'),
- ()=>row(p),
- ()=>row([p[0]],a+'moremargin-context-v1.webp','Assortment planning — illustrative golf-shop reference, not verified client work')+row(p.slice(1),a+'moremargin-takeaway-v1.webp','Dashboard structure — illustrative, not client results')
+ ()=>row(p,a+'moremargin-takeaway-v1.webp','Dashboard structure — illustrative, not client results')
  ];
  return `<div class="chapter-copy"><h4>${e(c.k)}</h4></div>${rows[j]()}`;
 };
