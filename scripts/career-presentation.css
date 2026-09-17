@@ -11,9 +11,9 @@
  --card-accent: #efbd83; --card-line: #d9e4ec44;
 }
 #experience .career-designed .career-backdrop {position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none}
-#experience .career-designed .career-backdrop img {width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.29}
+#experience .career-designed .career-backdrop img {width:100%;height:1050px;max-height:100%;object-fit:cover;object-position:center top;opacity:.38;mask-image:linear-gradient(#000 0%,#000 75%,transparent 100%)}
 #experience .career-designed .career-backdrop:after {content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f5efe3ed 0%,#f5efe3df 47%,#f5efe360 100%)}
-#experience .career-designed.palette-navy .career-backdrop img {opacity:.43}
+#experience .career-designed.palette-navy .career-backdrop img {opacity:.5}
 #experience .career-designed.palette-navy .career-backdrop:after {background:linear-gradient(90deg,#172b3af2 0%,#172b3ae8 47%,#172b3a88 100%)}
 #experience .career-designed>.role-body {padding:0}
 #experience .career-designed .role-title .company-heading>strong,
@@ -21,6 +21,8 @@
 #experience .career-designed .chapter-copy h4,
 #experience .career-designed .client-work h4,
 #experience .career-designed .client-story h5 {color:var(--card-ink)}
+#experience .career-designed .role-year,
+#experience .career-designed .disclosure,
 #experience .career-designed .role-context,
 #experience .career-designed .role-title .role-meta,
 #experience .career-designed .role-title .role-subtitle,
@@ -28,7 +30,7 @@
 #experience .career-designed .eyebrow,
 #experience .career-designed .about-trigger {color:var(--card-accent)}
 #experience .career-designed .career-tabs {border-color:var(--card-line)}
-#experience .career-designed .career-tabs button {color:var(--card-ink);border-color:var(--card-line);background:transparent}
+#experience .career-designed .career-tabs button {color:var(--card-ink);border-color:var(--card-line);background:transparent;padding:12px 16px}
 #experience .career-designed .career-tabs button:hover {background:color-mix(in srgb,var(--card-accent) 12%,transparent)}
 #experience .career-designed .career-tabs button[aria-selected=true] {background:var(--card-ink);border-color:var(--card-ink);color:var(--card-bg)}
 #experience .career-designed .career-chapter,
