@@ -7,7 +7,7 @@ bigbox:[[c('bigbox-context-v1')],[c('bigbox-work-v1')],[c('bigbox-outcome-v1')],
 campingworld:[[c('campingworld-context-v1')],[c('campingworld-work-v1')],[c('campingworld-outcome-v1')],['assets/career/campingworld-takeaway-plan-v1.png']],
 lemonis:[[c('lemonis-context-v1')],[c('lemonis-work-v1')],[c('lemonis-outcome-v1')],[c('lemonis-takeaway-v1')]],
 courageb:[[c('courageb-context-v1')],[c('courageb-work-v1')],[c('courageb-outcome-v1')],[c('courageb-takeaway-v1')]],
-sharperimage:[[c('sharperimage-context-v1')],[c('sharperimage-work-v1')],[c('sharperimage-outcome-v1')],[c('sharperimage-takeaway-v1')]],
+sharperimage:[[c('sharperimage-context-v1')],[c('sharperimage-work-v1')],[c('sharperimage-outcome-v1')],[c('sharperimage-takeaway-v2')]],
 kbp:[[c('advertising')],['assets/career/kbp-1.jpg'],['assets/career/kbp-2.jpg'],['assets/career/kbp-3.jpg']]
 };
 export const clientImages={
