@@ -4,7 +4,7 @@ export const chapterImages={
 moremargin:[[c('moremargin-work-v1')],[c('moremargin-outcome-v1')],[],[c('moremargin-context-v1'),c('moremargin-takeaway-v1')]],
 funtown:[[c('funtown-context-v2')],[c('funtown-work-v2')],[c('funtown-outcome-v2')],[c('funtown-takeaway-v2')]],
 bigbox:[[c('bigbox-context-v1')],[c('bigbox-work-v1')],[c('bigbox-outcome-v1')],[c('bigbox-takeaway-v1')]],
-campingworld:[[h(27),h(28)],[h(29),h(30)],[h(26),h(31),h(35)],[h(32),h(33)]],
+campingworld:[[c('campingworld-context-v1')],[c('campingworld-work-v1')],[c('campingworld-outcome-v1')],['assets/career/campingworld-takeaway-plan-v1.png']],
 lemonis:[[h(40),h(41)],[h(39)],['assets/lemonis-bentleys.png'],[h(48)]],
 courageb:[[h(54)],[h(53)],[h(57),h(58)],[h(56),h(61)]],
 sharperimage:[[c('storefront')],[c('product')],[c('catalog')],['assets/career/sharperimage-3.jpg']],
