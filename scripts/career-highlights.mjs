@@ -2,52 +2,52 @@
 // Each pair belongs to its tab; qualifications remain visible beside the number.
 export const careerHighlights = {
  moremargin: [
-  [['8 months','DJI flagship engagement, 2025–2026.'],['Opened','Fifth Avenue store launched around February–March 2026.']],
-  [['Connected','Store layout, training, replenishment and STC systems.'],['New channels','NuvoMed outdoor retail and home-improvement display program.']],
-  [['$5M+','My estimated NuvoMed revenue contribution over ten months.'],['Launched','DJI flagship opened with city and headquarters approvals.']],
-  [['Built','Dashboards for small businesses and e-commerce.'],['Made usable','Scattered information brought into accessible reporting.']]
+  [['8-month flagship delivery','DJI Fifth Avenue: from the financial case through buildout and opening.'],['Built the investment case','Modeled the store on its own and as part of STC’s wider business.']],
+  [['Integrated the store operation','Connected customer, warehouse, product-information and accounting systems.'],['Opened new retail channels','NuvoMed placements included Fun Town RV, Camping World and REI.'],['Developed the display program','Drive-aisle PDQ displays supporting Home Depot and Lowe’s expansion.']],
+  [['$5M+ estimated revenue','My estimated contribution to NuvoMed over ten months.'],['Opened DJI Fifth Avenue','The flagship launched around February–March 2026 with city and headquarters approvals.']],
+  [['Built usable business dashboards','Turned scattered small-business and e-commerce data into accessible reporting.'],['Earned repeat client work','STC and NuvoMed continue to call on me as new needs arise.']]
  ],
  funtown: [
-  [['65,000 sq ft','Corsicana facility opened March 2022; about 10,000 sq ft retail.'],['6 checkout lanes','Retail, café and service functions brought together.']],
-  [['30,000+ SKUs','Organized into a shared product database.'],['2 house brands','KAMPTIME and USA Rec. Supply; top 50 products targeted for direct sourcing.']],
-  [['$3M','Internal sourcing sales in under one year.'],['28% → 79%','Reported margin on selected factory-direct products: +51 percentage points.'],['6 locations','Retail platform expanded across two divisions.']],
-  [['Connected','Sourcing, store standards, sales, ordering and logistics.'],['Delivered','Merchandising guides and processes for teams to use.']]
+  [['65,000 sq ft brought into use','Corsicana opened in March 2022, including about 10,000 sq ft of retail.'],['6 checkout lanes established','Retail, café and service functions in one facility.']],
+  [['30,000+ SKUs unified','Built a shared product database for the retail operation.'],['2 house brands developed','KAMPTIME and USA Rec. Supply.'],['Top 50 products targeted','Prioritized high-selling items for factory-direct sourcing.']],
+  [['$3M in sourcing sales','Internal sales generated in under one year.'],['28% → 79% product margin','Reported increase on selected factory-direct products: 51 percentage points.'],['6 locations, 2 divisions','Expanded the retail platform across the business.']],
+  [['Built repeatable store standards','Created merchandising guides and operating processes for teams.'],['Connected sourcing to selling','Linked product records, ordering, logistics and store execution.']]
  ],
  bigbox: [
-  [['20+ years','International relationships brought into sourcing and channel work.'],['Created','FitBox: a new operating model for vacant retail space.']],
-  [['Capital raised','First FitBox prototype funding, contingent on a lease.'],['Model developed','Smaller tenant spaces and shared facilities within a master lease.']],
-  [['Funds returned','FitBox stopped before lease signing when COVID changed the plan.'],['No investor lost money','The prototype did not reach an operating launch.']],
-  [['Commercial model built','Space, shared costs and tenant economics considered together.'],['Commitment avoided','Stopped before signing and returned the capital.']]
+  [['20+ years of trading relationships','Applied an international network to sourcing and new sales channels.'],['Created the FitBox venture','Developed a shared-space business model for vacant big-box properties.']],
+  [['Raised prototype capital','Secured funding for the first FitBox location, contingent on a lease.'],['Built the tenant economics','Worked through master rent, smaller leases and shared-facility costs.']],
+  [['Returned the investors’ capital','Stopped before the planned lease signing when COVID changed the conditions.'],['No investor lost money','FitBox remained a funded concept; it did not open.']],
+  [['Designed a new use for vacant space','Combined complementary tenants, smaller premises and shared facilities.'],['Avoided the lease commitment','Reassessed the venture before signing and returned the funds.']]
  ],
  campingworld: [
-  [['$300M+','Overall project scale; cross-department leadership.'],['Hundreds of people','Led across departments and four businesses.']],
-  [['20+ concepts','Category shop-in-shops developed.'],['Led delivery','Connected branding, products, layouts, merchandising and initial store sets.']],
-  [['80+ stores','Wider Gander team program: rebuilt and merchandised in under 18 months.'],['Adopted','My proposal to use larger stores for indoor RV sales.'],['Express model','Helped develop the smaller dealership and delivery approach.']],
-  [['Space rethought','RV sales offered an alternative to filling large stores with inventory.'],['Decisions connected','Product, supplier, floor-space and team execution brought together.']]
+  [['$300M+ project scope','Cross-department leadership on the overall transformation program.'],['Led across 4 businesses','Coordinated hundreds of people across departments.']],
+  [['20+ shop-in-shops developed','Turned broad outdoor categories into distinct retail destinations.'],['Led the initial store sets','Brought branding, layouts, products and merchandising onto the floor.'],['Developed private-label ranges','Connected suppliers, price points and assortments to customer needs.']],
+  [['80+ stores in under 18 months','Rebuilt and merchandised through the wider Gander team program.'],['Indoor RV proposal adopted','Put oversized stores to work as RV sales space.'],['Developed the express format','Helped shape smaller dealerships and their delivery model.']],
+  [['Created an alternative use for space','Proposed indoor RV sales instead of filling large stores with inventory.'],['Joined buying decisions to execution','Brought supplier, assortment, floor-space and team decisions together.']]
  ],
  lemonis: [
-  [['~80%','Involvement in Marcus’s family-office investments featured on The Profit.'],['Builds delivered','Coordinated owners, producers and resources for transformations.']],
-  [['Lower-cost openings','Ready-made fixtures plus graphics replaced expensive custom fabrication at Bentley’s.'],['Resources shared','Suppliers and practical solutions connected across businesses.']],
-  [['~8,000 sq ft','W82 redesign, branding, buildout and merchandising.'],['7 shops in one','Distinct product areas organized within W82.'],['Handed over','Denim & Soul concept and operating work transferred to ML Fashion.']],
-  [['Beyond the shop floor','Bowery layout, fixtures, SKU management and reporting improved.'],['Plans put to work','Owners, producers and specialist resources connected.']]
+  [['Worked across ~80% of investments','Marcus’s family-office investments featured on The Profit.'],['Delivered business transformations','Coordinated owners, producers and specialist resources.']],
+  [['Reduced fixture costs at Bentley’s','Replaced custom fabrication with ready-made fixtures and graphics.'],['Made openings easier to repeat','Developed a practical fixture approach for subsequent locations.']],
+  [['~8,000 sq ft transformed','W82 redesign, branding, buildout and merchandising.'],['7 shops built into one store','Organized distinct product destinations within W82.'],['Delivered the Denim & Soul handoff','Transferred the concept and operating work to ML Fashion.']],
+  [['Improved Bowery’s operating tools','Worked on layout, fixtures, SKU management and reporting.'],['Put shared resources to work','Connected businesses with suppliers and practical solutions used across the portfolio.']]
  ],
  courageb: [
-  [['2008','Co-founded COURAGE. b with my sister.'],['Personally funded & built','Financed the business and physically built its stores.']],
-  [['~90% private label','Merchandise mix in the early business.'],['7 production locations','France, Italy, China, India, Vietnam, New York and Los Angeles.']],
-  [['Business expanded','Stores opened across multiple US markets, alongside outlets.'],['Partial ownership sale','Sold a portion to ML Fashion; acquisitions and openings followed.']],
-  [['Outlet channel created','A separate route for discounted inventory.'],['Comparable net margins','In my experience, close to regular stores, including rent.']]
+  [['Co-founded and funded COURAGE. b','Started the business with my sister in 2008.'],['Built the stores myself','Handled leases, financing and the physical work of opening locations.']],
+  [['~90% private-label merchandise','Built the early offer around directly sourced products.'],['7 production locations connected','France, Italy, China, India, Vietnam, New York and Los Angeles.'],['Took on all manufacturing','Managed production alongside logistics, tagging and pricing.']],
+  [['Expanded across US markets','From Scarsdale to locations including New York, Palm Beach and Aspen.'],['Sold a stake to ML Fashion','Partial ownership sale followed by acquisitions and further openings.']],
+  [['Built a profitable outlet channel','Created a separate route for discounted merchandise.'],['Net margins close to full-price stores','Including rent, in my experience of the outlet operation.']]
  ],
  sharperimage: [
-  [['Client → employer','Recruited from KBP after work on The Sharper Image account.'],['3 sales channels','Connected product presentation across stores, catalog and website.']],
-  [['8 product examples','From air purifiers and an MP3 watch to a cooling neck band and R2-D2.'],['Supplier programs','Worked across company suppliers on products and private label.']],
-  [['~$1M annually','Negotiated vendor co-op funding for the catalog.'],['Licensing developed','Helped develop the approach during my tenure; agreements not claimed.']],
-  [['Products connected','Customer interest, suppliers and commercial terms considered together.'],['Offer developed','Product presentation coordinated across selling channels.']]
+  [['Recruited by The Sharper Image','Advertising account work led to a role that became Product Development Director.'],['Worked directly with the CEO','Helped shape product direction and merchandising priorities.']],
+  [['Developed product and private-label offers','Worked across suppliers on products from air purifiers to the cooling neck band.'],['Coordinated 3 selling channels','Connected store displays with catalog and website presentation.']],
+  [['~$1M a year negotiated','Secured vendor co-op funding for the catalog.'],['Helped develop the licensing approach','Worked on extending the brand to other manufacturers’ products; development was underway during my tenure.']],
+  [['Turned product discovery into an offer','Connected supplier research with assortment and customer-facing presentation.'],['Brought suppliers into catalog funding','Negotiated commercial support alongside product partnerships.']]
  ],
  kbp: [
-  [['Managing partners','Worked in their new-business unit as a Junior Analyst.'],['Agency brought together','Combined departmental contributions for pitches and account growth.']],
-  [['Pitch → campaign','The Priceline trophies I made became part of the actual campaign.'],['2 existing accounts','Assembled work supporting Edward Jones and Snapple expansion.']],
-  [['4 team wins','Priceline, Mrs. Butterworth’s, Diageo and The Sharper Image.'],['Recruited by the client','The Sharper Image hired me from KBP.']],
-  [['Made it tangible','Priceline pitch trophies carried into the campaign.'],['Next role earned','Client work led directly into product development.']]
+  [['Worked with the managing partners','Joined their special new-business unit as a Junior Analyst.'],['Assembled the agency’s pitch work','Brought departmental contributions together for new business and account growth.']],
+  [['Priceline pitch work became campaign work','The physical trophies I made for the pitch became part of the actual campaign.'],['Supported 2 account expansions','Assembled the agency’s work for Edward Jones and Snapple.']],
+  [['Helped win 4 named accounts','Team wins: Priceline, Mrs. Butterworth’s, Diageo and The Sharper Image.'],['Recruited directly by a client','The Sharper Image hired me from KBP.']],
+  [['Made an idea the client used','Priceline carried my pitch trophies into its campaign.'],['Earned the move into product development','The Sharper Image relationship led directly to my next role.']]
  ]
 };
 
