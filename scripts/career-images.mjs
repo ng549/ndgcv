@@ -6,7 +6,7 @@ funtown:[[c('funtown-context-v2')],[c('funtown-work-v2')],[c('funtown-outcome-v2
 bigbox:[[c('bigbox-context-v1')],[c('bigbox-work-v1')],[c('bigbox-outcome-v1')],[c('bigbox-takeaway-v1')]],
 campingworld:[[c('campingworld-context-v1')],[c('campingworld-work-v1')],[c('campingworld-outcome-v1')],['assets/career/campingworld-takeaway-plan-v1.png']],
 lemonis:[[c('lemonis-context-v1')],[c('lemonis-work-v1')],[c('lemonis-outcome-v1')],[c('lemonis-takeaway-v1')]],
-courageb:[[h(54)],[h(53)],[h(57),h(58)],[h(56),h(61)]],
+courageb:[[c('courageb-context-v1')],[c('courageb-work-v1')],[c('courageb-outcome-v1')],[c('courageb-takeaway-v1')]],
 sharperimage:[[c('storefront')],[c('product')],[c('catalog')],['assets/career/sharperimage-3.jpg']],
 kbp:[[c('advertising')],['assets/career/kbp-1.jpg'],['assets/career/kbp-2.jpg'],['assets/career/kbp-3.jpg']]
 };

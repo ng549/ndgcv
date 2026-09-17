@@ -449,3 +449,26 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #role-lemonis .example-heading .meta{display:block}
 #role-lemonis .company-card-copy>span{color:#23313b}
 #role-lemonis .client-stories{display:grid;grid-template-columns:1fr;gap:28px}
+
+/* COURAGE. b: approved founder story and source-based imagery. */
+#role-courageb .role-body>.eyebrow{margin:22px 0 12px}
+#role-courageb .career-headline{margin:0 0 24px;max-width:29ch}
+#role-courageb .career-chapter{display:block;padding:28px 0 8px}
+#role-courageb .career-chapter[hidden]{display:none}
+#role-courageb .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-courageb .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-courageb .chapter-copy p:last-child{margin-bottom:0}
+#role-courageb .chapter-media{position:static;margin:0}
+#role-courageb .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-courageb .about-trigger,#role-courageb .disclosure{color:#52616a}
+#role-courageb .company-card>img{object-fit:contain;height:auto;aspect-ratio:3/2}
+@media(max-width:760px){
+ #role-courageb .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-courageb .chapter-copy p{font-size:17px}
+ #role-courageb .career-headline{font-size:28px}
+ #role-courageb .career-tabs{gap:6px}
+ #role-courageb .career-tabs button{padding:9px 10px}
+}
+
+
+#role-courageb .company-card-copy>span{color:#23313b}
