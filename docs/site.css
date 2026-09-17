@@ -340,3 +340,5 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #role-moremargin .story-passage{grid-template-columns:1fr}
  #role-moremargin .story-passage>.chapter-media{grid-column:1;grid-row:2}
 }
+
+#role-moremargin .company-card>img{width:100%;height:auto;max-height:260px;object-fit:contain;align-self:start}

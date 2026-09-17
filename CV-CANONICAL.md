@@ -213,3 +213,6 @@ This supersedes the paragraph-by-paragraph, mixed-width presentation.
 - Preserve one unique image per tab and all approved wording. More Margin mapping remains Context DJI, The Work assortment, Outcome NuvoMed, Takeaway dashboard.
 - On narrow screens stack heading, body copy, image, with no artificial alignment gap.
 Apply this standing standard to future section edits. Implemented for More Margin Co. only in this update; other job cards await their scheduled section review. Live verification follows publication.
+
+## More Margin company image — 2026-09-17
+Latest explicit instruction: use the More Margin Co. image from Drive in its About popup. Selected original “More Margin Co. About Popup.jpg”, file ID 1SssUNecwVE6rbhdruRshG7GrGieWYKQS. This specific selection supersedes the temporary text wordmark and prior rejection of that image for visible faces. Use the provided original intact, preserve the Drive source, and identify it as a branded company illustration rather than a documentary client photograph. Website asset: docs/assets/moremargin-about-drive.jpg. Readable popup description color retained. No story-tab changes.
