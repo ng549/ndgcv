@@ -551,3 +551,35 @@ Built-in image-generation prompts:
   "takeaway": "Use case: style-transfer. Image 1 is subject reference, image 2 style only. Match the approved skateshop's detailed charcoal/navy brush and pencil linework, warm amber highlights, cream paper texture, dimensional perspective. Clearly a painterly sketch. Landscape 3:2 1536x1024, full composition. No people, recognizable faces, footers, captions, watermarks or invented client campaign artwork. Adapt the exact black rectangular Sharper Image brand mark and white letter arrangement from image 1 into a textured graphic illustration. Keep brand words THE SHARPER IMAGE accurate, centered within wide cream and charcoal brushwork field. No store, products, people or added slogan. Treat as an editorial brand reference, not a campaign advertisement.",
   "about": "Use case: style-transfer. Image 1 is subject reference, image 2 style only. Match the approved skateshop's detailed charcoal/navy brush and pencil linework, warm amber highlights, cream paper texture, dimensional perspective. Clearly a painterly sketch. Landscape 3:2 1536x1024, full composition. No people, recognizable faces, footers, captions, watermarks or invented client campaign artwork. Focus solely on the KBP-branded glass entrance detail from image 1, with accurate KIRSHENBAUM BOND + PARTNERS and KBP lettering, glass edge and dark frame. Tight architectural detail, no desk composition or wide office view. This represents the company conceptually, not documentary premises. No posters or people."
 }
+
+
+## Education — approved planning record; deployment deferred
+Nicolas requested saving this material in the CV canonical and deploying later. No website changes authorized by this save. Education is added to the remaining editorial section list as provisional Section 19; Let's talk becomes Section 20. Final section order can change during full-site review.
+Design direction: brief, visually striking, confident about the programs and their relevance as foundations for his work. Proposed two compact university cards, institution-specific architectural sketches in the established skateshop style, clear credentials and a short foundation-for-my-work statement. Preserve alignment/eyebrow rules. Do not force career-story four-tab structure onto Education.
+
+Confirmed firsthand: The American University of Paris accelerated summer business management program, summer 2002, completed while living in Paris before attending University of Miami. Nicolas supplied the following present-day curriculum links as references for the courses he took:
+- Marketing Paris BA1018: https://catalog-2026-2027.aup.edu/course/ba1018
+- Foundations of Project Management BA1021: https://catalog-2026-2027.aup.edu/course/ba1021/fall-2026
+- Entrepreneurship & New Ventures BA2010: https://catalog-2026-2027.aup.edu/course/ba2010/fall-2026
+All three supplied screenshots read in conversation. They describe 2026–27 courses, not a historical transcript. Broad themes: customer motivation, marketing and cultural context; project planning, resources and execution; opportunity evaluation and business models in an international setting. Do not attribute modern assignments, terminology, exact credits or 2026 staff to 2002. Program wording is a descriptive label; no degree or certificate invented.
+Approved direction for compact entry:
+The American University of Paris · Summer 2002
+Accelerated summer business management program
+An early international foundation in entrepreneurship, marketing, and project execution—combining business studies with the experience of living in Paris before attending the University of Miami.
+
+Miami reference links supplied:
+- Advertising: https://bulletin.miami.edu/undergraduate-academic-programs/communication/strategic-communication/advertising-bs-advertising-management-track/
+- Economics: https://bulletin.miami.edu/undergraduate-academic-programs/business/economics/economics-bba/
+- Theatre BA: https://bulletin.miami.edu/undergraduate-academic-programs/arts-sciences/theatre-arts/theatre-arts-ba/
+- Theatre department: https://bulletin.miami.edu/undergraduate-academic-programs/arts-sciences/theatre-arts/
+Nicolas will provide more about Miami degrees. Exact awarded degree(s), major/minor distinctions, attendance/graduation dates and personal focus remain unconfirmed. Links alone do not establish three degrees. Candidate connections for later approval: advertising/customer insight and persuasion; economics/markets and commercial tradeoffs; theatre/storytelling, presentation, design and coordinated production where personally applicable. Current curricula are background, not proof of historical coursework.
+Status: saved for later drafting/implementation; not deployed. Continue section-by-section workflow, then full-site review/second pass, two-page downloadable CV and LinkedIn rebuild.
+
+
+
+## Section 12 publication and actual live verification — 2026-09-17
+Published df39c7d1a79c1956a7855c8be89a21f715c3edeb via non-force main update; actual new card verified at https://nicolasgoureau.com/#role-kbp after deployment cleared old version.
+All four tabs clicked and visually inspected: agency Context, workspace The Work, Mrs.Butterworth’s Outcome, SharperImage wordmark Takeaway. Exactly one image each, all1200px natural width; five local assets decode1200×800. Image-to-first-body-paragraph offset0px in all tabs. Desktop text left/image right, separate headings, consistent spacing/typography and meaningful eyebrow. KBP and preceding SharperImage company-name left edges291.4375px; metadata bottom offset0px. About above name, years2005–2006 above NewYork, JuniorAnalyst title.
+Opened About inspected: company-specific conceptual image loads1200px, description rgb(35,49,59) on rgb(248,244,236), approximately12.16:1 contrast. Escape closes. Keyboard ArrowRight wraps Takeaway to Context with focus/selection. Context full-size link opens1200×800 image in new tab. Live counts8jobs,32panels,12examples. Other7cards byte-identical prepublication; build passes.
+MOBILE VISUAL VERIFICATION REMAINS PENDING. Current browser has no supported viewport resizing; responsive body-then-image CSS reviewed but no actual mobile pass claimed. Original Priceline trophy image still unavailable; conceptual workspace used with accurate labeling, no fabricated campaign.
+Individual career sections complete for this pass. Next: Section13 How I can help, review current live and canonical first, questions only for factual gaps, then copy/image plan approval before implementation. Preserve prior sections. Continue remaining editorial sections, then full-site review/second editing pass, two-page downloadable CV, LinkedIn rebuild. Education planning is saved/deferred, not deployed.
