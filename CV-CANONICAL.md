@@ -256,3 +256,7 @@ Published Section 6 and the authorized shared company-header correction in 3dae1
 - Company header: About above the flush-left company name; dates above location on the right. Browser measurements across all eight job headers confirm the bottom of the combined date/location block exactly matches the bottom of the company name (0px difference). Role title remains below.
 - Build passed. Eight jobs, 32 story sections and 12 supporting examples preserved. Other seven job bodies match the latest prepublication main, including concurrent More Margin changes. Newest-to-oldest order preserved. No Big Box content work.
 - Mobile responsive rules are present, but mobile visual verification remains PENDING: the available browser has no supported viewport/device-resize capability. Do not claim mobile passed.
+
+
+## Fun Town RV house-brand clarification — 2026-09-17
+Nicolas confirmed the second house brand was **USA Rec. Supply**. The two house brands were **KAMPTIME** and **USA Rec. Supply**. Use this exact spelling in the Fun Town RV story and private-label supporting example. Existing KAMPTIME imagery represents KAMPTIME only; do not relabel it as USA Rec. Supply. This is a factual text correction only.
