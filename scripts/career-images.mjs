@@ -1,7 +1,7 @@
 const h=n=>`history/img-${String(n).padStart(2,'0')}.jpg`;
 const c=n=>`assets/career/${n}.webp`;
 export const chapterImages={
-moremargin:[[c('moremargin-context-v1')],[c('moremargin-work-v1')],[c('moremargin-outcome-v1')],[c('moremargin-takeaway-v1')]],
+moremargin:[[c('moremargin-work-v1')],[c('moremargin-outcome-v1')],[],[c('moremargin-context-v1'),c('moremargin-takeaway-v1')]],
 funtown:[[c('storeplan')],[h(16)],[c('housebrand')],[c('logistics')]],
 bigbox:[[h(19)],[h(21),h(22)],[h(23)],[h(24)]],
 campingworld:[[h(27),h(28)],[h(29),h(30)],[h(26),h(31),h(35)],[h(32),h(33)]],

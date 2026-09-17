@@ -319,3 +319,15 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #role-moremargin .chapter-copy p:last-child{margin-bottom:0}
 @media(max-width:760px){#role-moremargin .career-chapter{grid-template-columns:1fr;gap:22px}#role-moremargin .chapter-media{position:static}#role-moremargin .chapter-copy p{font-size:17px}#role-moremargin .career-headline{font-size:28px}#role-moremargin .career-tabs{gap:6px}#role-moremargin .career-tabs button{padding:9px 10px}}
 #role-moremargin .about-trigger,#role-moremargin .role-title>span:last-child,#role-moremargin .disclosure{color:#52616a}
+
+/* Section 5 correction: company identity, readable popup, narrative image pairing. */
+#role-moremargin .company-card-copy>span{color:#23313b}
+#role-moremargin .company-wordmark{display:flex;align-items:center;justify-content:center;min-height:150px;background:#23313b;color:#f8f4ec;font:700 28px/1.15 Manrope,sans-serif;letter-spacing:-.04em;padding:16px}
+#role-moremargin .career-chapter{display:block}
+#role-moremargin .career-chapter[hidden]{display:none}
+#role-moremargin .story-passage{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:start;gap:32px;margin:0 0 28px}
+#role-moremargin .story-text{display:block;max-width:900px}
+#role-moremargin .story-text .chapter-copy p{max-width:none}
+#role-moremargin .story-passage:last-child{margin-bottom:0}
+#role-moremargin .chapter-media{position:static}
+@media(max-width:760px){#role-moremargin .story-passage{grid-template-columns:1fr;gap:18px}#role-moremargin .company-card{grid-template-columns:1fr;max-height:70vh;overflow-y:auto}#role-moremargin .company-wordmark{min-height:0;display:block;font-size:22px}#role-moremargin .company-wordmark br{display:none}#role-moremargin .company-wordmark br:after{content:' '}#role-moremargin .company-card-copy>span{font-size:16px}}
