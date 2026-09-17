@@ -341,4 +341,41 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #role-moremargin .story-passage>.chapter-media{grid-column:1;grid-row:2}
 }
 
+/* Company header standard: About above name; dates/location block bottom-aligned to name. */
+.role>summary{display:block;position:relative;padding:28px 0}
+.role .role-title{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:28px;row-gap:8px;align-items:end}
+.role .role-title .company-heading{display:contents}
+.role .role-title .company-heading>strong{grid-column:1;grid-row:2;margin:0;line-height:1.15}
+.role .role-title .company-about{grid-column:1;grid-row:1;justify-self:start;position:relative;display:inline-flex}
+.role .role-title .role-meta{grid-column:2;grid-row:2;display:block;text-align:right;line-height:1.3;color:#52616a}
+.role .role-title .role-meta>span{display:block;margin:0;font-size:15px;line-height:1.3}
+.role .role-title .role-subtitle{grid-column:1/-1;grid-row:3;font-size:16px;color:#52616a}
+.role>summary>.disclosure{position:absolute;right:0;top:25px;font-size:13px}
+.role .company-card{left:0;right:auto;top:100%;width:min(560px,80vw)}
+.role .company-card-copy>span{color:#23313b}
+#role-funtown .role-body>.eyebrow{margin:22px 0 12px}
+#role-funtown .career-headline{margin:0 0 24px;max-width:29ch}
+#role-funtown .career-chapter{display:block;padding:28px 0 8px}
+#role-funtown .career-chapter[hidden]{display:none}
+#role-funtown .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-funtown .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-funtown .chapter-copy p:last-child{margin-bottom:0}
+#role-funtown .chapter-media{position:static;margin:0}
+#role-funtown .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-funtown .client-stories{display:grid;grid-template-columns:1fr;gap:28px}
+#role-funtown .example-heading{margin-bottom:18px}
+#role-funtown .client-story h5{margin:0 0 6px}
+#role-funtown .about-trigger,#role-funtown .disclosure{color:#52616a}
+@media(max-width:760px){
+ .role .role-title{column-gap:14px}
+ .role .role-title .company-heading>strong{font-size:24px}
+ .role .role-title .role-meta>span{font-size:12px}
+ .role .company-card{width:min(560px,88vw);max-width:88vw;max-height:70vh;overflow:auto;grid-template-columns:1fr}
+ #role-funtown .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-funtown .chapter-copy p{font-size:17px}
+ #role-funtown .career-headline{font-size:28px}
+ #role-funtown .career-tabs{gap:6px}
+ #role-funtown .career-tabs button{padding:9px 10px}
+}
+
 #role-moremargin .company-card>img{width:100%;height:auto;max-height:260px;object-fit:contain;align-self:start}

@@ -216,3 +216,35 @@ Apply this standing standard to future section edits. Implemented for More Margi
 
 ## More Margin company image — 2026-09-17
 Latest explicit instruction: use the More Margin Co. image from Drive in its About popup. Selected original “More Margin Co. About Popup.jpg”, file ID 1SssUNecwVE6rbhdruRshG7GrGieWYKQS. This specific selection supersedes the temporary text wordmark and prior rejection of that image for visible faces. Use the provided original intact, preserve the Drive source, and identify it as a branded company illustration rather than a documentary client photograph. Website asset: docs/assets/moremargin-about-drive.jpg. Readable popup description color retained. No story-tab changes.
+
+## Section 6 Fun Town RV — approved implementation, 2026-09-17
+Nicolas explicitly directed implementation/publication of the drafted section: “update this section in https://nicolasgoureau.com/ do that from now on. this is your job to make updates”. Treat future direct requests to update a section as instructions to implement; preserve factual caveats and scope.
+Firsthand clarifications:
+- Reported directly to COO Jeff England. Explained new capabilities to obtain approval; different views/processes were part of building a business for Fun Town, with autonomy developing over time.
+- $1M refers to online/marketplace business; achieved/projected status and period remain unresolved. $3M refers to internal sourcing with dealerships as main customers; earlier firsthand questionnaire specifies under one year. $4.5M is total positive impact, not equivalent to sourcing revenue; components/period unresolved. Omit $1M and $4.5M from this card rather than invent definitions.
+- Use top 50 products. Reported selected-product margin 28% to 79% = 51 percentage points. Do not call this company-wide margin or assert gross margin after landed costs; cost basis remains unresolved.
+- Shopify and plugins introduced in one location, then six across two divisions. Do not equate six platform locations with earlier four prototypes; relation remains unresolved.
+- Hired November 2021; Corsicana opened March 2022. 65,000 sq ft facility, about 10,000 sq ft retail, full-service café/restaurant, service counter, six checkout lanes. Nicolas designed branding/layout/graphics for retail and RV sales, including sales tower and training rooms. Do not claim he personally coded every system.
+Sources read: current live four tabs/About/four examples, current main canonical/preservation rules, Fun Town RV Projects sheet 1Qgotj36MNXpUsD_3qpsCe0o31rAl0WZYYqwmVr6IYNE, completed CV Story Questionnaire 1pZn_He3MxqSYn_5YtIDcjlNTjQ6WbyoFnEkjFeYQI_g, earlier CV PDF 1Ov8ozXHlFydk8azLoIKIepsEvX61OtuX.
+Original source images inspected: planning 1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po, KAMPTIME display 1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA, logistics 1wmZaFE6IgHc_g8B8d_LJgLRoShMELeOD, and Corsicana exterior URL from project sheet. Original links/files preserved.
+Built-in image generation used for four main and four distinct detail sketches, matching inspected illustrations/43.webp. Prompt direction: exact source subject and recognizable architecture/products; painterly textured sketch linework, navy/charcoal shadows, warm amber light, realistic perspective; no faces, extra captions, footers, or unrelated objects. Main mapping Context exterior / Work planning / Outcome products / Takeaway warehouse. Supporting examples each use their own detail composition. 1536x1024 PNG masters saved in NDG CV → Current → Photos and Imagery; WebP copies in repository.
+- context: docs/assets/career/funtown-context-v1.webp; Drive master 1fG4k_krzeZG_N45k-KMYPVTlNV3AlbVK
+- work: docs/assets/career/funtown-work-v1.webp; Drive master 1cinIlO85cfIVVWYS4t4oyHfDQbrSiG1k
+- outcome: docs/assets/career/funtown-outcome-v1.webp; Drive master 1-i4Z36whaL3c9dqslP3I8fATidaCCq1j
+- takeaway: docs/assets/career/funtown-takeaway-v1.webp; Drive master 1F7hWp5lM-KbfpjIP1oQKxOZhc4YL2JZJ
+- planning-detail: docs/assets/career/funtown-planning-detail-v1.webp; Drive master 1sJsjpgyKXuXUbC31knY9Wgip_iffgxT1
+- flagship-detail: docs/assets/career/funtown-flagship-detail-v1.webp; Drive master 1aAyzfCMI2Ay7Rhfg1cf-aVShrGorE9-P
+- product-detail: docs/assets/career/funtown-product-detail-v1.webp; Drive master 1ytWvb_BBg9Okz_5z-9TCIr9AX156OqkX
+- logistics-detail: docs/assets/career/funtown-logistics-detail-v1.webp; Drive master 1rkAJcV4XHWoedOg93zN0V2ptNZquq1le
+Rewritten role summary/company description, all four tabs, and all four examples preserve substantive detail. Other job bodies and Sections 1–5 content preserved. Stop after Section 6; Big Box Group next.
+Build and source checks precede publication; live verification results to follow. Mobile visual verification remains pending unless actually verified.
+
+## Company header standard — latest operator corrections, 2026-09-17
+Applies to company/job-card headers throughout the CV:
+- Company name flush left with the body/section alignment.
+- About link above the company name, left aligned.
+- Dates ABOVE location in one right-aligned block to the right of the company name.
+- Bottom of the entire dates/location block aligns with bottom of company name. This supersedes date-only bottom alignment.
+- Role title below company name, without duplicating location.
+- Preserve About interaction, readable popup contrast and newest-to-oldest order.
+Authorized as a header-only correction across cards while substantive editing remains limited to Fun Town RV.
