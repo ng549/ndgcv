@@ -331,3 +331,12 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #role-moremargin .story-passage:last-child{margin-bottom:0}
 #role-moremargin .chapter-media{position:static}
 @media(max-width:760px){#role-moremargin .story-passage{grid-template-columns:1fr;gap:18px}#role-moremargin .company-card{grid-template-columns:1fr;max-height:70vh;overflow-y:auto}#role-moremargin .company-wordmark{min-height:0;display:block;font-size:22px}#role-moremargin .company-wordmark br{display:none}#role-moremargin .company-wordmark br:after{content:' '}#role-moremargin .company-card-copy>span{font-size:16px}}
+
+/* Standard story layout: complete copy left, one image right, tops aligned. */
+#role-moremargin .story-passage{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start}
+#role-moremargin .story-passage>.chapter-copy{grid-column:1;grid-row:1;order:0}
+#role-moremargin .story-passage>.chapter-media{grid-column:2;grid-row:1;order:0;position:static;margin-top:0}
+@media(max-width:760px){
+ #role-moremargin .story-passage{grid-template-columns:1fr}
+ #role-moremargin .story-passage>.chapter-media{grid-column:1;grid-row:2}
+}

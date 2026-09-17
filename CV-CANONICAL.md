@@ -204,3 +204,12 @@ Latest instruction supersedes uneven image distribution: keep exactly one releva
 - Build passed for the latest source. Initial published HTML and CSS matched live byte-for-byte. Existing npm test fails on the pre-existing script query-string path check; all actual local asset paths passed independent validation with query strings removed.
 - Mobile responsive rules reviewed, including stacked story rows and a scrollable single-column About popup. MOBILE VISUAL VERIFICATION REMAINS PENDING: this browser exposes no supported viewport/device resizing capability. Desktop verification must not be presented as a phone check.
 - Stop after More Margin Co.; Fun Town RV remains the next separate step.
+
+## Standardized story layout — latest instruction, 2026-09-17
+This supersedes the paragraph-by-paragraph, mixed-width presentation.
+- Every tab uses the same structure: its heading above, ALL body paragraphs together in the LEFT column, ONE relevant illustration in the RIGHT column.
+- Image top aligns exactly with the first body paragraph's top, never with the Context/The Work/Outcome/Takeaway heading.
+- No full-width introductory paragraphs above the image/copy row, no alternating sides, no additional image rows.
+- Preserve one unique image per tab and all approved wording. More Margin mapping remains Context DJI, The Work assortment, Outcome NuvoMed, Takeaway dashboard.
+- On narrow screens stack heading, body copy, image, with no artificial alignment gap.
+Apply this standing standard to future section edits. Implemented for More Margin Co. only in this update; other job cards await their scheduled section review. Live verification follows publication.
