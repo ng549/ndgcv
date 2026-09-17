@@ -260,3 +260,13 @@ Published Section 6 and the authorized shared company-header correction in 3dae1
 
 ## Fun Town RV house-brand clarification — 2026-09-17
 Nicolas confirmed the second house brand was **USA Rec. Supply**. The two house brands were **KAMPTIME** and **USA Rec. Supply**. Use this exact spelling in the Fun Town RV story and private-label supporting example. Existing KAMPTIME imagery represents KAMPTIME only; do not relabel it as USA Rec. Supply. This is a factual text correction only.
+
+
+## Fun Town RV unique tab imagery — 2026-09-17
+Latest operator instruction: do not reuse images. A different crop or adaptation of the same source is not a substitute for distinct source material between story tabs and supporting examples. Four new user-supplied sources replace the four v1 tab illustrations; supporting examples remain unchanged. Mapping: Context stadium RV show; The Work Shopify POS tablet; Outcome stocked RV accessories aisles; Takeaway Fun Town RV brand collage. People/cartoon cowboy removed from collage under standing no-faces rule. Tablet hand retained without a face. Illustrations are not documentary proof of a particular event, transaction or personal authorship. Existing copy, company About, layout, eight jobs, 32 tabs and 12 examples preserved. Mobile visual verification remains pending.
+- context: original 6c80c645-35d6-41bd-bf67-c5469a2c4be8.png, Drive source 1vHOgggNgAcv3IBvO4kPqJiJmGfc1fWna; master 18YKzAI0gGS3dc2ykxHXxYr7XpfRVnpId; site docs/assets/career/funtown-context-v2.webp.
+- work: original 37a9ae9a-0f4a-4728-acff-c0292bda27ac.png, Drive source 1T5wnrt1iQiIfMT2KrMwMCwkwVlWHUltu; master 1oC77faf0sXfY8rEzXYVTQHKDAVMCDonX; site docs/assets/career/funtown-work-v2.webp.
+- outcome: original dad9b4ae-6324-4f6b-b6cd-ba289d857421.png, Drive source 1UJeBMENTmqkrsrWcZb1Zy5ooSk8LKyDD; master 1O-FMbDQ1lXBizVbqJB8TwpG3KrGdHb1p; site docs/assets/career/funtown-outcome-v2.webp.
+- takeaway: original d83c21c8-23e4-42f5-9aca-da16842f1dd7.png, Drive source 1uxEYHdKcLoqEtosIo8l5wYvpeh6g1b5u; master 16xiM_M44RcBOMqtkk9X5ItgNqrxhmZXE; site docs/assets/career/funtown-takeaway-v2.webp.
+Built-in image-generation skill used with each exact source and illustrations/43.webp style reference. Prompt set: preserve source subject, composition and recognizable details; transfer dry-brush/sketch linework, navy/charcoal and amber palette, realistic perspective and texture; no faces, footers or extra captions; 1536x1024. Build passed; live verification follows deployment.
+
