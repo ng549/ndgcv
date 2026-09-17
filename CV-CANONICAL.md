@@ -270,3 +270,8 @@ Latest operator instruction: do not reuse images. A different crop or adaptation
 - takeaway: original d83c21c8-23e4-42f5-9aca-da16842f1dd7.png, Drive source 1uxEYHdKcLoqEtosIo8l5wYvpeh6g1b5u; master 16xiM_M44RcBOMqtkk9X5ItgNqrxhmZXE; site docs/assets/career/funtown-takeaway-v2.webp.
 Built-in image-generation skill used with each exact source and illustrations/43.webp style reference. Prompt set: preserve source subject, composition and recognizable details; transfer dry-brush/sketch linework, navy/charcoal and amber palette, realistic perspective and texture; no faces, footers or extra captions; 1536x1024. Build passed; live verification follows deployment.
 
+
+
+## Supporting-example contrast and year-only job dates — 2026-09-17
+Latest operator correction: supporting-example sublines must be dark and readable, not pale blue on cream. Use #52616a at full opacity on job-card example metadata. Job employment dates display years only, with no month names; Fun Town RV displays 2021–2024 in the card and journey link. Preserve precise November 2021 hiring and March 2022 opening facts in the narrative/source record.
+The four v2 Fun Town sketches were verified in the actual live tabs: Context stadium, The Work Shopify POS, Outcome stocked aisles, Takeaway company collage. All four loaded at 1536px natural width with 0px image-to-body top offset. No reused source between tabs and supporting examples. Mobile visual verification still pending.
