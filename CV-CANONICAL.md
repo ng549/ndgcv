@@ -248,3 +248,11 @@ Applies to company/job-card headers throughout the CV:
 - Role title below company name, without duplicating location.
 - Preserve About interaction, readable popup contrast and newest-to-oldest order.
 Authorized as a header-only correction across cards while substantive editing remains limited to Fun Town RV.
+
+
+## Fun Town RV publication and live verification — 2026-09-17
+Published Section 6 and the authorized shared company-header correction in 3dae1c05512b687ec92c045324607c834380bb83. Corrected an empty Outcome WebP export in eae0c67e6a8ceb8114932a6c6fc1a0b21557e22f; confirmed the replacement bytes match live and it renders at 1536px natural width in a fresh browser tab.
+- Actual live desktop: all four tabs operated; eight distinct story/example illustrations inspected; all four supporting examples retained, with body text left and relevant image right. Text and image top edges align. Company About opens with readable dark text (#23313b) on cream (#f8f4ec), approximately 12.16:1 contrast.
+- Company header: About above the flush-left company name; dates above location on the right. Browser measurements across all eight job headers confirm the bottom of the combined date/location block exactly matches the bottom of the company name (0px difference). Role title remains below.
+- Build passed. Eight jobs, 32 story sections and 12 supporting examples preserved. Other seven job bodies match the latest prepublication main, including concurrent More Margin changes. Newest-to-oldest order preserved. No Big Box content work.
+- Mobile responsive rules are present, but mobile visual verification remains PENDING: the available browser has no supported viewport/device-resize capability. Do not claim mobile passed.
