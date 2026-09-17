@@ -195,3 +195,12 @@ Live browser measurements confirmed image top equals first body-paragraph top fo
 
 ## One illustration per story tab — 2026-09-17
 Latest instruction supersedes uneven image distribution: keep exactly one relevant illustration in each of Context, The Work, Outcome and Takeaway. More Margin mapping: Context → DJI storefront; The Work → assortment reference; Outcome → NuvoMed product; Takeaway → dashboard. No repeated image. Move the existing assortment-decision detail from Takeaway into a dedicated Work paragraph so its image has directly relevant copy. Retain all other approved factual copy. Each illustration stays aligned to its accompanying body paragraph below the heading. This correction is authorized for publication; verify actual live tab counts.
+
+## Section 5 final verification — 2026-09-17
+- Initial corrections published in 664132e73b6e0f6d76e3e805b67c4845232d4dd9. Preserved concurrent one-image-per-tab revision 3ddee319fdd85e30f3309f6bef495cf6f732b884; did not overwrite it.
+- Actual live desktop card checked at https://nicolasgoureau.com/#role-moremargin. All four tabs exercised; one loaded 1536×1024 sketch in each: Context DJI, The Work assortment, Outcome NuvoMed, Takeaway dashboard. No repeated image or detached gallery. Image and corresponding body-paragraph tops match exactly in browser measurements; story headings remain separate. Keyboard ArrowRight navigation also passed.
+- Opened company About visually verified: clear More Margin Co. wordmark, no client photograph or faces; computed description #23313b on #f8f4ec, contrast 12.16:1. Description is readable. Eyebrow and section alignment retained.
+- Eight jobs, 32 story panels and 12 supporting examples confirmed in the live DOM. Approved dates and qualifications retained. HTML outside More Margin remained unchanged apart from the stylesheet cache query. All four original image masters remain unchanged at their recorded Drive IDs.
+- Build passed for the latest source. Initial published HTML and CSS matched live byte-for-byte. Existing npm test fails on the pre-existing script query-string path check; all actual local asset paths passed independent validation with query strings removed.
+- Mobile responsive rules reviewed, including stacked story rows and a scrollable single-column About popup. MOBILE VISUAL VERIFICATION REMAINS PENDING: this browser exposes no supported viewport/device resizing capability. Desktop verification must not be presented as a phone check.
+- Stop after More Margin Co.; Fun Town RV remains the next separate step.
