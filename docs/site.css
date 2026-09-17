@@ -382,3 +382,23 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 
 /* Readable supporting-example sublines on cream job cards. */
 .role .client-story .meta{color:#52616a;opacity:1}
+
+/* Big Box follows the approved story layout. */
+#role-bigbox .role-body>.eyebrow{margin:22px 0 12px}
+#role-bigbox .career-headline{margin:0 0 24px;max-width:29ch}
+#role-bigbox .career-chapter{display:block;padding:28px 0 8px}
+#role-bigbox .career-chapter[hidden]{display:none}
+#role-bigbox .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-bigbox .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-bigbox .chapter-copy p:last-child{margin-bottom:0}
+#role-bigbox .chapter-media{position:static;margin:0}
+#role-bigbox .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-bigbox .about-trigger,#role-bigbox .disclosure{color:#52616a}
+#role-bigbox .company-card>img{object-fit:contain;height:auto;aspect-ratio:3/2}
+@media(max-width:760px){
+ #role-bigbox .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-bigbox .chapter-copy p{font-size:17px}
+ #role-bigbox .career-headline{font-size:28px}
+ #role-bigbox .career-tabs{gap:6px}
+ #role-bigbox .career-tabs button{padding:9px 10px}
+}
