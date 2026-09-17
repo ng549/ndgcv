@@ -168,3 +168,13 @@ Implementation status: these latest corrections are saved but NOT yet implemente
 
 ## More Margin Co. date label — latest correction
 Display the ongoing role as **2025–Present** everywhere in the CV, including the My journey timeline and More Margin Co. card. This updates the open-ended role date only; the separate DJI engagement dates remain 2025–2026. Requested and authorized by Nicolas. Earlier pending company About/image-order corrections remain pending.
+
+## Standing image-to-copy alignment rule — 2026-09-17
+
+Nicolas’s correction: “the images top needs to be aligned with the top of the copy. no the header. save to conical”.
+
+In every side-by-side story layout, align the top edge of the illustration with the top of the first line of its accompanying body paragraph. The story heading (Context, The Work, Outcome or Takeaway) sits above the copy and must not determine the image’s top alignment. Apply consistently when headings wrap; avoid brittle fixed offsets. On stacked mobile layouts, preserve a clear heading/image/copy reading order without adding desktop alignment spacers.
+
+This complements the existing subject-order rule: each image must accompany the relevant passage. In the supplied Outcome screenshot, the NuvoMed image is both aligned to the heading and beside opening DJI copy; the next correction must resolve both placement and alignment.
+
+Saved for the active handoff. Implementation and live verification of this alignment correction remain pending; do not describe it as published.
