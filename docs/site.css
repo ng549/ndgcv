@@ -472,3 +472,26 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 
 
 #role-courageb .company-card-copy>span{color:#23313b}
+
+/* The Sharper Image: approved product story and body-aligned imagery. */
+#role-sharperimage .role-body>.eyebrow{margin:22px 0 12px}
+#role-sharperimage .career-headline{margin:0 0 24px;max-width:29ch}
+#role-sharperimage .career-chapter{display:block;padding:28px 0 8px}
+#role-sharperimage .career-chapter[hidden]{display:none}
+#role-sharperimage .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-sharperimage .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-sharperimage .chapter-copy p:last-child{margin-bottom:0}
+#role-sharperimage .chapter-media{position:static;margin:0}
+#role-sharperimage .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-sharperimage .about-trigger,#role-sharperimage .disclosure{color:#52616a}
+#role-sharperimage .company-card>img{object-fit:contain;height:auto;aspect-ratio:3/2}
+@media(max-width:760px){
+ #role-sharperimage .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-sharperimage .chapter-copy p{font-size:17px}
+ #role-sharperimage .career-headline{font-size:28px}
+ #role-sharperimage .career-tabs{gap:6px}
+ #role-sharperimage .career-tabs button{padding:9px 10px}
+}
+
+
+#role-sharperimage .company-card-copy>span{color:#23313b}
