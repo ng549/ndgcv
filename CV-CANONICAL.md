@@ -186,3 +186,9 @@ Implemented after reading current main, based on 3a404533cfb54938af1ee1b5b37c5c5
 - Reuse all four original sketches once each, unchanged; no galleries, footers or duplicated images. The original asset filenames and Drive master IDs remain stable despite revised placement.
 - Approved copy and factual constraints unchanged; 2025–Present retained. No Fun Town RV work.
 - Pre-publication checks: build passed; outside-card HTML byte-identical except stylesheet cache query. Eight jobs, 32 story panels, 12 supporting examples retained. Existing npm test has a pre-existing failure because its asset checker does not remove script query strings; equivalent path checks run separately. Live and mobile verification results will follow.
+
+## Image-to-copy alignment verified live — 2026-09-17
+
+Nicolas asked this chat to complete the last alignment update. A concurrent main-branch update implemented paragraph-level story-passage rows, already satisfying the requested alignment. The older attempted heading-grid patch was rejected as a non-fast-forward and was NOT published; it must not replace the newer layout.
+
+Live browser measurements confirmed image top equals first body-paragraph top for all four rendered illustration positions: Context DJI (1030/1030), The Work NuvoMed (730.6875/730.6875), Takeaway assortment (583.9375/583.9375), Takeaway dashboard (899.0625/899.0625), in CSS pixels for the observed desktop scroll positions. Outcome correctly has no duplicated image under the latest narrative-placement layout. Headings sit separately above these rows. All four tabs were exercised. The alignment correction is now live and verified on desktop. Mobile visual verification is not newly claimed.
