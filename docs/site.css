@@ -495,3 +495,26 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 
 
 #role-sharperimage .company-card-copy>span{color:#23313b}
+
+/* KBP: approved product story and body-aligned imagery. */
+#role-kbp .role-body>.eyebrow{margin:22px 0 12px}
+#role-kbp .career-headline{margin:0 0 24px;max-width:29ch}
+#role-kbp .career-chapter{display:block;padding:28px 0 8px}
+#role-kbp .career-chapter[hidden]{display:none}
+#role-kbp .story-passage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#role-kbp .chapter-copy p{font-size:18px;line-height:1.65;margin:0 0 18px;max-width:none}
+#role-kbp .chapter-copy p:last-child{margin-bottom:0}
+#role-kbp .chapter-media{position:static;margin:0}
+#role-kbp .chapter-media img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:contain}
+#role-kbp .about-trigger,#role-kbp .disclosure{color:#52616a}
+#role-kbp .company-card>img{object-fit:contain;height:auto;aspect-ratio:3/2}
+@media(max-width:760px){
+ #role-kbp .story-passage{grid-template-columns:1fr;gap:20px}
+ #role-kbp .chapter-copy p{font-size:17px}
+ #role-kbp .career-headline{font-size:28px}
+ #role-kbp .career-tabs{gap:6px}
+ #role-kbp .career-tabs button{padding:9px 10px}
+}
+
+
+#role-kbp .company-card-copy>span{color:#23313b}

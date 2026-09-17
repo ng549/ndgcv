@@ -8,7 +8,7 @@ campingworld:[[c('campingworld-context-v1')],[c('campingworld-work-v1')],[c('cam
 lemonis:[[c('lemonis-context-v1')],[c('lemonis-work-v1')],[c('lemonis-outcome-v1')],[c('lemonis-takeaway-v1')]],
 courageb:[[c('courageb-context-v1')],[c('courageb-work-v1')],[c('courageb-outcome-v1')],[c('courageb-takeaway-v1')]],
 sharperimage:[[c('sharperimage-context-v1')],[c('sharperimage-work-v1')],[c('sharperimage-outcome-v1')],[c('sharperimage-takeaway-v2')]],
-kbp:[[c('advertising')],['assets/career/kbp-1.jpg'],['assets/career/kbp-2.jpg'],['assets/career/kbp-3.jpg']]
+kbp:[[c('kbp-context-v1')],[c('kbp-work-v1')],[c('kbp-outcome-v1')],[c('kbp-takeaway-v1')]]
 };
 export const clientImages={
 funtown:[[c('funtown-planning-detail-v1')],[c('funtown-flagship-detail-v1')],[c('funtown-product-detail-v1')],[c('funtown-logistics-detail-v1')]],

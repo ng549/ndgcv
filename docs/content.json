@@ -520,36 +520,40 @@
       "id": "kbp",
       "aboutImg": "1POgtI-d2YzYSmf8wD_IO4DwuDTzZlSIV",
       "post": "POST 01",
-      "years": "2005—06",
+      "years": "2005–2006",
       "company": "KBP Advertising",
       "location": "New York, NY",
-      "role": "New Business Development Group",
-      "context": "New York advertising agency; new-business development group.",
-      "about": "Kirshenbaum Bond + Partners — a New York agency founded in 1987 that grew into one of the largest independent advertising firms in the U.S., known for disruptive creative, guerrilla marketing, and media innovation for brands including BMW, Target, Citi, Tommy Hilfiger, and Delta Air Lines.",
+      "role": "Junior Analyst, New Business Development",
+      "context": "Kirshenbaum Bond + Partners — working with the managing partners and teams across the agency to win new clients and expand existing accounts.",
+      "about": "Kirshenbaum Bond + Partners was a New York advertising agency whose work brought together creative development, strategy and marketing services. Its new-business team worked with the managing partners and departments across the agency to pursue new clients and expand existing relationships.",
       "chapters": [
         {
           "k": "Context",
-          "img": "https://image.cnbcfm.com/api/v1/image/101168029-priceline_2_r.jpg?v=1425047653&w=1200&h=675",
-          "text": "I joined the new-business development group, working with senior executives to win clients and develop work for existing accounts. I was the point person on a group of accounts we won, starting with Priceline.com. I helped build the pitch by working through the positioning, the competition, and how to explain the opportunity. Online travel was still proving it could retain customers without a storefront. Priceline’s “name your own price” proposition needed to feel like a smart choice rather than a gamble; the pitch had to make that clear.",
-          "cap": "Priceline.com — the pitch that opened the run."
+          "img": "assets/career/kbp-context-v1.webp",
+          "text": "I joined Kirshenbaum Bond + Partners as a Junior Analyst in new business development, working for the managing partners. Our team operated like a special unit within the agency, helping win new clients and develop more business from existing relationships.\n\nEach department had its ongoing responsibilities. When an opportunity arose, we drew on those teams and their resources—sometimes at a moment’s notice—to bring together the strongest possible pitch. My work connected the agency’s capabilities with what we needed to show a prospective or existing client.",
+          "cap": "KBP agency setting — adapted conceptual company artwork, not documentary premises",
+          "sourceImg": "https://image.cnbcfm.com/api/v1/image/101168029-priceline_2_r.jpg?v=1425047653&w=1200&h=675"
         },
         {
           "k": "The Work",
-          "img": "https://i5.walmartimages.com/asr/17e73dfc-a3c4-4371-a961-d9c828dd50ab.50a595381da5433f8cc007ce82f70874.jpeg",
-          "text": "Mrs. Butterworth’s brought a different kind of question. It was already a recognizable brand, so the pitch had to show how it could stay relevant alongside private label and lower-priced alternatives. I worked on connecting the creative thinking with the retail questions: what sells, what earns margin, and what deserves shelf space. Recognition alone would not protect its place on the shelf. Grocery buyers needed a case built around sales velocity and margin per facing, as well as a strong creative idea.",
-          "cap": "Mrs. Butterworth's — the first major consumer products win."
+          "img": "assets/career/kbp-work-v1.webp",
+          "text": "I brought together work produced across the agency’s teams to help make the case for expanding relationships and securing future contracts. For existing accounts such as Edward Jones and Snapple, that meant connecting contributions from different departments into a proposal that showed what the agency could do next.\n\nPriceline.com was particularly memorable. I made Oscar-like trophies for the pitch, and those trophies went on to become part of the actual campaign. It was an early experience of making something tangible for a presentation and seeing it reach beyond the pitch itself.\n\nThe work required coordinating around an immediate opportunity while the people contributing to it still had their everyday client responsibilities. I learned how to draw on the right resources and help turn separate pieces of work into a coherent presentation.",
+          "cap": "Bringing the work together — conceptual workspace detail, not original client pitch materials",
+          "sourceImg": "https://i5.walmartimages.com/asr/17e73dfc-a3c4-4371-a961-d9c828dd50ab.50a595381da5433f8cc007ce82f70874.jpeg"
         },
         {
           "k": "Outcome",
-          "img": "https://www.asktraders.com/wp-content/uploads/2023/09/Diageo-drinks.jpg",
-          "text": "The wins also included Diageo, Edward Jones, and Snapple. Moving between travel, consumer products, financial services, and spirits meant getting to understand a different business each time. That variety was a big part of what I enjoyed about the work. For Diageo, the question was how a challenger agency could handle a portfolio of brands competing for attention in a crowded spirits market. The idea had to distinguish the brands, rather than depend only on spending more on advertising.",
-          "cap": "Diageo — one of the new-business accounts we won."
+          "img": "assets/career/kbp-outcome-v1.webp",
+          "text": "Mrs. Butterworth’s was among the pitches where I was the point person within our new-business team and we won the account. Other wins included Priceline.com, Diageo and The Sharper Image. These were team wins, supported by the managing partners and people across the agency. My contribution included assembling work for pitches and, in Priceline’s case, making a physical element that became part of the campaign.\n\nEdward Jones and Snapple involved expanding existing accounts. I helped bring the teams’ work together to support those conversations about future business.\n\nThe Sharper Image relationship led directly to my next role. They valued my work and insights into their business and recruited me from KBP into their own organization.",
+          "cap": "Mrs. Butterworth’s — client product reference, not a claim of packaging or campaign design",
+          "sourceImg": "https://www.asktraders.com/wp-content/uploads/2023/09/Diageo-drinks.jpg"
         },
         {
           "k": "Takeaway",
-          "img": "https://www.gordonbrothers.com/wp-content/uploads/2021/11/the-sharper-image_projects_square.jpg",
-          "text": "The Sharper Image became both a client and my next employer. Working on the account took me into the products, stores, catalog, and website, and the business later hired me directly. It was the move from helping explain what a retailer could do to taking responsibility for putting it into practice.",
-          "cap": "The Sharper Image — the client that became the next job."
+          "img": "assets/career/kbp-takeaway-v1.webp",
+          "text": "The Sharper Image’s decision to recruit me brought this experience into my next stage of work. I had learned that winning work depends on connecting an understanding of the client with a clear proposal and the people needed to deliver it.\n\nThe Priceline trophies showed me how a tangible idea could bring a pitch to life. The account-expansion work taught me how to assemble different teams’ contributions into a convincing case for what should happen next.\n\nThose habits stayed with me as I moved into product development and later built and operated businesses: understand the opportunity, find the resources, and help people turn their contributions into something useful.",
+          "cap": "The Sharper Image — brand reference marking the client-to-employer transition",
+          "sourceImg": "https://www.gordonbrothers.com/wp-content/uploads/2021/11/the-sharper-image_projects_square.jpg"
         }
       ]
     }
