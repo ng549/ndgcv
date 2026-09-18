@@ -51,6 +51,30 @@ export const careerHighlights = {
  ]
 };
 
+export const exampleHighlights = {
+ funtown: [
+  [['Created the store playbook','Developed planograms and merchandising guides for store teams.'],['Designed the retail offer','Connected layout, fixtures, product placement, branding and graphics.']],
+  [['Opened March 2022','65,000-square-foot Corsicana facility, including about 10,000 square feet of retail.'],['Designed retail and RV sales spaces','Branding, layout and graphics extended to the sales tower and training rooms.']],
+  [['2 house brands, top 50 products','Focused direct sourcing on KAMPTIME and USA Rec. Supply.'],['Developed the house-brand offer','Connected supplier sourcing with packaging, pricing and merchandising.']],
+  [['Built the internal ordering portal','Connected dealerships and head office with automatic replenishment.'],['Moved products into 3PL','Store inventory also fulfilled website and marketplace orders.']]
+ ],
+ lemonis: [
+  [['Developed the store and operating offer','Connected fixtures, floorplans and branding with assortment and pricing.'],['Worked through the physical build','Contributed to construction, real-estate negotiations, logistics and technology.']],
+  [['Shaped the candy-shop experience','Worked across fixtures, floorplans, branding and assortment.'],['Connected the operating details','Brought pricing, logistics and technology into the store-development work.']],
+  [['Replaced custom fabrication','Used ready-made fixtures with a coordinated graphics package.'],['Made expansion easier to repeat','Supported acquisitions and new openings with the fixture and store approach.']],
+  [['Reworked the store presentation','Contributed to redesign, layout and fixtures.'],['Improved product information','Worked on SKU management and reporting alongside the store changes.']],
+  [['~8,000 sq ft transformed','Redesigned, rebranded and remerchandised the Chicago space, including buildout.'],['7 shops within one store','Organized distinct product areas inside the wider active-sports concept.']],
+  [['Created the concept and rebrand','Developed technology, store builds and merchandising for the acquired business.'],['Completed the ML Fashion handoff','Carried the transformation work through to its transfer to the operating team.']],
+  [['Created the concept','Developed the assortment and store design.'],['Opened the first Texas store','Worked through the build to bring the first location into use.']],
+  [['Developed operating processes','Worked on the practical routines supporting the quick-service business.'],['Worked on retail assortments','Helped shape the product offer alongside the operating processes.']]
+ ]
+};
+
+export function withExampleHighlights(media, id, index, escape) {
+ const items=exampleHighlights[id][index];
+ return `<aside class="career-evidence">${media}<ul class="career-highlights example-highlights" aria-label="Work highlights">${items.map(([lead,detail])=>`<li><strong>${escape(lead)}</strong><span>${escape(detail)}</span></li>`).join('')}</ul></aside>`;
+}
+
 export function withHighlights(markup, id, chapter, escape) {
  const items=careerHighlights[id][chapter];
  const list=`<ul class="career-highlights" aria-label="${escape(['Context','The Work','Outcome','Takeaway'][chapter])} highlights">${items.map(([lead,detail])=>`<li><strong>${escape(lead)}</strong><span>${escape(detail)}</span></li>`).join('')}</ul>`;
