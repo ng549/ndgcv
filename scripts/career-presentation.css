@@ -7,12 +7,12 @@
  border-radius: 8px; box-shadow: 0 18px 44px #17242d0c;
 }
 #experience .role.career-designed.palette-stone {
- --card-bg: #c4d6e5; --card-ink: #172e42; --card-muted: #304b60;
- --card-accent: #214f73; --card-line: #172e4238;
+ --card-bg: #ced1d3; --card-ink: #202e38; --card-muted: #40515c;
+ --card-accent: #374f60; --card-line: #202e3838;
 }
 #experience .career-designed .career-backdrop {position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none;background-image:var(--career-scene);background-size:100% auto;background-repeat:repeat-y;opacity:.25}
 #experience .career-designed .career-backdrop:after {content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f6f1e7ed 0%,#f6f1e7de 48%,#f6f1e78c 100%)}
-#experience .career-designed.palette-stone .career-backdrop:after {background:linear-gradient(90deg,#c4d6e5ed 0%,#c4d6e5de 48%,#c4d6e58c 100%)}
+#experience .career-designed.palette-stone .career-backdrop:after {background:linear-gradient(90deg,#ced1d3ed 0%,#ced1d3de 48%,#ced1d38c 100%)}
 /* Opaque reading surfaces protect text from artwork, with soft edges rather than extra boxes. */
 #experience .career-designed .chapter-copy,
 #experience .career-designed .career-highlights,
@@ -74,7 +74,7 @@
  #experience .career-designed .career-highlights strong {font-size:23px}
  #experience .career-designed .career-backdrop {opacity:.18}
  #experience .career-designed .career-backdrop:after {background:#f6f1e7bf}
- #experience .career-designed.palette-stone .career-backdrop:after {background:#c4d6e5bf}
+ #experience .career-designed.palette-stone .career-backdrop:after {background:#ced1d3bf}
  #experience .career-designed .career-tabs {display:flex;flex-wrap:wrap;gap:6px}
  #experience .career-designed .career-tabs button {padding:9px 10px}
 }
