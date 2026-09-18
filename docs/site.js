@@ -10,26 +10,48 @@ function paint(){pending=false;document.querySelectorAll('[data-parallax]').forE
 addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(paint)}},{passive:true});motion.addEventListener('change',paint);small.addEventListener('change',paint);
 const form=document.querySelector('#reference-form');form?.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const d=new FormData(form);const body=`Hello Nicolas,\n\nI'd like to request references.\n\nName: ${d.get('name')}\nCompany / role: ${d.get('company')}\nEmail: ${d.get('email')}\n\nOpportunity and what I'd like to discuss:\n${d.get('story')}\n`;location.href='mailto:ngoureau@mac.com?subject='+encodeURIComponent('Reference request — '+d.get('name'))+'&body='+encodeURIComponent(body);document.querySelector('#reference-status').textContent='Your email app will open with the request. Send it there to reach Nicolas.'});
 
-// Capability descriptions work with a mouse, keyboard, or touch.
-const capabilityButtons = [...document.querySelectorAll('[data-capability]')];
+// Capabilities: a quiet invitation until mouse, keyboard, or touch selects a topic.
+const capabilityButtons = [...document.querySelectorAll('#capabilities [data-capability]')];
+const capabilityDetail = document.querySelector('#capabilities .cap-detail');
+const capabilityInvitation = document.querySelector('#capabilities .cap-invitation');
+let activeCapability = null, restoringCapabilityFocus = false;
 function selectCapability(button) {
+  activeCapability = button;
   capabilityButtons.forEach(item => {
     const selected = item === button;
     item.setAttribute('aria-expanded', String(selected));
     document.getElementById(item.dataset.capability).hidden = !selected;
   });
+  capabilityDetail.hidden = false;
+  capabilityInvitation.hidden = true;
+  capabilityDetail.scrollTop = 0;
+}
+function closeCapability() {
+  capabilityButtons.forEach(item => {
+    item.setAttribute('aria-expanded', 'false');
+    document.getElementById(item.dataset.capability).hidden = true;
+  });
+  capabilityDetail.hidden = true;
+  capabilityInvitation.hidden = false;
+  if (activeCapability) {
+    restoringCapabilityFocus = true;
+    activeCapability.focus({preventScroll:true});
+    restoringCapabilityFocus = false;
+  }
+  activeCapability = null;
 }
 capabilityButtons.forEach(button => {
   button.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse') selectCapability(button);
   });
-  button.addEventListener('focus', () => selectCapability(button));
+  button.addEventListener('focus', () => {if (!restoringCapabilityFocus) selectCapability(button);});
   button.addEventListener('click', () => selectCapability(button));
 });
-if (capabilityButtons.length) selectCapability(capabilityButtons[0]);
+document.querySelector('#capabilities .cap-close')?.addEventListener('click',closeCapability);
+document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
 
 const sections = {
-  about: 'About me', opportunity: 'My next chapter', build: 'How I can help', value: 'Results',
+  about: 'About me', opportunity: 'My next chapter', build: 'How I can help', capabilities: 'Capabilities', value: 'Results',
   'product-journey': 'From idea to sale', experience: 'My journey',
   ai: 'Systems, tools & AI', contact: 'Let’s talk'
 };

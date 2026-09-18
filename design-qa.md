@@ -1,43 +1,19 @@
-# Inside the Work preview — design QA
+# Section 14 capability diagram QA — 2026-09-18
+
+Source visual truth: ../generated_images/exec-3d8be544-d3e0-41dc-8eb7-5ada10028a4a.png (1536×1024).
+Implementation screenshot: ../section14-preview.png (1363×936 browser viewport, 1× density). Local browser: http://terminal.local:4173/#capabilities.
+State: invitation, plus Sourcing detail, keyboard focus, close, and all 23 selected panels.
+
+Comparison: source and rendered capture were opened together. Source has a wider canvas; compare the diagram content at proportional width, not exact full-page pixel positions. Existing sidebar, section label and heading alignment are retained intentionally. Diagram uses four new concept sketches, four original groups, rounded controls, navy/amber background, clear center and handwritten invitation. Lower controls extend below the 936px viewport and remain in normal scrolling flow. No page overflow.
+
+Iteration 1: P2 hard rectangular image edges and excessive vertical spacing. Fixed with a soft elliptical edge mask, 195px desktop image height and tighter row spacing. Moved group headings beneath their images as in the reference. Post-fix screenshot confirms softened edges, readable controls, clear central panel and no overlap.
+
+Required fidelity surfaces: Manrope headings and Source Sans 3 controls/body preserve site typography; Caveat gives the invitation its sketch style. Four corner groups preserve spacing around the central panel. Cream panel with dark navy text and amber active control remains legible over the decorative background. New concept images retain proportions and full subjects. All 23 capability names preserved, each with an introduction and three substantive bullets. Concepts identified through accessible image text and hover title, with full-size links. No central name, image footer or reused site illustrations.
+
+Interaction verification: clicked all 23 controls; each revealed exactly one panel with three bullets. Tab from Sourcing opened Private Label; Escape restored the invitation and focus; Close also works. Active dot is attached to selected pill. All four foreground images loaded. Browser error review found extension metadata errors only, no site-script errors. Existing npm checker still mistakes the script URL for an image; independent check confirmed every actual img source exists. HTML outside Capabilities/head is byte-for-byte unchanged, preserving eight jobs, 32 tabs, 12 supporting examples and Section13.
+
+Mobile visual check: PENDING. Browser capabilities list is empty, so no viewport resizing available. Responsive CSS is implemented but this report does not claim mobile visual verification.
+
+Final result applies to available desktop comparison and interactions; mobile remains an explicit verification gap.
 
 final result: passed
-
-Scope: reviewable public CV frontend. Cloudflare account deployment and private reference approval/email automation are not complete and are not represented as working features.
-
-## Evidence
-- Source visual truth: `/workspace/scratch/7737b44dd817/generated_images/exec-6c382cf8-7d88-4b5c-b3e4-28fecef9f96d.png` (1536 × 1024).
-- Browser-rendered final: `/workspace/scratch/cv-desktop-final-v2.jpg` (1363 × 936, desktop page, top, menu closed).
-- Full comparison: `/workspace/scratch/cv-qa-comparison.jpg`.
-- Focused typography/header comparison: `/workspace/scratch/cv-qa-focus.jpg`.
-- Source normalized proportionally to implementation width; no device chrome. Reference is a composed mockup, so lower crop differs after adding requested availability text and retaining full bio. Implementation uses original photographic cutout, not the generated portrait in the source.
-- Mobile evidence: `/workspace/scratch/cv-mobile-review.jpg`, real page in 390 × 844 iframe. This is a responsive CSS layout check, not physical-device testing.
-
-## Findings and iteration
-- Initial P2: hero occupied 850px and introduction delayed the biography. Reduced hero to 740px, placed bio directly below it, moved introduction after bio. Final screenshot confirms cream bio starts in first desktop viewport.
-- Initial P2: header links sat at the far right, unlike source. Changed to start-aligned compact navigation after wordmark. Final focused comparison confirms correction.
-- Initial P2: mobile illustration competed with headline. Increased mobile dark overlay. Mobile menu and gallery tests passed.
-- No remaining actionable P0/P1/P2 issues in reviewed states. Full bio is intentionally longer than the mockup excerpt; actual fabric-sourcing illustration replaces invented clothing props. Availability text and image caption add height versus source. These preserve user corrections and source facts.
-
-## Fidelity surfaces
-- Typography: Manrope headings/navigation, Source Sans 3 prose, readable hierarchy and three-line opening. Font rendering visible in browser; no clipping in reviewed states.
-- Spacing: stable text layer, original portrait on right, paired illustration/bio, grouped results and career stories. Responsive stacking used below 760px.
-- Colors: charcoal #22262B, warm white #EFEDE6, blue #8FB0D8; source amber retained in editorial imagery.
-- Images: seven source-based editorial illustrations, original unretouched photographic portrait cutout. Software screenshots and original packaging evidence remain readable. No broken loaded images in browser; every image path verified on disk.
-- Copy: approved opening, childhood work at twelve, locked handyman bio, Atlanta GA, remote/hybrid and travel. Eight career roles, 32 story passages, 23 topics, seven software projects and three smaller projects retained. Source project status labels preserved rather than inferred current claims.
-
-## Interaction checks
-- Desktop section navigation and company links; Camping World link opens its disclosure.
-- Mobile menu opens, links navigate and close menu.
-- PARKOUR Costs gallery button changes selected state and screenshot.
-- Reference-request disclosure reveals labeled form. Button clearly prepares an email, not an unimplemented API submission. No test emails sent.
-- Email, telephone and LinkedIn destinations checked in rendered DOM.
-- Reduced motion and mobile disable parallax in code; native disclosures preserve keyboard behavior.
-- Desktop DOM overflow: false. Loaded broken image list: empty.
-- Browser console checked: only browser-extension metadata errors; no site JavaScript errors.
-- npm build/test, static image and anchor checks, and Wrangler deployment dry-run pass.
-
-## Follow-up
-- Review on Nicolas's actual mobile device and gather copy notes.
-- Connect Cloudflare account and deploy preview; do not change production domain before review.
-- Implement authenticated private reference list, approval dashboard and email delivery after secure sender connection.
-- Original product packaging remains photographic source evidence; extend illustration treatment if Nicolas wants that evidence stylized too.
