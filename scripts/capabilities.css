@@ -60,3 +60,22 @@
 @media(max-width:760px){#capabilities .cap-map{grid-template-columns:1fr;gap:20px}#capabilities .cap-invitation{left:5%;width:90%}#capabilities .cap-pill{min-height:44px;font-size:16px;padding:10px 3px}#capabilities .cap-cluster h4{font-size:22px}#capabilities .cap-detail{max-height:65dvh}#capabilities::after{background:#14232de6}}
 @media(min-width:1101px){#capabilities .cap-center{left:34%;width:32%}}
 @media(min-width:1101px){#capabilities .cap-center{left:35%;width:30%}}
+
+/* Compass layout: each group sits on a cardinal side of the invitation. */
+@media(min-width:1101px){
+ #capabilities .cap-map{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr);grid-template-rows:auto 230px auto;gap:8px 22px;min-height:0;padding:0 0 24px;align-items:center}
+ #capabilities .cap-cluster-0{grid-area:1/2}
+ #capabilities .cap-cluster-1{grid-area:1/3/4/4}
+ #capabilities .cap-cluster-2{grid-area:1/1/4/2}
+ #capabilities .cap-cluster-3{grid-area:3/2}
+ #capabilities .cap-art{margin:-12px -20px -4px}
+ #capabilities .cap-art img{height:210px;max-height:none}
+ #capabilities .cap-center{position:relative;grid-area:2/2;left:auto;top:auto;width:100%;transform:none;align-self:center}
+ #capabilities .cap-invitation{padding:10px 0;background:none;border-radius:0}
+ #capabilities .cap-invitation p{font-size:35px}
+ #capabilities .cap-invitation span{font-size:23px}
+ #capabilities .cap-detail{max-height:230px;padding:14px 16px}
+ #capabilities .cap-cluster h4{font-size:21px;margin-bottom:9px}
+ #capabilities .cap-pills{gap:3px 13px}
+ #capabilities .cap-pill{font-size:16px;padding:8px 1px}
+}
