@@ -70,9 +70,9 @@ export const exampleHighlights = {
  ]
 };
 
-export function withExampleHighlights(media, id, index, escape) {
+export function withExampleHighlights(copy, id, index, escape) {
  const items=exampleHighlights[id][index];
- return `<aside class="career-evidence">${media}<ul class="career-highlights example-highlights" aria-label="Work highlights">${items.map(([lead,detail])=>`<li><strong>${escape(lead)}</strong><span>${escape(detail)}</span></li>`).join('')}</ul></aside>`;
+ return `<div class="chapter-copy">${copy}<ul class="career-highlights example-highlights" aria-label="Work highlights">${items.map(([lead,detail])=>`<li><strong>${escape(lead)}</strong><span>${escape(detail)}</span></li>`).join('')}</ul></div>`;
 }
 
 export function withHighlights(markup, id, chapter, escape) {
