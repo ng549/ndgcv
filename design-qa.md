@@ -19,3 +19,6 @@ Final result applies to available desktop comparison and interactions; mobile re
 final result: passed
 
 Live follow-up: c300e22 initially omitted the stylesheet-only background from the deployment package (P1). Fixed by a51a3bd, explicitly packaging the asset. Post-fix actual live screenshot ../section14-live.png shows background, four new sketches, Sourcing cream panel, readable bullets and adjacent active dot. All23 live panels tested; Tab and Escape passed; eight jobs and32tabs present. Build163assets. Live desktop final result remains passed; mobile visual remains pending.
+
+## User correction pass — 2026-09-18
+User screenshot showed excessive negative space, rejected pills, and background restricted to diagram. Updated to immersive skateshop-style studio behind entire section, compact groups and underlined text controls. User supplied screenshot and rendered local correction inspected. Narrowed central panel after initial comparison showed it covering edge of neighboring labels. Real pointer movement verifies open → enter panel (stays open) → leave (closes). Entire HTML content unchanged; mobile remains unverified. Prior style acceptance superseded by this correction. Desktop correction final result: passed.

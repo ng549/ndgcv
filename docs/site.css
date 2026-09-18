@@ -679,3 +679,29 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #capabilities .cap-map{padding-top:8px;gap:26px 18px}
 @media(min-width:1101px){#capabilities .cap-art img{height:195px;width:100%;object-fit:contain}#capabilities .cap-center{left:33%;width:34%}}
 @media(max-width:1100px){#capabilities .cap-map{padding-top:105px;gap:35px 30px}}
+/* Approved correction: immersive section-wide sketch, compact groups, text controls. */
+#capabilities{position:relative;isolation:isolate;padding-top:20px;margin-top:45px}
+#capabilities::before{content:'';position:absolute;inset:0 -6.82%;z-index:-2;background:#202e38 url('illustrations/section14-workspace-background-v2.webp') center/cover no-repeat}
+#capabilities::after{content:'';position:absolute;inset:0 -6.82%;z-index:-1;background:#14232ddd}
+#capabilities>.section-bar{margin-bottom:20px}
+#capabilities .section-heading{margin-bottom:0}
+#capabilities .section-heading h3{margin-top:7px}
+#capabilities .cap-map{background:none;grid-template-columns:minmax(0,1fr) minmax(210px,.65fr) minmax(0,1fr);gap:12px 12px;padding:0 0 24px}
+#capabilities .cap-art{margin:-5px -10px 0}
+#capabilities .cap-cluster h4{margin:0 0 7px;font-size:20px}
+#capabilities .cap-pills{gap:2px 14px;justify-content:center}
+#capabilities .cap-pill{border:0;border-bottom:1px solid #dfba815e;border-radius:0;background:transparent;box-shadow:none;font:600 15px/1.3 'Source Sans 3',sans-serif;padding:7px 1px;color:#fff7ed;text-shadow:0 1px 3px #07121c}
+#capabilities .cap-pill:hover,#capabilities .cap-pill[aria-expanded=true]{color:#ffd39b;background:transparent;border-color:#ffd39b}
+#capabilities .cap-pill[aria-expanded=true]::before{left:-9px;width:5px;height:5px;top:calc(50% - 2px);box-shadow:none}
+#capabilities .cap-center{left:32%;width:36%}
+#capabilities .cap-invitation{padding:12px 8px;background:#152632bb;border-radius:12px}
+#capabilities .cap-invitation p{font-size:34px;margin-bottom:6px}
+#capabilities .cap-invitation span{font-size:24px}
+#capabilities .cap-detail{padding:18px 20px;border-radius:10px;max-height:580px;overflow:auto}
+#capabilities .cap-detail-panel p,#capabilities .cap-detail-panel li{font-size:15px;line-height:1.4}
+#capabilities .cap-detail-panel li{margin-bottom:10px}
+@media(min-width:1101px){#capabilities .cap-art img{height:160px}#capabilities .cap-map{min-height:590px}#capabilities .cap-detail{max-height:570px}}
+@media(max-width:1100px){#capabilities .cap-map{grid-template-columns:1fr 1fr;padding-top:95px;gap:22px}#capabilities .cap-center{width:auto}#capabilities .cap-invitation{left:22%;width:56%;top:6px}#capabilities .cap-art img{max-height:190px}#capabilities .cap-detail{max-height:65vh}}
+@media(max-width:760px){#capabilities .cap-map{grid-template-columns:1fr;gap:20px}#capabilities .cap-invitation{left:5%;width:90%}#capabilities .cap-pill{min-height:44px;font-size:16px;padding:10px 3px}#capabilities .cap-cluster h4{font-size:22px}#capabilities .cap-detail{max-height:65dvh}#capabilities::after{background:#14232de6}}
+@media(min-width:1101px){#capabilities .cap-center{left:34%;width:32%}}
+@media(min-width:1101px){#capabilities .cap-center{left:35%;width:30%}}

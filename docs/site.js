@@ -14,8 +14,13 @@ const form=document.querySelector('#reference-form');form?.addEventListener('sub
 const capabilityButtons = [...document.querySelectorAll('#capabilities [data-capability]')];
 const capabilityDetail = document.querySelector('#capabilities .cap-detail');
 const capabilityInvitation = document.querySelector('#capabilities .cap-invitation');
-let activeCapability = null, restoringCapabilityFocus = false;
+let activeCapability = null, restoringCapabilityFocus = false, capabilityDismissTimer;
+function scheduleCapabilityDismiss() {
+  clearTimeout(capabilityDismissTimer);
+  capabilityDismissTimer = setTimeout(() => closeCapability(false), 160);
+}
 function selectCapability(button) {
+  clearTimeout(capabilityDismissTimer);
   activeCapability = button;
   capabilityButtons.forEach(item => {
     const selected = item === button;
@@ -26,14 +31,15 @@ function selectCapability(button) {
   capabilityInvitation.hidden = true;
   capabilityDetail.scrollTop = 0;
 }
-function closeCapability() {
+function closeCapability(restoreFocus = true) {
+  clearTimeout(capabilityDismissTimer);
   capabilityButtons.forEach(item => {
     item.setAttribute('aria-expanded', 'false');
     document.getElementById(item.dataset.capability).hidden = true;
   });
   capabilityDetail.hidden = true;
   capabilityInvitation.hidden = false;
-  if (activeCapability) {
+  if (activeCapability && restoreFocus) {
     restoringCapabilityFocus = true;
     activeCapability.focus({preventScroll:true});
     restoringCapabilityFocus = false;
@@ -44,10 +50,16 @@ capabilityButtons.forEach(button => {
   button.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse') selectCapability(button);
   });
+  button.addEventListener('pointerleave', event => {if(event.pointerType === 'mouse') scheduleCapabilityDismiss();});
+  button.addEventListener('blur', event => {if(!capabilityDetail.contains(event.relatedTarget)) scheduleCapabilityDismiss();});
   button.addEventListener('focus', () => {if (!restoringCapabilityFocus) selectCapability(button);});
   button.addEventListener('click', () => selectCapability(button));
 });
-document.querySelector('#capabilities .cap-close')?.addEventListener('click',closeCapability);
+capabilityDetail?.addEventListener('pointerenter',()=>clearTimeout(capabilityDismissTimer));
+capabilityDetail?.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse')scheduleCapabilityDismiss();});
+capabilityDetail?.addEventListener('focusin',()=>clearTimeout(capabilityDismissTimer));
+capabilityDetail?.addEventListener('focusout',event=>{if(!capabilityDetail.contains(event.relatedTarget))scheduleCapabilityDismiss();});
+document.querySelector('#capabilities .cap-close')?.addEventListener('click',()=>closeCapability());
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
 
 const sections = {
