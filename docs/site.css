@@ -604,3 +604,25 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #experience .career-designed .career-backdrop {display:none}
  #experience .role.career-designed {--card-bg:white;--card-ink:#23313b;--card-muted:#465864;--card-accent:#80502c;box-shadow:none}
 }
+
+/* Section 13 only: readable contribution areas, source-based sketches. */
+#build .help-intro {max-width:100%;margin-bottom:36px}
+#build .help-intro p {max-width:850px}
+#build .help-areas {display:grid;gap:24px}
+#build .help-area {padding:30px;background:#f6f1e7;color:#172b3d;border-radius:6px}
+#build .help-area:nth-child(even) {background:#536b7f;color:#fff}
+#build .help-area h3 {margin:0 0 20px;font-size:clamp(23px,2.4vw,32px);line-height:1.2;color:inherit}
+#build .help-passage {display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:start}
+#build .help-copy p {font-size:18px;line-height:1.55;margin:0 0 18px;color:inherit;max-width:none}
+#build .help-copy .help-example {font-size:16px;line-height:1.5;padding-top:16px;border-top:1px solid currentColor}
+#build .help-example strong {font-weight:750}
+#build .help-evidence {font-size:15px;font-weight:750;color:inherit;text-underline-offset:4px}
+#build .help-evidence:focus-visible,#build .help-image:focus-visible {outline:3px solid currentColor;outline-offset:5px}
+#build .help-image {display:block;min-width:0;align-self:start;border:0;background:transparent;box-shadow:none}
+#build .help-image img {display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;border:0;border-radius:0;box-shadow:none;mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 95%,transparent);mask-composite:intersect}
+@media(max-width:760px){
+ #build .help-area {padding:22px 18px}
+ #build .help-passage {grid-template-columns:minmax(0,1fr);gap:24px}
+ #build .help-copy p {font-size:17px}
+ #build .help-area h3 {font-size:25px}
+}

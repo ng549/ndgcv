@@ -1,0 +1,62 @@
+[
+  {
+    "area": "launch",
+    "source": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2024/03/DJI-NYC_5thAve_Exterior_01.jpg?resize=720%2C900&ssl=1",
+    "master": "https://drive.google.com/file/d/16rclpqHcu3ohHJT_ThvhIhNBT-LQGH80/view?usp=drivesdk",
+    "asset": "illustrations/how-i-can-help-launch.webp",
+    "classification": "Source-based adapted sketch, not documentary photograph",
+    "dimensions": [
+      1200,
+      800
+    ],
+    "prompt": "Use case: style-transfer. Image 1 is the exact subject reference; image 2 is STYLE ONLY. Create a detailed editorial architectural/product sketch for Nicolas Goureau CV How I can help. Match image 2 navy/charcoal linework, amber lighting, textured cream paper, painterly brush edges and dimensional perspective. Landscape 1536x1024 (3:2), full subject without cutting key details. Preserve the DJI Fifth Avenue facade: tall vertical ribs, narrow entrance and stone architecture. Show complete essential facade centered with cream sketch-paper breathing room to fit landscape. Remove pedestrians and neighboring promotional posters; no invented interior. No recognizable faces, generated slogans, numbers, image footers or invented project evidence. Essential labels will be HTML text. This is an adapted sketch, not a documentary photo."
+  },
+  {
+    "area": "economics",
+    "source": "https://drive.google.com/file/d/1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA/view",
+    "master": "https://drive.google.com/file/d/1dRE1cjiioUCGgQ1P0sAO8E5kJS3D_Bkg/view?usp=drivesdk",
+    "asset": "illustrations/how-i-can-help-economics.webp",
+    "classification": "Source-based adapted sketch, not documentary photograph",
+    "dimensions": [
+      1200,
+      800
+    ],
+    "prompt": "Use case: style-transfer. Image 1 is the exact subject reference; image 2 is STYLE ONLY. Create a detailed editorial architectural/product sketch for Nicolas Goureau CV How I can help. Match image 2 navy/charcoal linework, amber lighting, textured cream paper, painterly brush edges and dimensional perspective. Landscape 1536x1024 (3:2), full subject without cutting key details. Preserve the KAMPTIME cartons, green sewer-hose product graphics, two pallets, stack arrangement and storefront context. Remove promotional price placard lettering; no prices, metrics or added products. No recognizable faces, generated slogans, numbers, image footers or invented project evidence. Essential labels will be HTML text. This is an adapted sketch, not a documentary photo."
+  },
+  {
+    "area": "expansion",
+    "source": "https://drive.google.com/file/d/1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po/view",
+    "master": "https://drive.google.com/file/d/1LNsQG6XyFBjipNvOTPYhqIdxS9RQHRhD/view?usp=drivesdk",
+    "asset": "illustrations/how-i-can-help-expansion.webp",
+    "classification": "Source-based adapted sketch, not documentary photograph",
+    "dimensions": [
+      1200,
+      800
+    ],
+    "prompt": "Use case: style-transfer. Image 1 is the exact subject reference; image 2 is STYLE ONLY. Create a detailed editorial architectural/product sketch for Nicolas Goureau CV How I can help. Match image 2 navy/charcoal linework, amber lighting, textured cream paper, painterly brush edges and dimensional perspective. Landscape 1536x1024 (3:2), full subject without cutting key details. Preserve the exact unfinished retail hall, structural columns, exposed roof, planning table with wooden chairs and drawings. Remove all people. Do not turn it into a completed shop or invent a floorplan. No recognizable faces, generated slogans, numbers, image footers or invented project evidence. Essential labels will be HTML text. This is an adapted sketch, not a documentary photo."
+  },
+  {
+    "area": "integration",
+    "source": "https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg",
+    "master": "https://drive.google.com/file/d/14OpOR8mV7OpYuPvQ0pd480vUVfpzEvC7/view?usp=drivesdk",
+    "asset": "illustrations/how-i-can-help-integration.webp",
+    "classification": "Source-based adapted sketch, not documentary photograph",
+    "dimensions": [
+      1200,
+      800
+    ],
+    "prompt": "Use case: style-transfer. Image 1 is the exact subject reference; image 2 is STYLE ONLY. Create a detailed editorial architectural/product sketch for Nicolas Goureau CV How I can help. Match image 2 navy/charcoal linework, amber lighting, textured cream paper, painterly brush edges and dimensional perspective. Landscape 1536x1024 (3:2), full subject without cutting key details. Preserve the Denim & Soul storefront architecture: horizontal timber slats, projecting metal awnings, central doors, window arrangement and faceless mannequins. No people. Keep store recognizable by architecture; no need to reproduce lettering. No recognizable faces, generated slogans, numbers, image footers or invented project evidence. Essential labels will be HTML text. This is an adapted sketch, not a documentary photo."
+  },
+  {
+    "area": "coordination",
+    "source": "https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg",
+    "master": "https://drive.google.com/file/d/1_O85j_KiOX-65vIx2grzFnk0VXN1yjdy/view?usp=drivesdk",
+    "asset": "illustrations/how-i-can-help-coordination.webp",
+    "classification": "Source-based adapted sketch, not documentary photograph",
+    "dimensions": [
+      1200,
+      800
+    ],
+    "prompt": "Use case: style-transfer. Image 1 is the exact subject reference; image 2 is STYLE ONLY. Create a detailed editorial architectural/product sketch for Nicolas Goureau CV How I can help. Match image 2 navy/charcoal linework, amber lighting, textured cream paper, painterly brush edges and dimensional perspective. Landscape 1536x1024 (3:2), full subject without cutting key details. Preserve the Bowery knife wall organization, glass display counter, exposed ceiling and warm pendant lights. Omit the staff member entirely. Create an original source-based sketch, no photograph watermark or captions. No recognizable faces, generated slogans, numbers, image footers or invented project evidence. Essential labels will be HTML text. This is an adapted sketch, not a documentary photo."
+  }
+]

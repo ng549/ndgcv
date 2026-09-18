@@ -29,7 +29,7 @@ capabilityButtons.forEach(button => {
 if (capabilityButtons.length) selectCapability(capabilityButtons[0]);
 
 const sections = {
-  about: 'About me', opportunity: 'My next chapter', build: 'The work', value: 'Results',
+  about: 'About me', opportunity: 'My next chapter', build: 'How I can help', value: 'Results',
   'product-journey': 'From idea to sale', experience: 'My journey',
   ai: 'Systems, tools & AI', contact: 'Let’s talk'
 };

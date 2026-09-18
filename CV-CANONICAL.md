@@ -639,3 +639,55 @@ Published 0eec277bed7b49da4fed56f38a3178d115f713e2 through non-force main update
 ## Supporting bullets moved beneath copy — 2026-09-18
 Nicolas requested moving the newly added More of the work bullets under the narrative, where there is more room. All12 supporting examples now place their two bullets inside the left chapter-copy column after the original paragraph; the original image stays right, top-aligned with the paragraph. Narrow-screen order is copy, bullets, image. Main story-tab bullets remain unchanged beneath their images.
 Published 69bc9a1a3245273486836903c887c3cf648309ae via non-force main update after recheck. Build passes with151assets. Preservation check confirms identical paragraph, bullet and image content in all12examples and identical HTML outside those examples. Live DOM confirms12lists inside chapter-copy. Desktop screenshots inspected for Planning the new stores and W82, verifying left-column placement on navy/cream respectively. Mobile visual verification remains pending. No Section13 or Education changes.
+
+
+## Section 13 — approved How I can help, 2026-09-18
+Nicolas approved the proposed copy, layout and five-source image plan with “go”. Scope: Section 13 only. This supersedes prior Section 13 paused/unimplemented notes. Capabilities (Section 14) and deferred Education remain unchanged; stop after How I can help.
+
+Section name: How I can help. Eyebrow: Connecting opportunity with execution. Headline: Building what comes next. Making it work across the business.
+
+I help owners and leadership teams turn an opportunity into something the business can operate. That can mean a new offering, better product economics, an expansion, or several businesses that need their people, resources and systems to work together.
+
+I can take responsibility within one business or across a group, where experience and relationships from one company can help another move forward. I work with owners and teams to understand the need, agree the priorities and resources, and stay involved through implementation.
+
+### Build and launch new offerings
+When an opportunity has promise but no clear route into operation, I connect the business model with the work required to launch it. I work through the customer offer, margins, suppliers, people, systems and delivery plan with the team. The aim is a proposition the business can resource and run, with the important dependencies understood before commitments grow.
+
+From my experience: For DJI’s Fifth Avenue flagship, I worked from the financial case through layout, build coordination, training, replenishment and systems integration to opening.
+Evidence link: #role-moremargin
+
+### Improve product and margin economics
+When the offer is selling but the economics need attention, I look at assortment, sourcing, pricing and inventory together. I can develop direct-sourcing and private-label opportunities, work through supplier terms, and help teams decide what to carry, change or stop buying. The aim is a stronger product offer with clearer economics and more deliberate inventory commitments.
+
+From my experience: At Fun Town RV, I connected factory-direct sourcing with two house brands. Reported margin on selected products increased from 28% to 79%.
+Evidence link: #role-funtown
+
+### Turn expansion plans into working operations
+When a business is adding locations or sales channels, I bring together the physical setup and the operation behind it. That includes layouts and merchandising where relevant, product records, ordering, logistics, selling systems and team readiness. The aim is an opening or expansion that people can operate consistently, with practical standards they can use again.
+
+From my experience: At Fun Town RV, my store-development brief expanded into a connected retail platform across six locations and two divisions, including e-commerce, fulfillment and replenishment.
+Evidence link: #role-funtown
+
+### Make operational change work after an acquisition
+When an acquired business needs to join a wider operation, I work through what should connect, what needs to change and what is worth preserving. I listen to the people doing the work, then help coordinate changes to the offer, branding, locations, product information and operating routines. The aim is a workable transition that retains useful knowledge and gives teams clear handoffs.
+
+From my experience: For Denim & Soul, I developed the concept and rebrand, worked through technology, store builds and merchandising, and carried the transformation through to its handoff to ML Fashion.
+Evidence link: #role-lemonis
+
+### Coordinate execution across several businesses
+When several businesses need attention at once, I help owners identify the next practical steps and bring together the people, suppliers and specialist resources needed to take them. I look for solutions that can be shared while respecting how each business works. The aim is to make better use of available resources and help teams deliver without starting from scratch every time.
+
+From my experience: Working with Marcus Lemonis, I helped develop plans, coordinate owners and producers, and find resources across different businesses. Assignments ranged from Bowery’s store layout and product reporting to Bentley’s simpler, lower-cost fixture approach.
+Evidence link: #role-lemonis
+
+Layout: five unnumbered rows, text and example left, image right aligned with body copy; narrow screens stack copy/example/link then image. Solid cream and muted light navy reading surfaces; source-based sketches have softened edges and consistent 1200×800 dimensions without cropping. Full-size image links, descriptive sketch alt/title and existing career anchors. No career tabs or consulting menu introduced. Section name aligned using existing section-bar system. Capabilities remains structurally and textually unchanged.
+
+Image sources and masters (originals preserved; each generated artwork is an adapted sketch, not documentary evidence):
+- launch: source https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2024/03/DJI-NYC_5thAve_Exterior_01.jpg?resize=720%2C900&ssl=1; master https://drive.google.com/file/d/16rclpqHcu3ohHJT_ThvhIhNBT-LQGH80/view?usp=drivesdk; website illustrations/how-i-can-help-launch.webp
+- economics: source https://drive.google.com/file/d/1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA/view; master https://drive.google.com/file/d/1dRE1cjiioUCGgQ1P0sAO8E5kJS3D_Bkg/view?usp=drivesdk; website illustrations/how-i-can-help-economics.webp
+- expansion: source https://drive.google.com/file/d/1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po/view; master https://drive.google.com/file/d/1LNsQG6XyFBjipNvOTPYhqIdxS9RQHRhD/view?usp=drivesdk; website illustrations/how-i-can-help-expansion.webp
+- integration: source https://studio9arch.net/wp-content/uploads/2021/07/studio-9-architecture-1.jpg; master https://drive.google.com/file/d/14OpOR8mV7OpYuPvQ0pd480vUVfpzEvC7/view?usp=drivesdk; website illustrations/how-i-can-help-integration.webp
+- coordination: source https://schweetlife.com/wp-content/uploads/Bowery-Kitchen-Supplies-Knives-01.jpg; master https://drive.google.com/file/d/1_O85j_KiOX-65vIx2grzFnk0VXN1yjdy/view?usp=drivesdk; website illustrations/how-i-can-help-coordination.webp
+All masters saved in Current/Photos and Imagery, folder 1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S. Full prompts and provenance: scripts/how-i-can-help-images.json. Source Drive sheets and linked images inspected before adaptation; illustrations/43.webp used as style reference.
+
+Prepublication: build passes with 156 public assets. HTML outside Section 13 is byte-identical excluding CSS/JS cache keys, including all career cards, 32 story panels, 12 supporting examples and Capabilities. No Education deployment. Live desktop verification follows publication. Mobile visual verification remains pending because current browser has no viewport/device capabilities.
