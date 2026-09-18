@@ -626,3 +626,19 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #build .help-copy p {font-size:17px}
  #build .help-area h3 {font-size:25px}
 }
+
+#build .help-technology.help-area {background:#f6f1e7;color:#172b3d;margin-top:12px;padding:34px 30px}
+#build .help-technology>.eyebrow {display:block;color:#485d70;margin-bottom:14px}
+#build .help-technology>h3 {font-size:clamp(28px,3vw,40px);max-width:800px}
+#build .help-tech-intro {max-width:850px}
+#build .help-tech-part {margin-top:30px;padding-top:26px;border-top:1px solid #172b3d33}
+#build .help-technology h4 {font-size:23px;line-height:1.25;color:inherit;margin:0 0 18px}
+#build .help-tech-bullets {margin:0 0 20px;padding-left:22px;list-style:disc}
+#build .help-tech-bullets li {font-size:17px;line-height:1.5;margin:0 0 14px;padding-left:3px;color:inherit}
+#build .help-tech-bullets li::marker {color:#536b7f}
+#build .help-tech-value {margin-top:30px;padding-top:26px;border-top:1px solid #172b3d33}
+#build .help-tech-value>p,#build .help-tech-value>ul {max-width:850px}
+#build .help-tech-links {display:flex;flex-wrap:wrap;gap:14px 28px;margin-bottom:24px}
+#build .help-copy .help-tech-close {font-size:21px;font-weight:650;line-height:1.45}
+#build .help-copy .help-concept-note {font-size:14px;margin-bottom:0;color:#485d70}
+@media(max-width:760px){#build .help-technology.help-area {padding:24px 18px}#build .help-technology h4 {font-size:22px}}
