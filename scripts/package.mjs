@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 const html=fs.readFileSync('docs/index.html','utf8');
 const paths=new Set(['index.html','site.css','site.js']);
+// Section 14 diagram background is referenced from its stylesheet.
+paths.add('illustrations/section14-background.webp');
 for(const match of html.matchAll(/(?:src|href|data-shot)="([^"#]+)"/g)){
  const file=match[1].replaceAll('&amp;','&');
  if(!/^(?:https?:|mailto:|tel:)/.test(file)&&fs.existsSync('docs/'+file))paths.add(file);
