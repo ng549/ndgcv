@@ -529,12 +529,21 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  border-radius: 8px; box-shadow: 0 18px 44px #17242d0c;
 }
 #experience .role.career-designed.palette-stone {
- --card-bg: #ddd4c5; --card-ink: #23313b; --card-muted: #3f4e57;
- --card-accent: #704222; --card-line: #23313b38;
+ --card-bg: #c4d6e5; --card-ink: #172e42; --card-muted: #304b60;
+ --card-accent: #214f73; --card-line: #172e4238;
 }
-#experience .career-designed .career-backdrop {position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none;background-image:var(--career-scene);background-size:100% auto;background-repeat:repeat-y;opacity:.62}
+#experience .career-designed .career-backdrop {position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none;background-image:var(--career-scene);background-size:100% auto;background-repeat:repeat-y;opacity:.25}
 #experience .career-designed .career-backdrop:after {content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f6f1e7ed 0%,#f6f1e7de 48%,#f6f1e78c 100%)}
-#experience .career-designed.palette-stone .career-backdrop:after {background:linear-gradient(90deg,#ddd4c5ed 0%,#ddd4c5de 48%,#ddd4c58c 100%)}
+#experience .career-designed.palette-stone .career-backdrop:after {background:linear-gradient(90deg,#c4d6e5ed 0%,#c4d6e5de 48%,#c4d6e58c 100%)}
+/* Opaque reading surfaces protect text from artwork, with soft edges rather than extra boxes. */
+#experience .career-designed .chapter-copy,
+#experience .career-designed .career-highlights,
+#experience .career-designed .example-heading {
+ background:var(--card-bg);color:var(--card-ink);
+ box-shadow:0 0 16px 10px var(--card-bg);
+}
+#experience .career-designed .chapter-copy p,
+#experience .career-designed .client-work>p {color:var(--card-ink)}
 #experience .career-designed>.role-body {padding:0}
 #experience .career-designed .role-title .company-heading>strong,
 #experience .career-designed .career-headline,
@@ -585,9 +594,9 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
  #experience .career-designed .story-passage>.chapter-media {grid-column:1;grid-row:2}
  #experience .career-designed .career-highlights {margin-top:16px}
  #experience .career-designed .career-highlights strong {font-size:23px}
- #experience .career-designed .career-backdrop {opacity:.4}
+ #experience .career-designed .career-backdrop {opacity:.18}
  #experience .career-designed .career-backdrop:after {background:#f6f1e7bf}
- #experience .career-designed.palette-stone .career-backdrop:after {background:#ddd4c5bf}
+ #experience .career-designed.palette-stone .career-backdrop:after {background:#c4d6e5bf}
  #experience .career-designed .career-tabs {display:flex;flex-wrap:wrap;gap:6px}
  #experience .career-designed .career-tabs button {padding:9px 10px}
 }
