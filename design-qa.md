@@ -17,3 +17,5 @@ Mobile visual check: PENDING. Browser capabilities list is empty, so no viewport
 Final result applies to available desktop comparison and interactions; mobile remains an explicit verification gap.
 
 final result: passed
+
+Live follow-up: c300e22 initially omitted the stylesheet-only background from the deployment package (P1). Fixed by a51a3bd, explicitly packaging the asset. Post-fix actual live screenshot ../section14-live.png shows background, four new sketches, Sourcing cream panel, readable bullets and adjacent active dot. All23 live panels tested; Tab and Escape passed; eight jobs and32tabs present. Build163assets. Live desktop final result remains passed; mobile visual remains pending.
