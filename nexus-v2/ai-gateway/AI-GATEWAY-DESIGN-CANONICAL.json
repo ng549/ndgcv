@@ -1,6 +1,6 @@
 {
   "title": "Nexus V2 AI Gateway Design Canonical",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "updated_at": "2026-09-19",
   "status": "NEEDS_REVIEW",
   "authority": "NEXUS-V2-CANONICAL.json remains authoritative; this record is Worker 8's proposed Phase One design and does not approve vendors, prices, commercial rights, or production readiness.",
@@ -11,7 +11,12 @@
     "revenue_default": "UNVERIFIED",
     "customer_byok_fallback_to_nicolas": false,
     "target_gross_margin_percent": 70,
-    "workload_replacement_requires_benchmark": true
+    "workload_replacement_requires_benchmark": true,
+    "interactive_development_subscriptions": "retain ChatGPT Claude and Grok pending workload evidence",
+    "autonomous_worker_path": "Nexus AI Gateway",
+    "plugsky_preference": "conditional on commercial privacy benchmark reliability and reconciled-cost evidence",
+    "openrouter_role": "specialist frontier and fallback candidate",
+    "provider_hard_coding": false
   },
   "proposed_architecture": {
     "application_contract": "Nexus Policy Edge",
@@ -24,6 +29,10 @@
   },
   "artifacts": [
     "README.md",
+    "PLUGSKY-VERIFICATION-2026-09-19.md",
+    "benchmark/README.md",
+    "benchmark/tasks.json",
+    "benchmark/run.mjs",
     "schemas/model-capability-manifest.schema.json",
     "schemas/development-bullpen.schema.json",
     "schemas/revenue-bullpen.schema.json",
@@ -38,16 +47,23 @@
     "schemas/operator-command.schema.json"
   ],
   "evidence": {
-    "nexus_canonical_sha": "77fa238b507c6c38e5ce6f5d5a6cf453432e86fc",
+    "nexus_canonical_sha": "f6902f7a58112c55889b33c770a27be23b1d2b4f",
+    "nexus_canonical_version": "0.4",
     "ai_stack_drive_reviewed": true,
     "ai_stack_economics_reviewed": true,
     "worker_2_reconciled_through": "9a6d207",
-    "official_sources_reviewed_at": "2026-09-19"
+    "official_sources_reviewed_at": "2026-09-19",
+    "plugsky_official_sources_rechecked": true,
+    "plugsky_public_api_probes_run": true,
+    "plugsky_openrouter_authenticated_benchmark": "NOT_RUN_MISSING_CREDENTIALS",
+    "benchmark_fixture_validation": "PASSED"
   },
   "remaining_gates": [
     "Control Tower architecture review",
     "Worker 3 and Worker 10 pricing/billing decisions",
     "vendor proof of concept and load test",
+    "authenticated Plugsky versus OpenRouter benchmark and sustained soak",
+    "Plugsky controlling pricing SLA DPA and enterprise resale agreement",
     "commercial and legal review per exact route",
     "ChatGPT Claude and Grok workload export analysis",
     "production-like security and acceptance testing"
