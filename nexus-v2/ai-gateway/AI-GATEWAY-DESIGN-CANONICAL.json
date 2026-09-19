@@ -1,0 +1,55 @@
+{
+  "title": "Nexus V2 AI Gateway Design Canonical",
+  "version": "0.1.0",
+  "updated_at": "2026-09-19",
+  "status": "NEEDS_REVIEW",
+  "authority": "NEXUS-V2-CANONICAL.json remains authoritative; this record is Worker 8's proposed Phase One design and does not approve vendors, prices, commercial rights, or production readiness.",
+  "branch": "nexus-v2-p1-08-ai-gateway",
+  "decisions_preserved": {
+    "strategy": "aggregator-first",
+    "bullpens": ["development", "revenue", "capability"],
+    "revenue_default": "UNVERIFIED",
+    "customer_byok_fallback_to_nicolas": false,
+    "target_gross_margin_percent": 70,
+    "workload_replacement_requires_benchmark": true
+  },
+  "proposed_architecture": {
+    "application_contract": "Nexus Policy Edge",
+    "provider_normalization": "LiteLLM proof-of-concept candidate",
+    "edge_gateway": "Cloudflare AI Gateway optional by route",
+    "telemetry": "Langfuse or equivalent; never billing truth",
+    "billing_truth": "Nexus immutable ledger integrated with Worker 10",
+    "metering_candidates": ["OpenMeter", "Lago commercial", "Stripe meters"],
+    "selection_status": "UNVERIFIED"
+  },
+  "artifacts": [
+    "README.md",
+    "schemas/model-capability-manifest.schema.json",
+    "schemas/development-bullpen.schema.json",
+    "schemas/revenue-bullpen.schema.json",
+    "schemas/capability-bullpen.schema.json",
+    "schemas/commercial-rights-record.schema.json",
+    "schemas/ai-request.schema.json",
+    "schemas/entitlement-decision.schema.json",
+    "schemas/ai-usage-event.schema.json",
+    "schemas/cost-margin-event.schema.json",
+    "schemas/retail-price-quote.schema.json",
+    "schemas/tool-permission-grant.schema.json",
+    "schemas/operator-command.schema.json"
+  ],
+  "evidence": {
+    "nexus_canonical_sha": "77fa238b507c6c38e5ce6f5d5a6cf453432e86fc",
+    "ai_stack_drive_reviewed": true,
+    "ai_stack_economics_reviewed": true,
+    "worker_2_reconciled_through": "9a6d207",
+    "official_sources_reviewed_at": "2026-09-19"
+  },
+  "remaining_gates": [
+    "Control Tower architecture review",
+    "Worker 3 and Worker 10 pricing/billing decisions",
+    "vendor proof of concept and load test",
+    "commercial and legal review per exact route",
+    "ChatGPT Claude and Grok workload export analysis",
+    "production-like security and acceptance testing"
+  ]
+}
