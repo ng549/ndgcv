@@ -28,13 +28,14 @@ Smallest useful private operator surface for Nicolas to supervise Nexus API work
 
 Expected authenticated server-to-server endpoints:
 
-- `GET /v1/workers`
-- `POST /v1/workers/:id/actions`
-- `POST /v1/actions`
+- `GET /api/workers`
+- `POST /api/workers/:id/commands`
+- `POST /api/run-all-ready`
+- `POST /api/run-phase/:phase`
 
 The exact response/request contracts are under `schemas/`.
 
-Until Worker 9 supplies a compatible endpoint and service credential, the UI returns seeded workers with truthful `UNKNOWN` runtime state and disabled controls. Branch names are static provenance hints, not proof of worker execution.
+Worker 9 has now published these routes and its command contract on `nexus-v2-p1-09-build-orchestration`; Worker 13 is aligned to that contract. Until a deployed Worker 9 service endpoint and service credential are attached, the UI still returns seeded workers with truthful `UNKNOWN` runtime state and disabled controls. Branch names are provenance hints, not proof of execution.
 
 ## Authentication and sessions
 
@@ -121,7 +122,7 @@ This branch intentionally does **not** modify the public CV/navigation yet becau
 
 ## Current blockers
 
-1. Worker 9 branch/API contract is not yet available, so live worker state and command execution cannot be verified.
+1. Worker 9 contract is available and consumed, but its service is not deployed/attached to this operator surface, so live worker state and command execution remain unverified.
 2. Cloudflare Access application values are not available on this branch.
 3. D1 database ID has not been provisioned/verified.
 4. The operator Worker has not been deployed to `nicolasgoureau.com/operator/*`.
