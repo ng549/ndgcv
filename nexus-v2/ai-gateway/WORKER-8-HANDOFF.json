@@ -10,11 +10,16 @@
     "Worker 2 reuse findings reconciled",
     "JSON artifacts parse successfully",
     "Schema contract fixtures pass local validator",
+    "Plugsky current official documentation pricing terms privacy and white-label materials rechecked",
+    "Plugsky public model status health and incident endpoints probed",
+    "Plugsky versus OpenRouter benchmark fixture passes local validation",
     "Remote branch file contents verified after upload"
   ],
   "not_verified": [
     "Production implementation",
-    "Provider reliability or route availability",
+    "Authenticated Plugsky or OpenRouter completion quality latency cost or concurrency",
+    "Plugsky sustained reliability or route availability",
+    "Plugsky controlling flat-rate fair-use overage SLA DPA or resale contract",
     "Vendor quotes and final commercial contracts",
     "New commercial-rights approvals",
     "Replacement economics for Nicolas's subscriptions",
@@ -30,6 +35,13 @@
     "worker_10": "Implement entitlement, reservation, settlement and billing ledger.",
     "worker_13": "Implement operator telemetry and audited command UI."
   },
-  "next_slice": "Control Tower review, then a bounded LiteLLM plus Nexus Policy Edge proof of concept with fake provider fixtures; no customer production traffic.",
+  "priority_status": {
+    "plugsky": "UNVERIFIED_DEVELOPMENT_CANDIDATE",
+    "openrouter": "SPECIALIST_FRONTIER_FALLBACK_CANDIDATE",
+    "live_benchmark": "NOT_RUN_MISSING_BOTH_API_KEYS",
+    "subscriptions": "RETAIN_FOR_INTERACTIVE_DEVELOPMENT",
+    "hard_coded_provider": false
+  },
+  "next_slice": "Run the bounded authenticated Plugsky/OpenRouter benchmark and soak after credentials and exact models are supplied; in parallel continue the LiteLLM plus Nexus Policy Edge proof of concept with fake provider fixtures. No customer production traffic.",
   "final_status_rule": "Not Complete until implementation, acceptance tests and required production behavior are verified."
 }
