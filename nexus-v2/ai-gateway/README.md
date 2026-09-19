@@ -203,6 +203,8 @@ Official research reviewed 2026-09-19:
 - Helicone Gateway: https://docs.helicone.ai/gateway/overview
 - MCP authorization and token audience requirements: https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization
 
+Worker 2 reconciliation (branch `nexus-v2-p1-02-reuse-scout`, commits through `9a6d207`): its Phase One report independently recommends a Nexus-owned gateway contract with LiteLLM/Helicone/OpenRouter adapters, Langfuse for telemetry rather than billing truth, and OpenMeter/Lago/Stripe for metering and reconciliation. It also classifies public MCP registry presence as discovery only, not a security endorsement. Worker 8 adopts those boundaries. Final product selections remain Control Tower decisions after proof-of-concept testing and commercial review.
+
 This is a reuse recommendation, not production verification. License, version, deployment security, load and failure behavior must be verified in the implementation slice. Worker 2 should reconcile its broader reuse findings with this boundary.
 
 ## X. Cost Comparison integration
@@ -239,6 +241,8 @@ The sheet can then calculate effective cost per successful task, active customer
 
 Production verification also requires load, chaos, secret-rotation, replay, retention/deletion and reconciliation tests in a production-like environment.
 
+Contract checks can be run with `node nexus-v2/ai-gateway/tests/validate-contracts.mjs`.
+
 ## Handoffs
 
 - Worker 1 Control Tower: approve domain ownership, event envelope and Phase Two implementation slice; reconcile shared identity/status enums.
@@ -258,4 +262,3 @@ Production verification also requires load, chaos, secret-rotation, replay, rete
 - Actual ChatGPT/Claude/Grok workload and billing exports remain outstanding.
 - Thresholds, price books and retail offers require Worker 3/10 decisions.
 - Implementation, integration tests and production verification remain Phase Two work.
-
