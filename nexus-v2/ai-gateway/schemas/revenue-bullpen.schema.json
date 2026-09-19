@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/revenue-bullpen.schema.json",
+  "title": "Nexus revenue bullpen entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["entry_id", "route_id", "intended_use", "rights_record_id", "commercial_status", "privacy_profile_id", "last_reviewed"],
+  "properties": {
+    "entry_id": {"type": "string"}, "route_id": {"type": "string"}, "intended_use": {"type": "string"},
+    "rights_record_id": {"type": "string"},
+    "commercial_status": {"enum": ["APPROVED_MONETIZABLE", "CONDITIONAL", "INTERNAL_ONLY", "REJECTED", "UNVERIFIED"]},
+    "allowed_monetization_patterns": {"type": "array", "items": {"enum": ["EMBEDDED_FEATURE", "WHITE_LABEL", "SUBSCRIPTION", "ALLOWANCE", "USAGE", "CREDITS", "PER_JOB", "RAW_API_RESALE"]}},
+    "privacy_profile_id": {"type": "string"}, "customer_tiers": {"type": "array", "items": {"type": "string"}},
+    "approval_conditions": {"type": "array", "items": {"type": "string"}},
+    "last_reviewed": {"type": "string", "format": "date-time"}
+  }
+}
