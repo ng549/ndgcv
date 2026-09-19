@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check src/index.mjs && node --check src/core.mjs"
+    "check": "node --check src/worker9-index.mjs && node --check src/core.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.132.0"
