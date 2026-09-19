@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/tool-permission-grant.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["grant_id", "organization_id", "project_id", "environment", "ai_worker_id", "server_id", "tool_ids", "access", "expires_at", "policy_version"],
+  "properties": {
+    "grant_id": {"type": "string"}, "organization_id": {"type": "string"}, "project_id": {"type": "string"},
+    "environment": {"enum": ["development", "test", "staging", "production"]}, "ai_worker_id": {"type": "string"},
+    "server_id": {"type": "string"}, "tool_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "resource_scopes": {"type": "array", "items": {"type": "string"}}, "access": {"enum": ["READ", "WRITE", "DESTRUCTIVE", "FINANCIAL", "DEPLOYMENT"]},
+    "human_approval_required": {"type": "boolean"}, "maximum_cost_micros": {"type": "integer", "minimum": 0},
+    "expires_at": {"type": "string", "format": "date-time"}, "policy_version": {"type": "string"}
+  }
+}
