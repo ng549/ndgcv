@@ -1,6 +1,6 @@
 # Nexus V2 Control Tower — Phase One
 
-Status: **Testing**
+Status: **Needs Review**
 
 This directory contains the first shared architecture contract for Nexus V2. It is isolated from the existing CV application and does not import Old Nexus code.
 

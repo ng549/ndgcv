@@ -1,8 +1,8 @@
 # Phase One Control Tower — First Contract Draft Handoff
 
-Status: **Testing** after remediation; independent re-review is required.
+Status: **Needs Review** after remediation and independent re-review.
 
-Verified artifact commit: `649cc8ad0c0b0e7b7f4f6315a81412a34d00e8ba`
+Verified remediation commit: `f4a7d46c007eb8514365de1529dfc3f09d470b62`
 
 ## Requested
 
@@ -26,30 +26,30 @@ Establish the first Nexus V2 master architecture, module boundaries, permanent c
 
 ## Acceptance evidence
 
-- All 5 JSON files parsed successfully with `jq`.
+- All 10 JSON files parsed successfully.
 - The module registry validated against `schemas/module-registry.schema.json` using `check-jsonschema`.
 - All 4 schemas passed `check-jsonschema --check-metaschema`.
 - A deterministic invariant check confirmed exactly 13 unique module numbers, IDs, and branches.
 - The same invariant check confirmed every dependency refers to a registered module ID.
 - A repository scan confirmed the forbidden term is absent from these artifacts.
-- GitHub compare verification showed the artifact commit exactly one commit ahead of the canonical base, zero commits behind, with only the 10 bounded Control Tower files changed.
+- GitHub compare verification showed the remediation commit three commits ahead of the canonical base, zero commits behind, with only the 16 bounded Control Tower files changed.
 - Remediation test suite validates native CloudEvents tenant/system fixtures, rejects invalid scope fixtures, checks registry uniqueness/dependencies/cycles, and rejects semantic false completion.
-- Independent architecture review remains required.
+- Independent re-review passed 22 additional positive/negative assertions and found all four original blockers resolved at the architecture-draft/local-validation level.
 
 ## Known limitations
 
 - This is a first shared-contract draft, not production implementation.
 - Runtime vendors and module-owned technology selections remain unresolved by design.
 - No production environment exists for V2 behavior verification.
-- Independent review found contract blockers; remediation is being implemented and must be re-reviewed.
-- CI enforcement and contract tests are not implemented yet.
+- No external CloudEvents SDK round-trip, runtime authorization, cross-module integration, or production behavior has been verified.
+- Local contract tests exist and pass; CI enforcement is not implemented yet.
 
 ## Next actions
 
-1. Independently review shared ownership, event envelope, tenant boundary, and integration gates.
-2. Start Workstreams 2, 7, and 8 against this draft without merging them.
-3. Start Workstream 13; its stated dependency (first Control Tower contract draft) is satisfied once this commit is verified.
-4. Reconcile submitted contracts through ACRs and ADRs.
+1. Start Workstreams 2, 7, and 8 against this draft without merging them.
+2. Start Workstream 13; its first-Control-Tower-draft dependency is satisfied.
+3. Reconcile submitted ownership and interface contracts through ACRs and ADRs.
+4. Wire contract validation into CI through Workstream 9.
 
 ## Completion status
 

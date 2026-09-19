@@ -12,12 +12,15 @@ uvx check-jsonschema --schemafile "$root/schemas/domain-event.schema.json" \
   "$root/tests/fixtures/event-tenant-valid.json" \
   "$root/tests/fixtures/event-system-valid.json"
 
-if uvx check-jsonschema --schemafile "$root/schemas/domain-event.schema.json" \
-  "$root/tests/fixtures/event-tenant-invalid-missing-tenant.json" \
-  "$root/tests/fixtures/event-system-invalid-tenant.json"; then
-  echo "invalid event fixture unexpectedly passed" >&2
-  exit 1
-fi
+expect_schema_failure() {
+  local fixture="$1"
+  if uvx check-jsonschema --schemafile "$root/schemas/domain-event.schema.json" "$fixture"; then
+    echo "invalid event fixture unexpectedly passed: $fixture" >&2
+    exit 1
+  fi
+}
+expect_schema_failure "$root/tests/fixtures/event-tenant-invalid-missing-tenant.json"
+expect_schema_failure "$root/tests/fixtures/event-system-invalid-tenant.json"
 
 node - "$root" <<'NODE'
 const fs=require('fs'), path=require('path');
@@ -52,13 +55,22 @@ function validateSemanticContract(value){
   }
 }
 validateSemanticContract(contract);
-const falseComplete=structuredClone(contract);
-falseComplete.status='Complete'; falseComplete.reviewer=falseComplete.owner;
-falseComplete.handoff.commit='pending'; falseComplete.handoff.remaining_work=['still open'];
-falseComplete.acceptance_criteria[0].status='Failed'; falseComplete.acceptance_criteria[0].evidence='';
-let falseCompleteRejected=false;
-try { validateSemanticContract(falseComplete); } catch { falseCompleteRejected=true; }
-if(!falseCompleteRejected) throw new Error('false completion fixture passed');
+const validComplete=structuredClone(contract);
+validComplete.status='Complete';
+validComplete.handoff.commit='a'.repeat(40);
+validComplete.handoff.remaining_work=[];
+for(const c of validComplete.acceptance_criteria){ c.status='Passed'; c.evidence=c.evidence||'verified'; }
+validateSemanticContract(validComplete);
+function expectSemanticFailure(label, mutate){
+  const value=structuredClone(validComplete); mutate(value);
+  let rejected=false; try { validateSemanticContract(value); } catch { rejected=true; }
+  if(!rejected) throw new Error('semantic negative passed: '+label);
+}
+expectSemanticFailure('same owner and reviewer', v=>{v.reviewer=v.owner});
+expectSemanticFailure('pending commit', v=>{v.handoff.commit='pending'});
+expectSemanticFailure('remaining work', v=>{v.handoff.remaining_work=['still open']});
+expectSemanticFailure('failed criterion', v=>{v.acceptance_criteria[0].status='Failed'});
+expectSemanticFailure('empty evidence', v=>{v.acceptance_criteria[0].evidence=''});
 console.log('semantic contract gates passed');
 NODE
 

@@ -2,7 +2,7 @@
   "$schema":"./schemas/module-contract.schema.json",
   "contract_version":"0.2.0-draft",
   "module_id":"control-tower",
-  "status":"Testing",
+  "status":"Needs Review",
   "owner":"Control Tower & Master Architect",
   "reviewer":"Independent Control Tower Reviewer",
   "branch":"nexus-v2-p1-01-control-tower",
@@ -26,7 +26,7 @@
     {"id":"CT-002","statement":"Registry has 13 unique modules with resolved acyclic dependencies","evidence":"tests/validate-contracts.sh exit 0, including duplicate negative fixture","status":"Passed"},
     {"id":"CT-003","statement":"Tenant and system event fixtures enforce scope and CloudEvents attributes","evidence":"tests/validate-contracts.sh exit 0 with valid and expected-invalid fixtures","status":"Passed"},
     {"id":"CT-004","statement":"Completion semantic gate rejects false completion","evidence":"tests/validate-contracts.sh exit 0 with synthetic false-completion fixture","status":"Passed"},
-    {"id":"CT-005","statement":"Independent review has no unresolved blocking findings","evidence":"Re-review pending","status":"Testing"}
+    {"id":"CT-005","statement":"Independent review has no unresolved blocking findings","evidence":"Independent re-review of f4a7d46c007eb8514365de1529dfc3f09d470b62 resolved all four original blockers","status":"Passed"}
   ],
   "research_records":[
     {"name":"CloudEvents","url":"https://github.com/cloudevents/spec","license":"Apache-2.0","commercial_use":"Permitted with license obligations","version_or_commit":"v1.0.2","maintenance":"Established CNCF specification","security":"Payload authorization remains application responsibility","integration_effort":"Low to moderate","lock_in":"Low; vendor-neutral","decision":"USE","custom_gap":"Nexus scope, actor, tenant, classification, and correlation extensions"}
@@ -36,5 +36,5 @@
     {"decision":"Contract testing toolchain and CI enforcement","owner":"Build Orchestration"},
     {"decision":"Runtime auth provider","owner":"Shared Client Platform"}
   ],
-  "handoff":{"commit":"pending","artifacts":["nexus-v2-control-tower/"],"tests":["tests/validate-contracts.sh: exit 0"],"limitations":["No production implementation"],"remaining_work":["Independent re-review","Control Tower reconciliation"]}
+  "handoff":{"commit":"f4a7d46c007eb8514365de1529dfc3f09d470b62","artifacts":["nexus-v2-control-tower/"],"tests":["tests/validate-contracts.sh: exit 0","Independent re-review: 22 positive/negative assertions passed"],"limitations":["No external CloudEvents SDK round-trip","No runtime authorization verification","No cross-module integration","No production implementation","No CI enforcement"],"remaining_work":["Control Tower reconciliation with affected workstreams"]}
 }
