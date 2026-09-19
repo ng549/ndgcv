@@ -1,0 +1,33 @@
+{
+  "worker": 13,
+  "branch": "nexus-v2-p1-13-operator-command-center",
+  "status": "Implemented / Unverified",
+  "canonical_version": "0.5",
+  "implemented": [
+    "authenticated operator route",
+    "operator-only authorization",
+    "rate limiting",
+    "persistent command audit schema",
+    "mobile-first worker status UI",
+    "UNKNOWN fallback for missing runtime evidence",
+    "capability-gated worker controls",
+    "global run controls",
+    "orchestrator state and command contracts",
+    "unit tests for state and control safety"
+  ],
+  "dependencies": {
+    "worker_9": "No orchestration branch or live endpoint was available at this checkpoint.",
+    "worker_8": "Boundary consumed; provider routing remains outside Worker 13.",
+    "worker_1": "No newer shared status/identity artifact was available at this checkpoint."
+  },
+  "remaining_gates": [
+    "connect the deployed authentication layer",
+    "provision the command audit database",
+    "connect Worker 9 orchestration",
+    "run live integration tests",
+    "deploy the protected operator route",
+    "verify iPhone and desktop behavior",
+    "add the subtle site entry only after the protected route exists"
+  ],
+  "golden_rule": "Missing runtime evidence is represented as UNKNOWN and unsupported controls remain disabled."
+}
