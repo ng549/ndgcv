@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/retail-price-quote.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["quote_id", "request_id", "price_book_version", "pricing_model", "currency", "maximum_wholesale_micros", "retail_price_micros", "retail_credits", "projected_margin_basis_points", "valid_until"],
+  "properties": {
+    "quote_id": {"type": "string"}, "request_id": {"type": "string"}, "price_book_version": {"type": "string"},
+    "pricing_model": {"enum": ["SUBSCRIPTION", "SUBSCRIPTION_ALLOWANCE", "USAGE", "CREDITS", "REUP", "PER_JOB", "PER_IMAGE", "PER_VIDEO_SECOND", "PER_AUDIO_MINUTE", "PER_DOCUMENT", "PREMIUM_SURCHARGE", "MINIMUM_COMMITMENT"]},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "maximum_wholesale_micros": {"type": "integer", "minimum": 0},
+    "retail_price_micros": {"type": "integer", "minimum": 0}, "retail_credits": {"type": "integer", "minimum": 0},
+    "projected_margin_basis_points": {"type": ["integer", "null"], "maximum": 10000},
+    "approval_required": {"type": "boolean"}, "disclosure": {"type": ["string", "null"]},
+    "valid_until": {"type": "string", "format": "date-time"}
+  }
+}
