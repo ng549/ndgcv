@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/entitlement-decision.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["decision_id", "request_id", "allowed", "reason_code", "capability_included", "hard_cap_reached", "approval_required", "policy_version", "decided_at"],
+  "properties": {
+    "decision_id": {"type": "string"}, "request_id": {"type": "string"}, "allowed": {"type": "boolean"},
+    "reason_code": {"type": "string"}, "capability_included": {"type": "boolean"},
+    "included_allowance_remaining": {"type": ["integer", "null"], "minimum": 0}, "credit_balance": {"type": ["integer", "null"], "minimum": 0},
+    "hard_cap_reached": {"type": "boolean"}, "approval_required": {"type": "boolean"},
+    "maximum_wholesale_micros": {"type": ["integer", "null"], "minimum": 0}, "maximum_retail_credits": {"type": ["integer", "null"], "minimum": 0},
+    "route_constraints": {"type": "array", "items": {"type": "string"}}, "policy_version": {"type": "string"},
+    "decided_at": {"type": "string", "format": "date-time"}, "expires_at": {"type": ["string", "null"], "format": "date-time"}
+  }
+}
