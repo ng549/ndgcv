@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/development-bullpen.schema.json",
+  "title": "Nexus development bullpen entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["entry_id", "route_id", "roles", "status", "effective_cost_status", "last_reviewed"],
+  "properties": {
+    "entry_id": {"type": "string"}, "route_id": {"type": "string"},
+    "roles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["architecture", "coding", "research", "ui_design", "qa", "security", "review", "routing", "extraction", "media"]}},
+    "status": {"enum": ["DISCOVERED", "RESEARCHED", "APPEARS_SUITABLE", "BENCHMARKING", "BENCHMARKED", "APPROVED_INTERNAL", "REJECTED"]},
+    "benchmark_refs": {"type": "array", "items": {"type": "string"}},
+    "effective_cost_status": {"enum": ["UNKNOWN", "ESTIMATED", "MEASURED", "RECONCILED"]},
+    "subscription_displacement_candidate": {"type": "boolean"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "reviewer": {"type": ["string", "null"]}, "last_reviewed": {"type": "string", "format": "date-time"}
+  }
+}
