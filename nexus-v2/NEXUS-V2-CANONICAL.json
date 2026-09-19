@@ -324,5 +324,14 @@
       "MHC/Cabinet/project boundaries"
     ],
     "acceptance_rule": "Worker 12 cannot claim Complete while any required acceptance criterion or independently executable audit work remains."
+  },
+  "phase_one_worker_updates": {
+    "worker_7": {
+      "branch": "nexus-v2-p1-07-integrations",
+      "status": "Complete for Phase One architecture/contracts scope; not production verified",
+      "artifacts_path": "nexus-v2/workstreams/07-integrations/",
+      "updated_at": "2026-09-19",
+      "notes": "No merge to nexus-v2 performed. Control Tower must reconcile ACR-07-001 through ACR-07-004 before global conventions are adopted."
+    }
   }
 }

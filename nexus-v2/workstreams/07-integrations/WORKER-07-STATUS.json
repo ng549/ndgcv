@@ -1,0 +1,41 @@
+{
+  "worker": 7,
+  "name": "Integration & Data Connectivity Layer",
+  "phase": "Phase One",
+  "branch": "nexus-v2-p1-07-integrations",
+  "base_branch": "nexus-v2",
+  "updated_at": "2026-09-19",
+  "scope_status": "Complete for Phase One architecture/contracts scope; not production verified",
+  "artifacts": [
+    "INTEGRATION-ARCHITECTURE.md",
+    "connector-contract.schema.json",
+    "connection-data-model.json",
+    "STANDARDS.md",
+    "MCP-STRATEGY.md",
+    "INITIAL-CONNECTOR-CATALOG.csv",
+    "SECURITY-OBSERVABILITY-COST.md",
+    "ACCEPTANCE-TESTS.md",
+    "HANDOFF.md",
+    "PHASE-ONE-MANIFEST.md"
+  ],
+  "validation": {
+    "json_parse": [
+      "connector-contract.schema.json",
+      "connection-data-model.json"
+    ],
+    "provider_production_tests": false,
+    "production_verification": false
+  },
+  "dependencies": [
+    "Control Tower approval of global event/entity/tenancy conventions",
+    "managed queue/workflow and secret store selection",
+    "commercial/security review and quotes for integration vendors",
+    "provider sandbox credentials for later connector testing"
+  ],
+  "architecture_change_requests": [
+    "ACR-07-001 IntegrationEvent envelope/naming",
+    "ACR-07-002 tenant key ownership",
+    "ACR-07-003 normalized entity vocabulary",
+    "ACR-07-004 queue/workflow/secrets dependencies"
+  ]
+}

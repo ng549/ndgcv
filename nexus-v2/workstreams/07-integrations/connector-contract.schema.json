@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/connector-contract.schema.json",
+  "title": "Nexus Connector Contract",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "provider",
+    "auth",
+    "capabilities",
+    "resources",
+    "health"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "object",
+      "required": [
+        "key",
+        "name"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "docs_url": {
+          "type": "string"
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "required": [
+        "methods"
+      ],
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "oauth2",
+              "api_key",
+              "service_account",
+              "pat",
+              "database_credentials",
+              "mcp",
+              "delegated"
+            ]
+          }
+        },
+        "minimum_scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "secret_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "connection_state": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "pending",
+          "connected",
+          "degraded",
+          "auth_expired",
+          "rate_limited",
+          "failed",
+          "disconnected"
+        ]
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "read": {
+          "type": "boolean"
+        },
+        "write": {
+          "type": "boolean"
+        },
+        "webhooks": {
+          "type": "boolean"
+        },
+        "polling": {
+          "type": "boolean"
+        },
+        "incremental_sync": {
+          "type": "boolean"
+        },
+        "full_sync": {
+          "type": "boolean"
+        },
+        "backfill": {
+          "type": "boolean"
+        },
+        "mcp": {
+          "type": "boolean"
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "operations"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "normalized_entity": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "list",
+                "get",
+                "create",
+                "update",
+                "delete",
+                "search"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "webhooks": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "signature_scheme": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supports_event_id": {
+          "type": "boolean"
+        }
+      }
+    },
+    "rate_limits": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "errors": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "health": {
+      "type": "object",
+      "required": [
+        "probe"
+      ],
+      "properties": {
+        "probe": {
+          "type": "string"
+        },
+        "freshness_slo_seconds": {
+          "type": "integer"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "meter": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "vendor_plan_ref": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
