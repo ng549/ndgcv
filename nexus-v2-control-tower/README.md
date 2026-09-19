@@ -1,6 +1,6 @@
 # Nexus V2 Control Tower — Phase One
 
-Status: **Needs Review**
+Workstream status: **Blocked** on affected-owner contracts and reconciliation. Local artifacts implemented and tested; not Complete.
 
 This directory contains the first shared architecture contract for Nexus V2. It is isolated from the existing CV application and does not import Old Nexus code.
 
@@ -35,3 +35,7 @@ Conflicts move upward for resolution; lower layers never silently override highe
 - No direct merge into `nexus-v2`
 - No Old Nexus migration
 - No final technology-stack selection for module-owned concerns
+
+## Continuation artifacts
+
+See `ACCEPTANCE-COVERAGE.md` for the full assigned-scope matrix, `control-tower-status.json` for the subordinate execution record, and `RECONCILIATION.md` for inspected Scout findings. Shared policy remains the integration canonical. New foundation tests reuse the existing check-jsonschema tool at observed version 0.38.0; run the existing shell entry point. These additions do not implement CI or a runtime.

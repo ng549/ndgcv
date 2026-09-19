@@ -1,0 +1,60 @@
+{
+  "record_type": "subordinate-workstream-canonical",
+  "workstream": 1,
+  "status": "Blocked",
+  "complete": false,
+  "updated_at": "2026-09-19",
+  "source": {
+    "repository": "ng549/ndgcv",
+    "integration_branch": "nexus-v2",
+    "integration_commit": "13ebf77f1760c09696096eeb5a8b2a495449fc04",
+    "canonical_blob": "77fa238b507c6c38e5ce6f5d5a6cf453432e86fc",
+    "working_branch": "nexus-v2-p1-01-control-tower",
+    "verified_input_commit": "4f278477855b02c11c73ca9599cc87a5d0190e8d",
+    "scout_reviewed_commit": "9a6d207c11380c0dfbf21f7f08b2f0a62feb96e9"
+  },
+  "scope": "Phase One architecture, schemas, templates, conventions and peer handoffs only",
+  "implemented": [
+    "Canonical structural schema and maintenance rules",
+    "Shared entity hierarchy",
+    "Architecture map",
+    "Worktree and branch guide",
+    "Twelve peer handoffs",
+    "ACR template and four proposed reconciliation records",
+    "Acceptance coverage matrix",
+    "Pinned local structural validation"
+  ],
+  "verified": [
+    "Existing suite exit 0",
+    "19 new foundation structure checks",
+    "Canonical fixture matches fetched source semantically",
+    "All twelve peer handoffs match registry",
+    "Independent continuation review and correction readback"
+  ],
+  "pending": [
+    "Affected module owner submissions and ACR dispositions",
+    "Final cross-module reconciliation"
+  ],
+  "external_blockers": [
+    {
+      "owner": "reuse-scout",
+      "blocker": "Inspected submission has inconsistent worker mapping and lacks formal module contract and candidate pins",
+      "impact": "Cannot accept reuse recommendations for integration",
+      "next_action": "Owner supplies corrected mappings, candidate evidence and contract; Control Tower reviews ACR-0001"
+    },
+    {
+      "owner": "affected module owners",
+      "blocker": "No other module branch submissions visible in inspected branch snapshot",
+      "impact": "Cannot verify cross-module interfaces or close reconciliation",
+      "next_action": "Owners commit bounded contracts; Control Tower compares pinned submissions"
+    }
+  ],
+  "limitations": [
+    "Local tests do not verify source evidence truth",
+    "No runtime or production implementation",
+    "No CI enforcement",
+    "No module branch merged",
+    "Other chat activity is not inferred from branch absence"
+  ],
+  "handoff": "HANDOFF.md"
+}

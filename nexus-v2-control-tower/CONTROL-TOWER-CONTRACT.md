@@ -1,7 +1,7 @@
 # Nexus V2 Control Tower Contract
 
 Contract version: `0.2.0-draft`  
-Status: **Needs Review** after independent re-review  
+Contract-draft status: **Needs Review** for affected-owner acceptance; workstream status: **Blocked** on reconciliation  
 Owner: Workstream 1 — Control Tower & Master Architect
 
 ## 1. System shape

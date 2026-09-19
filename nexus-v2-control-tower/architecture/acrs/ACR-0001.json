@@ -1,0 +1,30 @@
+{
+  "acr_id": "ACR-0001",
+  "title": "Reconcile Reuse Scout module mappings and change proposals",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "reuse-scout",
+    "integrations",
+    "ai-gateway",
+    "managed-ops",
+    "build-orchestration",
+    "client-platform"
+  ],
+  "problem": "Reuse Scout handoffs number six workers inconsistently with the authoritative 13-workstream registry. Candidate records lack pinned versions and candidate-level evidence. Three prose ACR IDs do not conform to the shared ACR schema.",
+  "proposed_change": "Keep the authoritative registry; route Client Platform to 6, Managed Ops/support to 10, Build Orchestration/contractors to 9, Design System to 11, and Old Nexus Audit to 12. Normalize scout proposals into ACR-0002 through ACR-0004 without treating them as accepted.",
+  "alternatives": [
+    "Renumber the authoritative workstreams: rejected because it conflicts with source prompts and creates branch ownership drift."
+  ],
+  "contract_impact": "No vendor selection or source-worker file modification. Owners submit corrected mappings and evidence before integration.",
+  "security_impact": "Candidate discovery is not authorization, commercial clearance, or runtime security verification.",
+  "cost_schedule_impact": "Removes misrouted work; no paid service is purchased by this proposal.",
+  "migration": "Correct references in the source workstream after owner review; preserve original IDs in evidence.",
+  "rollback": "Supersede this proposal with a reviewed correction; retain original evidence.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/blob/9a6d207c11380c0dfbf21f7f08b2f0a62feb96e9/nexus-v2/research/reuse-scout/PHASE-ONE-REUSE-SCOUT.md"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}

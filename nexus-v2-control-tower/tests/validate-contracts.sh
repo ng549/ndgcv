@@ -3,18 +3,18 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 
 for schema in "$root"/schemas/*.json; do
-  uvx check-jsonschema --check-metaschema "$schema"
+  uvx check-jsonschema==0.38.0 --check-metaschema "$schema"
 done
 
-uvx check-jsonschema --schemafile "$root/schemas/module-registry.schema.json" "$root/module-registry.json"
-uvx check-jsonschema --schemafile "$root/schemas/module-contract.schema.json" "$root/control-tower.module-contract.json"
-uvx check-jsonschema --schemafile "$root/schemas/domain-event.schema.json" \
+uvx check-jsonschema==0.38.0 --schemafile "$root/schemas/module-registry.schema.json" "$root/module-registry.json"
+uvx check-jsonschema==0.38.0 --schemafile "$root/schemas/module-contract.schema.json" "$root/control-tower.module-contract.json"
+uvx check-jsonschema==0.38.0 --schemafile "$root/schemas/domain-event.schema.json" \
   "$root/tests/fixtures/event-tenant-valid.json" \
   "$root/tests/fixtures/event-system-valid.json"
 
 expect_schema_failure() {
   local fixture="$1"
-  if uvx check-jsonschema --schemafile "$root/schemas/domain-event.schema.json" "$fixture"; then
+  if uvx check-jsonschema==0.38.0 --schemafile "$root/schemas/domain-event.schema.json" "$fixture"; then
     echo "invalid event fixture unexpectedly passed: $fixture" >&2
     exit 1
   fi
@@ -75,7 +75,11 @@ console.log('semantic contract gates passed');
 NODE
 
 forbidden_term="play""book"
-if rg -n -i "$forbidden_term" "$root"; then
+# The unmodified canonical fixture necessarily contains the policy's prohibited term.
+# Only that exact source snapshot is excluded from prose scanning.
+if rg -n -i --glob '!canonical-valid.json' "$forbidden_term" "$root"; then
   echo "forbidden term found" >&2
   exit 1
 fi
+
+uvx --from check-jsonschema==0.38.0 python "$root/tests/test-foundation.py"

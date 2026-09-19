@@ -1,0 +1,26 @@
+{
+  "acr_id": "ACR-0002",
+  "title": "Separate connector runtime from durable business orchestration",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "integrations",
+    "build-orchestration"
+  ],
+  "problem": "Normalize Scout proposal ACR-02-001 for owner reconciliation.",
+  "proposed_change": "Define connector OAuth/sync responsibility separately from business workflow responsibility. Runtime selection remains with module owners; Temporal/Nango are candidates only.",
+  "alternatives": [
+    "Defer adoption until affected owners supply contract and verification evidence."
+  ],
+  "contract_impact": "Proposed only; no accepted vendor or module boundary change.",
+  "security_impact": "Candidate discovery is not authorization, commercial clearance, or runtime security verification.",
+  "cost_schedule_impact": "Removes misrouted work; no paid service is purchased by this proposal.",
+  "migration": "Apply only through reviewed owner contracts.",
+  "rollback": "Keep current draft boundaries until proposal is accepted or superseded.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/blob/9a6d207c11380c0dfbf21f7f08b2f0a62feb96e9/nexus-v2/research/reuse-scout/PHASE-ONE-REUSE-SCOUT.md"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}

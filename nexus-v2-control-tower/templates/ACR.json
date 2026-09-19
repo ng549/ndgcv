@@ -1,0 +1,23 @@
+{
+  "acr_id": "ACR-0000",
+  "title": "Replace with a specific shared architecture change",
+  "status": "proposed",
+  "requester": "Requesting module ID",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "control-tower"
+  ],
+  "problem": "Describe observed problem and evidence",
+  "proposed_change": "Describe proposed change without claiming approval",
+  "alternatives": [
+    "Describe an evaluated alternative and its tradeoffs"
+  ],
+  "contract_impact": "List affected schemas, APIs, events and version changes",
+  "security_impact": "Describe authorization, data and credential risks",
+  "cost_schedule_impact": "Estimate cost and calendar impact, labeling assumptions",
+  "migration": "Describe the migration and verification sequence",
+  "rollback": "Describe a reversible backout and evidence preservation strategy",
+  "evidence": [],
+  "decision_owner": "Name accountable owner",
+  "decision": null
+}

@@ -1,0 +1,571 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "version",
+    "updated_at",
+    "source_of_truth",
+    "purpose",
+    "authority_rule",
+    "golden_rule",
+    "delivery_target",
+    "spend_to_accelerate_rule",
+    "repository",
+    "drive",
+    "business",
+    "marketing_engine",
+    "build_method",
+    "reuse_rule",
+    "ai_stack",
+    "nicolas_command_center",
+    "phase_one",
+    "terminology"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "const": "0.2"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "source_of_truth": {
+      "const": true
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "golden_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "rule",
+        "hard_rules",
+        "status_ladder",
+        "complete_requires",
+        "mandatory_completion_report"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hard_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status_ladder": {
+          "const": [
+            "Not Started",
+            "Researching",
+            "Designed",
+            "Implementing",
+            "Implemented / Unverified",
+            "Testing",
+            "Blocked",
+            "Needs Review",
+            "Production Verified",
+            "Complete"
+          ]
+        },
+        "complete_requires": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "mandatory_completion_report": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "delivery_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "priority",
+        "rule",
+        "acceleration_strategy"
+      ],
+      "properties": {
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acceleration_strategy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "spend_to_accelerate_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approved",
+        "principle",
+        "allowed",
+        "decision_test",
+        "rule"
+      ],
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "principle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowed": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "decision_test": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo",
+        "integration_branch",
+        "old_nexus_policy"
+      ],
+      "properties": {
+        "repo": {
+          "const": "ng549/ndgcv"
+        },
+        "integration_branch": {
+          "const": "nexus-v2"
+        },
+        "old_nexus_policy": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "drive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "folder_name",
+        "folder_id",
+        "prompt_control_sheet_id",
+        "phase_one_prompts_doc_id"
+      ],
+      "properties": {
+        "folder_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "folder_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt_control_sheet_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase_one_prompts_doc_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "business": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "positioning",
+        "initial_market",
+        "revenue_goal",
+        "gross_margin_goal",
+        "pricing",
+        "managed_service_boundary",
+        "lower_tiers",
+        "premium_tiers",
+        "ownership"
+      ],
+      "properties": {
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positioning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "initial_market": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "revenue_goal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gross_margin_goal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pricing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shared_configured_builds",
+            "custom_business_systems",
+            "fractional_systems_department",
+            "managed_service",
+            "quarterly_expansion"
+          ],
+          "properties": {
+            "shared_configured_builds": {
+              "type": "string",
+              "minLength": 1
+            },
+            "custom_business_systems": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fractional_systems_department": {
+              "type": "string",
+              "minLength": 1
+            },
+            "managed_service": {
+              "type": "string",
+              "minLength": 1
+            },
+            "quarterly_expansion": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "managed_service_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lower_tiers": {
+          "type": "string",
+          "minLength": 1
+        },
+        "premium_tiers": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownership": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "marketing_engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "channels",
+        "rule",
+        "goal"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "channels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "build_method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "module_first",
+        "separate_branches",
+        "independent_review",
+        "context_reset_at_milestones",
+        "architecture_changes_require_request",
+        "canonical_over_chat_memory"
+      ],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module_first": {
+          "type": "boolean"
+        },
+        "separate_branches": {
+          "type": "boolean"
+        },
+        "independent_review": {
+          "type": "boolean"
+        },
+        "context_reset_at_milestones": {
+          "type": "boolean"
+        },
+        "architecture_changes_require_request": {
+          "type": "boolean"
+        },
+        "canonical_over_chat_memory": {
+          "type": "boolean"
+        }
+      }
+    },
+    "reuse_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "sequence",
+        "required_record"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required_record": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "ai_stack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy",
+        "bullpens",
+        "revenue_rule",
+        "gateway",
+        "customer_metering",
+        "development_goal"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bullpens": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "revenue_rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gateway": {
+          "type": "string",
+          "minLength": 1
+        },
+        "customer_metering": {
+          "type": "string",
+          "minLength": 1
+        },
+        "development_goal": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nicolas_command_center": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "surface",
+        "entry",
+        "security",
+        "realtime",
+        "shows"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "security": {
+          "type": "string",
+          "minLength": 1
+        },
+        "realtime": {
+          "type": "boolean"
+        },
+        "shows": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "phase_one": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workstreams",
+        "first_to_start",
+        "operator_command_center",
+        "rule"
+      ],
+      "properties": {
+        "workstreams": {
+          "const": 13
+        },
+        "first_to_start": {
+          "const": [
+            1,
+            2,
+            7,
+            8
+          ]
+        },
+        "operator_command_center": {
+          "const": 13
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "terminology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "forbidden",
+        "preferred"
+      ],
+      "properties": {
+        "forbidden": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "preferred": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "step_by_step",
+            "architecture"
+          ],
+          "properties": {
+            "step_by_step": {
+              "type": "string",
+              "minLength": 1
+            },
+            "architecture": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nexus:v2:canonical:0.2",
+  "title": "Nexus V2 canonical structure v0.2"
+}

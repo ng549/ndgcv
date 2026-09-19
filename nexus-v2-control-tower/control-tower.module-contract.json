@@ -1,40 +1,185 @@
 {
-  "$schema":"./schemas/module-contract.schema.json",
-  "contract_version":"0.2.0-draft",
-  "module_id":"control-tower",
-  "status":"Needs Review",
-  "owner":"Control Tower & Master Architect",
-  "reviewer":"Independent Control Tower Reviewer",
-  "branch":"nexus-v2-p1-01-control-tower",
-  "allowed_files":["nexus-v2-control-tower/**"],
-  "inputs":[
-    {"name":"Nexus V2 canonical","kind":"file","version":"0.2","owner":"Nicolas Goureau","schema_ref":null,"data_classification":"internal","retention":"permanent","compatibility_policy":"Explicit Nicolas decisions override this input"}
+  "$schema": "./schemas/module-contract.schema.json",
+  "contract_version": "0.2.0-draft",
+  "module_id": "control-tower",
+  "status": "Blocked",
+  "owner": "Control Tower & Master Architect",
+  "reviewer": "Independent Control Tower Reviewer",
+  "branch": "nexus-v2-p1-01-control-tower",
+  "allowed_files": [
+    "nexus-v2-control-tower/**"
   ],
-  "outputs":[
-    {"name":"Module contract schema","kind":"schema","version":"0.2.0-draft","owner":"control-tower","schema_ref":"./schemas/module-contract.schema.json","data_classification":"internal","retention":"permanent","compatibility_policy":"Closed top level; breaking fields require a new major version"},
-    {"name":"Nexus domain event","kind":"event","version":"1.0.0-draft","owner":"control-tower","schema_ref":"./schemas/domain-event.schema.json","data_classification":"internal","retention":"defined by producing module and Managed Ops policy","compatibility_policy":"Native CloudEvents 1.0; event type major version is authoritative"}
+  "inputs": [
+    {
+      "name": "Nexus V2 canonical",
+      "kind": "file",
+      "version": "0.2",
+      "owner": "Nicolas Goureau",
+      "schema_ref": null,
+      "data_classification": "internal",
+      "retention": "permanent",
+      "compatibility_policy": "Explicit Nicolas decisions override this input"
+    }
   ],
-  "owned_data":[
-    {"name":"module registry","data_classification":"internal","retention":"permanent","compatibility_policy":"Reconciled changes only"},
-    {"name":"architecture decisions and change requests","data_classification":"internal","retention":"permanent","compatibility_policy":"Append/supersede; do not rewrite history"}
+  "outputs": [
+    {
+      "name": "Module contract schema",
+      "kind": "schema",
+      "version": "0.2.0-draft",
+      "owner": "control-tower",
+      "schema_ref": "./schemas/module-contract.schema.json",
+      "data_classification": "internal",
+      "retention": "permanent",
+      "compatibility_policy": "Closed top level; breaking fields require a new major version"
+    },
+    {
+      "name": "Nexus domain event",
+      "kind": "event",
+      "version": "1.0.0-draft",
+      "owner": "control-tower",
+      "schema_ref": "./schemas/domain-event.schema.json",
+      "data_classification": "internal",
+      "retention": "defined by producing module and Managed Ops policy",
+      "compatibility_policy": "Native CloudEvents 1.0; event type major version is authoritative"
+    }
   ],
-  "prohibited_ownership":["client business data","credentials","billing ledger","customer identity lifecycle","project lifecycle"],
-  "dependencies":[],
-  "non_goals":["business module implementation","production deployment","Old Nexus migration","runtime vendor selection"],
-  "acceptance_criteria":[
-    {"id":"CT-001","statement":"All JSON artifacts parse and schemas pass metaschema validation","evidence":"tests/validate-contracts.sh exit 0","status":"Passed"},
-    {"id":"CT-002","statement":"Registry has 13 unique modules with resolved acyclic dependencies","evidence":"tests/validate-contracts.sh exit 0, including duplicate negative fixture","status":"Passed"},
-    {"id":"CT-003","statement":"Tenant and system event fixtures enforce scope and CloudEvents attributes","evidence":"tests/validate-contracts.sh exit 0 with valid and expected-invalid fixtures","status":"Passed"},
-    {"id":"CT-004","statement":"Completion semantic gate rejects false completion","evidence":"tests/validate-contracts.sh exit 0 with synthetic false-completion fixture","status":"Passed"},
-    {"id":"CT-005","statement":"Independent review has no unresolved blocking findings","evidence":"Independent re-review of f4a7d46c007eb8514365de1529dfc3f09d470b62 resolved all four original blockers","status":"Passed"}
+  "owned_data": [
+    {
+      "name": "module registry",
+      "data_classification": "internal",
+      "retention": "permanent",
+      "compatibility_policy": "Reconciled changes only"
+    },
+    {
+      "name": "architecture decisions and change requests",
+      "data_classification": "internal",
+      "retention": "permanent",
+      "compatibility_policy": "Append/supersede; do not rewrite history"
+    }
   ],
-  "research_records":[
-    {"name":"CloudEvents","url":"https://github.com/cloudevents/spec","license":"Apache-2.0","commercial_use":"Permitted with license obligations","version_or_commit":"v1.0.2","maintenance":"Established CNCF specification","security":"Payload authorization remains application responsibility","integration_effort":"Low to moderate","lock_in":"Low; vendor-neutral","decision":"USE","custom_gap":"Nexus scope, actor, tenant, classification, and correlation extensions"}
+  "prohibited_ownership": [
+    "client business data",
+    "credentials",
+    "billing ledger",
+    "customer identity lifecycle",
+    "project lifecycle"
   ],
-  "security":{"data_classification":["internal","confidential","restricted"],"tenant_boundary":"Tenant scope requires nonempty tenantid; system scope forbids tenantid and requires external authorization","secret_handling":"Only secret references may cross contracts; secret values are prohibited"},
-  "unresolved_decisions":[
-    {"decision":"Contract testing toolchain and CI enforcement","owner":"Build Orchestration"},
-    {"decision":"Runtime auth provider","owner":"Shared Client Platform"}
+  "dependencies": [],
+  "non_goals": [
+    "business module implementation",
+    "production deployment",
+    "Old Nexus migration",
+    "runtime vendor selection"
   ],
-  "handoff":{"commit":"f4a7d46c007eb8514365de1529dfc3f09d470b62","artifacts":["nexus-v2-control-tower/"],"tests":["tests/validate-contracts.sh: exit 0","Independent re-review: 22 positive/negative assertions passed"],"limitations":["No external CloudEvents SDK round-trip","No runtime authorization verification","No cross-module integration","No production implementation","No CI enforcement"],"remaining_work":["Control Tower reconciliation with affected workstreams"]}
+  "acceptance_criteria": [
+    {
+      "id": "CT-001",
+      "statement": "All JSON artifacts parse and schemas pass metaschema validation",
+      "evidence": "tests/validate-contracts.sh exit 0",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-002",
+      "statement": "Registry has 13 unique modules with resolved acyclic dependencies",
+      "evidence": "tests/validate-contracts.sh exit 0, including duplicate negative fixture",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-003",
+      "statement": "Tenant and system event fixtures enforce scope and CloudEvents attributes",
+      "evidence": "tests/validate-contracts.sh exit 0 with valid and expected-invalid fixtures",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-004",
+      "statement": "Completion semantic gate rejects false completion",
+      "evidence": "tests/validate-contracts.sh exit 0 with synthetic false-completion fixture",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-005",
+      "statement": "Independent review has no unresolved blocking findings",
+      "evidence": "Independent re-review of f4a7d46c007eb8514365de1529dfc3f09d470b62 resolved all four original blockers",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-006",
+      "statement": "Canonical schema validates baseline and rejects invalid routing/status/structure fixtures",
+      "evidence": "Local validation exit 0; 19 foundation checks; canonical equality and twelve registry mappings verified",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-007",
+      "statement": "All twelve peer handoffs, entity hierarchy, worktree and maintenance rules exist",
+      "evidence": "Local validation exit 0; 19 foundation checks; canonical equality and twelve registry mappings verified",
+      "status": "Passed"
+    },
+    {
+      "id": "CT-008",
+      "statement": "Affected owners reconcile submitted cross-module contracts",
+      "evidence": "RECONCILIATION.md: owner contracts and responses pending",
+      "status": "Blocked"
+    },
+    {
+      "id": "CT-009",
+      "statement": "Continuation artifacts receive independent review",
+      "evidence": "Independent continuation review and correction readback; see REVIEW-CONTINUATION.md",
+      "status": "Passed"
+    }
+  ],
+  "research_records": [
+    {
+      "name": "CloudEvents",
+      "url": "https://github.com/cloudevents/spec",
+      "license": "Apache-2.0",
+      "commercial_use": "Permitted with license obligations",
+      "version_or_commit": "v1.0.2",
+      "maintenance": "Established CNCF specification",
+      "security": "Payload authorization remains application responsibility",
+      "integration_effort": "Low to moderate",
+      "lock_in": "Low; vendor-neutral",
+      "decision": "USE",
+      "custom_gap": "Nexus scope, actor, tenant, classification, and correlation extensions"
+    }
+  ],
+  "security": {
+    "data_classification": [
+      "internal",
+      "confidential",
+      "restricted"
+    ],
+    "tenant_boundary": "Tenant scope requires nonempty tenantid; system scope forbids tenantid and requires external authorization",
+    "secret_handling": "Only secret references may cross contracts; secret values are prohibited"
+  },
+  "unresolved_decisions": [
+    {
+      "decision": "Contract testing toolchain and CI enforcement",
+      "owner": "Build Orchestration"
+    },
+    {
+      "decision": "Runtime auth provider",
+      "owner": "Shared Client Platform"
+    }
+  ],
+  "handoff": {
+    "commit": "4f278477855b02c11c73ca9599cc87a5d0190e8d",
+    "artifacts": [
+      "nexus-v2-control-tower/"
+    ],
+    "tests": [
+      "tests/validate-contracts.sh: exit 0 with 19 added foundation checks",
+      "Independent continuation review ran suite and verified fixture/mappings"
+    ],
+    "limitations": [
+      "No external CloudEvents SDK round-trip",
+      "No runtime authorization verification",
+      "No cross-module integration",
+      "No production implementation",
+      "No CI enforcement"
+    ],
+    "remaining_work": [
+      "Affected owner contracts and ACR dispositions",
+      "Final cross-module reconciliation"
+    ]
+  }
 }
