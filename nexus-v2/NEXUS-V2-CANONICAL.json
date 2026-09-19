@@ -1,0 +1,229 @@
+{
+  "title": "Nexus V2 Canonical",
+  "version": "0.2",
+  "updated_at": "2026-09-19",
+  "source_of_truth": true,
+  "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
+  "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
+
+  "golden_rule": {
+    "title": "Truth Before Comfort",
+    "rule": "Never claim completion unless the work is actually complete, verified, usable, and matches the approved scope. Never hide uncertainty, partial failure, missing validation, blockers, or unfinished dependencies to make progress sound better than it is.",
+    "hard_rules": [
+      "Do not say done, fixed, deployed, working, resolved, saved, updated, finished, or complete without direct evidence supporting that exact claim.",
+      "A successful tool call does not automatically prove the user-visible outcome succeeded.",
+      "Partial work must be labeled accurately.",
+      "If required work remains, status cannot be Complete.",
+      "If required production behavior has not been verified, status cannot be Complete.",
+      "If known defects affect required behavior, status cannot be Complete.",
+      "Do not substitute optimism for evidence. 'Should work' and 'works' are different claims.",
+      "Never hide failures, omitted scope, or unresolved dependencies.",
+      "When blocked, state the blocker, impact, and exact next action.",
+      "Accuracy outranks reassurance, speed, appearance of progress, or the desire to please Nicolas."
+    ],
+    "status_ladder": [
+      "Not Started",
+      "Researching",
+      "Designed",
+      "Implementing",
+      "Implemented / Unverified",
+      "Testing",
+      "Blocked",
+      "Needs Review",
+      "Production Verified",
+      "Complete"
+    ],
+    "complete_requires": [
+      "Approved acceptance criteria satisfied",
+      "Implementation complete for approved scope",
+      "Required tests passed",
+      "Required integrations verified",
+      "Required production behavior verified",
+      "No known required work remains",
+      "Known limitations disclosed and compatible with acceptance criteria"
+    ],
+    "mandatory_completion_report": [
+      "What was requested",
+      "What was completed",
+      "What was verified",
+      "Where it was verified",
+      "Tests run",
+      "Known limitations",
+      "Remaining work",
+      "Final status"
+    ]
+  },
+
+  "delivery_target": {
+    "target": "Production-ready Nexus V2 in less than 8 weeks",
+    "priority": "Aggressive",
+    "rule": "The under-8-week target is real, but it never overrides the Golden Rule, security, acceptance criteria, or production verification.",
+    "acceleration_strategy": [
+      "Parallel independent workstreams",
+      "Research before build",
+      "Reuse before create",
+      "Integrate before custom-build",
+      "Premium AI models where they save meaningful time",
+      "Paid commercial tools when cheaper than custom ownership",
+      "Contractors and specialists for bounded work packets",
+      "Managed infrastructure where it reduces setup/maintenance",
+      "Automated testing, deployment, monitoring, and documentation",
+      "Strict module contracts to reduce rework",
+      "No silent scope expansion during Phase One"
+    ]
+  },
+
+  "spend_to_accelerate_rule": {
+    "approved": true,
+    "principle": "Nicolas is willing to spend money to shorten delivery when the spend has a clear speed, quality, reliability, or gross-margin benefit.",
+    "allowed": [
+      "Premium AI/model tiers",
+      "Commercial SaaS and APIs",
+      "Paid aggregators",
+      "Contract developers",
+      "Specialist contractors",
+      "Design/QA/security specialists",
+      "Managed databases and hosting",
+      "Observability and monitoring services",
+      "Commercial integration platforms",
+      "Paid data/enrichment providers",
+      "Testing and deployment services"
+    ],
+    "decision_test": [
+      "Does it save meaningful calendar time?",
+      "Does it reduce implementation or maintenance risk?",
+      "Does it avoid building commodity infrastructure?",
+      "Does it preserve or improve the 70% gross-margin target?",
+      "Does it avoid unacceptable lock-in or licensing risk?",
+      "Can it be replaced later if economics change?"
+    ],
+    "rule": "Do not choose the cheapest option if a paid option materially accelerates the build or improves reliability. Spend deliberately, not wastefully."
+  },
+
+  "repository": {
+    "repo": "ng549/ndgcv",
+    "integration_branch": "nexus-v2",
+    "old_nexus_policy": "Old Nexus is reference-only. Pull specific approved pieces only when needed; never merge or inherit wholesale."
+  },
+
+  "drive": {
+    "folder_name": "Nexus V2",
+    "folder_id": "137sMNK6jYVnMuZca5UB6h1Z06Dc_wjYn",
+    "prompt_control_sheet_id": "1OdPBUyc_zTSpNcFbs9Y2fFjE2lDBKJQU1LwcSro6Rbc",
+    "phase_one_prompts_doc_id": "11Bf7aQGeodtrRKxZzkGr32iRY3Izmp7LV6WF6fX1dz8"
+  },
+
+  "business": {
+    "category": "Fractional Business Systems",
+    "positioning": "Nicolas is the product. AI is infrastructure and leverage behind the service, not the marketing billboard.",
+    "initial_market": [
+      "Retail",
+      "Ecommerce",
+      "Distribution",
+      "Consumer products",
+      "Multi-location operators",
+      "Operationally complex SMBs generally $500K+ revenue"
+    ],
+    "revenue_goal": "$500K-$1M annual revenue",
+    "gross_margin_goal": "about 70%",
+    "pricing": {
+      "shared_configured_builds": "$3K-$12K",
+      "custom_business_systems": "$12K-$30K",
+      "fractional_systems_department": "$30K-$50K+",
+      "managed_service": "$2K-$10K/month",
+      "quarterly_expansion": "$5K-$10K+"
+    },
+    "managed_service_boundary": "Retainer covers continuity, monitoring, support, minor adjustments and system stewardship. Work requiring planning, architecture, multiple work sessions, or threatening a major delivery becomes separately scoped project work.",
+    "lower_tiers": "Shared platform architecture",
+    "premium_tiers": "Dedicated option",
+    "ownership": "Hybrid; decide per tier/client."
+  },
+
+  "marketing_engine": {
+    "required": true,
+    "channels": ["Warm network", "Targeted outbound", "Partner/referral"],
+    "rule": "Do not lead with AI.",
+    "goal": "Automated and outsourced customer acquisition engine feeding qualified opportunities to Nicolas."
+  },
+
+  "build_method": {
+    "rule": "No single AI owns the whole build.",
+    "module_first": true,
+    "separate_branches": true,
+    "independent_review": true,
+    "context_reset_at_milestones": true,
+    "architecture_changes_require_request": true,
+    "canonical_over_chat_memory": true
+  },
+
+  "reuse_rule": {
+    "title": "Research Before Build",
+    "sequence": [
+      "Define need",
+      "Search public repos/MCPs/APIs/SDKs",
+      "Evaluate",
+      "Use directly",
+      "Integrate",
+      "Fork/extend",
+      "Build only what is missing"
+    ],
+    "required_record": [
+      "URL",
+      "License",
+      "Commercial-use implications",
+      "Version/commit",
+      "Maintenance activity",
+      "Security concerns",
+      "Integration effort",
+      "Lock-in risk",
+      "Reason custom code is still needed"
+    ]
+  },
+
+  "ai_stack": {
+    "strategy": "Aggregator-first",
+    "bullpens": ["Development", "Revenue", "Capability"],
+    "revenue_rule": "Only use provider/model routes for customer monetization after commercial customer-facing use is verified.",
+    "gateway": "Apps should call Nexus AI Gateway instead of individual providers where practical.",
+    "customer_metering": "Track wholesale cost, retail credits/price, gross profit, and gross margin per request/job.",
+    "development_goal": "Reduce current roughly $500/month GPT + Claude + Grok development subscription spend where capability can be preserved or improved."
+  },
+
+  "nicolas_command_center": {
+    "required": true,
+    "surface": "nicolasgoureau.com",
+    "entry": "Small low-visibility operator link known to Nicolas",
+    "security": "Real sign-in and authorization are mandatory; obscurity is not security.",
+    "realtime": true,
+    "shows": [
+      "Projects and modules",
+      "AI workers/chats",
+      "Work packets",
+      "Branches and PRs",
+      "Blockers",
+      "Deployments",
+      "Client health",
+      "AI spend and system costs",
+      "Revenue and margin",
+      "Alerts",
+      "Lead/sales pipeline",
+      "Tasks",
+      "Approvals"
+    ]
+  },
+
+  "phase_one": {
+    "workstreams": 13,
+    "first_to_start": [1,2,7,8],
+    "operator_command_center": 13,
+    "rule": "No Phase One workstream merges directly into nexus-v2. Control Tower reconciles contracts before Phase Two."
+  },
+
+  "terminology": {
+    "forbidden": ["playbook"],
+    "preferred": {
+      "step_by_step": "Implementation Guide",
+      "architecture": "Deployment Framework"
+    }
+  }
+}
