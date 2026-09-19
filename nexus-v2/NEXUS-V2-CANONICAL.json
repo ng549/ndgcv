@@ -1,6 +1,6 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.4",
+  "version": "0.5",
   "updated_at": "2026-09-19",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
@@ -251,7 +251,9 @@
       "dependency_aware_launch": true,
       "model_failover": "Preferred models may have qualified fallbacks when quota or provider availability prevents execution.",
       "merge_policy": "Merge remains gated and must not be an unrestricted autonomous worker action.",
-      "implementation_boundary": "Durable one-click execution should use API/agent workers through Nexus AI Gateway, not UI automation of consumer ChatGPT/Claude/Grok apps."
+      "implementation_boundary": "Durable one-click execution should use API/agent workers through Nexus AI Gateway, not UI automation of consumer ChatGPT/Claude/Grok apps.",
+      "mvp_priority": "P0 — build the smallest real supervisor/control slice first: persistent work packet, API worker launch, checkpoint, execution-end detection, acceptance-state check, automatic continuation, budget cap, genuine-blocker stop, and mobile status/control.",
+      "target_first_slice": "Prioritize functional worker supervision over broad dashboard polish."
     }
   },
   "phase_one": {
@@ -275,6 +277,18 @@
       "note": "Workers 1, 2, 7 and 8 are currently running on ChatGPT/GPT-5.6 Sol. Grok is temporarily over its usage limit. Do not interrupt active workers solely to rebalance model families.",
       "grok_status": "Temporarily quota-limited",
       "routing_rule": "Use the best qualified available model; do not wait for Grok quota to reset."
+    },
+    "priority_override": {
+      "decision": "Accelerate worker supervision and Nicolas Command & Control immediately.",
+      "reason": "Manual 'Go' turns in consumer ChatGPT are creating operator friction and slowing the <8-week build.",
+      "start_now": [
+        9,
+        13
+      ],
+      "supporting": [
+        8
+      ],
+      "note": "Worker 9 and Worker 13 may begin before all other Phase One contracts are complete. They must consume current canonical contracts, isolate reversible implementation, and raise Architecture Change Requests for shared-contract conflicts."
     }
   },
   "terminology": {
