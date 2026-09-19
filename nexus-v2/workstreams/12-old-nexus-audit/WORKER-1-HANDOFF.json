@@ -1,0 +1,336 @@
+{
+  "worker": 12,
+  "name": "Nexus V1 Salvage, Provenance & Migration Auditor",
+  "canonical": "nexus-v2/NEXUS-V2-CANONICAL.json",
+  "status": "Needs Review",
+  "rule": "No V1 code was migrated. These are migration intelligence recommendations only.",
+  "candidates": [
+    {
+      "candidate_id": "V1-001",
+      "capability": "Agency/project model",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:apps/mhc-console/src/index.js",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 6",
+      "dependencies": [
+        "identity",
+        "membership",
+        "project registry"
+      ],
+      "decision_required": "Confirm V2 tenant/org/project shape; do not import hardcoded records."
+    },
+    {
+      "candidate_id": "V1-002",
+      "capability": "Project access/roles",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/index.js+src/membership.js",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 6",
+      "dependencies": [
+        "identity provider",
+        "authorization"
+      ],
+      "decision_required": "Choose maintained identity provider and explicit grants."
+    },
+    {
+      "candidate_id": "V1-003",
+      "capability": "48h project invitations",
+      "v1_source": "ng549/Merchant-PRO@feature/nexus-invitations-48h-project commit 9db04d38",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 6",
+      "dependencies": [
+        "identity provider",
+        "membership"
+      ],
+      "decision_required": "Preserve 48h/email/project behavior; implement with chosen identity platform."
+    },
+    {
+      "candidate_id": "V1-004",
+      "capability": "Control Panel account/member UX",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/nexus-account-ui.js",
+      "classification": "ADAPT",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 6 + Worker 11",
+      "dependencies": [
+        "auth",
+        "design shell"
+      ],
+      "decision_required": "Split UI from domain ownership."
+    },
+    {
+      "candidate_id": "V1-005",
+      "capability": "Task metadata and acceptance",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/nexus-tasks.js",
+      "classification": "ADAPT",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 9",
+      "dependencies": [
+        "Work Packet contract"
+      ],
+      "decision_required": "Map useful fields to V2 Work Packet; discard legacy storage."
+    },
+    {
+      "candidate_id": "V1-006",
+      "capability": "Task search",
+      "v1_source": "ng549/Merchant-PRO@feature/nexus-task-search commit b4884cca",
+      "classification": "REBUILD",
+      "confidence": "MEDIUM",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 9 + Worker 11",
+      "dependencies": [
+        "Work Packet read model"
+      ],
+      "decision_required": "Keep arbitrary-text behavior; choose V2 search implementation."
+    },
+    {
+      "candidate_id": "V1-007",
+      "capability": "Acceptance/revision gates",
+      "v1_source": "ng549/Merchant-PRO@fix/nexus-acceptance-revision-gates commit 7ba0f040",
+      "classification": "ADAPT",
+      "confidence": "HIGH",
+      "contamination_risk": "LOW-MEDIUM",
+      "v2_destination": "Worker 9",
+      "dependencies": [
+        "Work Packet state"
+      ],
+      "decision_required": "Reconcile with canonical Golden Rule ladder."
+    },
+    {
+      "candidate_id": "V1-008",
+      "capability": "Codex executor",
+      "v1_source": "ng549/Merchant-PRO@fix/nexus-executor-default-registration:.github/workflows/nexus-executor.yml commit 79eba46a",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 9",
+      "dependencies": [
+        "job runner",
+        "GitHub",
+        "AI adapter"
+      ],
+      "decision_required": "Keep safety controls; replace branch/path/provider coupling."
+    },
+    {
+      "candidate_id": "V1-009",
+      "capability": "Grok operator control",
+      "v1_source": "ng549/Merchant-PRO@grok/nexus-operator-control commit ee5849be",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 9",
+      "dependencies": [
+        "provider adapter",
+        "GitHub"
+      ],
+      "decision_required": "Preserve independent-worker UX/policy, not bespoke stack."
+    },
+    {
+      "candidate_id": "V1-010",
+      "capability": "Quark product contract",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/assistant.js",
+      "classification": "ADAPT",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 8 + Worker 11 + Worker 13",
+      "dependencies": [
+        "auth context",
+        "AI gateway",
+        "design"
+      ],
+      "decision_required": "Split AI policy, memory, and presentation."
+    },
+    {
+      "candidate_id": "V1-011",
+      "capability": "Quark approved visual reference",
+      "v1_source": "ng549/Merchant-PRO@feature/nexus-approved-shared-design:src/assets/quark-approved-reference.js",
+      "classification": "ADAPT",
+      "confidence": "MEDIUM",
+      "contamination_risk": "LOW",
+      "v2_destination": "Worker 11",
+      "dependencies": [
+        "asset provenance"
+      ],
+      "decision_required": "Confirm source/rights before reuse."
+    },
+    {
+      "candidate_id": "V1-012",
+      "capability": "Quark renderer/animation",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/quark-character.js",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM-HIGH",
+      "v2_destination": "Worker 11",
+      "dependencies": [
+        "approved asset",
+        "motion contract"
+      ],
+      "decision_required": "Use old states/tests as reference only."
+    },
+    {
+      "candidate_id": "V1-013",
+      "capability": "Shared design CSS/shell",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/nexus-shared-theme.js commit 8893eb98",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 11",
+      "dependencies": [
+        "design tokens",
+        "shell"
+      ],
+      "decision_required": "Recreate approved look with clean V2 components."
+    },
+    {
+      "candidate_id": "V1-014",
+      "capability": "Header/mobile acceptance",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation qa/nexus-design.spec.mjs",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "MEDIUM",
+      "v2_destination": "Worker 11",
+      "dependencies": [
+        "visual regression"
+      ],
+      "decision_required": "Carry behavioral geometry/spacing intent into V2 tests."
+    },
+    {
+      "candidate_id": "V1-016",
+      "capability": "Adaptive customer forms",
+      "v1_source": "V1 requirement NX-010; complete implementation not verified",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "LOW",
+      "v2_destination": "Worker 6 + Worker 9 + Worker 11",
+      "dependencies": [
+        "open tasks",
+        "client delivery"
+      ],
+      "decision_required": "Implement task-generated, burden-scaled, admin-approved forms."
+    },
+    {
+      "candidate_id": "V1-017",
+      "capability": "AI cost ledger",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/index.js",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 8 + Worker 10",
+      "dependencies": [
+        "Cost Event",
+        "billing"
+      ],
+      "decision_required": "Replace JS float/Sheet ledger with canonical money/event model."
+    },
+    {
+      "candidate_id": "V1-018",
+      "capability": "Billing reconciliation jobs",
+      "v1_source": "ng549/Merchant-PRO commits c072e790/7e057999/3d8f1d4",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 10",
+      "dependencies": [
+        "provider billing APIs"
+      ],
+      "decision_required": "Reuse provider knowledge only; normalize into V2 ledger."
+    },
+    {
+      "candidate_id": "V1-019",
+      "capability": "BYOK non-fallback policy",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/assistant.js",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "LOW",
+      "v2_destination": "Worker 8",
+      "dependencies": [
+        "tenant credential store"
+      ],
+      "decision_required": "Make hard failure on missing customer BYOK; never operator fallback."
+    },
+    {
+      "candidate_id": "V1-020",
+      "capability": "OAuth/session stack",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/index.js",
+      "classification": "REBUILD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 6",
+      "dependencies": [
+        "WorkOS/Clerk candidate"
+      ],
+      "decision_required": "Do not preserve broad scopes or token-in-cookie architecture."
+    },
+    {
+      "candidate_id": "V1-021",
+      "capability": "Recovered production-era Worker",
+      "v1_source": "ng549/nexus@recovery/mhc-hud-nx006-production-2026-09-11",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 1",
+      "dependencies": [
+        "historical provenance"
+      ],
+      "decision_required": "Archive as evidence; no migration."
+    },
+    {
+      "candidate_id": "V1-022",
+      "capability": "Source reconciliation manifest",
+      "v1_source": "ng549/nexus@cleanup/source-reconciliation-2026-09-12:NEXUS-SOURCE-MANIFEST.md",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "LOW",
+      "v2_destination": "Worker 1",
+      "dependencies": [
+        "canonical governance"
+      ],
+      "decision_required": "Use to prevent old deployment/source confusion."
+    },
+    {
+      "candidate_id": "V1-023",
+      "capability": "Deployment workflow",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:.github/workflows/deploy-mhc-nexus.yml",
+      "classification": "REFERENCE ONLY",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Worker 9 + Worker 10",
+      "dependencies": [
+        "CI/CD",
+        "Cloudflare"
+      ],
+      "decision_required": "Retain stage concepts; rebuild promotion/provenance."
+    },
+    {
+      "candidate_id": "V1-024",
+      "capability": "MHC Drive/Sheet core coupling",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/index.js",
+      "classification": "DISCARD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Future Merchant PRO/MHC",
+      "dependencies": [
+        "Google Drive/Sheets"
+      ],
+      "decision_required": "Keep out of V2 core; module-specific future review only."
+    },
+    {
+      "candidate_id": "V1-025",
+      "capability": "Cabinet core coupling",
+      "v1_source": "ng549/Merchant-PRO@feature/mhc-project-foundation:src/index.js",
+      "classification": "DISCARD",
+      "confidence": "HIGH",
+      "contamination_risk": "HIGH",
+      "v2_destination": "Future Cabinet module",
+      "dependencies": [
+        "project shell"
+      ],
+      "decision_required": "Keep Cabinet-specific assumptions out of V2 core."
+    }
+  ]
+}
