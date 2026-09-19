@@ -1,0 +1,16 @@
+{
+  "name": "nexus-worker-supervisor",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-09-19",
+  "d1_databases": [
+    { "binding": "DB", "database_name": "nexus-worker-supervisor", "database_id": "REPLACE_AT_DEPLOY" }
+  ],
+  "kv_namespaces": [
+    { "binding": "CANONICAL", "id": "REPLACE_AT_DEPLOY" },
+    { "binding": "ROUTE_HEALTH", "id": "REPLACE_AT_DEPLOY" }
+  ],
+  "queues": {
+    "producers": [{ "binding": "SUPERVISOR_QUEUE", "queue": "nexus-supervisor" }],
+    "consumers": [{ "queue": "nexus-supervisor", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 5 }]
+  }
+}
