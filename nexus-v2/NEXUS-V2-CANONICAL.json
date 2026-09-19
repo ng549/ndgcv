@@ -5,7 +5,6 @@
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
-
   "golden_rule": {
     "title": "Truth Before Comfort",
     "rule": "Never claim completion unless the work is actually complete, verified, usable, and matches the approved scope. Never hide uncertainty, partial failure, missing validation, blockers, or unfinished dependencies to make progress sound better than it is.",
@@ -53,7 +52,6 @@
       "Final status"
     ]
   },
-
   "delivery_target": {
     "target": "Production-ready Nexus V2 in less than 8 weeks",
     "priority": "Aggressive",
@@ -72,7 +70,6 @@
       "No silent scope expansion during Phase One"
     ]
   },
-
   "spend_to_accelerate_rule": {
     "approved": true,
     "principle": "Nicolas is willing to spend money to shorten delivery when the spend has a clear speed, quality, reliability, or gross-margin benefit.",
@@ -99,20 +96,17 @@
     ],
     "rule": "Do not choose the cheapest option if a paid option materially accelerates the build or improves reliability. Spend deliberately, not wastefully."
   },
-
   "repository": {
     "repo": "ng549/ndgcv",
     "integration_branch": "nexus-v2",
     "old_nexus_policy": "Old Nexus is reference-only. Pull specific approved pieces only when needed; never merge or inherit wholesale."
   },
-
   "drive": {
     "folder_name": "Nexus V2",
     "folder_id": "137sMNK6jYVnMuZca5UB6h1Z06Dc_wjYn",
     "prompt_control_sheet_id": "1OdPBUyc_zTSpNcFbs9Y2fFjE2lDBKJQU1LwcSro6Rbc",
     "phase_one_prompts_doc_id": "11Bf7aQGeodtrRKxZzkGr32iRY3Izmp7LV6WF6fX1dz8"
   },
-
   "business": {
     "category": "Fractional Business Systems",
     "positioning": "Nicolas is the product. AI is infrastructure and leverage behind the service, not the marketing billboard.",
@@ -138,14 +132,16 @@
     "premium_tiers": "Dedicated option",
     "ownership": "Hybrid; decide per tier/client."
   },
-
   "marketing_engine": {
     "required": true,
-    "channels": ["Warm network", "Targeted outbound", "Partner/referral"],
+    "channels": [
+      "Warm network",
+      "Targeted outbound",
+      "Partner/referral"
+    ],
     "rule": "Do not lead with AI.",
     "goal": "Automated and outsourced customer acquisition engine feeding qualified opportunities to Nicolas."
   },
-
   "build_method": {
     "rule": "No single AI owns the whole build.",
     "module_first": true,
@@ -155,7 +151,6 @@
     "architecture_changes_require_request": true,
     "canonical_over_chat_memory": true
   },
-
   "reuse_rule": {
     "title": "Research Before Build",
     "sequence": [
@@ -179,16 +174,18 @@
       "Reason custom code is still needed"
     ]
   },
-
   "ai_stack": {
     "strategy": "Aggregator-first",
-    "bullpens": ["Development", "Revenue", "Capability"],
+    "bullpens": [
+      "Development",
+      "Revenue",
+      "Capability"
+    ],
     "revenue_rule": "Only use provider/model routes for customer monetization after commercial customer-facing use is verified.",
     "gateway": "Apps should call Nexus AI Gateway instead of individual providers where practical.",
     "customer_metering": "Track wholesale cost, retail credits/price, gross profit, and gross margin per request/job.",
     "development_goal": "Reduce current roughly $500/month GPT + Claude + Grok development subscription spend where capability can be preserved or improved."
   },
-
   "nicolas_command_center": {
     "required": true,
     "surface": "nicolasgoureau.com",
@@ -211,19 +208,33 @@
       "Approvals"
     ]
   },
-
   "phase_one": {
     "workstreams": 13,
-    "first_to_start": [1,2,7,8],
+    "first_to_start": [
+      1,
+      2,
+      7,
+      8
+    ],
     "operator_command_center": 13,
     "rule": "No Phase One workstream merges directly into nexus-v2. Control Tower reconciles contracts before Phase Two."
   },
-
   "terminology": {
-    "forbidden": ["playbook"],
+    "forbidden": [
+      "playbook"
+    ],
     "preferred": {
       "step_by_step": "Implementation Guide",
       "architecture": "Deployment Framework"
+    }
+  },
+  "phase_one_worker_updates": {
+    "worker_7": {
+      "branch": "nexus-v2-p1-07-integrations",
+      "status": "Complete for Phase One architecture/contracts scope; not production verified",
+      "artifacts_path": "nexus-v2/workstreams/07-integrations/",
+      "updated_at": "2026-09-19",
+      "notes": "No merge to nexus-v2 performed. Control Tower must reconcile ACR-07-001 through ACR-07-004 before global conventions are adopted."
     }
   }
 }
