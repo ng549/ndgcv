@@ -1,6 +1,8 @@
 # Phase One Control Tower — First Contract Draft Handoff
 
-Status: **Needs Review** after local validation; branch commit verification is still required.
+Status: **Needs Review** after local validation and branch commit verification.
+
+Verified artifact commit: `649cc8ad0c0b0e7b7f4f6315a81412a34d00e8ba`
 
 ## Requested
 
@@ -27,7 +29,7 @@ Establish the first Nexus V2 master architecture, module boundaries, permanent c
 - A deterministic invariant check confirmed exactly 13 unique module numbers, IDs, and branches.
 - The same invariant check confirmed every dependency refers to a registered module ID.
 - A repository scan confirmed the forbidden term is absent from these artifacts.
-- Branch commit containment still requires post-commit verification.
+- GitHub compare verification showed the artifact commit exactly one commit ahead of the canonical base, zero commits behind, with only the 10 bounded Control Tower files changed.
 - Independent architecture review remains required.
 
 ## Known limitations
