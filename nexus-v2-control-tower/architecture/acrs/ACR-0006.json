@@ -1,0 +1,31 @@
+{
+  "acr_id": "ACR-0006",
+  "title": "Reconcile financial precision and ledger authority",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "ai-gateway",
+    "integrations",
+    "managed-ops",
+    "business-model"
+  ],
+  "problem": "Worker 8 uses integer micros while Control Tower states integer currency minor units. Worker 7 assigns economics reconciliation to Worker 8; shared contract assigns normalized billing ledger/corrections to Managed Ops.",
+  "proposed_change": "Propose exact integer micros for AI raw cost measurement with explicit unit/scale/currency; retain currency minor units at settlement. Managed Ops must define rounding, zero-decimal/three-decimal currency behavior, adjustment linking and allocation; Business Model supplies pricing policy. Worker 8 owns raw AI measurement and consumes ledger APIs; Worker 7 emits connector usage. No ambiguous wholesale_amount.",
+  "alternatives": [
+    "Accept incompatible drafts without reconciliation: rejected by shared integration gate.",
+    "Owners may propose a different explicit versioned mapping with equivalent safety and evidence."
+  ],
+  "contract_impact": "Requires a reviewed precision exception and owner API/payload agreement; no silent arithmetic or pricing authority shift.",
+  "security_impact": "Tenant, credential and financial authority must be explicit; schemas alone do not establish runtime authorization.",
+  "cost_schedule_impact": "Resolve contract drift before implementation to avoid cross-module rework; no vendor spend or deployment authorized.",
+  "migration": "Affected owners revise their assigned branches; Control Tower reviews pinned revisions before selective integration.",
+  "rollback": "Keep prior shared draft and source submissions; supersede the proposal if rejected.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/tree/2a0227668f85d52dc8719c45232aca98c6129a97",
+    "https://github.com/ng549/ndgcv/tree/9d4015c6f5dc18ce7122a14b7818f4b471a87f5e",
+    "https://github.com/ng549/ndgcv/tree/62f27be5eb0e4d32fe419ac3d4834ff59864afb7"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}

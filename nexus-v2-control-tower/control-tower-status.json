@@ -11,7 +11,13 @@
     "canonical_blob": "77fa238b507c6c38e5ce6f5d5a6cf453432e86fc",
     "working_branch": "nexus-v2-p1-01-control-tower",
     "verified_input_commit": "4f278477855b02c11c73ca9599cc87a5d0190e8d",
-    "scout_reviewed_commit": "9a6d207c11380c0dfbf21f7f08b2f0a62feb96e9"
+    "scout_reviewed_commit": "9a6d207c11380c0dfbf21f7f08b2f0a62feb96e9",
+    "reviewed_submissions": {
+      "reuse-scout": "2a0227668f85d52dc8719c45232aca98c6129a97",
+      "integrations": "9d4015c6f5dc18ce7122a14b7818f4b471a87f5e",
+      "ai-gateway": "62f27be5eb0e4d32fe419ac3d4834ff59864afb7"
+    },
+    "verified_continuation_commit": "224fd0bc060501dfb1dda60e558019bab3b4b206"
   },
   "scope": "Phase One architecture, schemas, templates, conventions and peer handoffs only",
   "implemented": [
@@ -29,24 +35,37 @@
     "19 new foundation structure checks",
     "Canonical fixture matches fetched source semantically",
     "All twelve peer handoffs match registry",
-    "Independent continuation review and correction readback"
+    "Independent continuation review and correction readback",
+    "Round 2: fetched all 40 changed peer artifacts at exact commits",
+    "13 peer schemas passed metaschema validation",
+    "Worker 7 adversarial connector definition accepted: recorded admission defect",
+    "Independent Worker 8 review: contract and evidence defects recorded in REVIEW-WORKER-8.md",
+    "27 local foundation checks pass after round 2",
+    "Independent round-2 reconciliation readback: no material defect"
   ],
   "pending": [
-    "Affected module owner submissions and ACR dispositions",
+    "Revised owner module contracts and ACR-0001 through ACR-0008 dispositions",
+    "Remaining module submissions",
     "Final cross-module reconciliation"
   ],
   "external_blockers": [
     {
       "owner": "reuse-scout",
-      "blocker": "Inspected submission has inconsistent worker mapping and lacks formal module contract and candidate pins",
-      "impact": "Cannot accept reuse recommendations for integration",
-      "next_action": "Owner supplies corrected mappings, candidate evidence and contract; Control Tower reviews ACR-0001"
+      "blocker": "Worker routing and candidate version evidence remain incomplete",
+      "impact": "Adoption gate cannot pass",
+      "next_action": "Correct worker IDs, add exact version/commit evidence and formal module contract"
     },
     {
-      "owner": "affected module owners",
-      "blocker": "No other module branch submissions visible in inspected branch snapshot",
-      "impact": "Cannot verify cross-module interfaces or close reconciliation",
-      "next_action": "Owners commit bounded contracts; Control Tower compares pinned submissions"
+      "owner": "integrations and ai-gateway",
+      "blocker": "Shared identity/event, financial precision/ownership and evidence gates unresolved",
+      "impact": "Cross-module contracts cannot be accepted for integration",
+      "next_action": "Revise assigned branches against RECONCILIATION-ROUND-2.md and ACR-0005 through ACR-0007"
+    },
+    {
+      "owner": "remaining module owners",
+      "blocker": "Other formal submissions not present in reviewed branch snapshot",
+      "impact": "Full Phase One reconciliation cannot close",
+      "next_action": "Submit bounded contracts and owner acceptance"
     }
   ],
   "limitations": [

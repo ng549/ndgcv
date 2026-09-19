@@ -13,3 +13,7 @@ Verified independently: shell suite exit 0, 19 foundation checks, canonical snap
 | README and contract header status ambiguity | README now Blocked; contract header distinguishes draft acceptance from workstream blocker | Parent readback after reviewer flagged inconsistency. |
 
 No production, CI, external owner acceptance or remote branch isolation was certified by the local reviewer. Parent must verify remote commit and bounded tree separately. External reconciliation remains blocked. Tests validate structure, not truth of external evidence.
+
+## Round 2 independent readback
+
+The same independent read-only reviewer checked RECONCILIATION-ROUND-2.md, REVIEW-WORKER-8.md, ACR-0005..0008 and the updated handoff/status. It found no material defect: findings match inspected schemas/probes, ACRs remain needs-review with null decisions, precision/vendor choices require owner review, and no document authorizes bypassing integration gates. Remaining work requires revised owner contracts and outstanding submissions.

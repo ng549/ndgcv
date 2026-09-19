@@ -1,0 +1,30 @@
+{
+  "acr_id": "ACR-0007",
+  "title": "Enforce Phase One admission and evidence status",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "integrations",
+    "ai-gateway",
+    "reuse-scout"
+  ],
+  "problem": "Worker 7 claims Complete despite unresolved shared-contract acceptance and only JSON parsing. Its connector schema admits blank identities, empty methods/resources, negative freshness and arbitrary top-level fields. Worker 8 claims schema fixtures but its checked-in script is only structural inspection. None of the three compared submissions includes a shared module-contract document.",
+  "proposed_change": "Require schema-valid module metadata, independent review, meaningful positive/negative fixtures, exact test evidence and honest status. Worker 7 should remain Needs Review or Blocked until architecture acceptance gates pass. Runtime tests belong to later scope and must remain explicitly unverified. Validate definition invariants without imposing tenant fields on stateless global definitions.",
+  "alternatives": [
+    "Accept incompatible drafts without reconciliation: rejected by shared integration gate.",
+    "Owners may propose a different explicit versioned mapping with equivalent safety and evidence."
+  ],
+  "contract_impact": "Shared admission gate is unchanged; owners add missing machine-readable contracts and correct evidence/status locally.",
+  "security_impact": "Tenant, credential and financial authority must be explicit; schemas alone do not establish runtime authorization.",
+  "cost_schedule_impact": "Resolve contract drift before implementation to avoid cross-module rework; no vendor spend or deployment authorized.",
+  "migration": "Affected owners revise their assigned branches; Control Tower reviews pinned revisions before selective integration.",
+  "rollback": "Keep prior shared draft and source submissions; supersede the proposal if rejected.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/tree/2a0227668f85d52dc8719c45232aca98c6129a97",
+    "https://github.com/ng549/ndgcv/tree/9d4015c6f5dc18ce7122a14b7818f4b471a87f5e",
+    "https://github.com/ng549/ndgcv/tree/62f27be5eb0e4d32fe419ac3d4834ff59864afb7"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}

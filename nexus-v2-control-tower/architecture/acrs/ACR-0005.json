@@ -1,0 +1,31 @@
+{
+  "acr_id": "ACR-0005",
+  "title": "Reconcile tenant identity and native event envelope",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "client-platform",
+    "integrations",
+    "ai-gateway",
+    "operator-gateway"
+  ],
+  "problem": "Workers 7 and 8 use organization/client/project context without the shared explicit scope/tenant identity. Both propose event payload shapes without a specified native CloudEvents wrapping contract.",
+  "proposed_change": "Retain the shared scope and tenant identity rules. Owners define versioned mappings from authenticated platform context. Keep module-specific event fields inside CloudEvents data; specify naming, source, actor, classification, deduplication and round-trip fixtures. A payload schema alone is not the envelope.",
+  "alternatives": [
+    "Accept incompatible drafts without reconciliation: rejected by shared integration gate.",
+    "Owners may propose a different explicit versioned mapping with equivalent safety and evidence."
+  ],
+  "contract_impact": "No vendor decision. Closed payload schemas need an explicit wrapper or a reviewed breaking schema revision.",
+  "security_impact": "Tenant, credential and financial authority must be explicit; schemas alone do not establish runtime authorization.",
+  "cost_schedule_impact": "Resolve contract drift before implementation to avoid cross-module rework; no vendor spend or deployment authorized.",
+  "migration": "Affected owners revise their assigned branches; Control Tower reviews pinned revisions before selective integration.",
+  "rollback": "Keep prior shared draft and source submissions; supersede the proposal if rejected.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/tree/2a0227668f85d52dc8719c45232aca98c6129a97",
+    "https://github.com/ng549/ndgcv/tree/9d4015c6f5dc18ce7122a14b7818f4b471a87f5e",
+    "https://github.com/ng549/ndgcv/tree/62f27be5eb0e4d32fe419ac3d4834ff59864afb7"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}

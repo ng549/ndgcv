@@ -105,13 +105,13 @@
     {
       "id": "CT-006",
       "statement": "Canonical schema validates baseline and rejects invalid routing/status/structure fixtures",
-      "evidence": "Local validation exit 0; 19 foundation checks; canonical equality and twelve registry mappings verified",
+      "evidence": "Local validation exit 0; 27 foundation checks after round 2; canonical equality and twelve registry mappings verified",
       "status": "Passed"
     },
     {
       "id": "CT-007",
       "statement": "All twelve peer handoffs, entity hierarchy, worktree and maintenance rules exist",
-      "evidence": "Local validation exit 0; 19 foundation checks; canonical equality and twelve registry mappings verified",
+      "evidence": "Local validation exit 0; 27 foundation checks after round 2; canonical equality and twelve registry mappings verified",
       "status": "Passed"
     },
     {
@@ -162,13 +162,14 @@
     }
   ],
   "handoff": {
-    "commit": "4f278477855b02c11c73ca9599cc87a5d0190e8d",
+    "commit": "224fd0bc060501dfb1dda60e558019bab3b4b206",
     "artifacts": [
       "nexus-v2-control-tower/"
     ],
     "tests": [
-      "tests/validate-contracts.sh: exit 0 with 19 added foundation checks",
-      "Independent continuation review ran suite and verified fixture/mappings"
+      "tests/validate-contracts.sh: exit 0 with 27 foundation checks",
+      "Independent continuation review ran suite and verified fixture/mappings",
+      "Round 2 peer review: 13 metaschemas valid; negative probes expose peer contract defects"
     ],
     "limitations": [
       "No external CloudEvents SDK round-trip",
@@ -178,7 +179,8 @@
       "No CI enforcement"
     ],
     "remaining_work": [
-      "Affected owner contracts and ACR dispositions",
+      "Worker 2/7/8 revisions against pinned round-2 findings and ACRs",
+      "Remaining module contracts and affected owner dispositions",
       "Final cross-module reconciliation"
     ]
   }

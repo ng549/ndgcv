@@ -39,3 +39,5 @@ Conflicts move upward for resolution; lower layers never silently override highe
 ## Continuation artifacts
 
 See `ACCEPTANCE-COVERAGE.md` for the full assigned-scope matrix, `control-tower-status.json` for the subordinate execution record, and `RECONCILIATION.md` for inspected Scout findings. Shared policy remains the integration canonical. New foundation tests reuse the existing check-jsonschema tool at observed version 0.38.0; run the existing shell entry point. These additions do not implement CI or a runtime.
+
+Latest reconciliation: `RECONCILIATION-ROUND-2.md` and `REVIEW-WORKER-8.md` supersede the initial submission-availability snapshot. Workers 2/7/8 drafts are reviewed; owner revisions and other module submissions remain required.

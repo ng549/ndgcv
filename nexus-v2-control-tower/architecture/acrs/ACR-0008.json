@@ -1,0 +1,31 @@
+{
+  "acr_id": "ACR-0008",
+  "title": "Route expanded Scout proposals without adopting vendors",
+  "status": "needs-review",
+  "requester": "control-tower",
+  "date": "2026-09-19",
+  "affected_modules": [
+    "reuse-scout",
+    "integrations",
+    "build-orchestration",
+    "client-platform"
+  ],
+  "problem": "Scout now proposes a governed MCP access layer, mandatory version/license/replacement records and preventing vendor tools becoming project/task truth (ACR-02-004..006).",
+  "proposed_change": "Evaluate managed MCP access options under module-owned authorization and runtime research; no automatic portal adoption. Reuse version/terms evidence gate already exists. Project authority remains Client Platform and work-packet authority Build Orchestration; vendor systems may supply external facts without replacing those owners.",
+  "alternatives": [
+    "Accept incompatible drafts without reconciliation: rejected by shared integration gate.",
+    "Owners may propose a different explicit versioned mapping with equivalent safety and evidence."
+  ],
+  "contract_impact": "Normalize proposals into existing authority; any runtime/vendor adoption requires owner evidence and review.",
+  "security_impact": "Tenant, credential and financial authority must be explicit; schemas alone do not establish runtime authorization.",
+  "cost_schedule_impact": "Resolve contract drift before implementation to avoid cross-module rework; no vendor spend or deployment authorized.",
+  "migration": "Affected owners revise their assigned branches; Control Tower reviews pinned revisions before selective integration.",
+  "rollback": "Keep prior shared draft and source submissions; supersede the proposal if rejected.",
+  "evidence": [
+    "https://github.com/ng549/ndgcv/tree/2a0227668f85d52dc8719c45232aca98c6129a97",
+    "https://github.com/ng549/ndgcv/tree/9d4015c6f5dc18ce7122a14b7818f4b471a87f5e",
+    "https://github.com/ng549/ndgcv/tree/62f27be5eb0e4d32fe419ac3d4834ff59864afb7"
+  ],
+  "decision_owner": "Control Tower with affected module owners",
+  "decision": null
+}
