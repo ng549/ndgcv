@@ -3,10 +3,18 @@
 Status: **Designed / Needs Review**  
 Worker: 8  
 Branch: `nexus-v2-p1-08-ai-gateway`  
-Canonical read: `nexus-v2/NEXUS-V2-CANONICAL.json` at `77fa238b507c6c38e5ce6f5d5a6cf453432e86fc`  
+Canonical read: remote `nexus-v2/NEXUS-V2-CANONICAL.json` version 0.4 from branch `nexus-v2` at `f6902f7a58112c55889b33c770a27be23b1d2b4f`
 AI Stack artifacts read: `AI-STACK-CANONICAL.json` and `AI Stack Economics` (2026-09-19)  
 
 This package defines the Phase One contracts. It does not claim a deployed gateway, verified provider route, completed legal review, or benchmarked replacement for Nicolas's current subscriptions.
+
+## Current build-pool decision
+
+- Keep current ChatGPT, Claude and Grok subscriptions for interactive development.
+- Route Nexus autonomous workers through the provider-neutral Gateway contract.
+- Plugsky is a high-priority routine/high-volume candidate, not an approved preferred route. Its public billing and SLA materials conflict, its public route-health response showed failures, and no authenticated benchmark was possible without credentials.
+- OpenRouter remains the specialist/frontier/fallback candidate. Neither provider is hard-coded; route eligibility remains manifest and policy data.
+- See `PLUGSKY-VERIFICATION-2026-09-19.md` and `benchmark/` for the evidence and reproducible comparison.
 
 ## A. Architecture
 
@@ -256,7 +264,8 @@ Contract checks can be run with `node nexus-v2/ai-gateway/tests/validate-contrac
 
 ## Remaining gates
 
-- Worker 2 reuse report not yet available in this branch.
+- Plugsky and OpenRouter authenticated benchmark, concurrency runs and sustained soak remain `NOT_RUN` because credentials were unavailable.
+- Plugsky controlling plan/order-form economics, resale rights, DPA and SLA remain unresolved.
 - No vendor has been contracted or load-tested here.
 - No new commercial-rights determination has been legally approved here.
 - Actual ChatGPT/Claude/Grok workload and billing exports remain outstanding.
