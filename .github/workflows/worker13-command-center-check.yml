@@ -1,0 +1,21 @@
+name: Worker 13 Command Center Check
+on:
+  push:
+    branches:
+      - nexus-v2-p1-13-operator-command-center
+    paths:
+      - "nexus-v2/operator-command-center/**"
+      - ".github/workflows/worker13-command-center-check.yml"
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nexus-v2/operator-command-center
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm run check
+      - run: npm test
