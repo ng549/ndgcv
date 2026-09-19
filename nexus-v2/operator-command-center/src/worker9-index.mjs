@@ -34,7 +34,7 @@ async function auth(request,env){
   const key=await crypto.subtle.importKey("jwk",jwk,{name:"RSASSA-PKCS1-v1_5",hash:"SHA-256"},false,["verify"]);
   if(!await crypto.subtle.verify("RSASSA-PKCS1-v1_5",key,b64(s),enc.encode(h+"."+p))) throw new Error("AUTH_REQUIRED");
   const aud=Array.isArray(payload.aud)?payload.aud:[payload.aud];
-  if(!payload.exp||payload.exp<=Math.floor(Date.now()/1000)||!aud.includes(env.ACCESS_AUD)) throw new Error("AUTH_REQUIRED");
+  if(payload.iss!=="https://"+host||!payload.exp||payload.exp<=Math.floor(Date.now()/1000)||!aud.includes(env.ACCESS_AUD)) throw new Error("AUTH_REQUIRED");
   if(String(payload.email||"").toLowerCase()!==String(env.OPERATOR_EMAIL).toLowerCase()) throw new Error("FORBIDDEN");
   if(!env.OPERATOR_RATE_LIMITER) throw new Error("RATE_LIMIT_UNAVAILABLE");
   if(!(await env.OPERATOR_RATE_LIMITER.limit({key:String(payload.email).toLowerCase()})).success) {
@@ -49,7 +49,7 @@ function controls(state){
   else if(state==="RUNNING") Object.assign(c,{PAUSE:true,STOP:true});
   else if(state==="PAUSED") Object.assign(c,{RESUME:true,STOP:true});
   else if(state==="FAILED") Object.assign(c,{RUN:true,CONTINUE:true,PAUSE:true,STOP:true,RETRY:true});
-  else if(state==="BLOCKED"||state==="STOPPED") c.RETRY=true;
+  else if(state==="BLOCKED") c.RETRY=true;\n  else if(state==="STOPPED") Object.assign(c,{RUN:true,CONTINUE:true,RETRY:true});
   return c;
 }
 
@@ -67,7 +67,7 @@ function packetToWorker(p){
     lastCheckpoint:p.checkpoint_sha||null,
     latestCommit:null,
     budgetConsumedMicros:Number.isSafeInteger(p.budget_consumed_micros)?p.budget_consumed_micros:null,
-    blocker:p.blocker||null,
+    blocker:p.blocker ? (typeof p.blocker==="string" ? p.blocker : (p.blocker.message||p.blocker.code||JSON.stringify(p.blocker))) : null,
     controls:controls(state)
   };
 }
