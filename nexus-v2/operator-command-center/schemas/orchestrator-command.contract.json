@@ -1,28 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://nexus.internal/contracts/orchestrator-command.v1.json",
-  "title": "Nexus Orchestrator Command v1",
-  "oneOf": [
-    {
-      "type": "object",
-      "required": ["action","requested_by","request_id"],
-      "properties": {
-        "action": { "enum": ["RUN","CONTINUE","PAUSE","RESUME","STOP","RETRY"] },
-        "requested_by": { "type": "string", "format": "email" },
-        "request_id": { "type": "string", "minLength": 8 }
-      },
-      "additionalProperties": false
+  "$id": "https://nexus.internal/contracts/worker9-command-request.v1.json",
+  "title": "Worker 9 command request consumed by Worker 13",
+  "type": "object",
+  "required": ["command","payload"],
+  "properties": {
+    "command": {
+      "enum": ["RUN","CONTINUE","PAUSE","RESUME","STOP","RETRY"]
     },
-    {
+    "payload": {
       "type": "object",
-      "required": ["action","requested_by","request_id"],
-      "properties": {
-        "action": { "enum": ["RUN_ALL_READY","RUN_PHASE"] },
-        "phase": { "type": ["string","null"] },
-        "requested_by": { "type": "string", "format": "email" },
-        "request_id": { "type": "string", "minLength": 8 }
-      },
       "additionalProperties": false
     }
-  ]
+  },
+  "additionalProperties": false,
+  "x-worker9-routes": {
+    "list": "GET /api/workers",
+    "worker_command": "POST /api/workers/:id/commands",
+    "run_all_ready": "POST /api/run-all-ready",
+    "run_phase": "POST /api/run-phase/:phase"
+  }
 }
