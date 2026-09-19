@@ -1,6 +1,6 @@
 # Nexus V2 Control Tower — Phase One
 
-Status: **Needs Review**
+Status: **Testing**
 
 This directory contains the first shared architecture contract for Nexus V2. It is isolated from the existing CV application and does not import Old Nexus code.
 
@@ -23,6 +23,8 @@ Conflicts move upward for resolution; lower layers never silently override highe
 - `schemas/domain-event.schema.json` — shared event envelope
 - `schemas/architecture-change-request.schema.json` — shared-architecture change request
 - `templates/ADR.md` — decision record template
+- `control-tower.module-contract.json` — this workstream's machine-readable self-contract
+- `tests/` — executable registry, event, and semantic completion fixtures
 - `REUSE-RESEARCH.md` — research-before-build evidence and reuse decisions
 - `HANDOFF.md` — exact verification state and next integration actions
 

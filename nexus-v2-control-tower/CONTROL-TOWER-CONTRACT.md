@@ -19,8 +19,10 @@ No UI is authoritative for shared state. UIs read/write through module contracts
 
 ## 2. Global invariants
 
-- Every request carries `tenant_id`; operator-only activity additionally carries `operator_id`.
-- Every project-scoped request carries `project_id`.
+- Every request declares `scope` as `tenant` or `system`. Tenant scope requires a nonempty `tenant_id`; system scope forbids tenant impersonation.
+- Every authenticated action carries actor type and actor ID. For operator actions, actor ID is the operator identity.
+- Every project-scoped request carries a nonempty `project_id`.
+- Cross-tenant reads or writes are denied by default and require an explicit Nicolas-approved system capability, purpose, audit event, and least-privilege policy.
 - Cross-module changes use versioned APIs or events; no module reads another module's private tables.
 - Credentials are references to a secrets manager, never fields in contracts, logs, prompts, or events.
 - Customer BYOK credentials are tenant-isolated and cannot fall back to Nicolas's providers.
@@ -39,17 +41,18 @@ No UI is authoritative for shared state. UIs read/write through module contracts
 | Organization | Shared Client Platform | `organization_id`, `tenant_id` |
 | User | Shared Client Platform | `user_id` |
 | Membership / Role | Shared Client Platform | `membership_id` |
-| Project | Control Tower registry; lifecycle delegated later | `project_id`, `tenant_id` |
+| Project | Shared Client Platform | `project_id`, `tenant_id` |
 | Module | Control Tower | `module_id` |
 | Work Packet | Build Orchestration | `work_packet_id`, `project_id` |
 | Connector | Integration Layer | `connector_id`, `tenant_id` |
 | AI Route / Manifest | AI Gateway | `route_id` / `manifest_id` |
-| Usage Event | Producing module; normalized by economics consumers | `event_id` |
-| Lead / Opportunity | Marketing then Sales per explicit handoff | `lead_id` / `opportunity_id` |
+| Usage Event | Producing module owns raw fact; Managed Ops owns price normalization, corrections, deduplication, and billing ledger | `event_id` |
+| Lead | Marketing until qualification handoff is accepted | `lead_id` |
+| Opportunity | Sales & Assessment after accepting a qualified lead | `opportunity_id`, source `lead_id` |
 | Assessment | Sales & Assessment | `assessment_id` |
 | Service Agreement / Entitlement | Managed Ops | `agreement_id` / `entitlement_id` |
 | Deployment | Build Orchestration; runtime status from hosting provider | `deployment_id` |
-| Audit Event | Evidence plane | `event_id`, `actor_id` |
+| Audit Event | Managed Ops owns durable storage/query/retention; every producing module owns factual emission | `event_id`, `actor_id` |
 
 Ownership means schema and lifecycle authority, not exclusive visibility.
 
@@ -68,9 +71,12 @@ Ownership means schema and lifecycle authority, not exclusive visibility.
 ### 4.2 Asynchronous events
 
 - Describe channel contracts with AsyncAPI when implementation begins.
-- All events use `schemas/domain-event.schema.json`.
+- All events use the native CloudEvents 1.0 JSON-format contract in `schemas/domain-event.schema.json`.
 - Event names follow `nexus.<domain>.<entity>.<past_tense_action>.v<major>`.
-- Consumers must be idempotent by `event_id`.
+- CloudEvents `id` is the idempotency key. The major version appears only in `type`; there is no second version field to drift.
+- CloudEvents extension attributes use lowercase alphanumeric names: `scope`, `tenantid`, `projectid`, `actortype`, `actorid`, `dataclassification`, `correlationid`, `causationid`, and `traceparent`.
+- Tenant events require `tenantid`. System events omit `tenantid` and require authorization outside the payload. Operator actions use `actortype=operator` and the authenticated operator identifier in `actorid`.
+- Consumers must be idempotent by `id`.
 - Producers own truth; events are facts, not remote commands.
 - Personally identifiable or credential data is excluded unless the receiving contract explicitly requires and protects it.
 
@@ -78,8 +84,9 @@ Ownership means schema and lifecycle authority, not exclusive visibility.
 
 - JSON Schema is the canonical validation language for shared data.
 - Schemas use semantic versions.
-- Additive optional fields are non-breaking; removed, renamed, or meaning-changed fields are breaking.
-- Each schema declares owner, classification, retention expectation, and compatibility policy in its module contract.
+- Shared top-level schemas are closed. Adding, removing, renaming, or changing a top-level field is breaking unless the schema already exposes an `extensions` object whose policy explicitly permits that key.
+- Producers validate strictly. Consumers accept only the pinned major contract and ignore unknown keys solely inside an approved `extensions` object.
+- Each schema/interface declares owner, schema reference, classification, retention expectation, and compatibility policy in its module contract.
 
 ## 5. Module boundary rules
 
@@ -184,23 +191,33 @@ For a bounded work packet:
 - Adopt JSON Schema for shared payload validation.
 - Adopt OpenAPI for synchronous HTTP contracts.
 - Adopt AsyncAPI for asynchronous channel documentation.
-- Adopt a CloudEvents-compatible envelope shape without requiring a broker choice in Phase One.
+- Adopt native CloudEvents 1.0 JSON format without requiring a broker choice in Phase One.
 - Adopt ADRs for accepted durable decisions and ACRs for proposed cross-module changes.
 - Defer runtime, database, queue, auth vendor, and hosting selections until relevant workstreams submit research.
 - Do not adopt Backstage as the Nexus runtime in Phase One; reuse its catalog concepts selectively.
 
 ## 11. Unresolved decisions
 
-- Final tenant identity and authentication provider
-- Operational database and tenant-isolation implementation
-- Event transport and durable job runner
-- Secrets-management provider
-- Observability and cost-ingestion backend
-- Shared versus dedicated deployment thresholds by service tier
-- Contract testing toolchain and CI enforcement
-- Data residency, retention, deletion, and backup policies
-- Source/IP transfer options for premium clients
-- Exact production boundary between `nicolasgoureau.com` and Nexus services
+| Decision | Accountable workstream |
+|---|---|
+| Final tenant identity and authentication provider | Shared Client Platform |
+| Operator authentication/session provider and adapter to shared auth context | Operator Gateway |
+| Operational database and tenant-isolation implementation | Shared Client Platform |
+| Event transport and durable job runner | Integration Layer |
+| Secrets-management provider | Integration Layer |
+| Observability and cost-ingestion backend | Managed Ops |
+| Shared versus dedicated deployment thresholds by service tier | Business Model + Shared Client Platform |
+| Contract testing toolchain and CI enforcement | Build Orchestration |
+| Data residency, retention, deletion, and backup policies | Managed Ops + Shared Client Platform |
+| Source/IP transfer options for premium clients | Business Model |
+| Exact production boundary between `nicolasgoureau.com` and Nexus services | Operator Gateway |
 
 These decisions belong to named workstreams and must not be guessed by implementers.
 
+## 12. Explicit ownership transitions
+
+- **Lead to opportunity:** Marketing emits `nexus.marketing.lead.qualified.v1`. Sales validates and accepts the handoff, creates `opportunity_id` with immutable source `lead_id`, then emits `nexus.sales.opportunity.created.v1`. Marketing retains lead history; Sales owns the opportunity lifecycle.
+- **Identity:** Shared Client Platform owns the client auth-context contract and client memberships. Operator Gateway owns Nicolas's operator session and maps it into the shared actor context. Other modules consume the context and may not create independent identities.
+- **Usage to billing:** Producing modules emit immutable raw usage facts. AI Gateway owns AI-specific measurement. Managed Ops owns pricing-version application, deduplication, corrections, invoice/billing events, and the financial ledger.
+- **Audit:** Producing modules emit audit facts. Managed Ops owns storage, retention, access controls, and query interfaces. Audit facts are append-oriented; corrections reference rather than overwrite earlier facts.
+- **Project lifecycle:** Shared Client Platform owns project creation, membership, lifecycle status, and tenant attachment. Control Tower owns only the module/contract registry and integration governance.

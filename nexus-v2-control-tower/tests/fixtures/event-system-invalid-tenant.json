@@ -1,0 +1,15 @@
+{
+  "specversion":"1.0",
+  "id":"evt_01K5H9NEXUS000000000004",
+  "source":"https://nexus.moremarginco.com/modules/control-tower",
+  "type":"nexus.control-tower.registry.reconciled.v1",
+  "time":"2026-09-19T12:00:00Z",
+  "datacontenttype":"application/json",
+  "scope":"system",
+  "tenantid":"tenant_123",
+  "actortype":"operator",
+  "actorid":"operator_nicolas",
+  "dataclassification":"internal",
+  "correlationid":"corr_126",
+  "data":{}
+}

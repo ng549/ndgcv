@@ -1,0 +1,17 @@
+{
+  "specversion":"1.0",
+  "id":"evt_01K5H9NEXUS000000000001",
+  "source":"https://nexus.moremarginco.com/modules/marketing",
+  "type":"nexus.marketing.lead.qualified.v1",
+  "subject":"lead/lead_123",
+  "time":"2026-09-19T12:00:00Z",
+  "datacontenttype":"application/json",
+  "scope":"tenant",
+  "tenantid":"tenant_123",
+  "projectid":"project_123",
+  "actortype":"worker",
+  "actorid":"worker_marketing_1",
+  "dataclassification":"confidential",
+  "correlationid":"corr_123",
+  "data":{"lead_id":"lead_123"}
+}
