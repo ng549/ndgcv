@@ -4,7 +4,7 @@ Verified date: 2026-09-19. This register separates technical suitability from co
 
 | Candidate | Role | Technical finding | Revenue status | Phase One disposition |
 |---|---|---|---|---|
-| Plugsky | Flat-rate/white-label aggregator | Existing AI Stack research covers chat, vision, agents, RAG, tools, coding and embeddings. | Preserve canonical route statuses; model terms still apply. | Keep in Development and Revenue research. Obtain order-form economics and run workload benchmark. |
+| Plugsky | Claimed flat-rate/white-label aggregator | Current official docs expose OpenAI-compatible chat, but many other endpoint families remain “coming soon.” Public pricing/docs conflict with Terms on credits, overages, discounts and SLA; public route health reported 4/36 broken models in a 2026-09-19 probe. | `UNVERIFIED`. Self-serve Terms prohibit resale except when an Enterprise agreement expressly permits it; third-party model terms still apply. | High-priority Development candidate only. Require controlling commercial schedule, DPA, authenticated benchmark, load/soak evidence and invoice reconciliation. See `PLUGSKY-VERIFICATION-2026-09-19.md`. |
 | OpenRouter | PAYG aggregator/router | Broad model choice, provider routing and OpenAI-compatible access. | Enterprise and Standard must remain separate; model terms flow down. | Primary aggregator candidate; exact plan/model/use case gate required. |
 | Hugging Face Inference Providers | Meta-aggregator | Useful access layer for open models and multiple inference providers. | Conditional by provider/model/license. | Capability candidate for embeddings, open models and selected media; never company-wide approval. |
 | Together AI | High-speed open-model inference | Candidate for low-cost automation, batch, coding, embeddings and dedicated endpoints. | Conditional; standalone resale restriction noted in AI Stack research. | Benchmark as a route, not as Nexus's application contract. |
@@ -35,3 +35,9 @@ Treat search as a separately metered tool/capability. A route must declare wheth
 7. Control Tower approves entry into the relevant bullpen.
 
 No candidate in this file is production verified.
+
+## Plugsky versus OpenRouter build-pool gate
+
+The canonical target is to retain current ChatGPT, Claude and Grok subscriptions for interactive development; route autonomous workers through the provider-neutral Nexus AI Gateway; prefer Plugsky for high-volume/routine work only after evidence supports it; and use OpenRouter for specialist/frontier/fallback work. “Preferred” is therefore a conditional policy outcome, not a hard-coded provider rule.
+
+The reproducible benchmark specification and fixture are in `benchmark/`. A valid decision needs matched task/capability tiers, exact route/model disclosure, blinded or deterministic quality scoring, first-pass success, total latency and time-to-first-token where available, retries, failure taxonomy, concurrency, sustained availability and reconciled effective cost per successful task. Neither live benchmark was run in this environment because both provider credentials were absent.
