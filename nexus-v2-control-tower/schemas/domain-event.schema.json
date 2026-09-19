@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.moremarginco.com/schemas/domain-event.schema.json",
+  "title": "Nexus Domain Event Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["specversion","event_id","event_type","event_version","occurred_at","producer","tenant_id","actor","subject","data_classification","correlation_id","data"],
+  "properties": {
+    "specversion": {"const":"1.0"},
+    "event_id": {"type":"string","minLength":16},
+    "event_type": {"type":"string","pattern":"^nexus\\.[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+\\.v[1-9][0-9]*$"},
+    "event_version": {"type":"integer","minimum":1},
+    "occurred_at": {"type":"string","format":"date-time"},
+    "producer": {"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "tenant_id": {"type":["string","null"]},
+    "project_id": {"type":["string","null"]},
+    "actor": {
+      "type":"object","additionalProperties":false,"required":["type","id"],
+      "properties":{"type":{"enum":["user","operator","service","worker","system"]},"id":{"type":"string","minLength":1}}
+    },
+    "subject": {
+      "type":"object","additionalProperties":false,"required":["type","id"],
+      "properties":{"type":{"type":"string","minLength":1},"id":{"type":"string","minLength":1}}
+    },
+    "data_classification": {"enum":["public","internal","confidential","restricted"]},
+    "correlation_id": {"type":"string","minLength":1},
+    "causation_id": {"type":["string","null"]},
+    "trace_id": {"type":["string","null"]},
+    "data": {"type":"object"}
+  }
+}
+

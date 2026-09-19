@@ -1,0 +1,23 @@
+{
+  "$schema": "./schemas/module-registry.schema.json",
+  "registry_version": "0.1.0",
+  "status": "draft",
+  "integration_branch": "nexus-v2",
+  "merge_policy": "control-tower-reconciliation-only",
+  "modules": [
+    {"id":"control-tower","number":1,"owner":"Control Tower & Master Architect","branch":"nexus-v2-p1-01-control-tower","starts":"immediate","depends_on":[],"owns":["module registry","shared contract standards","ADRs","ACRs","integration gates"],"non_goals":["business module implementation"]},
+    {"id":"reuse-scout","number":2,"owner":"Open-Source, MCP & Reuse Scout","branch":"nexus-v2-p1-02-reuse-scout","starts":"immediate","depends_on":[],"owns":["reuse registry","license and maintenance assessment","do-not-build list"],"non_goals":["production integration"]},
+    {"id":"business-model","number":3,"owner":"Business Model, Offer & Unit Economics","branch":"nexus-v2-p1-03-business-model","starts":"after-core-contracts","depends_on":["control-tower"],"owns":["offers","pricing rules","margin guardrails","service boundaries"],"non_goals":["billing implementation"]},
+    {"id":"marketing","number":4,"owner":"Marketing Engine","branch":"nexus-v2-p1-04-marketing","starts":"after-core-contracts","depends_on":["control-tower"],"owns":["lead acquisition","enrichment","lead scoring","outreach","attribution"],"non_goals":["opportunity assessment","general CRM"]},
+    {"id":"sales-assessment","number":5,"owner":"Sales, Qualification & Systems Assessment","branch":"nexus-v2-p1-05-sales-assessment","starts":"after-marketing-contract","depends_on":["control-tower","marketing"],"owns":["qualification","fit call","assessment","scope-ready output","sales decision log"],"non_goals":["billing","build execution"]},
+    {"id":"client-platform","number":6,"owner":"Shared Client Platform Core","branch":"nexus-v2-p1-06-client-platform","starts":"parallel-after-draft","depends_on":["control-tower","reuse-scout"],"owns":["tenant","organization","user","membership","client configuration","shared platform substrate"],"non_goals":["customer-specific business modules"]},
+    {"id":"integrations","number":7,"owner":"Integration & Data Connectivity Layer","branch":"nexus-v2-p1-07-integrations","starts":"immediate","depends_on":[],"owns":["connectors","sync jobs","webhook ingestion","field mappings","connector health","data provenance"],"non_goals":["source-system replacement"]},
+    {"id":"ai-gateway","number":8,"owner":"AI Gateway, Bullpen & Economics","branch":"nexus-v2-p1-08-ai-gateway","starts":"immediate","depends_on":[],"owns":["AI routing","provider adapters","AI manifests","AI usage events","commercial-rights gate","BYOK isolation"],"non_goals":["single-provider coupling","general billing ledger"]},
+    {"id":"build-orchestration","number":9,"owner":"Build Orchestration, Work Packets & Contractor System","branch":"nexus-v2-p1-09-build-orchestration","starts":"parallel-after-draft","depends_on":["control-tower","reuse-scout"],"owns":["work packets","builder-reviewer-tester stages","contractor handoffs","build evidence"],"non_goals":["general-purpose agent framework"]},
+    {"id":"managed-ops","number":10,"owner":"Managed Service, Monitoring, Support & Billing","branch":"nexus-v2-p1-10-managed-ops","starts":"after-integration-ai-contracts","depends_on":["control-tower","integrations","ai-gateway","business-model"],"owns":["service entitlements","monitoring","incidents","support","billing events","client health"],"non_goals":["payment processor internals"]},
+    {"id":"design-system","number":11,"owner":"Design System, Dashboard Shell & Client Experience","branch":"nexus-v2-p1-11-design-system","starts":"after-client-platform-draft","depends_on":["control-tower","client-platform"],"owns":["design tokens","interaction patterns","responsive shell contract","white-label rules"],"non_goals":["Old Nexus visual inheritance"]},
+    {"id":"old-nexus-audit","number":12,"owner":"Old Nexus Salvage Auditor","branch":"nexus-v2-p1-12-old-nexus-audit","starts":"parallel","depends_on":[],"owns":["salvage inventory","migration recommendations"],"non_goals":["migration","bulk copy","architecture authority"]},
+    {"id":"operator-gateway","number":13,"owner":"Nicolas Command & Control Gateway","branch":"nexus-v2-p1-13-operator-command-center","starts":"after-control-tower-first-draft","depends_on":["control-tower"],"owns":["operator entry flow","operator read models","operator commands","operator audit surface"],"non_goals":["security by obscurity","client portal"]}
+  ]
+}
+

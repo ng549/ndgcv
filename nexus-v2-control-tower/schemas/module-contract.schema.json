@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.moremarginco.com/schemas/module-contract.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version","module_id","status","owner","reviewer","branch","allowed_files","inputs","outputs","owned_data","dependencies","non_goals","acceptance_criteria","research_records","security","handoff"],
+  "properties": {
+    "contract_version": {"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-z0-9.-]+)?$"},
+    "module_id": {"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "status": {"enum":["Not Started","Researching","Designed","Implementing","Implemented / Unverified","Testing","Blocked","Needs Review","Production Verified","Complete"]},
+    "owner": {"type":"string","minLength":1},
+    "reviewer": {"type":"string","minLength":1},
+    "branch": {"type":"string","pattern":"^nexus-v2-p[0-9]+-[a-z0-9-]+$"},
+    "allowed_files": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},
+    "inputs": {"type":"array","items":{"$ref":"#/$defs/interface"}},
+    "outputs": {"type":"array","items":{"$ref":"#/$defs/interface"}},
+    "owned_data": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},
+    "dependencies": {"type":"array","uniqueItems":true,"items":{"type":"string"}},
+    "non_goals": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},
+    "acceptance_criteria": {"type":"array","minItems":1,"items":{"$ref":"#/$defs/criterion"}},
+    "research_records": {"type":"array","items":{"$ref":"#/$defs/research"}},
+    "security": {
+      "type":"object",
+      "additionalProperties":false,
+      "required":["data_classification","tenant_boundary","secret_handling"],
+      "properties": {
+        "data_classification":{"type":"array","minItems":1,"items":{"enum":["public","internal","confidential","restricted"]}},
+        "tenant_boundary":{"type":"string","minLength":1},
+        "secret_handling":{"type":"string","minLength":1}
+      }
+    },
+    "unresolved_decisions":{"type":"array","items":{"type":"string"}},
+    "handoff": {
+      "type":"object",
+      "additionalProperties":false,
+      "required":["commit","artifacts","tests","limitations","remaining_work"],
+      "properties": {
+        "commit":{"type":"string","pattern":"^(pending|[0-9a-f]{40})$"},
+        "artifacts":{"type":"array","minItems":1,"items":{"type":"string"}},
+        "tests":{"type":"array","items":{"type":"string"}},
+        "limitations":{"type":"array","items":{"type":"string"}},
+        "remaining_work":{"type":"array","items":{"type":"string"}}
+      }
+    }
+  },
+  "$defs": {
+    "interface": {
+      "type":"object","additionalProperties":false,
+      "required":["name","kind","version","owner"],
+      "properties": {
+        "name":{"type":"string","minLength":1},
+        "kind":{"enum":["api","event","file","schema","human-decision"]},
+        "version":{"type":"string","minLength":1},
+        "owner":{"type":"string","minLength":1}
+      }
+    },
+    "criterion": {
+      "type":"object","additionalProperties":false,
+      "required":["id","statement","evidence","status"],
+      "properties": {
+        "id":{"type":"string","minLength":1},
+        "statement":{"type":"string","minLength":1},
+        "evidence":{"type":"string"},
+        "status":{"enum":["Not Started","Testing","Passed","Failed","Blocked"]}
+      }
+    },
+    "research": {
+      "type":"object","additionalProperties":false,
+      "required":["name","url","license","commercial_use","version_or_commit","maintenance","security","integration_effort","lock_in","decision","custom_gap"],
+      "properties": {
+        "name":{"type":"string"},"url":{"type":"string","format":"uri"},"license":{"type":"string"},
+        "commercial_use":{"type":"string"},"version_or_commit":{"type":"string"},"maintenance":{"type":"string"},
+        "security":{"type":"string"},"integration_effort":{"type":"string"},"lock_in":{"type":"string"},
+        "decision":{"enum":["USE","INTEGRATE","FORK-EXTEND","REJECT","DEFER"]},"custom_gap":{"type":"string"}
+      }
+    }
+  }
+}
+
