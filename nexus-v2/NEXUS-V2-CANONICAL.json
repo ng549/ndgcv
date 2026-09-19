@@ -1,11 +1,10 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.2",
+  "version": "0.4",
   "updated_at": "2026-09-19",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
-
   "golden_rule": {
     "title": "Truth Before Comfort",
     "rule": "Never claim completion unless the work is actually complete, verified, usable, and matches the approved scope. Never hide uncertainty, partial failure, missing validation, blockers, or unfinished dependencies to make progress sound better than it is.",
@@ -53,7 +52,6 @@
       "Final status"
     ]
   },
-
   "delivery_target": {
     "target": "Production-ready Nexus V2 in less than 8 weeks",
     "priority": "Aggressive",
@@ -72,7 +70,6 @@
       "No silent scope expansion during Phase One"
     ]
   },
-
   "spend_to_accelerate_rule": {
     "approved": true,
     "principle": "Nicolas is willing to spend money to shorten delivery when the spend has a clear speed, quality, reliability, or gross-margin benefit.",
@@ -99,20 +96,17 @@
     ],
     "rule": "Do not choose the cheapest option if a paid option materially accelerates the build or improves reliability. Spend deliberately, not wastefully."
   },
-
   "repository": {
     "repo": "ng549/ndgcv",
     "integration_branch": "nexus-v2",
     "old_nexus_policy": "Old Nexus is reference-only. Pull specific approved pieces only when needed; never merge or inherit wholesale."
   },
-
   "drive": {
     "folder_name": "Nexus V2",
     "folder_id": "137sMNK6jYVnMuZca5UB6h1Z06Dc_wjYn",
     "prompt_control_sheet_id": "1OdPBUyc_zTSpNcFbs9Y2fFjE2lDBKJQU1LwcSro6Rbc",
     "phase_one_prompts_doc_id": "11Bf7aQGeodtrRKxZzkGr32iRY3Izmp7LV6WF6fX1dz8"
   },
-
   "business": {
     "category": "Fractional Business Systems",
     "positioning": "Nicolas is the product. AI is infrastructure and leverage behind the service, not the marketing billboard.",
@@ -138,14 +132,16 @@
     "premium_tiers": "Dedicated option",
     "ownership": "Hybrid; decide per tier/client."
   },
-
   "marketing_engine": {
     "required": true,
-    "channels": ["Warm network", "Targeted outbound", "Partner/referral"],
+    "channels": [
+      "Warm network",
+      "Targeted outbound",
+      "Partner/referral"
+    ],
     "rule": "Do not lead with AI.",
     "goal": "Automated and outsourced customer acquisition engine feeding qualified opportunities to Nicolas."
   },
-
   "build_method": {
     "rule": "No single AI owns the whole build.",
     "module_first": true,
@@ -153,9 +149,11 @@
     "independent_review": true,
     "context_reset_at_milestones": true,
     "architecture_changes_require_request": true,
-    "canonical_over_chat_memory": true
+    "canonical_over_chat_memory": true,
+    "autonomous_worker_directive": "Workers continue autonomously through their entire assigned scope; after each subtask they proceed to the next incomplete item, do not stop for reversible low-risk decisions, document a blocker and continue other independent work, checkpoint valid work at meaningful milestones, and only stop when acceptance criteria are satisfied, all remaining work is genuinely blocked, or the platform ends execution.",
+    "checkpoint_rule": "Commit valid incremental work at meaningful milestones so another worker can resume from the last verified checkpoint.",
+    "model_allocation": "Capability first; provider second. Model assignments are preferences, not blockers. If a provider/model is quota-limited, route work to another qualified model rather than pausing."
   },
-
   "reuse_rule": {
     "title": "Research Before Build",
     "sequence": [
@@ -179,16 +177,34 @@
       "Reason custom code is still needed"
     ]
   },
-
   "ai_stack": {
     "strategy": "Aggregator-first",
-    "bullpens": ["Development", "Revenue", "Capability"],
+    "bullpens": [
+      "Development",
+      "Revenue",
+      "Capability"
+    ],
     "revenue_rule": "Only use provider/model routes for customer monetization after commercial customer-facing use is verified.",
     "gateway": "Apps should call Nexus AI Gateway instead of individual providers where practical.",
     "customer_metering": "Track wholesale cost, retail credits/price, gross profit, and gross margin per request/job.",
-    "development_goal": "Reduce current roughly $500/month GPT + Claude + Grok development subscription spend where capability can be preserved or improved."
+    "development_goal": "Reduce current roughly $500/month GPT + Claude + Grok development subscription spend where capability can be preserved or improved.",
+    "build_phase_strategy": {
+      "subscriptions": "Keep current ChatGPT, Claude, and Grok subscriptions during the accelerated Nexus V2 build; do not optimize them away until workload evidence supports replacement.",
+      "programmatic_workers": "Add aggregator/API capacity for autonomous Nexus workers launched from the command center.",
+      "plugsky": {
+        "role": "High-priority candidate for high-volume/routine autonomous build work if current API, flat-rate/fair-use, automation, concurrency, reliability and terms are verified.",
+        "status": "UNVERIFIED — must be verified before dependency or Revenue Bullpen approval.",
+        "test_plan": "Run representative Nexus jobs through Plugsky and OpenRouter and compare completion quality, latency, retries, effective cost and reliability."
+      },
+      "openrouter": {
+        "role": "Programmatic specialist/frontier/fallback pool and immediate production-capable gateway candidate.",
+        "strategy": "Use selectively rather than routing all build workload through expensive frontier models."
+      },
+      "routing": "Nexus AI Gateway chooses by capability, quality, effective cost, latency, availability, privacy/commercial constraints and fallback health; do not hard-code a provider.",
+      "optimization_priority": "During the <8-week build, optimize primarily for calendar time and reliability; spend deliberately when it materially accelerates delivery."
+    },
+    "worker8_priority_directive": "Worker 8 must explicitly verify Plugsky current official API/pricing/fair-use/automation/concurrency/commercial terms and benchmark Plugsky versus OpenRouter for Nexus build workloads. Do not rely on prior research as current verified truth."
   },
-
   "nicolas_command_center": {
     "required": true,
     "surface": "nicolasgoureau.com",
@@ -209,21 +225,90 @@
       "Lead/sales pipeline",
       "Tasks",
       "Approvals"
-    ]
+    ],
+    "worker_control": {
+      "required": true,
+      "goal": "Allow Nicolas to launch and supervise Nexus API/agent workers from the private command center rather than manually opening consumer AI chats.",
+      "controls": [
+        "Run",
+        "Run All Ready",
+        "Run Phase",
+        "Pause",
+        "Resume",
+        "Stop",
+        "Retry",
+        "Review",
+        "Approve",
+        "Reject",
+        "Reassign Model",
+        "Adjust Budget",
+        "View Work",
+        "View Branch",
+        "View Costs"
+      ],
+      "orchestration": "Nexus checks dependencies, creates/loads a work packet, ensures the assigned branch/context/permissions/budget, routes through the AI Gateway, executes, checkpoints commits, tests/reviews, and reports status.",
+      "continuation": "If an execution session ends before acceptance criteria are satisfied, Nexus should be able to continue from the last verified checkpoint/handoff.",
+      "dependency_aware_launch": true,
+      "model_failover": "Preferred models may have qualified fallbacks when quota or provider availability prevents execution.",
+      "merge_policy": "Merge remains gated and must not be an unrestricted autonomous worker action.",
+      "implementation_boundary": "Durable one-click execution should use API/agent workers through Nexus AI Gateway, not UI automation of consumer ChatGPT/Claude/Grok apps."
+    }
   },
-
   "phase_one": {
     "workstreams": 13,
-    "first_to_start": [1,2,7,8],
+    "first_to_start": [
+      1,
+      2,
+      7,
+      8
+    ],
     "operator_command_center": 13,
-    "rule": "No Phase One workstream merges directly into nexus-v2. Control Tower reconciles contracts before Phase Two."
+    "rule": "No Phase One workstream merges directly into nexus-v2. Control Tower reconciles contracts before Phase Two.",
+    "active_workers": [
+      1,
+      2,
+      7,
+      8,
+      12
+    ],
+    "current_model_state": {
+      "note": "Workers 1, 2, 7 and 8 are currently running on ChatGPT/GPT-5.6 Sol. Grok is temporarily over its usage limit. Do not interrupt active workers solely to rebalance model families.",
+      "grok_status": "Temporarily quota-limited",
+      "routing_rule": "Use the best qualified available model; do not wait for Grok quota to reset."
+    }
   },
-
   "terminology": {
-    "forbidden": ["playbook"],
+    "forbidden": [
+      "playbook"
+    ],
     "preferred": {
       "step_by_step": "Implementation Guide",
       "architecture": "Deployment Framework"
     }
+  },
+  "v1_salvage": {
+    "status": "Worker 12 active",
+    "policy": "V1 is a donor system, not the V2 foundation. Phase One is inspection/provenance/classification only; no V1 code migration.",
+    "repositories": [
+      "ng549/nexus",
+      "ng549/Merchant-PRO"
+    ],
+    "method": "Audit by capability and branch lineage; classify KEEP AS-IS / ADAPT / REBUILD / REFERENCE ONLY / DISCARD; compare commodity V1 implementations against Worker 2 external reuse research before migration.",
+    "required_focus": [
+      "Project/Agency model",
+      "Authentication/access/invitations",
+      "Tasks/search/workspace",
+      "Worker/executor system",
+      "Control Panel",
+      "Quark",
+      "Design/branding/header/mobile",
+      "Customer forms",
+      "Cost tracking",
+      "BYOK",
+      "Deployment/Cloudflare",
+      "Data/schemas",
+      "MHC/Cabinet/project boundaries"
+    ],
+    "acceptance_rule": "Worker 12 cannot claim Complete while any required acceptance criterion or independently executable audit work remains."
   }
 }
