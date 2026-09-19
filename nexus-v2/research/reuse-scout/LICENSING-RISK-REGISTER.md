@@ -15,14 +15,18 @@ Date: 2026-09-19
 - **Renovate self-host** — AGPL licensing should be reviewed if Nexus operates it as a service for third parties; GitHub-native Dependabot is lower-friction where adequate.
 
 **AMBER — pin exact version/edition and preserve notices**
-- **LiteLLM** — product states OSS gateway is free for production, but exact repository license/version must be pinned in the architecture record before shipping.
-- **Helicone / Portkey / Cal.com / Formbricks / Refine** — open-source/open-core posture is useful, but exact selected component/version/license and enterprise-feature boundary must be recorded before embedding or transfer.
+- **Formbricks main application** — repository root is AGPLv3; specific JS/Android/iOS/API packages are MIT and EE code is separately licensed. Main-app embedding/modification requires AGPL/commercial analysis.
+- **Renovate self-host** — repository license is AGPL-3.0. Running it for Nexus internally is different from distributing/modifying/operating it as a customer-facing service; prefer GitHub-native Dependabot where it is sufficient.
+- **Cal.com / Portkey** — exact selected edition/version/license and enterprise-feature boundary must still be pinned before embedding or transfer.
 - **Sentry self-host** — use managed cloud initially unless current self-host/source terms are deliberately accepted.
 - **Grafana** — AGPL core; cloud is straightforward, but proprietary redistribution/embedding of core needs review.
 - **AG Grid Enterprise** — paid developer license/EULA. Community edition is permissive; advanced enterprise features carry license obligations.
 
 **GREEN — generally suitable permissive licenses, still retain notices**
 - Temporal (MIT)
+- LiteLLM core outside the enterprise directory (MIT)
+- Helicone core (Apache-2.0)
+- Refine (MIT)
 - PostgreSQL / pgvector (permissive PostgreSQL-style)
 - OpenTelemetry (Apache-2.0)
 - Qdrant (Apache-2.0)
@@ -70,3 +74,13 @@ Every adopted third-party component must have an Architecture/Reuse Record with:
 - Langfuse license/self-host: https://langfuse.com/pricing-self-host
 - Appsmith terms: https://www.appsmith.com/terms-and-conditions
 - AG Grid EULA/pricing: https://www.ag-grid.com/eula/commercial/ and https://www.ag-grid.com/license-pricing/
+
+
+## License pins verified directly from GitHub on 2026-09-19
+
+- LiteLLM `BerriAI/litellm`: root LICENSE states MIT for content outside `enterprise/`; enterprise code has separate license.
+- Helicone `Helicone/helicone`: Apache License 2.0.
+- Refine `refinedev/refine`: MIT.
+- Semgrep `semgrep/semgrep`: LGPL-2.1.
+- Renovate `renovatebot/renovate`: AGPL-3.0.
+- Formbricks `formbricks/formbricks`: AGPLv3 for main content, MIT for listed JS/mobile/API packages, EE directory separately licensed.
