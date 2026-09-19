@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/cost-margin-event.schema.json",
+  "title": "Nexus AI cost and margin event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "request_id", "usage_event_id", "occurred_at", "currency", "provider_cost_micros", "platform_fee_micros", "total_wholesale_cost_micros", "retail_price_micros", "gross_profit_micros", "pricing_status", "price_book_version"],
+  "properties": {
+    "event_id": {"type": "string"}, "request_id": {"type": "string"}, "usage_event_id": {"type": "string"},
+    "occurred_at": {"type": "string", "format": "date-time"}, "reservation_id": {"type": ["string", "null"]},
+    "organization_id": {"type": "string"}, "project_id": {"type": "string"}, "customer_id": {"type": ["string", "null"]},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"}, "provider_cost_micros": {"type": "integer", "minimum": 0},
+    "platform_fee_micros": {"type": "integer", "minimum": 0}, "allocated_fixed_cost_micros": {"type": "integer", "minimum": 0},
+    "total_wholesale_cost_micros": {"type": "integer", "minimum": 0}, "retail_credits": {"type": "integer", "minimum": 0},
+    "retail_price_micros": {"type": "integer", "minimum": 0}, "gross_profit_micros": {"type": "integer"},
+    "gross_margin_basis_points": {"type": ["integer", "null"], "minimum": -1000000, "maximum": 10000},
+    "pricing_status": {"enum": ["ESTIMATED", "PROVIDER_REPORTED", "RECONCILED", "ADJUSTMENT"]},
+    "price_book_version": {"type": "string"}, "source_verification_date": {"type": ["string", "null"], "format": "date"},
+    "billing_policy": {"enum": ["CHARGE_TERMINAL_ONLY", "CHARGE_SUCCESSFUL_ATTEMPTS", "NO_RETAIL_CHARGE", "CUSTOM"]},
+    "adjusts_event_id": {"type": ["string", "null"]}
+  }
+}
