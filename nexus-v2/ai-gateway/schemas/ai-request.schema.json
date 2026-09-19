@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/ai-request.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request_id", "idempotency_key", "organization_id", "project_id", "application_id", "environment", "capability", "operation", "quality", "privacy_class", "credential_policy", "limits"],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1}, "idempotency_key": {"type": "string", "minLength": 1},
+    "organization_id": {"type": "string"}, "client_id": {"type": ["string", "null"]}, "project_id": {"type": "string"},
+    "application_id": {"type": "string"}, "environment": {"enum": ["development", "test", "staging", "production"]},
+    "user_id": {"type": ["string", "null"]}, "session_id": {"type": ["string", "null"]},
+    "work_packet_id": {"type": ["string", "null"]}, "ai_worker_id": {"type": ["string", "null"]},
+    "capability": {"type": "string"}, "operation": {"type": "string"},
+    "quality": {"enum": ["UTILITY", "GENERAL", "FRONTIER", "SPECIALIST"]},
+    "privacy_class": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+    "credential_policy": {"enum": ["CUSTOMER_BYOK_REQUIRED", "PROJECT_BYOK_REQUIRED", "SAME_OWNER_FALLBACK_ALLOWED", "NEXUS_INTERNAL_ONLY"]},
+    "allowed_tool_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "limits": {"type": "object", "additionalProperties": false, "required": ["max_wholesale_micros", "max_attempts", "timeout_ms"], "properties": {"max_wholesale_micros": {"type": "integer", "minimum": 0}, "max_retail_credits": {"type": "integer", "minimum": 0}, "max_attempts": {"type": "integer", "minimum": 1}, "timeout_ms": {"type": "integer", "minimum": 1}, "max_tool_calls": {"type": "integer", "minimum": 0}}},
+    "payload_ref": {"type": ["string", "null"]}
+  }
+}
