@@ -27,6 +27,21 @@ Status: specified, not executed against a deployed gateway.
 | AG-PRIVACY-001 | Restricted data requests route lacking retention/region qualification | Route filtered out before credentials/provider call. |
 | AG-FORGE-001 | Client submits fabricated usage/cost fields | Ignored; only server-signed/provider-reconciled events affect ledger. |
 
+## Plugsky / OpenRouter build-pool qualification
+
+The benchmark fixture must validate before any live run. Qualification then requires:
+
+- exact plan, provider route and model recorded for every attempt;
+- matched capability tiers and identical task fixtures/parameters where supported;
+- deterministic assertions plus blinded human scoring for judgment tasks;
+- first-pass success, retries, total latency and time-to-first-token where supported;
+- concurrency tests within documented plan limits and a sustained route-level soak;
+- provider errors, throttles, timeouts, served-model discrepancies and fallback events retained;
+- fixed fees, credits, overages and PAYG costs normalized as effective cost per successful task;
+- estimated cost kept separate from provider-reported and invoice-reconciled cost.
+
+A public status page, one successful request, or lower advertised price does not pass this gate. Missing credentials produce `NOT_RUN`, not a zero-cost or failed result. Plugsky cannot become the preferred routine pool until commercial, privacy, reliability, quality and reconciled-cost thresholds all pass.
+
 ## Exit criteria
 
 - All tests pass in a production-like multi-tenant environment.
