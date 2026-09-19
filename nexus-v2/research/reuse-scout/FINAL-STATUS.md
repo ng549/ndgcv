@@ -103,3 +103,10 @@ Worker 2 did not edit the authoritative canonical on `nexus-v2`. Proposed decisi
 **COMPLETE — Worker 2 Phase One scouting/research scope.**
 
 This status means the assigned research deliverables and required registries/risk analyses/handoffs are complete. It does **not** mean any recommended third-party component is production verified or approved for deployment. Those statuses require downstream implementation and testing evidence.
+
+
+## Current canonical synchronization note
+
+Before final stop, Worker 2 re-read the authoritative `nexus-v2/NEXUS-V2-CANONICAL.json` after the integration branch advanced. The current canonical is **v0.4** (SHA `f6902f7a58112c55889b33c770a27be23b1d2b4f`). It adds the autonomous-worker continuation/checkpoint rules, current worker/model state, Worker 8 Plugsky-vs-OpenRouter verification priority, command-center worker-control requirements, and Worker 12 V1-salvage policy.
+
+Worker 2's recommendations remain compatible with those additions. Plugsky verification/benchmarking remains assigned to Worker 8; Worker 2 does not duplicate or pre-approve it. The Worker 2 branch is intentionally not merged into `nexus-v2` and may remain behind newer integration-branch commits until Control Tower reconciliation.
