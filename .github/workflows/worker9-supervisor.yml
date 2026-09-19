@@ -1,0 +1,23 @@
+name: Worker 9 Supervisor Tests
+on:
+  push:
+    branches:
+      - nexus-v2-p1-09-build-orchestration
+    paths:
+      - "nexus-v2/worker-supervisor/**"
+      - ".github/workflows/worker9-supervisor.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nexus-v2/worker-supervisor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm test
+      - run: npm run check
