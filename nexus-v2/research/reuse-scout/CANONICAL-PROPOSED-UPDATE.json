@@ -1,0 +1,26 @@
+{
+  "worker": 2,
+  "date": "2026-09-19",
+  "type": "proposed_canonical_additions_for_control_tower",
+  "do_not_modify_authoritative_canonical_directly": true,
+  "reuse_decisions_proposed": {
+    "identity": "Managed B2B identity; WorkOS AuthKit vs Clerk spike before selection.",
+    "workflow": "Temporal for durable business orchestration; simpler platform jobs where Temporal semantics are unnecessary.",
+    "integrations": "Nango-first for multi-tenant OAuth/API connectivity; direct vendor APIs for strategic connectors; Airbyte only for ELT.",
+    "mcp": "Official vendor MCP preferred; production admission by trust tier; evaluate Cloudflare MCP Server Portals as governed access layer.",
+    "ai": "Nexus-owned gateway contract; provider/aggregator replaceable; Langfuse observability separate from billing ledger.",
+    "billing": "Stripe for payments/invoices; OpenMeter-class meter for credits/usage if needed; reconcile against vendor invoices.",
+    "observability": "OpenTelemetry plus managed error/uptime/log/incident tooling.",
+    "source_of_truth": "Low-code/CRM/helpdesk/workflow tools must not replace Nexus canonical project/task truth."
+  },
+  "architecture_change_requests": [
+    "ACR-02-001 separate integration runtime from workflow runtime",
+    "ACR-02-002 separate AI telemetry from billable ledger",
+    "ACR-02-003 MCP trust tiers and production admission",
+    "ACR-02-004 governed MCP access layer / Cloudflare MCP portal evaluation",
+    "ACR-02-005 mandatory version-license-replacement record for dependencies",
+    "ACR-02-006 external tools cannot become Nexus canonical task/project source"
+  ],
+  "legal_flags": ["n8n","Windmill","Lago","Documenso","Airbyte","Nango","Appsmith Enterprise","Renovate self-host","Grafana embedding"],
+  "status": "PROPOSED_NOT_CANONICAL_UNTIL_CONTROL_TOWER_ACCEPTS"
+}
