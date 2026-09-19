@@ -1,0 +1,9 @@
+[
+  {"id":"schema-extraction","category":"structured_extraction","prompt":"Return only JSON with keys risk_level and reasons. Classify: a customer API key was logged in plaintext.","assert":{"type":"json_keys","keys":["risk_level","reasons"]}},
+  {"id":"defect-repair","category":"coding","prompt":"A JavaScript function `const debit=(balance,amount)=>balance-amount` must reject negative amounts and insufficient funds. Return only a replacement function.","assert":{"type":"contains_all","values":["amount","balance","throw"]}},
+  {"id":"test-generation","category":"qa","prompt":"Write three concise test cases for idempotent wallet settlement: duplicate event, conflicting payload, and first success. Return JSON array only.","assert":{"type":"json_array_min","min":3}},
+  {"id":"architecture","category":"architecture","prompt":"In at most 180 words, choose where commercial-rights enforcement belongs in an AI gateway and state two fail-closed invariants.","assert":{"type":"contains_all","values":["rights","fail"]}},
+  {"id":"security-review","category":"security","prompt":"Review this policy: customer BYOK failure falls back to the platform master key. Identify the primary vulnerability and give a safe replacement policy in at most 120 words.","assert":{"type":"contains_all","values":["BYOK","fallback"]}},
+  {"id":"tool-plan","category":"agents","prompt":"Return only JSON: a least-privilege tool plan for a read-only repository review with keys tools, denied, max_calls.","assert":{"type":"json_keys","keys":["tools","denied","max_calls"]}},
+  {"id":"context-reasoning","category":"repository_analysis","prompt":"Given: a retry creates a new provider request but retains one retail idempotency key; attempt costs are real; customers must not be double charged. In at most 150 words define attempt and terminal ledger behavior.","assert":{"type":"contains_all","values":["attempt","idempot"]}}
+]
