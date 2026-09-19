@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.internal/contracts/orchestrator-command.v1.json",
+  "title": "Nexus Orchestrator Command v1",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["action","requested_by","request_id"],
+      "properties": {
+        "action": { "enum": ["RUN","CONTINUE","PAUSE","RESUME","STOP","RETRY"] },
+        "requested_by": { "type": "string", "format": "email" },
+        "request_id": { "type": "string", "minLength": 8 }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": ["action","requested_by","request_id"],
+      "properties": {
+        "action": { "enum": ["RUN_ALL_READY","RUN_PHASE"] },
+        "phase": { "type": ["string","null"] },
+        "requested_by": { "type": "string", "format": "email" },
+        "request_id": { "type": "string", "minLength": 8 }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
