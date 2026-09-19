@@ -37,4 +37,14 @@ for (const file of ["AI-GATEWAY-DESIGN-CANONICAL.json", "WORKER-8-HANDOFF.json"]
   }
 }
 
+try {
+  const tasks = JSON.parse(fs.readFileSync(path.join(root, "benchmark", "tasks.json"), "utf8"));
+  if (!Array.isArray(tasks) || tasks.length < 7) throw new Error("expected at least seven representative tasks");
+  for (const task of tasks) if (!task.id || !task.category || !task.prompt || !task.assert) throw new Error("incomplete benchmark task");
+  console.log("PASS benchmark/tasks.json");
+} catch (error) {
+  failed = true;
+  console.error(`FAIL benchmark/tasks.json: ${error.message}`);
+}
+
 if (failed) process.exit(1);
