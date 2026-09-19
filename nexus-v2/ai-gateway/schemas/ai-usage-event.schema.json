@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/ai-usage-event.schema.json",
+  "title": "Nexus AI usage event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "request_id", "idempotency_key", "occurred_at", "organization_id", "project_id", "application_id", "environment", "capability", "route_id", "provider", "model", "status", "attempt", "latency_ms", "usage_source"],
+  "properties": {
+    "event_id": {"type": "string"}, "request_id": {"type": "string"}, "idempotency_key": {"type": "string"},
+    "occurred_at": {"type": "string", "format": "date-time"}, "organization_id": {"type": "string"},
+    "client_id": {"type": ["string", "null"]}, "project_id": {"type": "string"}, "application_id": {"type": "string"},
+    "environment": {"enum": ["development", "test", "staging", "production"]}, "user_id": {"type": ["string", "null"]},
+    "session_id": {"type": ["string", "null"]}, "work_packet_id": {"type": ["string", "null"]}, "ai_worker_id": {"type": ["string", "null"]},
+    "capability": {"type": "string"}, "route_id": {"type": "string"}, "aggregator": {"type": ["string", "null"]},
+    "provider": {"type": "string"}, "model": {"type": "string"}, "provider_request_id": {"type": ["string", "null"]},
+    "input_tokens": {"type": "integer", "minimum": 0}, "output_tokens": {"type": "integer", "minimum": 0},
+    "cached_tokens": {"type": "integer", "minimum": 0}, "search_calls": {"type": "integer", "minimum": 0},
+    "tool_calls": {"type": "integer", "minimum": 0}, "images": {"type": "integer", "minimum": 0},
+    "video_milliseconds": {"type": "integer", "minimum": 0}, "audio_milliseconds": {"type": "integer", "minimum": 0},
+    "characters": {"type": "integer", "minimum": 0}, "compute_milliseconds": {"type": "integer", "minimum": 0},
+    "usage_source": {"enum": ["PROVIDER_REPORTED", "NEXUS_CALCULATED", "RECONCILED"]},
+    "latency_ms": {"type": "integer", "minimum": 0}, "status": {"enum": ["SUCCEEDED", "FAILED", "CANCELLED", "PARTIAL"]},
+    "attempt": {"type": "integer", "minimum": 1}, "retry_count": {"type": "integer", "minimum": 0},
+    "fallback_used": {"type": "boolean"}, "fallback_from_route_id": {"type": ["string", "null"]},
+    "rights_record_id": {"type": ["string", "null"]}, "price_book_version": {"type": ["string", "null"]}
+  }
+}
