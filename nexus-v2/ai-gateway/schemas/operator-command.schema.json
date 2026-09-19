@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/operator-command.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["command_id", "actor_id", "action", "target_type", "target_id", "reason", "expected_policy_version", "issued_at"],
+  "properties": {
+    "command_id": {"type": "string"}, "actor_id": {"type": "string"},
+    "action": {"enum": ["DISABLE_PROVIDER", "DISABLE_MODEL", "PAUSE_CUSTOMER_AI", "CHANGE_LIMIT", "CHANGE_PREFERRED_ROUTE", "APPROVE_EXPENSIVE_JOB", "DENY_EXPENSIVE_JOB", "FORCE_ELIGIBLE_FALLBACK", "CANCEL_JOB", "CHANGE_BYOK_POLICY"]},
+    "target_type": {"enum": ["PROVIDER", "MODEL", "CUSTOMER", "PROJECT", "ROUTE", "JOB", "POLICY"]}, "target_id": {"type": "string"},
+    "parameters": {"type": "object"}, "reason": {"type": "string", "minLength": 1},
+    "expected_policy_version": {"type": "string"}, "approval_ids": {"type": "array", "items": {"type": "string"}},
+    "issued_at": {"type": "string", "format": "date-time"}
+  }
+}
