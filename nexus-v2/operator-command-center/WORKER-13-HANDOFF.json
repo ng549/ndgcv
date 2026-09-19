@@ -2,32 +2,52 @@
   "worker": 13,
   "branch": "nexus-v2-p1-13-operator-command-center",
   "status": "Implemented / Unverified",
-  "canonical_version": "0.5",
+  "canonical": {
+    "version": "0.5",
+    "sha": "ca446bf296a7a337da18dd877d29bff1eb026fa1"
+  },
   "implemented": [
-    "authenticated operator route",
-    "operator-only authorization",
-    "rate limiting",
-    "persistent command audit schema",
-    "mobile-first worker status UI",
-    "UNKNOWN fallback for missing runtime evidence",
-    "capability-gated worker controls",
-    "global run controls",
-    "orchestrator state and command contracts",
-    "unit tests for state and control safety"
+    "Cloudflare Access JWT origin validation with issuer audience expiry and operator checks",
+    "Cloudflare native rate limiting",
+    "persistent D1 command audit schema with fail-closed writes",
+    "mobile-first and desktop-responsive operator UI",
+    "truth-safe UNKNOWN fallback when runtime evidence is unavailable",
+    "Worker 9 work-packet adapter",
+    "RUN CONTINUE PAUSE RESUME STOP RETRY controls",
+    "RUN ALL READY and RUN PHASE controls",
+    "server-only Worker 9 credential isolation",
+    "same-origin JSON write protection",
+    "Worker 9 aligned state and command contracts",
+    "unit tests for UNKNOWN behavior explicit control gating and write-origin protection"
+  ],
+  "verified": [
+    "Nexus V2 canonical 0.5 inspected",
+    "Worker 8 handoff inspected and ownership boundary preserved",
+    "Worker 9 command contract work-packet schema and supervisor implementation inspected",
+    "Worker 13 branch artifacts confirmed present in GitHub",
+    "core guard tests executed locally: 5 passed 0 failed"
+  ],
+  "not_verified": [
+    "GitHub Actions validation; no workflow run was observed",
+    "live Cloudflare Access application behavior",
+    "live D1 command audit persistence",
+    "live Worker 9 service connectivity and commands",
+    "deployment on nicolasgoureau.com/operator/",
+    "live iPhone and desktop behavior"
   ],
   "dependencies": {
-    "worker_9": "No orchestration branch or live endpoint was available at this checkpoint.",
-    "worker_8": "Boundary consumed; provider routing remains outside Worker 13.",
-    "worker_1": "No newer shared status/identity artifact was available at this checkpoint."
+    "worker_9": "CONSUMED — contracts and API routes aligned. A deployed service endpoint and service credential are still required for live integration verification.",
+    "worker_8": "CONSUMED — AI provider and model routing remains outside Worker 13.",
+    "worker_1": "WAITING — no newer shared status or identity artifact was available during this run."
   },
   "remaining_gates": [
-    "connect the deployed authentication layer",
-    "provision the command audit database",
-    "connect Worker 9 orchestration",
-    "run live integration tests",
+    "configure the Cloudflare Access application and origin values",
+    "provision D1 and apply the audit migration",
+    "deploy or attach Worker 9 supervisor service and service credential",
+    "run non-production command integration tests",
     "deploy the protected operator route",
     "verify iPhone and desktop behavior",
-    "add the subtle site entry only after the protected route exists"
+    "add the subtle public-site entry only after the protected route exists"
   ],
-  "golden_rule": "Missing runtime evidence is represented as UNKNOWN and unsupported controls remain disabled."
+  "golden_rule": "Missing runtime evidence is represented as UNKNOWN. Unsupported or unverified controls remain disabled."
 }
