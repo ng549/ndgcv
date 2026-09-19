@@ -225,6 +225,18 @@ Not yet production-verified:
 - Full security assessment/CVE review of every transitive dependency.
 - Every requested marketing/sales/support candidate at the same depth as the foundation candidates.
 
-## Remaining research
+## Final scouting status
 
-Phase One remains **Needs Review / Researching**, not Complete. Next research should deepen marketing, sales, support, contractor orchestration and admin/UI candidates; obtain current paid quotes; and run bounded proofs for the final shortlist.
+The requested Phase One **research/scouting coverage is complete enough for Control Tower selection and downstream proofs**. Marketing, sales/assessment, support, contractor orchestration, client-platform, authorization/feature flags, webhook/eventing, QA/testing and official MCP candidates were subsequently deepened and are recorded in the expanded registry and dedicated risk/economics artifacts.
+
+This workstream is still labeled **Needs Review**, not Production Verified, because Worker 2 is the scout and has not deployed the shortlisted infrastructure inside Nexus. Exact enterprise quotes also remain contract-specific. These are downstream selection/proof activities rather than undisclosed missing research.
+
+Additional artifacts:
+- `LICENSING-RISK-REGISTER.md`
+- `SECURITY-RISK-REGISTER.md`
+- `COST-TIME-ANALYSIS.md`
+- `WORKER-2-HANDOFF.md`
+- `CANONICAL-PROPOSED-UPDATE.json`
+- `EVIDENCE-SOURCE-LOG.md`
+
+The component registry now also covers fine-grained authorization (OpenFGA), feature flags (Flagsmith/Unleash), webhook infrastructure (Svix/Hookdeck), QA (Playwright/Vitest) and contractor time/cost accounting (Harvest).
