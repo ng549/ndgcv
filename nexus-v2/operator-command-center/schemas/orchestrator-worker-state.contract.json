@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.internal/contracts/orchestrator-worker-state.v1.json",
+  "title": "Nexus Orchestrator Worker State v1",
+  "type": "object",
+  "required": ["workers"],
+  "properties": {
+    "observed_at": { "type": "string", "format": "date-time" },
+    "global_controls": {
+      "type": "object",
+      "properties": {
+        "RUN_ALL_READY": { "type": "boolean" },
+        "RUN_PHASE": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "workers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": ["string", "integer"] },
+          "name": { "type": "string" },
+          "status": {
+            "enum": ["RUNNING","READY","WAITING_ON_DEPENDENCY","BLOCKED","NEEDS_REVIEW","FAILED","STOPPED","PAUSED","COMPLETE","UNKNOWN"]
+          },
+          "current_task": { "type": ["string","null"] },
+          "model": { "type": ["string","null"] },
+          "last_heartbeat": { "type": ["string","null"], "format": "date-time" },
+          "cost_micros": { "type": ["integer","null"], "minimum": 0 },
+          "branch": { "type": ["string","null"] },
+          "last_checkpoint": { "type": ["string","null"] },
+          "latest_commit": { "type": ["string","null"] },
+          "budget_consumed_micros": { "type": ["integer","null"], "minimum": 0 },
+          "blocker": { "type": ["string","null"] },
+          "decision_required": { "type": ["string","null"] },
+          "controls": {
+            "type": "object",
+            "properties": {
+              "RUN": { "type": "boolean" },
+              "CONTINUE": { "type": "boolean" },
+              "PAUSE": { "type": "boolean" },
+              "RESUME": { "type": "boolean" },
+              "STOP": { "type": "boolean" },
+              "RETRY": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
