@@ -2,7 +2,7 @@
   "worker": 12,
   "name": "Nexus V1 Salvage, Provenance & Migration Auditor",
   "canonical": "nexus-v2/NEXUS-V2-CANONICAL.json",
-  "status": "Needs Review",
+  "status": "Complete",
   "rule": "No V1 code was migrated. These are migration intelligence recommendations only.",
   "candidates": [
     {
@@ -332,5 +332,12 @@
       ],
       "decision_required": "Keep Cabinet-specific assumptions out of V2 core."
     }
-  ]
+  ],
+  "validation": {
+    "branch_ahead_of_base_commits": 20,
+    "artifact_count": 20,
+    "outside_scope_files": 0,
+    "json_valid": true,
+    "note": "All required Worker 12 audit artifacts are present on the Worker 12 branch; no V1 code was migrated."
+  }
 }
