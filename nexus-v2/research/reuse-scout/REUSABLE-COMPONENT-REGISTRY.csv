@@ -1,0 +1,31 @@
+name,category,purpose,license_or_terms,hosting,classification,Nexus_module,client_reuse,license_risk,security_notes,implementation_estimate
+WorkOS AuthKit,Identity,B2B auth orgs invites SSO,Commercial SaaS,Cloud,INTEGRATE,Foundation,Yes,Low-Medium,Identity vendor concentration,1-3 days
+Clerk,Identity,Auth orgs invitations roles,Commercial SaaS,Cloud,INTEGRATE,Foundation,Yes,Low-Medium,Rate limits and tenant authorization still app-owned,1-3 days
+Keycloak,Identity,Self-host IAM,Apache-2.0,Self-host,REFERENCE/CONDITIONAL,Foundation,Yes,Low,Operational complexity,3-10 days
+Supabase,Data/Auth/Realtime,Postgres platform + realtime,Open source + commercial cloud,Hybrid,INTEGRATE,Foundation/Command Center,Yes,Low-Medium,RLS must be tested carefully,1-4 days
+Temporal,Workflow,Durable workflow execution,MIT,Cloud/Self-host,INTEGRATE,Workflow,Yes,Low,Workflow determinism/operational learning curve,2-5 days
+Trigger.dev,Workflow,Background jobs and developer workflows,Open-core/current terms require review,Cloud/Self-host,REFERENCE/INTEGRATE,Workflow,Yes,Medium,Validate current license and tenancy,1-3 days
+n8n,Automation,Low-code automation,Sustainable Use License + commercial licenses,Cloud/Self-host,CONDITIONAL,Automation,Yes,High,Client credential hosting/embedding requires commercial terms,1-5 days
+Windmill,Workflow/Internal tools,Workflows jobs internal apps,AGPLv3 + commercial terms,Cloud/Self-host,CONDITIONAL,Workflow/Admin,Yes,High,Embedding/managed service restrictions,2-5 days
+Nango,Integrations,OAuth token lifecycle API sync actions webhooks,Elastic License 2.0 + commercial,Cloud/Self-host,INTEGRATE,Integrations,Yes,High,High-value credential vault,2-5 days
+Airbyte,ELT,Bulk connector-based data movement,Elastic License 2.0,Cloud/Self-host,INTEGRATE,Integrations/Data,Yes,Medium-High,Not primary transactional integration runtime,2-5 days
+Pipedream,Integrations/Automation,Hosted connectors and workflows,Commercial,Cloud,REFERENCE/INTEGRATE,Integrations,Yes,Low-Medium,Vendor lock-in/usage pricing,1-3 days
+LiteLLM,AI Gateway,Provider normalization routing spend limits,Open source/open-core current license must be pinned,Self-host/Cloud,INTEGRATE/EXTEND,AI Gateway,Yes,Medium,Gateway is critical trust boundary,2-5 days
+OpenRouter,AI Aggregator,Multi-provider model access and BYOK,Commercial service,Cloud,INTEGRATE,AI Gateway,Yes,Low-Medium,Aggregator/provider dependency,0.5-2 days
+Helicone AI Gateway,AI Gateway,Unified LLM routing rate limits caching,Apache-2.0,Cloud/Self-host,REFERENCE/INTEGRATE,AI Gateway,Yes,Low,Newer gateway requires load/security evaluation,1-3 days
+Langfuse,AI Observability,LLM tracing evals prompt telemetry,MIT core + commercial EE,Cloud/Self-host,INTEGRATE,AI Observability,Yes,Low-Medium,Prompt/PII retention and redaction,1-3 days
+pgvector,Vector/RAG,Vector search inside Postgres,PostgreSQL-style open source,Self-host/Managed DB,USE DIRECTLY,RAG,Yes,Low,Scale/recall tuning,0.5-2 days
+Qdrant,Vector/RAG,Dedicated vector database,Apache-2.0,Cloud/Self-host,CONDITIONAL,RAG,Yes,Low,Adds separate stateful service,1-3 days
+Stripe Billing,Billing,Payments subscriptions invoices meters,Commercial,Cloud,USE DIRECTLY,Billing,Yes,Low-Medium,Financial correctness/webhook idempotency,2-5 days
+OpenMeter,Metering,Usage meters credits entitlements billing,Apache-2.0,Cloud/Self-host,INTEGRATE,Billing/AI Economics,Yes,Low,Current beta/breaking-change warning in docs,2-5 days
+Lago,Billing/Metering,Usage billing wallets entitlements invoices,AGPLv3 + commercial embedded options,Cloud/Self-host,CONDITIONAL,Billing/AI Economics,Yes,High,AGPL/commercial embedding review,2-5 days
+Sentry,Observability,Errors traces performance,Commercial/open source components,Cloud/Self-host,USE DIRECTLY,Managed Service,Yes,Low-Medium,Sensitive payload scrubbing,0.5-2 days
+OpenTelemetry,Observability,Portable traces metrics logs,Apache-2.0,Self/Managed backends,USE DIRECTLY,Managed Service,Yes,Low,Cardinality and PII discipline,1-3 days
+Chatwoot,Support,Support inbox portal automation,MIT core + paid offerings,Cloud/Self-host,INTEGRATE,Support,Yes,Low-Medium,Validate white-label/client terms,1-4 days
+Cal.com,Scheduling,Scheduling APIs and booking,Open-core/commercial terms,Cloud/Self-host,INTEGRATE,Sales/Assessment,Yes,Medium,Review embedding/enterprise features,1-3 days
+Documenso,E-sign/Documents,E-sign workflows,AGPL/commercial offerings,Cloud/Self-host,CONDITIONAL,Sales/Assessment,Yes,High,Legal enforceability + AGPL/commercial review,1-4 days
+GitHub Actions,DevOps,CI/CD automation,Commercial GitHub service,Cloud,USE DIRECTLY,Development,Yes,Low,Workflow token permissions,0.5-2 days
+GitHub MCP,MCP/DevOps,AI access to repos issues PRs actions,Official GitHub project; license verify per release,Remote/Self-host,INTEGRATE,Development/Command Center,Yes,Low-Medium,Use read-only/least privilege and prompt-injection controls,0.5-2 days
+Cloudflare MCP,MCP/Infrastructure,AI access to Workers and Cloudflare operations,Official Cloudflare project; license verify per server,Remote,INTEGRATE,Development/Command Center,Yes,Low-Medium,Write actions require strong approvals,0.5-2 days
+MCP Registry,MCP Infrastructure,Server discovery metadata,MIT API/spec repo,Cloud/Self-host,USE DIRECTLY,MCP Registry,Yes,Low,Registry entry is not a security endorsement,0.5-1 day
+Archived MCP reference servers,MCP,Historical reference implementations,Varied/archived,Self-host,REJECT,Any,No,High,Explicitly no security guarantees,0
