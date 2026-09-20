@@ -851,3 +851,11 @@ Standing rule: substantive bullet points and one relevant paired image per group
 - npm test still hits the known checker bug: it treats site.js?v=build-18-v1 as a missing image (final script URL remains that version). This is not a missing image. No unrelated checker rewrite performed.
 - Live illustrations were visually checked in the browser. A separate raw-image HTTP comparison was unavailable (403); no byte-for-byte live-image verification claim is made.
 - MOBILE VISUAL VERIFICATION PENDING. The available browser exposes no viewport/device emulation capability. Responsive stacking, spacing and reduced-motion rules are implemented but are not a substitute for an actual mobile visual check. This also does not clear earlier Section 14/17 mobile pending notes.
+
+
+## 2026-09-20 — Requested headline cleanup, Sections 17 and 18
+- Nicolas requested that “Make the business easier to run.” appear on one desktop line and that the Section 18 heading lose its isolated “problem” line.
+- Section 17 desktop title now uses available heading width and a responsive 28–46px scale, with nowrap above 760px. Publication: d763f15c7ddabeccc452819b0e725bf0dcd939c1.
+- Section 18 matches that desktop title scale and now reads as two lines: “From understanding the problem” / “to building the tool.” Publication: a59bcc450738504d1688e2f5d45c8e602b33c2cb.
+- Actual live desktop screenshots verified both requested layouts. At a 1363px viewport, Section 17 measured one 52px line; Section 18 measured 103px total with 51.7258px line height (two lines). Live stylesheet: site.css?v=section-headings-v2. Cloudflare Worker builds succeeded.
+- Copy, images, other sections and career content preserved; generated HTML changed only the stylesheet version. Build and whitespace checks passed. Mobile typography rules remain unchanged; mobile visual verification remains PENDING.
