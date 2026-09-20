@@ -53,3 +53,5 @@
 @media(prefers-reduced-motion:reduce){#software-work .build-backdrop{transform:none!important}}
 #software-work .tool-trigger span{color:inherit;font-size:16px;font-weight:600;margin:0}
 #software-work .tool-trigger img{filter:brightness(0) invert(1);opacity:.9}
+/* Match Section 17 heading scale; retain the intentional two-line title. */
+@media(min-width:761px){#software-work .section-heading h2{max-width:none;font-size:clamp(28px,3.3vw,46px)}}
