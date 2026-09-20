@@ -1,7 +1,6 @@
 /* Section 17 only: new artwork, open composition and native disclosures. */
 #ai.systems-section{background:#172b35;color:#f6f1e7;padding-top:64px;padding-bottom:64px;overflow:hidden;--wash:#172b35}
-#ai .systems-backdrop{position:absolute;inset:-180px 0;z-index:-2;pointer-events:none;background:url('assets/systems/section-17-background.webp') center center/cover no-repeat}
-#ai:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(14,29,38,.94),rgba(14,29,38,.87) 57%,rgba(14,29,38,.72))}
+#ai .systems-backdrop{position:absolute;inset:-180px 0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,rgba(14,29,38,.94),rgba(14,29,38,.87) 57%,rgba(14,29,38,.72)),url('assets/systems/section-17-background.webp') center center/cover no-repeat}
 #ai .section-heading{max-width:900px;margin-bottom:24px}
 #ai .section-heading h2{max-width:760px}
 #ai .section-heading p{max-width:80ch;font-size:19px;line-height:1.65}
@@ -38,7 +37,7 @@
  #ai .systems-copy li{margin-bottom:15px}
  #ai .systems-image{max-width:560px;margin:0 auto}
  #ai .systems-backdrop{inset:0;transform:none!important}
- #ai:after{background:rgba(14,29,38,.9)}
+ #ai .systems-backdrop{background-image:linear-gradient(#0e1d26e6,#0e1d26e6),url('assets/systems/section-17-background.webp')}
 }
 @media(prefers-reduced-motion:reduce){#ai .systems-backdrop{transform:none!important}}
 @media print{#ai.systems-section{background:white;color:black}#ai .systems-backdrop,#ai:after{display:none}#ai .systems-group summary,#ai .systems-preview{color:black}}
