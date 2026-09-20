@@ -1,7 +1,7 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.5",
-  "updated_at": "2026-09-19",
+  "version": "0.6",
+  "updated_at": "2026-09-20",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
@@ -324,5 +324,24 @@
       "MHC/Cabinet/project boundaries"
     ],
     "acceptance_rule": "Worker 12 cannot claim Complete while any required acceptance criterion or independently executable audit work remains."
+  },
+  "global_architecture": {
+    "name": "The Agency Global Architecture",
+    "status": "INCOMPLETE_LIVING_ARCHITECTURE",
+    "drive_folder_id": "1FjnMpfktz9t52Woa5eddH5wS3hwoqbpT",
+    "drive_canonical_document_id": "1N80_JSAO5k02yDcqJp5SPJd2Nwc1MkSY0Gdyb2sSIL8",
+    "relationship": "The Agency Global Architecture is broader than Nexus V2. The external Build Stack builds Nexus; Nexus later becomes command/control for business operations, client production resources, and client operations.",
+    "domains": [
+      "NEXUS_BUILD_STACK",
+      "NEXUS_BUSINESS_OPERATIONS",
+      "NEXUS_CLIENT_PRODUCTION_DELIVERY",
+      "NEXUS_MANAGED_CLIENT_OPERATIONS",
+      "CLIENT_MANAGED_CLIENT_OPERATIONS"
+    ],
+    "hybrid_profile": "CLIENT_OWNED_NEXUS_MANAGED",
+    "first_priority": "Build a powerful extensible cost-effective modular Build Stack that can keep growing/bolting on capabilities and can later support profitable client production.",
+    "automation_target": "Approximately 90% of repetitive execution where sensible; important judgment remains human-gated.",
+    "devil_up": "Devil Up AI is an internal Nexus production resource alongside AI agents, outsourced programmers, contractors, specialists and external vendors; it is not the Nexus control plane.",
+    "economic_principle": "Save money and make money: optimize effective cost per successful outcome, reuse, replaceability, automation, and gross margin rather than sticker price alone."
   }
 }
