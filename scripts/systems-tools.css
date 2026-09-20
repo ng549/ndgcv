@@ -41,3 +41,6 @@
 }
 @media(prefers-reduced-motion:reduce){#ai .systems-backdrop{transform:none!important}}
 @media print{#ai.systems-section{background:white;color:black}#ai .systems-backdrop,#ai:after{display:none}#ai .systems-group summary,#ai .systems-preview{color:black}}
+
+/* Keep the approved Section 17 headline on one desktop line. */
+@media(min-width:761px){#ai .section-heading h2{max-width:none;font-size:clamp(28px,3.3vw,46px);white-space:nowrap}}
