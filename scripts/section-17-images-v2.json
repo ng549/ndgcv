@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "workflow-planning",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. Front-on close view of a large wall-mounted physical workflow planning board. Distinct clusters of plain cream cards, short strings connecting handoffs, small location floorplan cutouts, one amber card at a bottleneck. No readable text or exact diagram claims. Board is lead subject, slim stools below; no desk. Concept of identifying handoffs and responsibilities.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1XDXBGsK4G0cnX3I210kP2Gjcw6OMJd1k",
+      "title": "section-17-workflow-planning-v2.png",
+      "file_name": "section-17-workflow-planning-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/1XDXBGsK4G0cnX3I210kP2Gjcw6OMJd1k/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1XDXBGsK4G0cnX3I210kP2Gjcw6OMJd1k",
+        "title": "section-17-workflow-planning-v2.png",
+        "file_name": "section-17-workflow-planning-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1XDXBGsK4G0cnX3I210kP2Gjcw6OMJd1k/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-workflow-planning-v2.webp"
+  },
+  {
+    "slug": "product-information",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. Three-quarter close view of a compact product-photo light tent with a coiled RV water hose and brass connector as sample, camera on tripod beside it, upright hanging contact-sheet strips and indexed product record sleeves on a rail. Show connection between product identity, imagery and organized records, no computers, no desk scene, no invented brands. Lead subject the light tent and indexed sleeves.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1irJLDCQFHX8xxuoqR736Wg8Pip5Cuesh",
+      "title": "section-17-product-information-v2.png",
+      "file_name": "section-17-product-information-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/1irJLDCQFHX8xxuoqR736Wg8Pip5Cuesh/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1irJLDCQFHX8xxuoqR736Wg8Pip5Cuesh",
+        "title": "section-17-product-information-v2.png",
+        "file_name": "section-17-product-information-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1irJLDCQFHX8xxuoqR736Wg8Pip5Cuesh/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-product-information-v2.webp"
+  },
+  {
+    "slug": "connected-channels",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. High overhead view of a small order dispatch station: three distinct shallow sorting lanes converge toward an open parcel with RV accessories, order slips clipped at each lane, tissue, packing tape and label printer. Concept of orders from multiple channels moving toward fulfillment, no system integration diagram, no screen or readable labels. Strong top-down graphic spatial composition.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1EiVyi5Egg5FbS6u7-yR9fK69p2Xo4RNN",
+      "title": "section-17-connected-channels-v2.png",
+      "file_name": "section-17-connected-channels-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/1EiVyi5Egg5FbS6u7-yR9fK69p2Xo4RNN/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1EiVyi5Egg5FbS6u7-yR9fK69p2Xo4RNN",
+        "title": "section-17-connected-channels-v2.png",
+        "file_name": "section-17-connected-channels-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1EiVyi5Egg5FbS6u7-yR9fK69p2Xo4RNN/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-connected-channels-v2.webp"
+  },
+  {
+    "slug": "purchasing-replenishment",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. Low eye-level view down a single narrow RV-accessory stock aisle. Foreground a rolling picking cart holding a few coiled hoses, an empty shelf slot with a plain reorder tag and handheld barcode scanner in cradle. Emphasize stock visibility and replenishment, not bulk pallet stacks. Long aisle perspective, no people or desk.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "12R9D3DG4CtBFiRZ6O0K43JSg0aNixdOy",
+      "title": "section-17-purchasing-replenishment-v2.png",
+      "file_name": "section-17-purchasing-replenishment-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/12R9D3DG4CtBFiRZ6O0K43JSg0aNixdOy/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "12R9D3DG4CtBFiRZ6O0K43JSg0aNixdOy",
+        "title": "section-17-purchasing-replenishment-v2.png",
+        "file_name": "section-17-purchasing-replenishment-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/12R9D3DG4CtBFiRZ6O0K43JSg0aNixdOy/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-purchasing-replenishment-v2.webp"
+  },
+  {
+    "slug": "operating-visibility",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. Close oblique view of a physical daily exception-review wall: a compact rack of three vertical paper pockets, several neutral cream review slips, one amber slip pulled forward, plain check marks and small metal responsibility clips. Small wall clock above and a single pinned checklist. Operational oversight concept, NOT a dashboard or computer, no text/numbers/results or exact workflow claims. Focus on finding the item needing attention.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1kcPi2Ec0OvK8-PUQHen7MWN7vpKAsjZp",
+      "title": "section-17-operating-visibility-v2.png",
+      "file_name": "section-17-operating-visibility-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/1kcPi2Ec0OvK8-PUQHen7MWN7vpKAsjZp/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1kcPi2Ec0OvK8-PUQHen7MWN7vpKAsjZp",
+        "title": "section-17-operating-visibility-v2.png",
+        "file_name": "section-17-operating-visibility-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1kcPi2Ec0OvK8-PUQHen7MWN7vpKAsjZp/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-operating-visibility-v2.webp"
+  },
+  {
+    "slug": "repeatable-execution",
+    "type": "editorial concept, not historical evidence",
+    "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+    "source": "New concept; style reference only, no existing composition reused",
+    "prompt": "Create one 1536x1024 painterly editorial concept illustration for a CV's Systems & tools section. Use attached image ONLY for drybrush texture, navy charcoal/warm amber palette and lighting, NEVER its shop composition or objects. Entirely new scene. No faces, people, lettering, numbers, logos, fake performance data. No screen-on-desk composition, no tablet, no open book on desk, no piled pallet warehouse scene. Single coherent scene, no panels or collage. Soft irregular navy vignette edges. Show the specified concrete operating activity, not generic tech. Close side view of a single retail fixture bay in the process of being standardized: pegboard with evenly spaced hooks holding practical camping accessories, a simple shelf-position template temporarily clipped directly to its side, tape measure stretched along shelf, adjustment tool on lower shelf. No guide book, desk or store panorama. Concept of applying merchandising standards consistently.",
+    "master": {
+      "accepted_input": "file_uri",
+      "success": true,
+      "id": "1DFhz2o5kbAxEtz-sjD4lwMiAE1UrxTq-",
+      "title": "section-17-repeatable-execution-v2.png",
+      "file_name": "section-17-repeatable-execution-v2.png",
+      "mime_type": "image/png",
+      "url": "https://drive.google.com/file/d/1DFhz2o5kbAxEtz-sjD4lwMiAE1UrxTq-/view?usp=drivesdk",
+      "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+      "structuredContent": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1DFhz2o5kbAxEtz-sjD4lwMiAE1UrxTq-",
+        "title": "section-17-repeatable-execution-v2.png",
+        "file_name": "section-17-repeatable-execution-v2.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1DFhz2o5kbAxEtz-sjD4lwMiAE1UrxTq-/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+      }
+    },
+    "destination": "docs/assets/systems/section-17-repeatable-execution-v2.webp"
+  }
+]

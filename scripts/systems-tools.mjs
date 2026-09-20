@@ -8,7 +8,7 @@ export const systemGroups = [
       'At Fun Town RV, separate location catalogs and inconsistent product identifiers helped define the need for shared information before I selected and connected the tools.'
     ],
     benefit: 'The operating need determines the system, so the tools support how the business actually works.',
-    alt: 'Source-based sketch adaptation of the Fun Town RV planning photograph: plans on a wooden table beneath the exposed trusses of an unfinished retail space.'
+    alt: 'Concept illustration of a physical handoff-planning board with grouped cards and location plans; not a historical workflow diagram.'
   },
   {
     id: 'product-information', heading: 'Give product information a common structure',
@@ -19,7 +19,7 @@ export const systemGroups = [
       'We used Google Workspace, mainly Sheets, for data input, output and dashboards. That gave the team a familiar way to work with the information supporting the operation.'
     ],
     benefit: 'Consistent records help purchasing, selling and reporting refer to the same products and pricing information.',
-    alt: 'Concept illustration of product records, accessory imagery and pricing information at a working desk; not a historical database screenshot.'
+    alt: 'Concept illustration of product photography and indexed product-record sleeves; not a photograph of an actual Fun Town setup.'
   },
   {
     id: 'connected-channels', heading: 'Connect stores, orders and fulfillment',
@@ -30,7 +30,7 @@ export const systemGroups = [
       'Much of the ongoing operation ran automatically. Dashboard reviews and health checks remained part of keeping it working.'
     ],
     benefit: 'Connected information supports execution across locations and channels, with oversight when something needs attention.',
-    alt: 'New sketch adapted from the supplied Shopify point-of-sale tablet reference; illustrative software structure, not a photograph of a Fun Town deployment.'
+    alt: 'Concept illustration of multiple order-sorting lanes converging at a packing station; not evidence of specific automated integrations.'
   },
   {
     id: 'purchasing-replenishment', heading: 'Make purchasing and replenishment actionable',
@@ -41,7 +41,7 @@ export const systemGroups = [
       'For imported products, I include import costs when assessing the economics, so purchasing decisions reflect more than the factory price.'
     ],
     benefit: 'Ordering and replenishment become part of an operating process that supports availability and margin discipline.',
-    alt: 'Source-based sketch adaptation of the Fun Town logistics photograph, preserving wrapped carton stacks, pallets and the warehouse trusses.'
+    alt: 'Concept illustration of a picking cart, barcode scanner and reorder slot in an accessory aisle; not a historical facility photograph.'
   },
   {
     id: 'operating-visibility', heading: 'Make performance and system health visible',
@@ -52,7 +52,7 @@ export const systemGroups = [
       'My broader reporting work has followed the same principle: make information useful for a decision, then connect that decision to action and follow-through.'
     ],
     benefit: 'Visibility helps people direct their attention and decide what to do next.',
-    alt: 'Concept illustration of a reporting workstation and review checklist, informed by the illustrative More Margin dashboard reference; no historical data or results shown.'
+    alt: 'Concept illustration of a daily exception-review rack highlighting an item needing attention; not an actual dashboard or performance record.'
   },
   {
     id: 'repeatable-execution', heading: 'Make the work repeatable',
@@ -63,7 +63,7 @@ export const systemGroups = [
       'I connect the tools with instructions, responsibilities and team feedback, so the operation can keep improving as people use it.'
     ],
     benefit: 'The organization gains a way of working that people can understand, maintain and repeat.',
-    alt: 'Concept illustration of an open merchandising guide, shelf-layout drawing and floor plan; not a reproduction of a historical operating document.'
+    alt: 'Concept illustration of a merchandising template being applied directly to a fixture bay; not a historical store photograph.'
   }
 ];
 
@@ -83,7 +83,7 @@ export function systemsTools(e) {
           <summary><span><strong>${e(g.heading)}</strong><span class="systems-preview">${e(g.preview)}</span></span><span class="systems-disclosure" aria-hidden="true"></span></summary>
           <div class="systems-body">
             <div class="systems-copy"><ul>${g.bullets.map(b=>`<li>${e(b)}</li>`).join('')}</ul><p class="systems-benefit"><strong>Why it matters:</strong> ${e(g.benefit)}</p></div>
-            <a class="systems-image" href="assets/systems/section-17-${g.id}.webp" target="_blank" rel="noopener" aria-label="Open ${e(g.heading.toLowerCase())} illustration at full size" title="${e(g.alt)}"><img src="assets/systems/section-17-${g.id}.webp" alt="${e(g.alt)}" width="1200" height="800" loading="lazy" decoding="async"></a>
+            <a class="systems-image" href="assets/systems/section-17-${g.id}-v2.webp" target="_blank" rel="noopener" aria-label="Open ${e(g.heading.toLowerCase())} illustration at full size" title="${e(g.alt)}"><img src="assets/systems/section-17-${g.id}-v2.webp" alt="${e(g.alt)}" width="1200" height="800" loading="lazy" decoding="async"></a>
           </div>
         </details>`).join('')}
       </div>
