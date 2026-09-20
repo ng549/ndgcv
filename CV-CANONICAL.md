@@ -799,3 +799,55 @@ New masters saved and read back from the established Photos and Imagery folder; 
 - repeatable-execution: https://drive.google.com/file/d/1DFhz2o5kbAxEtz-sjD4lwMiAE1UrxTq-/view?usp=drivesdk
 
 Standing rule: substantive bullet points and one relevant paired image per group; no near-duplicate compositions disguised as new images. Stop after Systems & tools; Section 18 remains next and Education stays undeployed.
+
+
+## 2026-09-20 — Section 18: Build process & AI toolkit, approved and published
+
+### Authority and scope
+- Nicolas approved the complete proposed copy, layout and image plan with “go”. Work was restricted to Section 18 and its navigation; previous sections and existing portfolio evidence were preserved.
+- Started from current main baeaa28fc4c6951a51999a35dc9db55a9ea6464c, not the historical Section 14 checkpoints. Rechecked main before each non-force publication.
+- Initial implementation: c10400287ed325a101e64ffa4cef71ec96ea1876. Gutter correction: b254da8a0308b05f0259ccbda0c160dbb8a8a0f2. Final presentation publication: 1eaeca1428f9b5a1fb4a93d728bf04fbd627dcd2.
+- Live: https://nicolasgoureau.com/#process . Stop after Section 18. Education remains UNDEPLOYED: AUP summer 2002 confirmed; exact Miami credentials unresolved. Preserve subsequent full-site review → second editing pass → two-page downloadable CV → LinkedIn rebuild order.
+
+### Confirmed personal contribution and editorial decisions
+- Nicolas uses Plugsky, OpenRouter, Slack, Stripe, Replit, Supabase, Vercel and Factory for different purposes in one unified working system. All eight added to the existing 23 tool explanations (31 total).
+- Hover explanations describe HOW NICOLAS USES each tool, in first person; product documentation supports product capabilities only, not claims of his integrations or deployments.
+- He personally builds, uses and tests all the projects and is developing a test team. Do not turn that developing team into established adoption, headcount or completed independent QA.
+- Manual coordination of separate AI sessions remains his own contribution; do not claim a fully autonomous orchestration system.
+- Section title: Build process & AI toolkit. Eyebrow: Operating experience, applied to software. Headline: From understanding the problem to building the tool.
+- Six stages: Define what needs to work; Research before building; Design the experience and organize the work; Build with the right tools for the task; Test it through use; Release, learn and improve.
+- Each stage uses 3–4 substantive bullets, a practical benefit, related personal-use tool controls and one distinct image. The standing BULLET POINTS AND IMAGES rule continues. Native expandable groups; first open initially. No numbered career-story format, proficiency ratings or logo wall.
+- Featured examples: Merchant PRO (in development, retail economics and landed-cost requirements, planned integrations remain planned); ATOMIQ (AI-assisted music software in continuing development, component tests do not establish overall readiness); this website (published and maintained).
+- The existing seven main software projects and three smaller examples remain in an expandable portfolio with their original evidence and screenshots. New featured links open the corresponding preserved project. No project repositories were edited. Existing historical project status labels are preserved and should not be read as fresh runtime certification.
+- Removed “playbook” from this section only. New tool names are readable text controls; existing authentic logos are supporting monochrome identifiers, not invented logos.
+- Official capability sources consulted: https://plugsky.com/docs ; https://openrouter.ai/docs/quickstart ; https://docs.factory.ai ; https://docs.replit.com/welcome ; https://supabase.com/docs ; https://vercel.com/docs ; https://docs.slack.dev ; https://docs.stripe.com/payments . Exact approved copy is versioned in scripts/build-process.mjs and rendered in docs/index.html at the publication above.
+
+### Artwork, sources and destinations
+- Ten newly generated artworks: six stage illustrations, three featured-project illustrations and one section background. Distinct scene compositions, not reused image files or lightly modified copies. Style reference inspected: https://nicolasgoureau.com/illustrations/43.webp . Navy/charcoal and amber sketch treatment, no faces or generic robot imagery.
+- Concept scenes are explicitly identified in image alt/title text. Adaptations are editorial illustrations, not exact screenshots or proof of implemented controls. Actual software screenshots remain in the preserved portfolio. Generated incidental marks or figures are not evidence.
+- ATOMIQ source for design and featured adaptation; also thematic input for conceptual testing scene: https://nicolasgoureau.com/uploads/ATOMIQ-UI-Main-Performance-Core.png . Merchant PRO concept informed by https://nicolasgoureau.com/assets/merchantpro/00-product-thesis.png . Requirement, research, build, release, website and background are conceptual illustrations. Release/website images are not screenshots of the actual site.
+- Text left, image right on desktop; image top aligned with first body bullet; consistent 3:2 crops and softened edges; open composition without content/image boxes (keyboard focus outlines remain). Background moves with existing parallax and honors reduced motion. Mobile CSS stacks copy and its image consistently; visual validation is still pending.
+- Masters saved as Section-18-Build-process-[subject]-master.png in NDG CV → Current → Photos and Imagery (1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S). Readback verified ten nonempty master files and their destination folder.
+
+| Subject / destination | Master | Basis |
+|---|---|---|
+| need → assets/build-process/section-18-need.webp | [Section-18-Build-process-need-master.png](https://drive.google.com/file/d/1w0zvjF_qgZogQIZ5Gm6KKmoEVHZ5NYm7/view?usp=drivesdk) | Concept illustration |
+| research → assets/build-process/section-18-research.webp | [Section-18-Build-process-research-master.png](https://drive.google.com/file/d/1Zl6tfHQDUzkpizS0tYq5xFVwEDiQGxzG/view?usp=drivesdk) | Concept illustration |
+| design → assets/build-process/section-18-design.webp | [Section-18-Build-process-design-master.png](https://drive.google.com/file/d/1_WmA7nqKATQxmcb7h-kyjWphSweFv2Bk/view?usp=drivesdk) | ATOMIQ source adaptation |
+| build → assets/build-process/section-18-build.webp | [Section-18-Build-process-build-master.png](https://drive.google.com/file/d/1CCmPeNvOj5zXbJgXS2M1s8xblUp8yLTa/view?usp=drivesdk) | Concept illustration |
+| test → assets/build-process/section-18-test.webp | [Section-18-Build-process-test-master.png](https://drive.google.com/file/d/1KSIfG0Bd182j-_tLKBO0vhZywQOyK41u/view?usp=drivesdk) | ATOMIQ-informed testing concept |
+| release → assets/build-process/section-18-release.webp | [Section-18-Build-process-release-master.png](https://drive.google.com/file/d/1MrpKeYLETBP95EtLljiBOnxTaHfNy1Ir/view?usp=drivesdk) | Concept illustration |
+| merchant → assets/build-process/section-18-merchant.webp | [Section-18-Build-process-merchant-master.png](https://drive.google.com/file/d/16HqfT68aPHujbqcfx27ltSIO0HaGCxRK/view?usp=drivesdk) | Merchant PRO thesis-informed concept |
+| atomiq → assets/build-process/section-18-atomiq.webp | [Section-18-Build-process-atomiq-master.png](https://drive.google.com/file/d/160ibxi4p4Nhs55iSqFZ1Cg4oklPEA3qN/view?usp=drivesdk) | ATOMIQ source adaptation |
+| website → assets/build-process/section-18-website.webp | [Section-18-Build-process-website-master.png](https://drive.google.com/file/d/1bKB9MYVpGQTGluc1Zaf2hFbJMjWtqreG/view?usp=drivesdk) | Concept illustration |
+| background → assets/build-process/section-18-background.webp | [Section-18-Build-process-background-master.png](https://drive.google.com/file/d/13RwXZpayIAHHMvlwXclBfaFD7dI-9Xi3/view?usp=drivesdk) | Concept illustration |
+
+### Verification and outstanding checks
+- Cloudflare “Workers Builds: ndgcv” succeeded for final presentation commit 1eaeca1428f9b5a1fb4a93d728bf04fbd627dcd2. Actual live browser loaded site.css?v=build-18-v3 and the new content. Separate legacy GitHub deploy check fails; it is not the connected Worker publication result.
+- Desktop screenshots reviewed for all six expanded stages and all three featured examples. Corrected gutter alignment and tool-label contrast during live review. Section 17 and 18 bar left coordinates matched (291.4375 CSS px in the reviewed 1363px viewport). Final tool labels measured rgb(246,241,231) on navy.
+- All eight added controls opened their personal-use explanation on the actual live site; keyboard Tab opened the next explanation and Escape dismissed it. Native stage navigation and featured-project link opening the preserved portfolio were exercised. No close button added. Existing pointer hover/dismiss handlers retained; no claim of exhaustive mouse hover QA across all 31 tools.
+- Preservation: main content before and after Section 18 compared byte-for-byte against baseline and passed. Actual live DOM still contained 32 career story panels, 12 supporting examples, seven main software projects and three mini projects. Eight roles remain unchanged.
+- npm run build passed. Independent asset check confirmed all local src resources packaged after stripping URL query strings; stylesheet background explicitly packaged. All ten new image files have distinct hashes. git diff --check passed.
+- npm test still hits the known checker bug: it treats site.js?v=build-18-v1 as a missing image (final script URL remains that version). This is not a missing image. No unrelated checker rewrite performed.
+- Live illustrations were visually checked in the browser. A separate raw-image HTTP comparison was unavailable (403); no byte-for-byte live-image verification claim is made.
+- MOBILE VISUAL VERIFICATION PENDING. The available browser exposes no viewport/device emulation capability. Responsive stacking, spacing and reduced-motion rules are implemented but are not a substitute for an actual mobile visual check. This also does not clear earlier Section 14/17 mobile pending notes.
