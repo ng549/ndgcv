@@ -871,3 +871,29 @@ Standing rule: substantive bullet points and one relevant paired image per group
 - Both source photographs visually inspected. Proposed adaptations are distinct new skateshop-style architectural sketches, subject to copy/design approval. No images generated or deployed at this stage.
 - Standing rule: substantive bullet points and one paired relevant image per institution block; text left/image right on desktop with image aligned to body copy; consistently paired mobile stacking. Preserve section heading alignment and purposeful eyebrow.
 - Status: Education copy and image direction pending user approval. No Education implementation or publication; desktop/mobile implementation verification not yet applicable. Other sections preserved; next section remains Section 20 Let's talk.
+
+
+## Section 19 Education — approved and published
+- Nicolas approved the complete copy and two-image direction with “go”. Only Education was implemented; Section 20 remains next.
+- Publication commit: 13e29cdf672b873ea68f64b6058432312474283f (non-force main update after remote recheck).
+- Live location verified: https://nicolasgoureau.com/#education . Placement is before Let's talk, without reordering other sections; final placement remains for full-site review.
+- Credentials: University of Miami, 2006 — B.S.C. Advertising; B.B.A. in Economics; B.A. in Theatre Arts (all majors, confirmed firsthand). AUP — Summer 2002; Accelerated summer business management program (descriptive label, not a certificate or degree).
+- Eyebrow: Where business and creativity meet. Headline: The foundations behind the work.
+- Approved copy:
+  - Advertising: I learned to connect an audience, an offering and a persuasive message. That foundation informs how I position products, shape customer experiences and give creative work a clear commercial purpose.
+  - Economics: I developed a framework for understanding markets, incentives and resource allocation. It supports the way I weigh pricing, costs and competing priorities—and examine the tradeoffs behind a business decision.
+  - Theatre arts: My studies spanned stage design, production, box office operations and some acting. Seeing the workings behind a performance helped me connect creative ambition with the people, preparation and practical coordination needed to deliver it.
+  - Before Miami, I completed an accelerated summer program that gave me an early foundation in entrepreneurship, marketing and project execution.
+  - Living in Paris made international experience part of that education. Studying business in another cultural setting broadened my perspective on customers, communication and the context in which an organization operates.
+- Distinct new images generated using built-in image generation, source photographs and illustrations/43.webp as style reference. Prompts: preserve Ring Theatre entrance geometry, circles, ivy and palms; preserve Bosquet stone arch, wooden doors and balcony, omit car/banner lettering; use navy/amber drybrush linework and softly faded edges, no people or generated credential lettering. Background is a new conceptual study/stage-design workspace, not historical evidence. No previous scene reused.
+- Image source links remain in the preceding Education confirmation entry. Original photographs preserved in Photos and Imagery: Miami 1mlOo7r8fp_slbySc349efzVtjUtbSFk-; Bosquet 1973 archive 1mmy1zNd26v6Dk1y6fPujo1pZeTLVoren.
+- Masters saved and folder readback verified in 1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S:
+  - section-19-education-miami-ring-master.png — 13K3uZ1TCRQkLfRXz5ofBV9etWjJNVsJY
+  - section-19-education-aup-bosquet-master.png — 1uZm-TjxexaIIJGpE39NJGrUvJxxYQSuy
+  - section-19-education-background-concept-master.png — 13YEmXa8F-osyYJjci-5rrDVDsqmK-824
+- Website derivatives: docs/assets/education/section-19-miami.webp; section-19-aup.webp; section-19-background.webp. Background explicitly included in deployment package. Source: scripts/education.mjs and scripts/education.css.
+- Desktop live visual inspection completed for both blocks: readable credentials, five substantive bullets, distinct images, no image boxes/footers. Both image tops align exactly with bullet containers. Education and preceding section labels measured x=291.4375 at 1363px viewport. No horizontal overflow. Both institution images loaded; background visible.
+- Live keyboard Enter verified minimize and expand with aria-expanded false/true. Navigation link verified. Accessible image descriptions identify adaptations and historic-source context.
+- Build and git diff whitespace checks passed. Existing HTML byte-for-byte preserved after subtracting new Education section/navigation and asset URL versions, preserving eight jobs, 32 career tabs and 12 examples. Local tree matched the published GitHub tree.
+- npm test remains blocked by the existing checker bug interpreting site.js?v=education-19-v1 as an image; separate actual image-path and packaged Education asset checks passed.
+- MOBILE VISUAL VERIFICATION REMAINS PENDING: available browser has no viewport/device emulation capability. Responsive one-column stacking, 17px mobile bullets and consistent image sizing are implemented, but do not count as actual mobile visual verification. Earlier pending mobile checks remain pending.
