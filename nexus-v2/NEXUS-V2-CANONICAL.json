@@ -1,6 +1,6 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.6",
+  "version": "0.7",
   "updated_at": "2026-09-20",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
@@ -342,6 +342,31 @@
     "first_priority": "Build a powerful extensible cost-effective modular Build Stack that can keep growing/bolting on capabilities and can later support profitable client production.",
     "automation_target": "Approximately 90% of repetitive execution where sensible; important judgment remains human-gated.",
     "devil_up": "Devil Up AI is an internal Nexus production resource alongside AI agents, outsourced programmers, contractors, specialists and external vendors; it is not the Nexus control plane.",
-    "economic_principle": "Save money and make money: optimize effective cost per successful outcome, reuse, replaceability, automation, and gross margin rather than sticker price alone."
+    "economic_principle": "Save money and make money: optimize effective cost per successful outcome, reuse, replaceability, automation, and gross margin rather than sticker price alone.",
+    "build_stack_evaluation": {
+      "factory_droid": {
+        "status": "PASSED_READ_ONLY_ARCHITECTURE_EVALUATION_NOT_SELECTED",
+        "role_candidate": "Replaceable conversational front door and agent execution provider; not owner of Agency governance, secrets, event truth, billing truth, or GitHub source truth.",
+        "next_gate": "Controlled disposable Test #2 covering isolation, coding/tests, interruption/resume, independent validation, telemetry, permission discipline, interventions, retries and effective cost."
+      },
+      "hard_requirements": {
+        "global_integration_secrets": "Agency-owned connect-once/reuse-many credential broker with Agency/client/project/environment/worker/execution scoping, BYOK, least privilege, rotation/revocation and auditability.",
+        "live_topology": "Real-time graphical animated topology driven by actual normalized telemetry with clickable worker/model/provider/GitHub/test/database/automation/deployment/integration/cost details.",
+        "live_cost": "Agency-owned append-only cost ledger with ESTIMATED, PROVIDER_REPORTED, FACTORY_CREDIT_REPORTED, INVOICE_RECONCILED and ADJUSTED states; track spend, budget, burn, projection, wholesale, retail, gross profit and margin."
+      },
+      "vendor_neutral_substrate": [
+        "Agency Identity & Policy Service",
+        "Work Packet Service",
+        "Integration & Secrets Vault / Credential Broker",
+        "Integration/MCP Gateway",
+        "ExecutionProvider abstraction",
+        "Agency Event Store",
+        "Topology projection/read model",
+        "Cost Ledger and reconciliation workers",
+        "Realtime graphical UI",
+        "GitHub software truth",
+        "Agency Postgres operational/financial truth"
+      ]
+    }
   }
 }
