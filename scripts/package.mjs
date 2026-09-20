@@ -6,6 +6,7 @@ const paths=new Set(['index.html','site.css','site.js']);
 paths.add('illustrations/section14-workspace-background-v2.webp');
 // Section 17 full-section background is referenced in its stylesheet.
 paths.add('assets/systems/section-17-background.webp');
+paths.add('assets/education/section-19-background.webp');
 for(const match of html.matchAll(/(?:src|href|data-shot)="([^"#]+)"/g)){
  const file=match[1].replaceAll('&amp;','&');
  if(!/^(?:https?:|mailto:|tel:)/.test(file)&&fs.existsSync('docs/'+file))paths.add(file);

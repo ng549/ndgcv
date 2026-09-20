@@ -829,3 +829,23 @@ main>section:not(.hero)>.section-bar{padding-left:0;padding-right:0}
 #software-work .tool-trigger img{filter:brightness(0) invert(1);opacity:.9}
 /* Match Section 17 heading scale; retain the intentional two-line title. */
 @media(min-width:761px){#software-work .section-heading h2{max-width:none;font-size:clamp(28px,3.3vw,46px)}}
+
+/* Section 19 only: open institution blocks and source-based architectural sketches. */
+#education{position:relative;isolation:isolate;overflow:hidden;padding:64px max(6%,calc((100% - 1100px)/2));background:#102029;color:#f6f1e7}
+#education .education-backdrop{position:absolute;inset:-180px 0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,#102029f5,#102029ed 55%,#102029db),url('assets/education/section-19-background.webp') center/cover no-repeat}
+#education>.section-bar{width:100%;margin:0 0 32px;padding:0 0 16px}
+#education .section-heading{max-width:none;margin-bottom:32px}
+#education h2{font-size:clamp(28px,3.25vw,46px);line-height:1.13;max-width:none;margin:12px 0 0}
+#education .eyebrow{color:#eabb87}
+#education .education-school{margin:0;padding:0;border:0;background:none}
+#education .education-school+.education-school{margin-top:36px}
+#education h3{font:650 clamp(22px,2.2vw,28px)/1.3 Manrope,sans-serif;letter-spacing:-.025em;margin:0 0 8px}
+#education h3 span{display:inline-block;color:#eabb87;font:500 17px/1.5 'Source Sans 3',sans-serif;letter-spacing:0}
+#education .education-credentials{font-size:18px;line-height:1.55;margin:0 0 18px;color:#eabb87}
+#education .education-pair{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+#education ul{margin:0;padding:0 0 0 20px;font-size:18px;line-height:1.65}
+#education li{padding-left:3px;margin:0 0 14px}
+#education li:last-child{margin-bottom:0}
+#education li::marker{color:#eabb87}
+#education .education-pair img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;border:0;border-radius:0;box-shadow:none;mask-image:radial-gradient(ellipse at center,#000 54%,transparent 74%)}
+@media(max-width:760px){#education{padding:42px 6%}#education h2{font-size:34px}#education .education-pair{grid-template-columns:1fr;gap:20px}#education ul{font-size:17px}#education .education-pair img{max-width:520px;margin:0 auto}#education h3 span{display:block;margin-top:5px}#education .education-school+.education-school{margin-top:32px}}
