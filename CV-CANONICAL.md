@@ -897,3 +897,11 @@ Standing rule: substantive bullet points and one relevant paired image per group
 - Build and git diff whitespace checks passed. Existing HTML byte-for-byte preserved after subtracting new Education section/navigation and asset URL versions, preserving eight jobs, 32 career tabs and 12 examples. Local tree matched the published GitHub tree.
 - npm test remains blocked by the existing checker bug interpreting site.js?v=education-19-v1 as an image; separate actual image-path and packaged Education asset checks passed.
 - MOBILE VISUAL VERIFICATION REMAINS PENDING: available browser has no viewport/device emulation capability. Responsive one-column stacking, 17px mobile bullets and consistent image sizing are implemented, but do not count as actual mobile visual verification. Earlier pending mobile checks remain pending.
+
+
+## Education logo correction — published
+- User requested university logos within the Miami and AUP illustrations. Added using built-in image editing while preserving the original masters; copy, layout, background and other sections unchanged.
+- Official logo sources: https://cdn.miami.edu/_assets-common/images/system/um-print-logo.png and https://www.aup.edu/themes/custom/aup/img/home/logo-homepage.png . Source logos inspected. Miami logo placed on illustrated sign; AUP full white/color mark placed over dark upper doorway. Added logos are editorial institutional identification, not evidence of historical signage.
+- Published non-force main commit e8d2f816f65692a0a8660cc897dc1e383b79c0f8. New derivatives: docs/assets/education/section-19-miami-logo.webp and section-19-aup-logo.webp. Build and whitespace checks passed; both assets packaged; other sections unchanged.
+- New masters saved and folder readback verified: section-19-education-miami-ring-logo-master.png (1L1pfY8APvzvk9cch-JV7RXU_7ysCEp-_); section-19-education-aup-bosquet-logo-master.png (1FLN5PTJWK5h9S6NK7nsjChyoic8k_pr9). Original versions retained.
+- Actual live desktop screenshots verified both logos, and DOM confirmed both new assets loaded. Mobile visual verification remains PENDING.
