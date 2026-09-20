@@ -22,3 +22,6 @@ fs.rmSync('dist',{recursive:true,force:true});
 fs.mkdirSync('dist',{recursive:true});
 for(const file of paths){fs.mkdirSync(path.dirname('dist/'+file),{recursive:true});fs.copyFileSync('docs/'+file,'dist/'+file)}
 console.log(`Packaged ${paths.size} public site assets.`);
+
+fs.mkdirSync('dist/assets/build-process',{recursive:true});
+fs.copyFileSync('docs/assets/build-process/section-18-background.webp','dist/assets/build-process/section-18-background.webp');
