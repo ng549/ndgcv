@@ -65,7 +65,7 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCap
 const sections = {
   about: 'About me', opportunity: 'My next chapter', build: 'How I can help', capabilities: 'Capabilities', value: 'Results',
   'product-journey': 'From idea to sale', experience: 'My journey',
-  ai: 'Systems, tools & AI', contact: 'Let’s talk'
+  ai: 'Systems & tools', contact: 'Let’s talk'
 };
 Object.entries(sections).forEach(([id, title]) => {
   const section = document.getElementById(id);

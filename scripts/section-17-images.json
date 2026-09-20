@@ -1,0 +1,79 @@
+{
+  "section": 17,
+  "approved": "2026-09-20",
+  "generation": "Built-in image_gen; seven new assets, no existing site artwork reused",
+  "styleReference": "https://nicolasgoureau.com/illustrations/43.webp",
+  "masterFolder": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+  "commonPrompt": "Create ONE entirely new 1536x1024 landscape illustration for Section17 Systems & tools. Image1 is STYLE reference only: match its painterly skateshop drybrush, charcoal/navy shadows, warm amber light, cream paper, realistic textured materials and perspective. Subject occupies central 85% with softly brushed vignette edges fading to deep navy #172b35, no rectangular frame, no panels, no footer, no collage, no faces, no logos or text. ",
+  "assets": [
+    {
+      "slug": "background",
+      "master": "https://drive.google.com/file/d/1fiCEZHhVTo_15C8VSEQiUCU7Uby94t0P/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-background.webp",
+      "sources": [],
+      "type": "editorial concept, not historical project evidence",
+      "prompt": "New cohesive retail operations back-office interior with data workstation, product images, pricing binder, ordering tablet, warehouse cartons and merchandising guides. Full-bleed continuous room; reference43 style only; no people or lettering."
+    },
+    {
+      "slug": "workflow-planning",
+      "master": "https://drive.google.com/file/d/1gC4XQS3q3XBkzRwjPymEml-cg62J0qEu/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-workflow-planning.webp",
+      "sources": [
+        "https://drive.google.com/file/d/1k6vb_oGz3JNsXmr4uO3w5r1psL1m5-Po/view"
+      ],
+      "type": "source-based photograph adaptation",
+      "prompt": "Source-based adaptation of photograph image2, a very large unfinished retail shell with exposed white steel trusses, square columns and temporary carved wooden dining table/chairs covered with rolled plans. Keep recognizable physical layout, remove all people and distant people. Reframe tighter on planning table but show columns and trusses. New composition, not reuse of existing web artwork."
+    },
+    {
+      "slug": "product-information",
+      "master": "https://drive.google.com/file/d/1YLH_sGkLqtOP7T16mCrWMVJgct-98F5R/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-product-information.webp",
+      "sources": [
+        "https://docs.google.com/spreadsheets/d/1Qgotj36MNXpUsD_3qpsCe0o31rAl0WZYYqwmVr6IYNE/edit"
+      ],
+      "type": "editorial concept, not historical project evidence",
+      "prompt": "Editorial CONCEPT: close view of a catalog-management workbench with one desktop display showing blank structured spreadsheet rows beside a small orderly contact sheet of RV accessories, a pricing binder and one camping accessory sample. No readable labels/numbers or invented real software interface. Physical, useful business activity, not abstract technology."
+    },
+    {
+      "slug": "connected-channels",
+      "master": "https://drive.google.com/file/d/1skZu5fmWnducV24xDNTFIkj969ienGrV/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-connected-channels.webp",
+      "sources": [
+        "https://drive.google.com/file/d/1T5wnrt1iQiIfMT2KrMwMCwkwVlWHUltu/view"
+      ],
+      "type": "illustrative software-reference adaptation, not photographed deployment",
+      "prompt": "Software-reference adaptation of image2 Shopify point-of-sale tablet: preserve oblique black tablet and split interface with colored action tiles left, item thumbnails/order rows right, but no sample prices or legible text. Remove hand/person. Tablet resting on retail counter beside slim product image contact sheet. New wide composition, not existing website sketch. Illustration of software reference, not documentary Fun Town screenshot."
+    },
+    {
+      "slug": "purchasing-replenishment",
+      "master": "https://drive.google.com/file/d/18VjiZuAQxDQC2iA0Q-CXBKLzsQbfxSRb/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-purchasing-replenishment.webp",
+      "sources": [
+        "https://drive.google.com/file/d/1wmZaFE6IgHc_g8B8d_LJgLRoShMELeOD/view"
+      ],
+      "type": "source-based photograph adaptation",
+      "prompt": "Source-based adaptation of warehouse photograph image2: retain recognizable shrink-wrapped tall tan carton stacks on pallets, lower carton pallet on right, roof trusses and dark columns. Crop new composition centered on lower right pallet and receding stock. Preserve carton shapes and packing marks without readable lettering. No people."
+    },
+    {
+      "slug": "operating-visibility",
+      "master": "https://drive.google.com/file/d/18yMAyxzI12e3sDoQRbrHlj9tS2-pg6NV/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-operating-visibility.webp",
+      "sources": [
+        "https://docs.google.com/spreadsheets/d/1sbOpIuQxAdmKekVgRLQnQxkPXDU3-VgmrSXW_unOTQA/edit",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZExiI6RcdIcxxIzKb_zVPE7lLRWmosD66P0kZOJ-4VA&s=10"
+      ],
+      "type": "editorial concept, not historical project evidence",
+      "prompt": "Editorial CONCEPT of an operating reporting desk. Single widescreen monitor angled slightly right, restrained spreadsheet-style table and simple chart structure inspired only by image2 illustrative retail dashboard. Do NOT copy any sample numbers or lettering. Small paper checklist beside keyboard, organized desk. This is a conceptual oversight activity not an actual historical screenshot. No extra screens."
+    },
+    {
+      "slug": "repeatable-execution",
+      "master": "https://drive.google.com/file/d/1g1ldxuLaKk-SuDcpuRj6-G1VlzxUWUuu/view?usp=drivesdk",
+      "web": "docs/assets/systems/section-17-repeatable-execution.webp",
+      "sources": [
+        "https://docs.google.com/spreadsheets/d/1Qgotj36MNXpUsD_3qpsCe0o31rAl0WZYYqwmVr6IYNE/edit"
+      ],
+      "type": "editorial concept, not historical project evidence",
+      "prompt": "Editorial CONCEPT: close view of open merchandising guide on a broad timber desk, pages show shelves and product-placement sketches, one rolled floor plan and a pencil beside it. A small real merchandise shelf in soft background relates guide to shop floor. No actual historical document claimed; no legible labels/numbers; no people, no hands."
+    }
+  ]
+}
