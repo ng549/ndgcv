@@ -51,3 +51,5 @@
  #software-work .tool-tooltip{left:0;right:0;width:auto;top:100%}
 }
 @media(prefers-reduced-motion:reduce){#software-work .build-backdrop{transform:none!important}}
+#software-work .tool-trigger span{color:inherit;font-size:16px;font-weight:600;margin:0}
+#software-work .tool-trigger img{filter:brightness(0) invert(1);opacity:.9}
