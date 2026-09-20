@@ -859,3 +859,15 @@ Standing rule: substantive bullet points and one relevant paired image per group
 - Section 18 matches that desktop title scale and now reads as two lines: “From understanding the problem” / “to building the tool.” Publication: a59bcc450738504d1688e2f5d45c8e602b33c2cb.
 - Actual live desktop screenshots verified both requested layouts. At a 1363px viewport, Section 17 measured one 52px line; Section 18 measured 103px total with 51.7258px line height (two lines). Live stylesheet: site.css?v=section-headings-v2. Cloudflare Worker builds succeeded.
 - Copy, images, other sections and career content preserved; generated HTML changed only the stylesheet version. Build and whitespace checks passed. Mobile typography rules remain unchanged; mobile visual verification remains PENDING.
+
+
+## Section 19 Education — firsthand confirmations, 2026-09-20
+
+- User confirmed Miami qualifications: B.S.C. Advertising; B.B.A. in Economics; B.A. in Theatre Arts. All were majors; graduation year 2006. These answers supersede earlier unresolved credential notes.
+- User confirmed theatre emphasis: stage design, production, some acting, box office, and the broader inner workings of theatre. Do not invent individual projects, honors, or personal production roles. User described a well-known commercialized campus theatre; avoid unsupported prestige claims.
+- AUP remains an accelerated summer business management program, Summer 2002, before Miami; user lived in Paris. This is descriptive program wording, not an invented degree or certificate.
+- User identified historic Bosquet building on Avenue Bosquet as relevant campus context. Official AUP timeline confirms 31 avenue Bosquet was rented from 1971, purchased in 2001, sold in 2012: https://www.aup.edu/about-aup/history-aup/aup-history-timeline . Archive entrance reference: https://www.aup.edu/sites/default/files/image/ACP-Summer-Session-1973-photo-submitted-by-Lorraine-van-Nes-Stuckgold.jpg . This is a 1973 archive image, not a photograph of the user's 2002 attendance.
+- Proposed Miami image reference: university-hosted Ring Theatre entrance photograph https://students.com.miami.edu/reviewing/wp-content/uploads/2022/02/Ring-Theater.jpeg ; source article https://students.com.miami.edu/reviewing/?page_id=4545 . Treat as institutional context, not evidence of a specific student project.
+- Both source photographs visually inspected. Proposed adaptations are distinct new skateshop-style architectural sketches, subject to copy/design approval. No images generated or deployed at this stage.
+- Standing rule: substantive bullet points and one paired relevant image per institution block; text left/image right on desktop with image aligned to body copy; consistently paired mobile stacking. Preserve section heading alignment and purposeful eyebrow.
+- Status: Education copy and image direction pending user approval. No Education implementation or publication; desktop/mobile implementation verification not yet applicable. Other sections preserved; next section remains Section 20 Let's talk.
