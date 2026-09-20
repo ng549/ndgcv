@@ -1,5 +1,5 @@
 /* Section 18: open composition, distinct artwork and personal-use tool explanations. */
-#software-work.build-process-section{position:relative;isolation:isolate;background:#172b35;color:#f6f1e7;padding:64px 0;overflow:hidden;--wash:#172b35}
+#software-work.build-process-section{position:relative;isolation:isolate;background:#172b35;color:#f6f1e7;padding:64px max(6%,calc((100% - 1100px)/2));overflow:hidden;--wash:#172b35}
 #software-work .build-backdrop{position:absolute;inset:-180px 0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,#0e1d26f2,#0e1d26df 57%,#0e1d26c2),url('assets/build-process/section-18-background.webp') center/cover no-repeat}
 #software-work .section-heading{max-width:900px;margin-bottom:24px}
 #software-work .section-heading h2{max-width:760px}
@@ -38,7 +38,7 @@
 #software-work .build-portfolio .software-project,#software-work .build-portfolio .mini-projects article{background:#172b35;color:#f6f1e7}
 #software-work :focus-visible{outline:3px solid #eabb87;outline-offset:5px}
 @media(max-width:760px){
- #software-work.build-process-section{padding:44px 0}
+ #software-work.build-process-section{padding:44px 6%}
  #software-work .section-heading h2{font-size:34px}
  #software-work .section-heading p{font-size:18px}
  #software-work .build-body{grid-template-columns:minmax(0,1fr);gap:18px;padding-bottom:26px}
