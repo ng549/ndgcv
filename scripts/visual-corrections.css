@@ -67,3 +67,4 @@ main section[data-collapsible].is-minimized>.section-art,main section[data-colla
 
 /* Keep section navigation in reading order rather than nesting Capabilities inside Help. */
 main>#capabilities{position:relative;isolation:isolate;margin:0;padding:64px max(6%,calc((100% - 1100px)/2));background:#202e38;color:#f4f0e8}
+main>#capabilities:before,main>#capabilities:after{inset:0;width:auto}
