@@ -1151,3 +1151,9 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Removed inner Build Process master box/header/disclosure; all6stages now belong directly to the main section. Added8missing brand icons with provenance; all31tool controls have local logo assets.
 - Every collapsible top-level section starts minimized on unanchored entry. Profile remains visible; navigation/deep links open their target.
 - Validation and exact hosted release status recorded in Drive after publication.
+
+## 2026-09-21 — Narrative navigation and compact clickable bands
+- Approved sequence: About me; How I got here; My experience; How I work; Building with AI; From idea to sale; What I bring; The results; Where I can help; What comes next; Education; Let’s connect. Static section order, navigation and previous/next arrows now agree.
+- Applied approved personal subtitles. Collapsed bands target84px, whole band clickable, unboxed +/− control with accessible labels/focus; contact stays open and uses a plain navigation link. About remains minimized at startup including reload at#about.
+- University of Miami: added Played club golf, rugby, and soccer.
+- Build, content preservation checks, syntax and diff checks passed; exact release and hosted verification follows in Drive.

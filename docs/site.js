@@ -62,12 +62,8 @@ capabilityDetail?.addEventListener('focusout',event=>{if(!capabilityDetail.conta
 document.querySelector('#capabilities .cap-close')?.addEventListener('click',()=>closeCapability());
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
 
-const sections = {
-  about: 'About me', opportunity: 'My next chapter', build: 'Connecting opportunity with execution', capabilities: 'Capabilities', value: 'How the work changed',
-  'product-journey': 'From idea to sale', experience: 'My journey', 'career-master':'Explore my career',
-  ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education'
-};
-const sectionSummaries={about:'The person, interests and experiences behind the work.',opportunity:'The leadership role and businesses I want to help build.',experience:'How the work grew, from the shop floor to connected operations.','career-master':'My roles, with context, work, outcomes, and lessons.',build:'Business building, product economics and connected operations.',capabilities:'The capabilities I bring to the work.',value:'Commercial outcomes and the work behind them.','product-journey':'From the first opportunity to a product in customers’ hands.',ai:'Six approaches to connecting information, people and execution.','software-work':'From defining the problem through building, testing and release.',education:'University of Miami and the American University of Paris.',contact:'Six ways to get in touch or explore my experience.'};
+const sections = {"about": "About me", "experience": "How I got here", "career-master": "My experience", "ai": "How I work", "software-work": "Building with AI", "product-journey": "From idea to sale", "capabilities": "What I bring", "value": "The results", "build": "Where I can help", "opportunity": "What comes next", "education": "Education"};
+const sectionSummaries={"about": "The person behind the work.", "experience": "From the shop floor to building businesses and connecting operations.", "career-master": "My roles, with context, work, outcomes, and lessons.", "ai": "Connecting people, information, and systems to make things work better.", "software-work": "Applying operating experience to practical software, programs, and apps.", "product-journey": "Bringing the product, economics, and operation together.", "capabilities": "Creative thinking, commercial judgment, and hands-on execution.", "value": "What changed through the work.", "build": "Turning opportunities into businesses that can operate and grow.", "opportunity": "The next chapter I want to build—and who I want to build it with.", "education": "My academic foundation and experiences beyond the classroom.", "contact": "A conversation about what we could build together."};
 Object.entries(sections).forEach(([id, title]) => {
   const section = document.getElementById(id);
   section.dataset.collapsible = '';
@@ -79,19 +75,20 @@ Object.entries(sections).forEach(([id, title]) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'section-toggle';
-  button.textContent = 'Minimize −';
+  button.textContent = '−';
   button.setAttribute('aria-expanded', 'true');
   button.setAttribute('aria-label', `Minimize ${title}`);
   button.addEventListener('click', () => {
     const closed = section.classList.toggle('is-minimized');
-    button.textContent = closed ? 'Expand +' : 'Minimize −';
+    button.textContent = closed ? '+' : '−';
     button.setAttribute('aria-expanded', String(!closed));
     button.setAttribute('aria-label', `${closed ? 'Expand' : 'Minimize'} ${title}`);
   });
   bar.append(label, button);
   section.prepend(bar);
+  section.addEventListener('click',event=>{if(section.classList.contains('is-minimized')&&!button.contains(event.target))button.click()});
   if(section.matches('[data-collapsible]')){
-    section.classList.add('is-minimized');button.textContent='Expand +';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
+    section.classList.add('is-minimized');button.textContent='+';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
   }
 });
 function revealSection(target) {
@@ -101,7 +98,7 @@ function revealSection(target) {
     if (parent.matches('[data-collapsible]')) {
       parent.classList.remove('is-minimized');
       const button = parent.querySelector(':scope > .section-bar button');
-      button.textContent = 'Minimize −';
+      button.textContent = '−';
       button.setAttribute('aria-expanded', 'true');
       button.setAttribute('aria-label', `Minimize ${sections[parent.id]}`);
     }
@@ -164,7 +161,7 @@ document.querySelectorAll('.career-open-button').forEach(button=>{
  button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();role.open=true});
  role.addEventListener('toggle',()=>button.setAttribute('aria-expanded',String(role.open)));
 });
-const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['career-master','Explore my career'],['build','Connecting opportunity with execution'],['capabilities','Capabilities'],['value','How the work changed'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
+const orderedSections=[["profile", "Profile"], ["about", "About me"], ["experience", "How I got here"], ["career-master", "My experience"], ["ai", "How I work"], ["software-work", "Building with AI"], ["product-journey", "From idea to sale"], ["capabilities", "What I bring"], ["value", "The results"], ["build", "Where I can help"], ["opportunity", "What comes next"], ["education", "Education"], ["contact", "Let’s connect"]];
 orderedSections.forEach(([id,title],i)=>{
  const section=document.getElementById(id);if(!section)return;
  const steps=document.createElement('nav');steps.className='section-stepper';steps.setAttribute('aria-label',title+' section navigation');

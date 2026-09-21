@@ -200,3 +200,14 @@ main>#career-master{background:#e8e2d8;color:#23313b;position:relative;isolation
 
 /* Anchor the opening text close to the foot of the hero. */
 @media(min-width:761px){#profile{display:flex;flex-direction:column;justify-content:flex-end}#profile .hero-content{flex:none;padding-top:85px;padding-bottom:76px}#profile .hero-lead{margin-bottom:0}#profile>.section-stepper{position:absolute;bottom:12px;left:6%;width:88%!important;margin:0;padding:0}}
+
+/* Compact, fully clickable section bands with a quiet plus/minus affordance. */
+main section[data-collapsible].is-minimized{min-height:84px!important;padding-top:0!important;padding-bottom:0!important;cursor:pointer}
+main section[data-collapsible].is-minimized>.section-bar{min-height:84px!important;gap:0}
+main section[data-collapsible].is-minimized>.section-bar>span{font-size:21px;max-width:calc(100% - 48px);padding:14px 0}
+main section[data-collapsible].is-minimized .section-preview{font-size:14px;line-height:1.4;margin-top:4px}
+main section[data-collapsible]>.section-bar{position:relative;min-height:44px}
+main section[data-collapsible]>.section-bar>.section-toggle,main section[data-collapsible].is-minimized .section-toggle{position:absolute;inset:0;width:100%;height:100%;max-width:none;min-width:0;min-height:44px;border:0;border-radius:0;background:transparent;color:inherit;box-shadow:none;padding:0 4px;text-align:right;font:400 28px/1 Manrope,sans-serif;cursor:pointer}
+main section[data-collapsible]>.section-bar>.section-toggle:hover{background:#8fb0d812}
+main section[data-collapsible]>.section-bar>.section-toggle:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+@media(max-width:760px){main section[data-collapsible].is-minimized{min-height:84px!important;padding-top:0!important;padding-bottom:0!important}main section[data-collapsible].is-minimized>.section-bar>span{font-size:19px}main section[data-collapsible].is-minimized .section-preview{font-size:13px}}
