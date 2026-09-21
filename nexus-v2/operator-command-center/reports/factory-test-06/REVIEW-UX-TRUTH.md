@@ -69,3 +69,37 @@ In the fixture harness, seed workers with no packet (e.g. Worker 7) skip `derive
 2. F2: visible reason captions for disabled global controls.
 3. F3: preserve/suspend reload around dirty inputs.
 4. F4/F6/F7: visible preference-only caption for REASSIGN_MODEL; bump caption font and input heights.
+
+---
+
+# Round 2 — Re-review of repairs (commit f19ff18)
+
+Method: diff read of f19ff18, then live browser verification (session `t6-ux-review2`) against my own harness copies restarted after the commit — connected on `:3615`, disconnected `--disconnected` on `:3614`, plus CDP 390×844 DPR2 mobile emulation. Orchestrator's `:3613` instance untouched.
+
+## Round 2 verdict: ACCEPTED
+
+Every Round-1 finding is repaired as claimed, with truthful (packet-derived, not fabricated) semantics, and no new misleading behavior introduced. Two new LOW residual items noted below; neither blocks.
+
+### Verification per finding
+
+1. **F1 — REPAIRED, verified live.** Worker 13 (READY, $2.00/$2.00 consumed/limit) now renders RUN and CONTINUE **disabled** with visible caption `budget_exhausted_predicted` on both (`src/capability.mjs` launch-guard block mirroring Worker 9 `validateLaunch`; gated on `remainingMicros === 0` exactly, so UNKNOWN cost — `remainingMicros: null` — does not falsely trigger: fail-open only where evidence is absent, and Worker 9 remains the loud final authority). Bonus truthful addition: `retry_limit_reached` at the FAILED retry ceiling, also packet-derived.
+   - **Residual gap (judged ACCEPTABLE, LOW):** no ADJUST_BUDGET floor hint (Worker 9 rejects limits below consumed with 409). Acceptable because the 409 surfaces as a loud error toast, the common operator direction is *raising* a limit, and the caption space is already carrying the preference/floor semantics honestly. Not a truth violation.
+2. **F2 — REPAIRED, verified live.** Disconnected instance renders visible `.reason` captions "orchestrator_not_connected" directly under both RUN ALL READY and RUN PHASE (screenshot-verified at desktop width; captions are in normal flow, so they render on touch devices too). Tooltips retained as redundant channel.
+3. **F3 — REPAIRED, verified live.** Typed `phase-9` into the Phase field, waited 17s: value intact, no reload. Guard is `:not(:placeholder-shown)` on `#phase` and `.cmd-input` (`src/ui.mjs` client script), which covers all three in-flight input types (phase/model/budget). Once fields are cleared, refresh resumes.
+4. **F4 — REPAIRED, verified live.** Enabled REASSIGN_MODEL on Worker 13 shows a persistent caption "preference only — Worker 9 + AI Gateway qualify the route" (`src/ui.mjs` commandButton; renders only when no disabling reason caption is present, i.e. exactly when enabled). Accurate wording, matches the Worker 9/8 boundary.
+5. **F6/F7 — REPAIRED, spot-checked live.** `.reason` computed at 10.88px (0.68rem); `.cmd-input` min-height 42px, measured 42px; all inputs now meet the 42px touch target at 390px; no horizontal overflow re-introduced (scrollW == 390).
+
+### Regression hunt — results
+
+- **Double-submit guard (new):** button disables on click; on simulated network failure (`fetch` reject) the button **re-enables** and the error toast shows the message — verified live (`duringDisabled:true`, `reEnabledAfterError:true`). On success the page reloads after 600ms, so no trapped-disabled state. PASS.
+- **Reload-guard staleness (new LOW):** while any input holds text, the 15s refresh is suppressed indefinitely, so the badge/statuses/"Observed" timestamp can go arbitrarily stale during a long editing session. Judged LOW: the "Observed: …" timestamp remains visible for cross-checking, the guard only engages on deliberate operator input, and all conservative states (UNKNOWN/stale-collapse) degrade safely. Suggest (optional) a "refresh paused while editing" hint.
+- **Inconsistency (new LOW):** the double-submit guard was added to per-worker commands (`bindCommands`) but not to the global RUN ALL READY / RUN PHASE handlers (`bindGlobal`), which can still double-fire during the 600ms pre-reload window. Worker 9 idempotency keys make this harmless upstream; cosmetic only.
+- No newly misleading text introduced in the repair diff; captions added are all accurate.
+
+### Round 2 residual items (non-blocking)
+
+1. ADJUST_BUDGET floor=consumed hint (F1 residual, LOW).
+2. "Refresh paused while editing" affordance (LOW).
+3. Double-submit guard for global buttons (LOW).
+
+Files inspected: `src/capability.mjs`, `src/ui.mjs`, `src/index.mjs` (diff), harness behavior on `:3614`/`:3615`. Evidence screenshots: `/tmp/t6-r2-disc.png`, `/tmp/t6-r2-mobile.png`.

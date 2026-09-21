@@ -250,3 +250,10 @@ test("FAILED below retry ceiling keeps RUN/CONTINUE", () => {
   assert.equal(controls.RUN.allowed, true);
   assert.equal(controls.CONTINUE.allowed, true);
 });
+
+test("FAILED at retry ceiling with missing max_retries uses Worker 9's default of 3", () => {
+  const controls = deriveControls(makeView({ status: "FAILED", retryCount: 3, maxRetries: null }), NOW);
+  assert.deepEqual(controls.RUN, { allowed: false, reason: "retry_limit_reached" });
+  const below = deriveControls(makeView({ status: "FAILED", retryCount: 2, maxRetries: null }), NOW);
+  assert.equal(below.RUN.allowed, true);
+});

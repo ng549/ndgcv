@@ -111,11 +111,11 @@ const CLIENT_SCRIPT_LINES = [
   "}",
   "function bindGlobal(){",
   " var all=document.getElementById('runAll'),phaseBtn=document.getElementById('runPhase'),phase=document.getElementById('phase');",
-  " if(all&&!all.disabled){all.onclick=function(){post('/operator/api/global',{action:'RUN_ALL_READY'}).then(function(){toast('Run-all request accepted');setTimeout(function(){location.reload()},600)}).catch(function(e){toast(e.message)})};}",
+  " if(all&&!all.disabled){all.onclick=function(){all.disabled=true;post('/operator/api/global',{action:'RUN_ALL_READY'}).then(function(){toast('Run-all request accepted');setTimeout(function(){location.reload()},600)}).catch(function(e){all.disabled=false;toast(e.message)})};}",
   " if(phaseBtn){var serverAllowed=!phaseBtn.disabled;",
   "  phaseBtn.disabled=true;",
   "  if(phase){phase.addEventListener('input',function(){phaseBtn.disabled=!(serverAllowed&&phase.value.trim().length>0)});}",
-  "  phaseBtn.onclick=function(){if(!phase||!phase.value.trim()){toast('Phase required');return}post('/operator/api/global',{action:'RUN_PHASE',phase:phase.value.trim()}).then(function(){toast('Phase request accepted');setTimeout(function(){location.reload()},600)}).catch(function(e){toast(e.message)})};}",
+  "  phaseBtn.onclick=function(){if(!phase||!phase.value.trim()){toast('Phase required');return}phaseBtn.disabled=true;post('/operator/api/global',{action:'RUN_PHASE',phase:phase.value.trim()}).then(function(){toast('Phase request accepted');setTimeout(function(){location.reload()},600)}).catch(function(e){phaseBtn.disabled=false;toast(e.message)})};}",
   "}",
   "bindCommands();bindGlobal();",
   // Do not wipe in-flight operator input: skip the refresh while any field has content.

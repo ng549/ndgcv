@@ -114,11 +114,14 @@ export function deriveControls(workerView, now = Date.now()) {
       if (view.cost && view.cost.remainingMicros === 0) {
         allowed = false;
         reason = "budget_exhausted_predicted";
-      } else if (status === "FAILED" &&
-        Number.isSafeInteger(view.retryCount) && Number.isSafeInteger(view.maxRetries) &&
-        view.retryCount >= view.maxRetries) {
-        allowed = false;
-        reason = "retry_limit_reached";
+      } else if (status === "FAILED" && Number.isSafeInteger(view.retryCount)) {
+        // Worker 9 validateLaunch: (packet.max_retries ?? 3); mirror that default
+        // when the packet row omits max_retries.
+        const ceiling = Number.isSafeInteger(view.maxRetries) ? view.maxRetries : 3;
+        if (view.retryCount >= ceiling) {
+          allowed = false;
+          reason = "retry_limit_reached";
+        }
       }
     }
 

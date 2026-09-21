@@ -137,3 +137,77 @@ against ground truth, and the full suite passes (77/79, 2 todo, 0 fail). The nin
 findings above are robustness/precision gaps around double submission, bulk-action
 timeouts, retry-limit prediction, and audit completeness — none of them cause the UI
 to claim a capability Worker 9 would deny. **ACCEPTED.**
+
+---
+
+## Round 2 — Re-review of repair commit f19ff18
+
+Verdict: **ACCEPTED.** All seven repaired items verified against source and Worker 9
+ground truth; suite re-run clean; no regressions found. Two residual LOW notes below.
+
+### Verification of repairs
+
+1. **F1 double submission — FIXED.** `src/ui.mjs` CLIENT_SCRIPT_LINES (~`:104-108`):
+   `b.disabled=true` is set synchronously on click; the button is re-enabled on
+   client-side validation failure (`b.disabled=false` before the early `return` for
+   missing model / invalid budget) and in the `post(...).catch` path. On success the
+   page reloads after 600 ms, so the disabled state never strands. Confirmed.
+2. **F2 RETRY_LIMIT mis-prediction — FIXED correctly.** `src/capability.mjs:110-124`:
+   RUN/CONTINUE are disabled with reason `retry_limit_reached` only when
+   `status === "FAILED"` and both `view.retryCount`/`view.maxRetries` are safe
+   integers and `retryCount >= maxRetries`. This mirrors Worker 9 `validateLaunch`
+   (`(packet.retry_count||0) >= (packet.max_retries ?? 3) && packet.state === "FAILED"`
+   → RETRY_LIMIT). RETRY itself stays enabled from FAILED/BLOCKED/STOPPED, matching
+   `commandTransition` RETRY which has no retry-count guard. `normalizePacket` now
+   surfaces `retryCount`/`maxRetries` (`src/core.mjs:83-84`). Confirmed.
+3. **F3 timeout audit — FIXED on both paths.** `src/index.mjs` commandWorker catch
+   (~`:198-201`) and commandGlobal catch (~`:233-236`) both map
+   `error.code === "TIMEOUT"` to audit outcome `TIMEOUT_UNKNOWN` instead of
+   `REJECTED`, with comments explaining Worker 9 may still be processing. Confirmed.
+4. **F7 unseeded workers dropped — FIXED.** `src/index.mjs` getWorkerState (~`:110-116`)
+   now appends any live packet whose id is not in SEED_WORKERS, with
+   `deriveControls` applied, and `deriveGlobalControls(true, workers)` runs over the
+   full merged list, so RUN_ALL_READY readiness reflects the real roster. Confirmed.
+5. **UX-F1 budget-exhaustion prediction — FIXED, no over-disable.**
+   `src/capability.mjs:113-116` disables RUN/CONTINUE with
+   `budget_exhausted_predicted` only when `view.cost.remainingMicros === 0`.
+   `normalizePacket` computes `remainingMicros = max(0, limit - consumed)` and leaves
+   it `null` when either input is missing, and `null === 0` is false, so UNKNOWN cost
+   stays eligible — exactly mirroring `validateLaunch`'s
+   `remainingBudget(packet) <= 0 → BUDGET_EXHAUSTED` without fabricating a denial on
+   absent evidence. Confirmed.
+6. **Security repairs — CONFIRMED.** `src/index.mjs:156` rejects model ids longer
+   than 128 chars with `MODEL_TOO_LONG`; the auth failure boundary (~`:249-252`)
+   only echoes `error.message` when it matches `/^[A-Z_]+$/` (machine codes), else
+   returns the literal `auth_failed`, so attacker-controlled token fragments cannot
+   leak through `detail`. Confirmed.
+7. **requested_by/request_id in command body — INERT, no wire violation.**
+   `src/adapter.mjs:117-134` adds optional `requested_by`/`request_id` alongside
+   `{command, payload}`. Worker 9's handler (`w9/src/index.mjs`) destructures exactly
+   `const { command, payload = {} } = await request.json()` and ignores all other
+   keys, so the extra fields are dropped upstream with no behavioral effect.
+   Confirmed inert.
+8. **Suite re-run (by reviewer):** `npm run check` clean (node --check on all 5 src
+   files). `npm test` → **87 tests, 85 pass, 0 fail, 2 todo, 0 cancelled** (~5.3 s),
+   up from 79/77 with the new repair-coverage tests.
+
+### Regression hunt — findings
+
+10. **LOW — Global buttons still lack the double-submit guard.** The F1 fix covers
+    per-worker command buttons only; `runAll.onclick` and `phaseBtn.onclick`
+    (`src/ui.mjs` CLIENT_SCRIPT_LINES ~`:112-118`) never disable the clicked global
+    button, so a fast double-click on RUN ALL READY / RUN PHASE still fires two
+    POSTs. Impact is smaller than F1 (bulk routes are re-entrant queue sends, and
+    the rate limiter throttles), but the repair is asymmetric.
+11. **LOW — Retry-limit prediction under-disables when `max_retries` is absent.**
+    Worker 9 defaults `max_retries` to 3 in `validateLaunch`; the new guard requires
+    `Number.isSafeInteger(view.maxRetries)`, so for a packet row lacking
+    `max_retries` the UI keeps RUN/CONTINUE enabled from FAILED even at
+    `retry_count >= 3` and Worker 9 will 409. Safe direction (no false denial) and
+    an edge case, but the prediction is not yet complete for defaulted rows.
+
+No other regressions detected: state guards, payload translation, normalization,
+auth boundary, and phase/run-all wiring are unchanged in behavior; the new
+auto-refresh skip selector (`#phase:not(:placeholder-shown), .cmd-input:not(...)`)
+correctly matches all three inputs because each renders with a `placeholder`
+attribute.
