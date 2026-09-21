@@ -197,3 +197,6 @@ main>#career-master{background:#e8e2d8;color:#23313b;position:relative;isolation
 #about .language-row{display:grid;grid-template-columns:70px minmax(0,1fr);justify-content:start;gap:12px;text-align:left}
 #about .language-row>span:last-child{text-align:left}
 @media(max-width:760px){#career-master .role.career-designed>summary{padding:24px 20px}#career-master .role>.role-body{padding:24px 20px}#career-master .role-preview-summary{font-size:20px}#experience .career-route nav{gap:20px}#career-master .role-preview-points{font-size:16px}}
+
+/* Anchor the opening text close to the foot of the hero. */
+@media(min-width:761px){#profile{display:flex;flex-direction:column;justify-content:flex-end}#profile .hero-content{flex:none;padding-top:85px;padding-bottom:76px}#profile .hero-lead{margin-bottom:0}#profile>.section-stepper{position:absolute;bottom:12px;left:6%;width:88%!important;margin:0;padding:0}}
