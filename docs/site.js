@@ -2,7 +2,7 @@ const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#n
 menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open)});
 function openHash(){const id=decodeURIComponent(location.hash.slice(1));if(!id)return;const el=document.getElementById(id);if(!el)return;for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;requestAnimationFrame(()=>el.scrollIntoView({block:'start'}))}
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');const target=document.getElementById(a.hash.slice(1));if(target?.tagName==='DETAILS')target.open=true}));
-addEventListener('hashchange',openHash);if(location.hash)openHash();
+addEventListener('hashchange',openHash);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false')}});
 document.querySelectorAll('[data-gallery]').forEach(g=>g.querySelectorAll('[data-shot]').forEach(b=>b.addEventListener('click',()=>{const img=g.querySelector('img');img.src=b.dataset.shot;img.alt=b.dataset.alt;g.querySelector('a').href=b.dataset.shot;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))})));
 const motion=matchMedia('(prefers-reduced-motion: reduce)'),small=matchMedia('(max-width: 760px)');let pending=false;
@@ -91,14 +91,31 @@ Object.entries(sections).forEach(([id, title]) => {
     section.classList.add('is-minimized');button.textContent='+';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
   }
 });
-// Compact global disclosure controls in the navigator.
+// One global control: expand any closed sections, otherwise minimize all.
 const allControls=document.createElement('div');allControls.className='section-all-controls';
-for(const [expand,label,path] of [[true,'Expand all sections','M5 8l7-5 7 5M5 16l7 5 7-5'],[false,'Minimize all sections','M5 3l7 5 7-5M5 21l7-5 7 5']]){
- const control=document.createElement('button');control.type='button';control.title=label;control.setAttribute('aria-label',label);
- control.innerHTML=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
- control.addEventListener('click',()=>document.querySelectorAll('main>section[data-collapsible]').forEach(section=>{if(section.classList.contains('is-minimized')===expand)section.querySelector(':scope>.section-bar button').click()}));allControls.append(control);
+const allControl=document.createElement('button');allControl.type='button';
+allControls.append(allControl);nav.append(allControls);
+const collapsibleSections=[...document.querySelectorAll('main>section[data-collapsible]')];
+function syncAllControl(){
+ const expand=collapsibleSections.some(section=>section.classList.contains('is-minimized'));
+ const label=expand?'Expand all sections':'Minimize all sections';
+ allControl.title=label;allControl.setAttribute('aria-label',label);
+ allControl.innerHTML=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${expand?'M5 8l7-5 7 5M5 16l7 5 7-5':'M5 3l7 5 7-5M5 21l7-5 7 5'}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
-nav.append(allControls);
+allControl.addEventListener('click',()=>{
+ const expand=collapsibleSections.some(section=>section.classList.contains('is-minimized'));
+ collapsibleSections.forEach(section=>{if(section.classList.contains('is-minimized')===expand)section.querySelector(':scope>.section-bar button').click()});
+ syncAllControl();
+});
+function syncBandArtwork(){
+ const heights=collapsibleSections.map(section=>section.querySelector(':scope>.section-bar').offsetHeight);
+ const total=heights.reduce((sum,height)=>sum+height,0);let offset=0;
+ collapsibleSections.forEach((section,index)=>{section.style.setProperty('--band-art-height',`${total}px`);section.style.setProperty('--band-art-offset',`${-offset}px`);offset+=heights[index]});
+}
+const sectionStateObserver=new MutationObserver(()=>{syncAllControl();syncBandArtwork()});
+collapsibleSections.forEach(section=>sectionStateObserver.observe(section,{attributes:true,attributeFilter:['class']}));
+new ResizeObserver(syncBandArtwork).observe(document.querySelector('main'));
+addEventListener('resize',syncBandArtwork);syncAllControl();syncBandArtwork();
 function revealSection(target) {
   if(target?.classList.contains('overview-section'))target.querySelector(':scope>details').open=true;
   for (let parent = target; parent; parent = parent.parentElement) {
@@ -125,18 +142,16 @@ addEventListener('hashchange', () => {
   const target = document.getElementById(location.hash.slice(1));
   if (target) revealSection(target);
 });
-const initialTarget = document.getElementById(location.hash.slice(1));
-if (initialTarget && initialTarget.id!=='about') revealSection(initialTarget);
-const navObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    nav.querySelectorAll('a').forEach(a => {
-      if (a.hash === '#' + entry.target.id) a.setAttribute('aria-current', 'location');
-      else a.removeAttribute('aria-current');
-    });
-  });
-}, { rootMargin: '-10% 0px -65% 0px' });
-document.querySelectorAll('section[id]').forEach(section => navObserver.observe(section));
+// Every section starts collapsed, including when refreshing a section URL.
+function syncNavigation(){
+ const destinations=[...document.querySelectorAll('main>section[id]')];
+ const marker=innerHeight*.2;
+ const current=destinations.find(section=>{const rect=section.getBoundingClientRect();return rect.top<=marker&&rect.bottom>marker})||destinations.find(section=>section.getBoundingClientRect().top>marker);
+ nav.querySelectorAll('a').forEach(a=>{if(current&&a.hash==='#'+current.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
+}
+const navObserver=new IntersectionObserver(syncNavigation,{rootMargin:'-10% 0px -65% 0px'});
+document.querySelectorAll('main>section[id]').forEach(section=>navObserver.observe(section));
+addEventListener('scroll',syncNavigation,{passive:true});syncNavigation();
 
 paint();
 
@@ -193,4 +208,4 @@ for(const id of ['experience','build','value','product-journey']){
 
 // Overview navigation targets are created after the main section controls.
 document.querySelectorAll('#how-work-grew,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
-if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){if(target.id!=='about')revealSection(target);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
+if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}

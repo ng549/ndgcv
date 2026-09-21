@@ -234,11 +234,22 @@ main>section:not(#profile) a{color:#efc68f}
 #career-master .career-designed .company-card{background:#203440;color:#f4f0e8;border-color:#eabb8755}
 #career-master .career-designed .company-card-copy>strong,#career-master .career-designed .company-card-copy>span{color:#f4f0e8}
 #career-master .career-open-button,#career-master .palette-stone .career-open-button{background:#14232e;color:#f4f0e8;border-color:#eabb8766}
-main section[data-collapsible].is-minimized{background-image:linear-gradient(#10212dcc,#10212dcc),url('illustrations/collapsed-dark-art-v1.webp')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;color:#f4f0e8!important}
-main section[data-collapsible].is-minimized:is(#experience,#ai,#product-journey,#value,#opportunity){background-image:linear-gradient(#405563aa,#405563aa),url('illustrations/collapsed-dark-art-v1.webp')!important}
+/* Aligned slices of one scene, with matching edge tones between bands. */
+main section[data-collapsible].is-minimized{--band-shade:#14232e85;background-image:linear-gradient(#14232e99,var(--band-shade) 50%,#14232e99),url('illustrations/collapsed-warm-scene-v2.webp')!important;background-size:100% 100%,100% var(--band-art-height,924px)!important;background-position:0 0,0 var(--band-art-offset,0px)!important;background-repeat:no-repeat!important;background-attachment:scroll!important;color:#f4f0e8!important;border:0!important;box-shadow:none!important}
+main section[data-collapsible].is-minimized:is(#experience,#ai,#product-journey,#value,#opportunity){--band-shade:#26384370}
 main section[data-collapsible].is-minimized::before,main section[data-collapsible].is-minimized::after{display:none!important}
 main section[data-collapsible].is-minimized>:is(.section-art,.systems-backdrop,.build-backdrop,.education-backdrop){display:none!important}
 main section[data-collapsible].is-minimized>.section-bar{color:#f4f0e8!important}
 main section[data-collapsible].is-minimized .section-preview{color:#e0e5e8;opacity:1}
 
 .section-all-controls{display:flex;gap:10px;padding:10px 4px 0;margin-top:4px}.section-all-controls button{display:grid;place-items:center;width:32px;height:32px;border:0;background:transparent;color:#dce5e9;cursor:pointer;border-radius:4px}.section-all-controls button:hover{background:#8fb0d825;color:#fff}.section-all-controls button:focus-visible{outline:2px solid #eabb87;outline-offset:2px}
+
+/* Fade the surrounding scenes into the shared dark edge without moving content. */
+#profile:after{content:'';position:absolute;inset:auto 0 0;height:64px;background:linear-gradient(transparent,#14232e);pointer-events:none;z-index:1}
+#about.is-minimized{box-shadow:inset 0 24px 24px -20px #14232e!important}
+#education.is-minimized{box-shadow:inset 0 -24px 24px -20px #14232e!important}
+#contact{box-shadow:inset 0 38px 38px -28px #14232e}
+.site-header #navigation{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.site-header #navigation>a,.section-all-controls{flex-shrink:0}
+.section-all-controls{margin-top:10px;padding-bottom:8px}
+@media(min-width:761px) and (max-width:1000px){.site-header #navigation{max-height:calc(100dvh - 100px)}}
