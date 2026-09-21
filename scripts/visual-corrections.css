@@ -68,3 +68,28 @@ main section[data-collapsible].is-minimized>.section-art,main section[data-colla
 /* Keep section navigation in reading order rather than nesting Capabilities inside Help. */
 main>#capabilities{position:relative;isolation:isolate;margin:0;padding:64px max(6%,calc((100% - 1100px)/2));background:#202e38;color:#f4f0e8}
 main>#capabilities:before,main>#capabilities:after{inset:0;width:auto}
+
+/* Independent introductions leave the work beneath them accessible. */
+.intro-disclosure{margin:18px 0 32px;border-top:1px solid #a38e714d;border-bottom:1px solid #a38e714d}
+.intro-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;list-style:none}
+.intro-disclosure>summary::-webkit-details-marker{display:none}
+.intro-disclosure>summary>.eyebrow{margin:0;color:inherit;font-size:14px;letter-spacing:.08em}
+.intro-toggle{flex-shrink:0;border:1px solid currentColor;border-radius:4px;padding:10px 14px;font:600 12px/1.3 Manrope,sans-serif}
+.intro-toggle:after{content:'Expand +'}.intro-disclosure[open]>.summary .intro-toggle:after,.intro-disclosure[open]>summary .intro-toggle:after{content:'Minimize −'}
+.intro-disclosure>.section-heading,.intro-disclosure>.journey-overview{margin:0;padding-top:14px;padding-bottom:24px}
+.idea-product-group{margin:0 0 16px;border:1px solid #eabb8766;border-radius:6px;background:#14273380;overflow:hidden}
+.idea-product-group>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;cursor:pointer;list-style:none}
+.idea-product-group>summary::-webkit-details-marker{display:none}
+.idea-product-group>summary h4{margin:0;font:600 16px/1.5 Manrope,sans-serif;color:#f5f0e7}
+.product-card-toggle{flex-shrink:0}.product-card-toggle:after{content:'+'}.idea-product-group[open] .product-card-toggle:after{content:'−'}
+.idea-product-group .idea-image{display:block;padding:0 14px 14px;margin:0;width:100%}
+.idea-product-group .idea-image img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+#contact .contact-reasons{max-width:none;font-size:17px;line-height:1.55}
+/* Background artwork overlaps through soft transparency at each tile boundary. */
+#experience>.blended-scene,#build>.blended-scene,#value>.blended-scene,#product-journey>.blended-scene{background-image:none!important;overflow:hidden;isolation:isolate}
+.blended-scene .scene-tile{display:block;position:absolute;left:0;width:100%;background-position:center;background-size:cover;background-repeat:no-repeat;mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 75%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 75%,transparent)}
+.blended-scene:before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#eee9dfcf,#eee9df8c)}
+#build>.blended-scene:before{background:linear-gradient(90deg,#202e38de,#202e388a)}
+#product-journey>.blended-scene:before{background:linear-gradient(90deg,#172b35db,#172b3580)}
+#build .help-area:before{background-repeat:no-repeat;mask-image:linear-gradient(0deg,transparent,#000 18%,#000 82%,transparent)}
+@media(max-width:760px){.intro-disclosure>summary{gap:14px}.intro-disclosure>summary>.eyebrow{font-size:12px;letter-spacing:.03em}.intro-toggle{padding:9px 10px}.idea-product-group>summary{padding:14px}.idea-product-group>summary h4{font-size:14px}#contact .contact-reasons{font-size:16px}}

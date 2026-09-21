@@ -35,3 +35,23 @@
 @media print{.scout-widget{display:none}}
 
 @media(prefers-reduced-motion:reduce){.scout-puppet g{animation:none!important;transition:none!important}}
+
+/* Separate upper/lower leg segments flex together; the shoe layer never moves. */
+.scout-thigh-left{transform-origin:393px 1115px;animation:scout-thigh-left 10s ease-in-out -2s infinite}
+.scout-thigh-right{transform-origin:628px 1115px;animation:scout-thigh-right 10s ease-in-out -2s infinite}
+@keyframes scout-weight{0%,100%{transform:translate(0,0) scaleX(1)}22%,35%{transform:translate(12px,38px) scaleX(.98)}56%,72%{transform:translate(-12px,28px) scaleX(.985)}88%{transform:translate(0,0) scaleX(1)}}
+@keyframes scout-knee-left{0%,88%,100%{transform:skewX(0) scaleY(1)}22%,35%{transform:skewX(8deg) scaleY(.9)}56%,72%{transform:skewX(5deg) scaleY(.93)}}
+@keyframes scout-knee-right{0%,88%,100%{transform:skewX(0) scaleY(1)}22%,35%{transform:skewX(-8deg) scaleY(.9)}56%,72%{transform:skewX(-5deg) scaleY(.93)}}
+@keyframes scout-thigh-left{0%,88%,100%{transform:translate(0,0)}22%,35%{transform:translate(-21px,15px) skewX(-13deg) scaleY(.86)}56%,72%{transform:translate(-13px,10px) skewX(-8deg) scaleY(.9)}}
+@keyframes scout-thigh-right{0%,88%,100%{transform:translate(0,0)}22%,35%{transform:translate(21px,15px) skewX(5deg) scaleY(.86)}56%,72%{transform:translate(13px,10px) skewX(13deg) scaleY(.9)}}
+.scout-widget.is-excited .scout-upper{animation:scout-delight .6s ease-in-out 4}
+.scout-widget.is-excited .scout-arm-left-motion{animation:scout-cheer-left .6s ease-in-out 4}
+.scout-widget.is-excited .scout-arm-right-motion{animation:scout-cheer-right .6s ease-in-out 4}
+.scout-widget.is-excited .scout-mouth{animation:scout-happy-mouth .6s ease-in-out 4}
+.scout-widget.is-excited .scout-brow-left,.scout-widget.is-excited .scout-brow-right{animation:scout-happy-brows .6s ease-in-out 4}
+@keyframes scout-delight{0%,100%{transform:translateY(12px)}45%{transform:translateY(-16px) scaleX(1.025)}}
+@keyframes scout-cheer-left{0%,100%{transform:rotate(8deg)}45%{transform:rotate(38deg)}}
+@keyframes scout-cheer-right{0%,100%{transform:rotate(-8deg)}45%{transform:rotate(-38deg)}}
+@keyframes scout-happy-mouth{0%,100%{transform:scale(1.04,1.2)}45%{transform:scale(1.18,1.65)}}
+@keyframes scout-happy-brows{0%,100%{transform:translateY(-5px)}45%{transform:translateY(-20px)}}
+@media(prefers-reduced-motion:reduce){.scout-widget .scout-puppet g{animation:none!important}}

@@ -179,3 +179,30 @@ orderedSections.forEach(([id,title],i)=>{
  section.append(steps);
 });
 document.querySelectorAll('[data-current-year]').forEach(el=>el.textContent=new Date().getFullYear());
+
+// The four overview passages have their own compact disclosure controls.
+for(const selector of ['#experience .journey-overview','#build .help-intro','#value>.section-heading','#product-journey .section-heading']){
+ const intro=document.querySelector(selector);if(!intro)continue;
+ const eyebrow=intro.querySelector('.eyebrow'),details=document.createElement('details'),summary=document.createElement('summary');
+ details.className='intro-disclosure';summary.append(eyebrow);
+ const cue=document.createElement('span');cue.className='intro-toggle';cue.setAttribute('aria-hidden','true');summary.append(cue);
+ intro.before(details);details.append(summary,intro);
+}
+
+// Overlapping, faded scenery tiles avoid visible horizontal repeat seams.
+for(const [id,file] of [['experience','My-journey.webp'],['build','build-v3.webp'],['value','value-v3.webp'],['product-journey','product-v3.webp']]){
+ const section=document.getElementById(id),art=section.querySelector(':scope>.section-art');if(!art)continue;
+ art.classList.add('blended-scene');art.replaceChildren();
+ let previous='';
+ const layout=()=>{
+  const tileHeight=Math.max(640,Math.round(section.clientWidth*.72)),step=tileHeight*.75;
+  const count=Math.ceil(section.clientHeight/step)+1,key=tileHeight+':'+count;
+  if(key===previous)return;previous=key;art.replaceChildren();
+  for(let i=0;i<count;i++){
+   const tile=document.createElement('span');tile.className='scene-tile';
+   tile.style.cssText=`top:${i*step-tileHeight*.125}px;height:${tileHeight}px;background-image:url('illustrations/${file}')`;
+   art.append(tile);
+  }
+ };
+ new ResizeObserver(layout).observe(section);layout();
+}

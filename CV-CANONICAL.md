@@ -1095,3 +1095,11 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Live desktop inspected: My next chapter and My journey both 112px when minimized (Journey was 224px), with visible artwork and aligned title/summary/Expand controls. Inner career master and job previews inspected. Contact icons measured at the same top coordinate, in the requested order, on both homepage and /connect. Arrows contain only arrow glyphs with accessible destination labels.
 - Four named background layers span their full section height at opacity 1 with a single overlay; screenshots show recognizable artwork. Career preview image loaded. Scout computed-style samples confirm independent arm rotation, upper-body movement and a stationary foot layer; screenshots show hand/arm positions changing.
 - Final cleanup contains Scout SVG overflow within a wider viewBox to remove a horizontal scrollbar caused by transformed image-layer bounds. Source artwork remains unchanged; final hosted verification follows this commit.
+
+## 2026-09-21 — Follow-up introductions, product cards and Scout interaction
+- Nicolas requested four independently minimized introductions (How the work grew; Connecting opportunity with execution; What the work changed; Connecting the idea with the operation). Added initially collapsed disclosures without removing their copy or Journey timeline.
+- Nine private-label images now each have their own expandable sub-card, with brand names in its heading. Removed visible photo footnotes and extra nested More private-label brands wrappers; original provenance/development notes remain in source records.
+- Replaced hard repeated background tiles with overlapping feathered scenery tiles sized to each section; help-group art now fades vertically too.
+- Let's Connect has five concise bullets, adding business solutions and programs/apps. Six contact actions remain unchanged.
+- Scout has separate thigh/shin segments for idle knee bends, an excited 2.4-second arm/body/face reaction on click, and no visible name beneath him. Feet stay fixed; introduction remains above, with existing pause/reduced-motion support.
+- Build, preservation tests, JavaScript syntax and diff checks passed. Production and rendered verification pending at this implementation commit; exact final status is recorded in Drive after release.
