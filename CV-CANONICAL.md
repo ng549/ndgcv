@@ -1122,3 +1122,9 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Standardized expanded top-level section padding to40px desktop/28px narrow layouts, removed redundant section/disclosure/navigation divider lines, tightened disclosure and arrow spacing. Existing minimized112px cards retained.
 - Restored Journey narrative-left/timeline-right desktop grid after overview wrappers had broken the old direct-child CSS selector. Timeline remains stacked on narrow layouts.
 - Build, preservation tests, syntax and diff checks passed. Live verification follows publication and is recorded in Drive.
+
+## 2026-09-21 — Scout activation bounds and icon controls
+- Nicolas reported clipped hands and disconnected body during activation. Expanded the transparent SVG movement bounds by256source pixels per side while keeping character scale104px desktop/78px narrow. Widget is an unboxed fixed layer; transparent surroundings do not intercept page interactions.
+- Excited motion no longer lifts the upper body away from the legs. Legs return to their connected neutral pose while arms/face celebrate, with a subtle anchored body expansion. Tightened arm clips to exclude adjacent compass-body pixels from moving arm pieces. Idle knee bends retained.
+- Replaced Pause/Play words with ⏸/▶ icons, retaining accessible state labels and reduced-motion behavior. No enclosing background on the icon control.
+- Build, preservation tests, syntax and diff checks pass; final hosted rendering verification pending publication.

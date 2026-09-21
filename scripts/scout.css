@@ -49,9 +49,19 @@
 .scout-widget.is-excited .scout-arm-right-motion{animation:scout-cheer-right .6s ease-in-out 4}
 .scout-widget.is-excited .scout-mouth{animation:scout-happy-mouth .6s ease-in-out 4}
 .scout-widget.is-excited .scout-brow-left,.scout-widget.is-excited .scout-brow-right{animation:scout-happy-brows .6s ease-in-out 4}
-@keyframes scout-delight{0%,100%{transform:translateY(12px)}45%{transform:translateY(-16px) scaleX(1.025)}}
+@keyframes scout-delight{0%,100%{transform:scaleX(1)}45%{transform:scaleX(1.01)}}
 @keyframes scout-cheer-left{0%,100%{transform:rotate(8deg)}45%{transform:rotate(38deg)}}
 @keyframes scout-cheer-right{0%,100%{transform:rotate(-8deg)}45%{transform:rotate(-38deg)}}
 @keyframes scout-happy-mouth{0%,100%{transform:scale(1.04,1.2)}45%{transform:scale(1.18,1.65)}}
 @keyframes scout-happy-brows{0%,100%{transform:translateY(-5px)}45%{transform:translateY(-20px)}}
 @media(prefers-reduced-motion:reduce){.scout-widget .scout-puppet g{animation:none!important}}
+
+/* Transparent room for the full arm sweep; no enclosing panel or clipped hands. */
+.scout-widget{width:156px;pointer-events:none}
+.scout-toggle,.scout-pause,.scout-bubble{pointer-events:auto}
+.scout-puppet{overflow:hidden}
+.scout-pause{width:32px;height:32px;padding:0;margin:0 auto;min-height:32px;background:transparent;color:#eabb87;font-size:18px;line-height:32px;border:0;box-shadow:none}
+.scout-pause:hover{background:transparent;color:#fff}
+.scout-widget.is-excited .scout-leg-left,.scout-widget.is-excited .scout-leg-right,.scout-widget.is-excited .scout-thigh-left,.scout-widget.is-excited .scout-thigh-right{animation:none;transform:none}
+.scout-bubble:after{right:68px}
+@media(max-width:700px){.scout-widget{width:117px}.scout-bubble:after{right:49px}}
