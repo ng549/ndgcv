@@ -181,12 +181,14 @@ orderedSections.forEach(([id,title],i)=>{
 document.querySelectorAll('[data-current-year]').forEach(el=>el.textContent=new Date().getFullYear());
 
 // The four overview passages have their own compact disclosure controls.
-for(const selector of ['#experience .journey-overview','#build .help-intro','#value>.section-heading','#product-journey .section-heading']){
+for(const [selector,id,contentSelector] of [['#experience .journey-overview','how-work-grew',null],['#build .help-intro','connecting-opportunity',null],['#value>.section-heading','what-work-changed','.outcome-stories'],['#product-journey .section-heading','connecting-ideas','.idea-stages']]){
  const intro=document.querySelector(selector);if(!intro)continue;
  const eyebrow=intro.querySelector('.eyebrow'),details=document.createElement('details'),summary=document.createElement('summary');
  details.className='intro-disclosure';summary.append(eyebrow);
  const cue=document.createElement('span');cue.className='intro-toggle';cue.setAttribute('aria-hidden','true');summary.append(cue);
- intro.before(details);details.append(summary,intro);
+ const section=document.createElement('section');section.className='overview-section';section.id=id;section.setAttribute('aria-label',eyebrow.textContent);
+ intro.before(section);section.append(details);details.append(summary,intro);
+ if(contentSelector){const content=section.parentElement.querySelector(contentSelector);if(content)details.append(content)}
 }
 
 // Overlapping, faded scenery tiles avoid visible horizontal repeat seams.

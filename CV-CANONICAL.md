@@ -1109,3 +1109,9 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Implemented one initially collapsed Private-label products gallery beneath the five retained process stages. Nine unique images displayed in a responsive three/two/one-column grid, with no image borders, boxes or headings. Brand captions sit below each image. No foreground images duplicated.
 - Removed circular borders/backgrounds from bottom navigation arrows, retaining accessible labels, focus affordances and46px click targets.
 - Build and preservation tests pass. Hosted rendered verification and exact release status follow in Drive canonical.
+
+## 2026-09-21 — Overview ownership and contact background
+- Nicolas clarified the four overview blocks are independently minimizable sections. Each now has its own named section wrapper and one disclosure. What the work changed owns all eight statistics; Connecting the idea with the operation owns the full five-stage process, numbered1–5. Journey overview retains its timeline; opportunity overview retains its narrative.
+- Private-label gallery stays independent: one disclosure, nine floating images and small brand captions underneath. Plain navigation arrows retained.
+- Let's Connect now has illustrated background artwork in both expanded and minimized states, using permitted repeated background43.webp with a dark readability overlay.
+- Build/preservation checks, JS syntax and diff checks passed. Final live verification is recorded in Drive after release.

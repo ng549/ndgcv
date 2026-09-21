@@ -108,3 +108,15 @@ main>#capabilities:before,main>#capabilities:after{inset:0;width:auto}
 .private-label-sketch figcaption{padding:8px 6px 0;text-align:center;font:400 13px/1.45 'Source Sans 3',sans-serif;color:#e7e0d4}
 @media(max-width:900px){.private-label-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.private-label-grid{grid-template-columns:1fr;gap:26px}.private-label-gallery>summary h3{font-size:22px}}
+
+/* Each overview owns its complete content and one minimize control. */
+.overview-section{padding:0;margin:0;background:transparent;color:inherit}
+.overview-section>.intro-disclosure{margin:18px 0 32px}
+.overview-section .outcome-stories{padding-bottom:30px}
+#product-journey ol.idea-stages{list-style:none;counter-reset:idea-step;padding:0;margin:20px 0 0;display:block}
+#product-journey li.idea-stage{counter-increment:idea-step;padding:0;margin:0 0 20px}
+#product-journey .idea-stage-heading{display:flex;align-items:baseline;gap:14px;padding:18px 0}
+#product-journey .idea-stage-heading:before{content:counter(idea-step) '.';font:650 26px/1.3 Manrope,sans-serif;color:#eabb87}
+#product-journey .idea-stage-heading h3{margin:0}
+#contact{background:linear-gradient(90deg,#142733ed,#142733cb),url('illustrations/43.webp') center/cover no-repeat;color:#f6f1e7}
+#contact.is-minimized{background-position:center 45%}
