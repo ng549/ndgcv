@@ -4,7 +4,7 @@ export const actions = [
   {id:'contact', label:'Save my contact', href:'/nicolas-goureau.vcf', hint:'Download my contact card to your address book.', download:true},
   {id:'references', label:'Request reference', href:'mailto:ngoureau@mac.com?subject=Reference%20request', hint:'Ask me for a personal introduction.'},
   {id:'linkedin', image:'linkedin-v2', label:'LinkedIn', href:'https://www.linkedin.com/in/nicolas-goureau-6ab3237/', hint:'See my professional profile on LinkedIn.', external:true},
-  {id:'download', image:'download-cv', extension:'png', label:'Download CV', href:'/Nicolas-Goureau-CV.pdf', hint:'Download my two-page CV as a PDF.', download:'Nicolas-Goureau-CV.pdf'},
+  {id:'download', image:'download-cv', extension:'png', label:'Download CV', href:'/Nicolas_Goureau_Executive_CV.pdf', hint:'Download my two-page CV as a PDF.', download:'Nicolas_Goureau_Executive_CV.pdf'},
   {id:'cv', image:'cv-v2', label:'View my Interactive CV', href:'/', hint:'Explore my experience and the work behind it.'},
 ];
 const e = s => String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
