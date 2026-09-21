@@ -107,10 +107,24 @@ test("worker name injection is escaped", () => {
   assert.match(html, /&lt;script&gt;alert/);
 });
 
-test("RUN PHASE button markup present and disabled until phase input non-empty", () => {
-  const html = renderPage(model());
-  assert.match(html, /<button id="runPhase" disabled/);
+test("RUN PHASE server-renders enabled when allowed (client gates on phase input)", () => {
+  const html = renderPage(model()); // default model: RUN_PHASE allowed
+  assert.match(html, /<button id="runPhase">RUN PHASE<\/button>/);
   assert.match(html, /<input id="phase" placeholder="Phase">/);
+});
+
+test("RUN PHASE server-renders disabled with reason when not allowed", () => {
+  const m = model({ globalControls: { RUN_ALL_READY: { allowed: false, reason: "no_ready_workers" }, RUN_PHASE: { allowed: false, reason: "orchestrator_not_connected" } } });
+  const html = renderPage(m);
+  assert.match(html, /<button id="runPhase" disabled title="orchestrator_not_connected">/);
+});
+
+test("long reason strings cannot overflow narrow viewports", () => {
+  // Browser-validated defect (390px viewport): unbroken reason text overflowed
+  // .reason -> .controls -> card -> page. Lock the wrap rules in place.
+  const html = renderPage(model());
+  assert.match(html, /\.reason\{[^}]*overflow-wrap:anywhere/);
+  assert.match(html, /\.controls button\{[^}]*overflow-wrap:anywhere/);
 });
 
 test("mobile viewport meta present", () => {
