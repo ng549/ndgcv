@@ -80,6 +80,8 @@ export function normalizePacket(raw = {}, now = Date.now()) {
     latestCommit: null,
     blocker: normalizeBlocker(raw.blocker ?? raw.decision_required ?? null),
     reviewState: REVIEW_STATES.includes(reviewState) ? reviewState : "UNKNOWN",
+    retryCount: Number.isSafeInteger(raw.retry_count) ? raw.retry_count : null,
+    maxRetries: Number.isSafeInteger(raw.max_retries) ? raw.max_retries : null,
     controls: {}
   };
 }
@@ -102,6 +104,8 @@ export function unknownWorker(id, name, branch = null) {
     latestCommit: null,
     blocker: null,
     reviewState: "UNKNOWN",
+    retryCount: null,
+    maxRetries: null,
     controls: {}
   };
 }

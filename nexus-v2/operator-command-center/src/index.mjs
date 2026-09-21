@@ -106,6 +106,14 @@ async function getWorkerState(env) {
       view.controls = deriveControls(view);
       return view;
     });
+    // Do not silently drop live workers outside the seed list (finding F7):
+    // an unseeded packet is still real evidence and must render.
+    for (const [id, view] of byId) {
+      if (!SEED_WORKERS.some(([seedId]) => seedId === id)) {
+        view.controls = deriveControls(view);
+        workers.push(view);
+      }
+    }
     return {
       connected: true,
       reason: null,
@@ -145,6 +153,7 @@ function buildPayload(action, body) {
   if (action === "REASSIGN_MODEL") {
     const model = String(body.model || "").trim();
     if (!model) return { error: "MODEL_REQUIRED" };
+    if (model.length > 128) return { error: "MODEL_TOO_LONG" };
     return { payload: { model } };
   }
   if (action === "ADJUST_BUDGET") {
@@ -181,12 +190,15 @@ async function commandWorker(request, env, actor, workerId) {
 
   await audit(env, { actor: actor.email, action, workerId, requestId, outcome: "REQUESTED", detail: { payload: built.payload } });
   try {
-    const result = await sendWorkerCommand(env, workerId, action, built.payload, requestId);
+    const result = await sendWorkerCommand(env, workerId, action, built.payload, requestId, actor.email);
     await audit(env, { actor: actor.email, action, workerId, requestId, outcome: "ACCEPTED", detail: { upstream_status: result.upstreamStatus ?? null, command_id: result.commandId ?? null } });
     return json({ accepted: true, request_id: requestId, upstream_status: result.upstreamStatus ?? null, command_id: result.commandId ?? null }, 202);
   } catch (error) {
     const reason = reasonFromError(error);
-    await audit(env, { actor: actor.email, action, workerId, requestId, outcome: "REJECTED", detail: { reason, upstream_status: error.httpStatus || null } });
+    // A timeout means Worker 9 may still have accepted and be processing the
+    // command; auditing that as REJECTED would misstate reality.
+    const outcome = error.code === "TIMEOUT" ? "TIMEOUT_UNKNOWN" : "REJECTED";
+    await audit(env, { actor: actor.email, action, workerId, requestId, outcome, detail: { reason, upstream_status: error.httpStatus || null } });
     return json({ accepted: false, request_id: requestId, upstream_status: error.httpStatus || null, command_id: null, reason }, 502);
   }
 }
@@ -218,7 +230,9 @@ async function commandGlobal(request, env, actor) {
     return json({ accepted: true, request_id: requestId, upstream_status: result.upstreamStatus ?? null, command_id: result.commandId ?? null }, 202);
   } catch (error) {
     const reason = reasonFromError(error);
-    await audit(env, { actor: actor.email, action, requestId, outcome: "REJECTED", detail: { reason, upstream_status: error.httpStatus || null } });
+    // TIMEOUT_UNKNOWN: a bulk run may be partially accepted upstream.
+    const outcome = error.code === "TIMEOUT" ? "TIMEOUT_UNKNOWN" : "REJECTED";
+    await audit(env, { actor: actor.email, action, requestId, outcome, detail: { reason, upstream_status: error.httpStatus || null } });
     return json({ accepted: false, request_id: requestId, upstream_status: error.httpStatus || null, command_id: null, reason }, 502);
   }
 }
@@ -232,7 +246,10 @@ export default {
     try {
       actor = await authenticate(request, env);
     } catch (error) {
-      return json({ error: error.status === 403 ? "FORBIDDEN" : "AUTH_REQUIRED", detail: error.message }, error.status || 401);
+      // Only machine codes leave this boundary; raw parser messages can echo
+      // fragments of the attacker-supplied token.
+      const safeDetail = /^[A-Z_]+$/.test(String(error.message || "")) ? error.message : "auth_failed";
+      return json({ error: error.status === 403 ? "FORBIDDEN" : "AUTH_REQUIRED", detail: safeDetail }, error.status || 401);
     }
 
     if (request.method === "GET" && (url.pathname === "/operator" || url.pathname === "/operator/")) {

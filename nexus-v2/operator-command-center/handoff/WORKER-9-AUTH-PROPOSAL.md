@@ -93,4 +93,13 @@ Additional requirements:
    treated as a launch-blocking finding otherwise.
 4. No canonical re-pin, no contract version bump required: wire shapes are unchanged.
 
-— Worker C (tests/adversarial), Factory Test #6.
+## 6. Related recommendation: actor attribution (from architecture review A1)
+
+Control Tower §2 requires actor identity on state-changing commands. As of this
+integration branch, Worker 13 includes `requested_by` (operator email) and `request_id`
+in the command body; Worker 9 (`72389be`) currently ignores both and its
+`supervisor_events` audit records only `command` + `payload`. Recommended Worker 9
+follow-up: accept and persist `requested_by`/`request_id` in the command audit event.
+No breakage either way — unknown fields are ignored by the current handler.
+
+— Worker C (tests/adversarial), Factory Test #6; section 6 added by orchestrator after architecture review.

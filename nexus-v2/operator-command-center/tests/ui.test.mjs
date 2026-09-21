@@ -143,3 +143,25 @@ test("disconnected badge shows reason", () => {
   assert.match(html, /DISCONNECTED/);
   assert.match(html, /AUTH_REJECTED/);
 });
+
+test("disabled global controls show a visible reason caption, not tooltip-only", () => {
+  const m = model({ globalControls: { RUN_ALL_READY: { allowed: false, reason: "no_ready_workers" }, RUN_PHASE: { allowed: false, reason: "orchestrator_not_connected" } } });
+  const html = renderPage(m);
+  assert.match(html, /<button id="runAll" disabled[^>]*>RUN ALL READY<\/button><div class="reason">no_ready_workers<\/div>/);
+  assert.match(html, /<button id="runPhase" disabled[^>]*>RUN PHASE<\/button><div class="reason">orchestrator_not_connected<\/div>/);
+});
+
+test("enabled REASSIGN_MODEL shows an always-visible preference-only caption", () => {
+  const m = model({ workers: [worker({ controls: controls({ REASSIGN_MODEL: { allowed: true, reason: null } }) })] });
+  const html = renderPage(m);
+  assert.match(html, /preference only &mdash; Worker 9 \+ AI Gateway qualify the route/);
+});
+
+test("client script guards double-submit, reload preserves in-flight input, model input capped", () => {
+  const html = renderPage(model());
+  const script = html.split("<script>")[1].split("</" + "script>")[0];
+  assert.ok(script.includes("b.disabled=true"), "disable-on-click present");
+  assert.ok(script.includes("b.disabled=false"), "re-enable on failure present");
+  assert.ok(script.includes(":not(:placeholder-shown)"), "reload skips when inputs have content");
+  assert.match(html, /data-input="model"[^>]*maxlength="128"|maxlength="128"[^>]*data-input="model"/);
+});

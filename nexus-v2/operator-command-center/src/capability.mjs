@@ -107,6 +107,21 @@ export function deriveControls(workerView, now = Date.now()) {
       }
     }
 
+    // Launch-guard predictions mirrored from Worker 9 validateLaunch (contract v1):
+    // RUN/CONTINUE additionally fail there on exhausted budget and retry ceiling.
+    // Both inputs are packet fields, so they are derivable, not fabricated.
+    if (allowed && (action === "RUN" || action === "CONTINUE")) {
+      if (view.cost && view.cost.remainingMicros === 0) {
+        allowed = false;
+        reason = "budget_exhausted_predicted";
+      } else if (status === "FAILED" &&
+        Number.isSafeInteger(view.retryCount) && Number.isSafeInteger(view.maxRetries) &&
+        view.retryCount >= view.maxRetries) {
+        allowed = false;
+        reason = "retry_limit_reached";
+      }
+    }
+
     if (!allowed && reason === null) {
       reason = `state_${status.toLowerCase()}_rejects_${action.toLowerCase()}`;
     }

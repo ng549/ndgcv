@@ -26,7 +26,9 @@ const NOW = Date.parse("2026-09-21T18:40:00.000Z");
 const FRESH = new Date(NOW - 60 * 1000).toISOString();
 const STALE = new Date(NOW - HEARTBEAT_STALE_MS - 1000).toISOString();
 
-function makeView({ status, reportedState = status, lastHeartbeat = null, reviewState = "NOT_SENT" } = {}) {
+function makeView({ status, reportedState = status, lastHeartbeat = null, reviewState = "NOT_SENT",
+  cost = { consumedMicros: null, limitMicros: null, remainingMicros: null, truthState: "UNKNOWN" },
+  retryCount = null, maxRetries = null } = {}) {
   return {
     id: "w-test",
     name: "Test worker",
@@ -38,12 +40,14 @@ function makeView({ status, reportedState = status, lastHeartbeat = null, review
     provider: null,
     lastHeartbeat,
     heartbeatFresh: heartbeatFresh(lastHeartbeat, NOW),
-    cost: { consumedMicros: null, limitMicros: null, remainingMicros: null, truthState: "UNKNOWN" },
+    cost,
     branch: null,
     lastCheckpoint: null,
     latestCommit: null,
     blocker: null,
     reviewState,
+    retryCount,
+    maxRetries,
     controls: {}
   };
 }
@@ -213,4 +217,36 @@ test("deriveGlobalControls: connected with zero workers disables RUN_ALL_READY",
   const g = deriveGlobalControls(true, []);
   assert.equal(g.RUN_ALL_READY.allowed, false);
   assert.equal(g.RUN_ALL_READY.reason, "no_ready_workers");
+});
+
+test("READY with zero remaining budget disables RUN/CONTINUE (predicts Worker 9 BUDGET_EXHAUSTED)", () => {
+  const controls = deriveControls(makeView({
+    status: "READY",
+    cost: { consumedMicros: 2000000, limitMicros: 2000000, remainingMicros: 0, truthState: "SUPERVISOR_RECORDED" }
+  }), NOW);
+  assert.deepEqual(controls.RUN, { allowed: false, reason: "budget_exhausted_predicted" });
+  assert.deepEqual(controls.CONTINUE, { allowed: false, reason: "budget_exhausted_predicted" });
+  assert.equal(controls.PAUSE.allowed, true, "PAUSE is not budget-gated");
+  assert.equal(controls.ADJUST_BUDGET.allowed, true, "ADJUST_BUDGET stays available to fix the budget");
+  assertShape(controls);
+});
+
+test("READY with unknown budget keeps RUN/CONTINUE state-eligible (no fabricated block)", () => {
+  const controls = deriveControls(makeView({ status: "READY" }), NOW);
+  assert.equal(controls.RUN.allowed, true);
+  assert.equal(controls.CONTINUE.allowed, true);
+});
+
+test("FAILED at retry ceiling disables RUN/CONTINUE (predicts Worker 9 RETRY_LIMIT); RETRY stays available", () => {
+  const controls = deriveControls(makeView({ status: "FAILED", retryCount: 3, maxRetries: 3 }), NOW);
+  assert.deepEqual(controls.RUN, { allowed: false, reason: "retry_limit_reached" });
+  assert.deepEqual(controls.CONTINUE, { allowed: false, reason: "retry_limit_reached" });
+  assert.equal(controls.RETRY.allowed, true, "RETRY transition itself is not limited; the next launch is");
+  assertShape(controls);
+});
+
+test("FAILED below retry ceiling keeps RUN/CONTINUE", () => {
+  const controls = deriveControls(makeView({ status: "FAILED", retryCount: 1, maxRetries: 3 }), NOW);
+  assert.equal(controls.RUN.allowed, true);
+  assert.equal(controls.CONTINUE.allowed, true);
 });

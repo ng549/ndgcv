@@ -55,7 +55,7 @@
         "id", "name", "status", "reportedState", "statusEvidence",
         "currentTask", "model", "provider", "lastHeartbeat", "heartbeatFresh",
         "cost", "branch", "lastCheckpoint", "latestCommit", "blocker",
-        "reviewState", "controls"
+        "reviewState", "retryCount", "maxRetries", "controls"
       ],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
@@ -92,6 +92,16 @@
         "latestCommit": { "type": ["string", "null"] },
         "blocker": { "type": ["string", "null"] },
         "reviewState": { "enum": ["NOT_SENT", "PENDING", "APPROVED", "REJECTED", "UNKNOWN"] },
+        "retryCount": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "From Worker 9 packet retry_count; null when absent. Used to predict Worker 9's RETRY_LIMIT launch guard."
+        },
+        "maxRetries": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "From Worker 9 packet max_retries; null when absent."
+        },
         "controls": { "$ref": "#/$defs/controls" }
       },
       "additionalProperties": false

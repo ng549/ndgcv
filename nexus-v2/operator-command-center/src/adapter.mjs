@@ -114,14 +114,22 @@ export async function listPackets(env) {
   return { packets: data.workers, observedAt: new Date().toISOString() };
 }
 
-export async function sendWorkerCommand(env, workerId, command, payload = {}, requestId) {
+export async function sendWorkerCommand(env, workerId, command, payload = {}, requestId, requestedBy = null) {
   if (typeof workerId !== "string" || workerId.length === 0) {
     throw new OrchestratorError("INVALID_PAYLOAD", "workerId is required");
   }
+  // requested_by/request_id travel in the body for forward compatibility:
+  // Worker 9 (72389be) ignores them today; the Worker 9 auth handoff proposes
+  // persisting them so its event log can attribute the operator (CT invariant).
   return orchestratorFetch(env, `/api/workers/${encodeURIComponent(workerId)}/commands`, {
     method: "POST",
     requestId,
-    body: { command, payload: toWirePayload(command, payload) }
+    body: {
+      command,
+      payload: toWirePayload(command, payload),
+      ...(requestedBy ? { requested_by: requestedBy } : {}),
+      ...(requestId ? { request_id: requestId } : {})
+    }
   });
 }
 

@@ -163,13 +163,15 @@ t("sendWorkerCommand: camelCase → snake_case wire body + x-idempotency-key", a
   const server = await startFakeWorker9({ command: { mode: "ok", commandId: "cmd-9" } });
   try {
     const result = await adapter.sendWorkerCommand(
-      envFor(server.url), "W1", "ADJUST_BUDGET", { budgetLimitMicros: 7_500_000 }, "req-idem-1");
+      envFor(server.url), "W1", "ADJUST_BUDGET", { budgetLimitMicros: 7_500_000 }, "req-idem-1", "operator@example.com");
     const recorded = server.requests.at(-1);
     assert.equal(recorded.method, "POST");
     assert.equal(recorded.path, "/api/workers/W1/commands");
     assert.equal(recorded.xIdempotencyKey, "req-idem-1");
     assert.equal(recorded.body.command, "ADJUST_BUDGET");
     assert.deepEqual(recorded.body.payload, { budget_limit_micros: 7_500_000 });
+    assert.equal(recorded.body.requested_by, "operator@example.com");
+    assert.equal(recorded.body.request_id, "req-idem-1");
     assert.equal(result.command_id ?? result.commandId, "cmd-9");
   } finally {
     await server.close();
@@ -181,7 +183,8 @@ t("sendWorkerCommand: empty-payload command sends {} and idempotency key", async
   try {
     await adapter.sendWorkerCommand(envFor(server.url), "W1", "PAUSE", {}, "req-idem-2");
     const recorded = server.requests.at(-1);
-    assert.deepEqual(recorded.body, { command: "PAUSE", payload: {} });
+    // request_id rides along (forward-compatible); requested_by omitted when not supplied.
+    assert.deepEqual(recorded.body, { command: "PAUSE", payload: {}, request_id: "req-idem-2" });
     assert.equal(recorded.xIdempotencyKey, "req-idem-2");
   } finally {
     await server.close();

@@ -100,3 +100,12 @@ test("blocker object and string normalization", () => {
   const none = normalizePacket({ worker_id: 7 });
   assert.equal(none.blocker, null);
 });
+
+test("retry_count and max_retries map to WorkerView; absent -> null", () => {
+  const w = normalizePacket({ worker_id: 9, state: "FAILED", retry_count: 2, max_retries: 3 });
+  assert.equal(w.retryCount, 2);
+  assert.equal(w.maxRetries, 3);
+  const none = normalizePacket({ worker_id: 9, state: "READY" });
+  assert.equal(none.retryCount, null);
+  assert.equal(none.maxRetries, null);
+});
