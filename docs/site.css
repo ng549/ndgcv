@@ -1226,7 +1226,7 @@ main section[data-collapsible].is-minimized .section-preview{color:#e0e5e8;opaci
 /* Soft color rhythm within the same warm palette; no collapsed plus glyph. */
 main section[data-collapsible].is-minimized{--band-title:#d9cdbc;--band-caption:#bbb9ae}
 main section[data-collapsible].is-minimized:is(#experience,#product-journey,#build){--band-title:#d9b88b;--band-caption:#c0b5a6}
-main section[data-collapsible].is-minimized:is(#career-master,#capabilities,#education){--band-title:#bbc9c3;--band-caption:#b0bcb8}
+main section[data-collapsible].is-minimized:is(#career-master,#capabilities,#education){--band-title:#d9cdbc;--band-caption:#bbb9ae}
 main section[data-collapsible].is-minimized>.section-bar>span{color:var(--band-title)!important;text-shadow:0 1px 8px #07101899}
 main section[data-collapsible].is-minimized .section-preview{color:var(--band-caption)!important;text-shadow:0 1px 6px #071018}
 /* Both sides meet at precisely the same navy, fading gradually into their imagery. */
