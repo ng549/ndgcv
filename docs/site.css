@@ -1242,6 +1242,6 @@ main section[data-collapsible].is-minimized>.section-bar>span{padding:9px 0;font
 main section[data-collapsible].is-minimized .section-preview{margin-top:2px;font-size:13px;line-height:1.35}
 @media(max-width:760px){main section[data-collapsible].is-minimized>.section-bar>span{font-size:18px;padding:10px 0}main section[data-collapsible].is-minimized .section-preview{font-size:13px}}
 
-/* Start collapsed labels one-third across the section artwork. */
-main section[data-collapsible].is-minimized{padding-left:33.333333%!important;padding-right:6%!important}
+/* Position collapsed labels halfway between the original inset and one-third. */
+main section[data-collapsible].is-minimized{padding-left:19.666667%!important;padding-right:6%!important}
 main section[data-collapsible].is-minimized>.section-bar>span{max-width:100%;width:100%}
