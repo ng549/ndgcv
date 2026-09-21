@@ -130,7 +130,7 @@ function syncRoadmap(){
  });roadmapPath.setAttribute('d',path);
 }
 function syncBandArtwork(){
- const heights=collapsibleSections.map(section=>section.querySelector(':scope>.section-bar').offsetHeight);
+ const heights=collapsibleSections.map(section=>section.classList.contains('is-minimized')?section.offsetHeight:section.querySelector(':scope>.section-bar').offsetHeight);
  const total=heights.reduce((sum,height)=>sum+height,0);let offset=0;
  collapsibleSections.forEach((section,index)=>{section.style.setProperty('--band-art-height',`${total}px`);section.style.setProperty('--band-art-offset',`${-offset}px`);offset+=heights[index]});
  syncRoadmap();

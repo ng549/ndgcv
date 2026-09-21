@@ -284,3 +284,8 @@ main{position:relative}
 .section-roadmap circle{fill:#d9b88b;stroke:#14232e;stroke-width:2;transition:r .18s,fill .18s}
 .section-roadmap circle.is-current{fill:#14232e;stroke:#d9b88b;stroke-width:2}
 @media print{.section-roadmap{display:none}}
+
+/* Keep the roadmap labels clear of the two image fades. */
+main>#about.is-minimized{padding-top:36px!important;--band-edge:linear-gradient(#14232e,transparent 36px)}
+main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gradient(to top,#14232e,transparent 36px)}
+@media(min-width:1001px){.site-header #navigation{padding-bottom:54px}.site-header .section-all-controls{position:absolute;left:22px;bottom:20px;margin:0;padding:0;background:#181e24}.site-header .section-all-controls button{width:36px;height:36px}}
