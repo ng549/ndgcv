@@ -4,22 +4,28 @@
 /* Continuous articulation: feet remain planted; no pose swaps or whole-body rocking. */
 .scout-toggle,.scout-toggle:hover,.scout-toggle:active{background:transparent!important;border:0!important;box-shadow:none!important;transform:none!important;border-radius:0!important}
 .scout-puppet{display:block;width:100%;height:auto;overflow:visible}.scout-name{font:600 12px/1.4 system-ui,sans-serif;color:inherit;background:transparent;border:0;padding:0}.scout-widget{color:#eabb87;background:none!important;border:0!important;box-shadow:none!important}
-.scout-upper{animation:scout-weight 14s cubic-bezier(.45,0,.25,1) infinite}.scout-leg-left{transform-origin:393px 1265px;animation:scout-knee-left 14s ease-in-out infinite}.scout-leg-right{transform-origin:628px 1265px;animation:scout-knee-right 14s ease-in-out infinite}
-.scout-eye-left{transform-origin:385px 636px}.scout-eye-right{transform-origin:637px 636px}.scout-eye{animation:scout-look 17s ease-in-out infinite}.scout-widget.is-blinking .scout-eye{animation:scout-blink .19s ease-in-out}
-.scout-brow-left{transform-origin:381px 533px;animation:scout-brow 19s ease-in-out infinite}.scout-brow-right{transform-origin:645px 533px;animation:scout-brow 19s ease-in-out -1s infinite}.scout-mouth{transform-origin:510px 735px;animation:scout-smile 19s ease-in-out infinite}.scout-needle{transform-origin:512px 646px;animation:scout-north 23s cubic-bezier(.45,0,.2,1) infinite}
-.scout-hand-left,.scout-hand-right{animation:scout-hands 14s ease-in-out infinite}.scout-finger-left-1,.scout-finger-left-2,.scout-finger-left-3,.scout-finger-right-1,.scout-finger-right-2,.scout-finger-right-3{transform-origin:50% 1075px;animation:scout-fingers 12s ease-in-out infinite}.scout-finger-left-2,.scout-finger-right-2{animation-delay:-.3s}.scout-finger-left-3,.scout-finger-right-3{animation-delay:-.6s}
+.scout-puppet g{transform-box:view-box}
+.scout-upper{transform-origin:512px 965px;animation:scout-weight 10s ease-in-out -2s infinite}
+.scout-leg-left{transform-origin:393px 1265px;animation:scout-knee-left 10s ease-in-out -2s infinite}.scout-leg-right{transform-origin:628px 1265px;animation:scout-knee-right 10s ease-in-out -2s infinite}
+.scout-arm-left-motion{transform-origin:205px 806px;animation:scout-arm-left 12s ease-in-out -1s infinite}.scout-arm-right-motion{transform-origin:817px 806px;animation:scout-arm-right 12s ease-in-out -6s infinite}
+.scout-eye-left{transform-origin:385px 636px}.scout-eye-right{transform-origin:637px 636px}.scout-eye{animation:scout-look 8s ease-in-out -1s infinite}.scout-widget.is-blinking .scout-eye{animation:scout-blink .19s ease-in-out}
+.scout-brow-left{transform-origin:381px 533px;animation:scout-brow 9s ease-in-out -1s infinite}.scout-brow-right{transform-origin:645px 533px;animation:scout-brow 9s ease-in-out -1.4s infinite}.scout-mouth{transform-origin:510px 735px;animation:scout-smile 9s ease-in-out -1s infinite}.scout-needle{transform-origin:512px 646px;animation:scout-north 16s ease-in-out -9s infinite}
+.scout-finger-left-1{transform-origin:135px 1080px}.scout-finger-left-2{transform-origin:167px 1080px}.scout-finger-left-3{transform-origin:208px 1080px}.scout-finger-right-1{transform-origin:802px 1080px}.scout-finger-right-2{transform-origin:853px 1080px}.scout-finger-right-3{transform-origin:900px 1080px}
+.scout-finger-left-1,.scout-finger-left-2,.scout-finger-left-3{animation:scout-fingers 6s ease-in-out infinite}.scout-finger-right-1,.scout-finger-right-2,.scout-finger-right-3{animation:scout-fingers 6s ease-in-out -3s infinite}.scout-finger-left-2{animation-delay:-.25s}.scout-finger-left-3{animation-delay:-.5s}.scout-finger-right-2{animation-delay:-3.25s}.scout-finger-right-3{animation-delay:-3.5s}
 .scout-pause{display:block;margin:3px auto 0;padding:4px 8px;min-height:28px;border:0;border-radius:12px;background:#152733;color:#f6f1e7;font:12px/1.4 system-ui,sans-serif;cursor:pointer}.scout-widget button:focus-visible,.scout-bubble a:focus-visible{outline:3px solid #eabb87;outline-offset:4px}
 .scout-widget.is-paused svg g{animation-play-state:paused!important}
-@keyframes scout-weight{0%,18%,100%{transform:translate(0,0)}32%,46%{transform:translate(6px,3px)}62%,76%{transform:translate(-4px,1px)}88%{transform:translate(0,-2px)}}
-@keyframes scout-knee-left{0%,18%,100%{transform:skewX(0)}32%,46%{transform:skewX(-1.1deg) scaleY(.994)}62%,76%{transform:skewX(.7deg)}}
-@keyframes scout-knee-right{0%,18%,100%{transform:skewX(0)}32%,46%{transform:skewX(-1deg)}62%,76%{transform:skewX(.8deg) scaleY(.994)}}
-@keyframes scout-look{0%,25%,52%,80%,100%{transform:translateX(0)}31%,41%{transform:translateX(-7px)}62%,70%{transform:translateX(7px)}}
+/* Movement is sized in the 1024px source coordinates: visible at a 104px widget. */
+@keyframes scout-weight{0%,100%{transform:translate(0,0) scaleX(1)}22%,35%{transform:translate(22px,8px) scaleX(.97)}56%,72%{transform:translate(-18px,5px) scaleX(.985)}88%{transform:translate(0,-7px) scaleX(1)}}
+@keyframes scout-knee-left{0%,100%{transform:skewX(0) scaleY(1)}22%,35%{transform:skewX(-4.6deg) scaleY(.975)}56%,72%{transform:skewX(3.7deg) scaleY(.985)}88%{transform:skewX(0) scaleY(1.022)}}
+@keyframes scout-knee-right{0%,100%{transform:skewX(0) scaleY(1)}22%,35%{transform:skewX(-4.6deg) scaleY(.975)}56%,72%{transform:skewX(3.7deg) scaleY(.985)}88%{transform:skewX(0) scaleY(1.022)}}
+@keyframes scout-arm-left{0%,12%,100%{transform:rotate(0)}28%,37%{transform:rotate(12deg)}44%{transform:rotate(7deg)}51%{transform:rotate(14deg)}65%,80%{transform:rotate(-4deg)}}
+@keyframes scout-arm-right{0%,12%,100%{transform:rotate(0)}28%,37%{transform:rotate(-10deg)}48%{transform:rotate(-5deg)}58%{transform:rotate(-13deg)}73%,84%{transform:rotate(3deg)}}
+@keyframes scout-look{0%,100%{transform:translate(0,0)}20%,38%{transform:translate(-17px,-4px)}58%,78%{transform:translate(17px,2px)}}
 @keyframes scout-blink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.08)}}
-@keyframes scout-brow{0%,45%,70%,100%{transform:translateY(0)}53%,60%{transform:translateY(-5px) rotate(-2deg)}}
-@keyframes scout-smile{0%,45%,75%,100%{transform:scale(1)}53%,64%{transform:scale(1.055,1.2)}}
-@keyframes scout-north{0%,55%,86%,100%{transform:rotate(0)}62%{transform:rotate(17deg)}70%{transform:rotate(-10deg)}79%{transform:rotate(3deg)}}
-@keyframes scout-hands{0%,20%,65%,100%{transform:translateY(0)}34%,45%{transform:translateY(2px)}}
-@keyframes scout-fingers{0%,35%,65%,100%{transform:translateY(0)}44%,54%{transform:translateY(-4px)}}
+@keyframes scout-brow{0%,100%{transform:translateY(0) rotate(0)}25%,42%{transform:translateY(-12px) rotate(-5deg)}64%,79%{transform:translateY(3px) rotate(3deg)}}
+@keyframes scout-smile{0%,100%{transform:scale(1)}25%,42%{transform:scale(1.09,1.45)}63%,78%{transform:scale(.96,.8)}}
+@keyframes scout-north{0%,48%,90%,100%{transform:rotate(0)}58%{transform:rotate(32deg)}70%{transform:rotate(-24deg)}81%{transform:rotate(7deg)}}
+@keyframes scout-fingers{0%,22%,100%{transform:rotate(0) scaleY(1)}40%,55%{transform:rotate(10deg) scaleY(.9)}72%{transform:rotate(-4deg) scaleY(.97)}}
 .scout-bubble{position:absolute;right:0;bottom:calc(100% + 16px);width:min(270px,calc(100vw - 30px));padding:19px 34px 18px 18px;border:1px solid #eabb87;border-radius:18px;background:#f8f2e6;color:#24313b;text-align:left;box-shadow:0 8px 30px #0004;font:16px/1.5 system-ui,sans-serif}
 .scout-bubble[hidden]{display:none}.scout-bubble::after{content:'';position:absolute;right:40px;bottom:-9px;width:16px;height:16px;background:#f8f2e6;border-right:1px solid #eabb87;border-bottom:1px solid #eabb87;transform:rotate(45deg)}
 .scout-bubble p{margin:0 0 8px;font-weight:600}.scout-bubble a{display:inline-block;color:#24313b;text-decoration:underline;text-underline-offset:3px;font-size:14px}

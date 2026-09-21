@@ -41,3 +41,14 @@
 /* Six shared contact actions, with no fixed orbit positions. */
 .connect-orbit{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:0;position:relative}.connect-orbit .illustrated-action:nth-child(n){grid-column:auto;grid-row:auto;width:100%;position:relative}.connect-orbit::before{display:none}.connect-hub{display:block;min-height:0;max-width:940px;margin:24px auto}.connect-identity{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto 20px}.connect-portrait{width:140px;height:190px}.connect-identity h2{margin-top:0}.connect-home{font-size:22px;white-space:nowrap;flex-direction:column;align-items:flex-start;gap:4px}.connect-home span{display:block;white-space:nowrap;font-size:12px}.connect-header{gap:18px}.scout-widget .scout-toggle{box-shadow:none!important}
 @media(max-width:760px){.connect-orbit{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.connect-home{font-size:19px}.connect-home span{display:block;font-size:10px}.connect-header{align-items:flex-start;flex-wrap:wrap}.connect-hub{margin-top:20px}}
+
+/* Nicolas: six smaller actions, in the same order on both contact surfaces. */
+#contact .contact-actions,.connect-orbit{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:start;margin-top:24px}
+#contact .contact-actions .illustrated-action,.connect-orbit .illustrated-action:nth-child(n){width:100%;min-width:0;padding:8px 4px 12px;gap:10px;justify-content:flex-start}
+#contact .contact-actions .action-art,.connect-orbit .action-art,.connect-orbit .action-linkedin .action-art{width:106px;max-width:100%;height:84px}
+#contact .contact-actions .action-label,.connect-orbit .action-label{font-size:13px;line-height:1.4;max-width:145px;min-height:36px}
+#contact .contact-actions .action-hint,.connect-orbit .action-hint{font-size:13px;width:180px}
+#contact .contact-actions .illustrated-action:first-child .action-hint,.connect-orbit .illustrated-action:first-child .action-hint{left:0;transform:none}
+#contact .contact-actions .illustrated-action:last-child .action-hint,.connect-orbit .illustrated-action:last-child .action-hint{left:auto;right:0;transform:none}
+@media(max-width:760px){#contact .contact-actions,.connect-orbit{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 8px}#contact .contact-actions .action-art,.connect-orbit .action-art{height:76px;width:96px}}
+@media(max-width:420px){#contact .contact-actions,.connect-orbit{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 8px}}

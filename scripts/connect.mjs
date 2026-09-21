@@ -1,11 +1,11 @@
 // Shared, build-time action registry. Add an item here; layout does not need coordinates.
 export const actions = [
-  {id:'cv', image:'cv-v2', label:'View my Interactive CV', href:'/', hint:'Explore my experience and the work behind it.'},
-  {id:'download', image:'download-cv', extension:'png', label:'Download CV', href:'/Nicolas-Goureau-CV.pdf', hint:'Download my two-page CV as a PDF.', download:'Nicolas-Goureau-CV.pdf'},
   {id:'email', label:'Email me', href:'mailto:ngoureau@mac.com', hint:'Tell me what you’re working toward.'},
-  {id:'references', label:'Request references', href:'mailto:ngoureau@mac.com?subject=Reference%20request', hint:'Ask me for a personal introduction.'},
-  {id:'linkedin', image:'linkedin-v2', label:'View LinkedIn', href:'https://www.linkedin.com/in/nicolas-goureau-6ab3237/', hint:'See my professional profile on LinkedIn.', external:true},
   {id:'contact', label:'Save my contact', href:'/nicolas-goureau.vcf', hint:'Download my contact card to your address book.', download:true},
+  {id:'references', label:'Request reference', href:'mailto:ngoureau@mac.com?subject=Reference%20request', hint:'Ask me for a personal introduction.'},
+  {id:'linkedin', image:'linkedin-v2', label:'LinkedIn', href:'https://www.linkedin.com/in/nicolas-goureau-6ab3237/', hint:'See my professional profile on LinkedIn.', external:true},
+  {id:'download', image:'download-cv', extension:'png', label:'Download CV', href:'/Nicolas-Goureau-CV.pdf', hint:'Download my two-page CV as a PDF.', download:'Nicolas-Goureau-CV.pdf'},
+  {id:'cv', image:'cv-v2', label:'View my Interactive CV', href:'/', hint:'Explore my experience and the work behind it.'},
 ];
 const e = s => String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
 export function actionLink(a,context='connect') {

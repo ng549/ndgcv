@@ -1,0 +1,69 @@
+/* Correct the inherited collapse rules at the end of the shared stylesheet. */
+.section-preview{display:none}
+main section[data-collapsible].is-minimized{display:block!important;position:relative;isolation:isolate;min-height:112px!important;height:auto!important;padding-top:24px!important;padding-bottom:24px!important;margin-top:0!important;margin-bottom:0!important;overflow:hidden}
+main section[data-collapsible].is-minimized>.section-bar{display:flex!important;align-items:center;gap:24px;min-height:64px;width:100%;max-width:none;margin:0!important;padding:0!important;border:0;position:relative;z-index:2}
+main section[data-collapsible].is-minimized>.section-bar>span{font:650 22px/1.3 Manrope,sans-serif;letter-spacing:-.02em;max-width:80%;text-align:left}
+main section[data-collapsible].is-minimized .section-preview{display:block;font:400 15px/1.5 'Source Sans 3',sans-serif;letter-spacing:0;margin-top:7px;opacity:.85}
+main section[data-collapsible].is-minimized .section-toggle{min-width:94px;min-height:44px;padding:10px 16px;border:1px solid currentColor;border-radius:4px;font:600 13px/1.2 Manrope,sans-serif;background:transparent;color:inherit}
+main section[data-collapsible].is-minimized>.section-art,main section[data-collapsible].is-minimized>.systems-backdrop,main section[data-collapsible].is-minimized>.build-backdrop{display:block!important;background-position:center 40%;background-size:cover}
+/* Align all four personal blocks, including their headings and separators. */
+#about .personal-notes{border:0;padding:0;margin-top:36px;gap:28px}
+#about .personal-notes>div,#about .personal-notes>div:first-child,#about .personal-notes>div:last-child{border:0;border-top:1px solid #23313b35;padding:18px 0 0;margin:0;align-self:start}
+#about .personal-notes strong{margin:0 0 12px;min-height:20px}
+/* Master disclosures read as a compact introduction, not an empty colored slab. */
+.master-card{background:#f5f0e60c;border:1px solid #eabb8755;border-radius:5px;margin:28px 0;overflow:visible}
+.master-card>summary{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:30px;row-gap:9px;padding:24px 28px;text-align:left}
+.master-card>summary>.eyebrow{grid-column:1;margin:0;font-size:12px;letter-spacing:.1em}
+.master-card>summary h3,.master-card>summary h4{grid-column:1;margin:0;font:650 27px/1.25 Manrope,sans-serif}
+.master-card>summary p{grid-column:1;margin:0;max-width:75ch;font-size:16px;line-height:1.55}
+.master-card>summary>.find-more{grid-column:2;grid-row:1/4;align-self:center;margin:0;padding:12px 16px;border:1px solid currentColor;border-radius:4px;font:600 13px/1.25 Manrope,sans-serif;white-space:nowrap}
+.master-card[open]>summary:after{grid-column:2;grid-row:1/4;align-self:center;margin:0;font-size:14px}
+#career-master{background:#faf7f1b3;border-color:#23313b40;color:#23313b}
+#experience .client-work.master-card{border-color:var(--card-line);background:transparent}
+#experience .role.career-designed>.summary{color:inherit}
+#experience .role.career-designed>summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;padding:24px 0;text-align:left}
+#experience .role.career-designed .role-title{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:8px}
+#experience .role.career-designed .company-heading{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px}
+#experience .role.career-designed .company-heading>strong{font-size:28px;text-align:left}
+#experience .role.career-designed .company-about{display:inline-flex}
+#experience .role.career-designed .role-subtitle{margin:0;font-size:16px;order:1}
+#experience .role.career-designed .role-meta{display:flex;flex-wrap:wrap;gap:8px 18px;text-align:left;margin:0;order:2}
+#experience .role.career-designed .role-meta>span{display:inline;font-size:14px}
+#experience .role.career-designed>summary>.disclosure{position:static;align-self:start;font-size:13px;padding-top:7px}
+#experience .role-preview{gap:16px 30px;align-items:center}
+#experience .role-preview-copy{font-size:18px;line-height:1.55}
+#experience .role-preview-media img{max-height:180px}
+#experience .role-preview .find-more{margin:0;padding-top:8px;font-size:14px}
+/* One readable overlay, at full layer opacity. Repetition is explicitly allowed. */
+#experience>.section-art,#build>.section-art,#value>.section-art,#product-journey>.section-art{z-index:0;opacity:1;background-repeat:repeat-y;background-size:100% auto;background-position:center top;mask-image:none}
+#experience>.section-art:after,#build>.section-art:after,#value>.section-art:after,#product-journey>.section-art:after{display:none}
+#experience>.section-art{background-image:linear-gradient(90deg,#eee9dfcf,#eee9df8c),url('illustrations/My-journey.webp')}
+#build>.section-art{background-image:linear-gradient(90deg,#202e38de,#202e388a),url('illustrations/build-v3.webp')}
+#value>.section-art{background-image:linear-gradient(90deg,#eee9dfcf,#eee9df8c),url('illustrations/value-v3.webp')}
+#product-journey>.section-art{background-image:linear-gradient(90deg,#172b35db,#172b3580),url('illustrations/product-v3.webp')}
+#experience>.section-art~*,#build>.section-art~*,#value>.section-art~*,#product-journey>.section-art~*{position:relative;z-index:1}
+#build .help-area:before{z-index:-1;opacity:.24;background-position:center;background-size:cover;mask-image:linear-gradient(90deg,transparent,#000 28%,#000)}
+#build .help-area{padding:30px 24px;margin:22px -24px;border-top:1px solid #eabb8740}
+/* Arrows keep accessible destination names but show only the arrow. */
+.section-stepper{width:100%!important;max-width:none;padding:22px 0 0;margin-top:24px;gap:20px}
+.section-stepper a{justify-content:center;flex:0 0 46px;width:46px;height:46px;padding:0;border:1px solid currentColor;border-radius:50%;opacity:.85}
+.section-stepper a:hover{opacity:1;background:#eabb871a;text-decoration:none}
+.section-stepper .step-arrow{font-size:26px;color:inherit;line-height:1}
+.section-stepper .step-next{margin-left:auto}
+.hero>.section-stepper{width:88%!important;margin:0 6% 20px;padding:0}
+@media(max-width:760px){
+ main section[data-collapsible].is-minimized{padding-top:20px!important;padding-bottom:20px!important;min-height:112px!important}
+ main section[data-collapsible].is-minimized>.section-bar{gap:16px}
+ main section[data-collapsible].is-minimized>.section-bar>span{font-size:19px;max-width:72%}
+ main section[data-collapsible].is-minimized .section-preview{font-size:14px}
+ main section[data-collapsible].is-minimized .section-toggle{min-width:76px;padding:10px}
+ .master-card>summary{grid-template-columns:1fr;padding:22px 18px;gap:12px}
+ .master-card>summary>.find-more,.master-card[open]>summary:after{grid-column:1;grid-row:auto;justify-self:end}
+ .master-card>summary h3,.master-card>summary h4{font-size:23px}
+ #experience .role.career-designed .company-heading>strong{font-size:24px}
+ #build .help-area{padding:24px 14px;margin:18px -14px}
+ #experience>.section-art,#build>.section-art,#value>.section-art,#product-journey>.section-art{background-size:auto 850px}
+}
+
+/* Keep section navigation in reading order rather than nesting Capabilities inside Help. */
+main>#capabilities{position:relative;isolation:isolate;margin:0;padding:64px max(6%,calc((100% - 1100px)/2));background:#202e38;color:#f4f0e8}

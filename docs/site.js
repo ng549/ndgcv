@@ -67,6 +67,7 @@ const sections = {
   'product-journey': 'From idea to sale', experience: 'My journey',
   ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education', contact: 'Let’s connect'
 };
+const sectionSummaries={about:'The person, interests and experiences behind the work.',opportunity:'The leadership role and businesses I want to help build.',experience:'Eight roles, with the context, work, outcomes and lessons.',build:'Business building, product economics and connected operations.',capabilities:'The capabilities I bring to the work.',value:'Commercial outcomes and the work behind them.','product-journey':'From the first opportunity to a product in customers’ hands.',ai:'Six approaches to connecting information, people and execution.','software-work':'From defining the problem through building, testing and release.',education:'University of Miami and the American University of Paris.',contact:'Six ways to get in touch or explore my experience.'};
 Object.entries(sections).forEach(([id, title]) => {
   const section = document.getElementById(id);
   section.dataset.collapsible = '';
@@ -74,6 +75,7 @@ Object.entries(sections).forEach(([id, title]) => {
   bar.className = 'section-bar';
   const label = document.createElement('span');
   label.textContent = title;
+  const preview=document.createElement('small');preview.className='section-preview';preview.textContent=sectionSummaries[id];label.append(preview);
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'section-toggle';
@@ -170,8 +172,8 @@ orderedSections.forEach(([id,title],i)=>{
   const [targetId,label]=orderedSections[index],link=document.createElement('a');link.href='#'+targetId;link.className='step-'+direction;
   link.setAttribute('aria-label',(direction==='next'?'Next: ':'Previous: ')+label);
   const arrow=document.createElement('span');arrow.className='step-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent=symbol;
-  const caption=document.createElement('span');caption.textContent=label;
-  link.append(...(direction==='next'?[caption,arrow]:[arrow,caption]));
+  link.title=(direction==='next'?'Next: ':'Previous: ')+label;
+  link.append(arrow);
   link.addEventListener('click',()=>{const target=document.getElementById(targetId);revealSection(target);requestAnimationFrame(()=>{target.scrollIntoView({block:'start',behavior:motion.matches?'instant':'smooth'});const heading=target.querySelector('.section-bar button,h1,h2');if(heading){heading.tabIndex=heading.tabIndex<0?-1:heading.tabIndex;heading.focus({preventScroll:true})}})});steps.append(link);
  }
  section.append(steps);
