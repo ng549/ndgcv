@@ -1086,3 +1086,21 @@ main>#capabilities:before,main>#capabilities:after{inset:0;width:auto}
 #product-journey .idea-stage-heading h3{margin:0}
 #contact{background:linear-gradient(90deg,#142733ed,#142733cb),url('illustrations/43.webp') center/cover no-repeat;color:#f6f1e7}
 #contact.is-minimized{background-position:center 45%}
+
+/* Consistent section rhythm without duplicate horizontal rules. */
+main>section:not(#profile):not(.is-minimized){padding-top:40px!important;padding-bottom:40px!important;border-top:0;border-bottom:0}
+main>section>.section-bar{margin:0 0 20px!important;padding:0!important;border:0!important;min-height:36px}
+.overview-section>.intro-disclosure{margin:0 0 24px;border:0}
+.intro-disclosure>summary{padding:12px 0}
+.intro-disclosure>.section-heading,.intro-disclosure>.journey-overview{padding-top:20px;padding-bottom:8px}
+.section-stepper{border:0!important;margin-top:20px;padding-top:8px;padding-bottom:0}
+.private-label-gallery{border:0;margin:24px 0 0}
+#experience .journey-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(245px,30%);gap:36px;align-items:start;--journey-gap:36px}
+#experience .journey-overview>.journey-introduction{margin:0;min-width:0}
+#experience .journey-overview>.career-route{grid-column:2;grid-row:1;padding:0;border:0;margin:0;min-width:0}
+#experience .journey-overview>.career-route:before{display:none}
+#experience .career-route nav{gap:18px;justify-content:flex-start}
+#experience .career-route nav a .route-role{white-space:normal}
+#navigation{gap:5px}
+#navigation>a{line-height:1.4;padding-top:9px;padding-bottom:9px}
+@media(max-width:760px){main>section:not(#profile):not(.is-minimized){padding-top:28px!important;padding-bottom:28px!important}#experience .journey-overview{grid-template-columns:1fr;gap:24px}#experience .journey-overview>.career-route{grid-column:1;grid-row:auto}#navigation>a{padding-top:8px;padding-bottom:8px}}

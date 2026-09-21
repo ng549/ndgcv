@@ -1115,3 +1115,10 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Private-label gallery stays independent: one disclosure, nine floating images and small brand captions underneath. Plain navigation arrows retained.
 - Let's Connect now has illustrated background artwork in both expanded and minimized states, using permitted repeated background43.webp with a dark readability overlay.
 - Build/preservation checks, JS syntax and diff checks passed. Final live verification is recorded in Drive after release.
+
+## 2026-09-21 — Navigation names, spacing and right-hand timeline
+- Updated sidebar labels/targets to the four new overview section names, with separate Explore my career and Private-label products links. Overview navigation opens its disclosure; static fallback anchors exist before script enhancement. Build Process link targets its section directly.
+- Removed Willing to travel from Profile only; retained availability information in About.
+- Standardized expanded top-level section padding to40px desktop/28px narrow layouts, removed redundant section/disclosure/navigation divider lines, tightened disclosure and arrow spacing. Existing minimized112px cards retained.
+- Restored Journey narrative-left/timeline-right desktop grid after overview wrappers had broken the old direct-child CSS selector. Timeline remains stacked on narrow layouts.
+- Build, preservation tests, syntax and diff checks passed. Live verification follows publication and is recorded in Drive.

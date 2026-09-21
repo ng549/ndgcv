@@ -92,6 +92,7 @@ Object.entries(sections).forEach(([id, title]) => {
   section.prepend(bar);
 });
 function revealSection(target) {
+  if(target?.classList.contains('overview-section'))target.querySelector(':scope>details').open=true;
   for (let parent = target; parent; parent = parent.parentElement) {
     if (parent.tagName === 'DETAILS') parent.open = true;
     if (parent.matches('[data-collapsible]')) {
@@ -186,7 +187,7 @@ for(const [selector,id,contentSelector] of [['#experience .journey-overview','ho
  const eyebrow=intro.querySelector('.eyebrow'),details=document.createElement('details'),summary=document.createElement('summary');
  details.className='intro-disclosure';summary.append(eyebrow);
  const cue=document.createElement('span');cue.className='intro-toggle';cue.setAttribute('aria-hidden','true');summary.append(cue);
- const section=document.createElement('section');section.className='overview-section';section.id=id;section.setAttribute('aria-label',eyebrow.textContent);
+ const section=document.createElement('section');section.className='overview-section';intro.removeAttribute('id');section.id=id;section.setAttribute('aria-label',eyebrow.textContent);
  intro.before(section);section.append(details);details.append(summary,intro);
  if(contentSelector){const content=section.parentElement.querySelector(contentSelector);if(content)details.append(content)}
 }
@@ -208,3 +209,7 @@ for(const [id,file] of [['experience','My-journey.webp'],['build','build-v3.webp
  };
  new ResizeObserver(layout).observe(section);layout();
 }
+
+// Overview navigation targets are created after the main section controls.
+document.querySelectorAll('.overview-section,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
+if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){revealSection(target);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
