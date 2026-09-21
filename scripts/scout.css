@@ -3,7 +3,7 @@
 .scout-toggle{display:block;width:100%;padding:0;border:0;background:transparent;color:#fff;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* Continuous articulation: feet remain planted; no pose swaps or whole-body rocking. */
 .scout-toggle,.scout-toggle:hover,.scout-toggle:active{background:transparent!important;border:0!important;box-shadow:none!important;transform:none!important;border-radius:0!important}
-.scout-puppet{display:block;width:100%;height:auto;overflow:visible}.scout-name{font:600 12px/1.4 system-ui,sans-serif;color:inherit;background:transparent;border:0;padding:0}.scout-widget{color:#eabb87;background:none!important;border:0!important;box-shadow:none!important}
+.scout-puppet{display:block;width:100%;height:auto;overflow:hidden}.scout-name{font:600 12px/1.4 system-ui,sans-serif;color:inherit;background:transparent;border:0;padding:0}.scout-widget{color:#eabb87;background:none!important;border:0!important;box-shadow:none!important}
 .scout-puppet g{transform-box:view-box}
 .scout-upper{transform-origin:512px 965px;animation:scout-weight 10s ease-in-out -2s infinite}
 .scout-leg-left{transform-origin:393px 1265px;animation:scout-knee-left 10s ease-in-out -2s infinite}.scout-leg-right{transform-origin:628px 1265px;animation:scout-knee-right 10s ease-in-out -2s infinite}
