@@ -181,22 +181,11 @@ orderedSections.forEach(([id,title],i)=>{
 });
 document.querySelectorAll('[data-current-year]').forEach(el=>el.textContent=new Date().getFullYear());
 
-// The four overview passages have their own compact disclosure controls.
-for(const [selector,id,contentSelector] of [['#experience .journey-overview','how-work-grew',null]]){
- const intro=document.querySelector(selector);if(!intro)continue;
- const eyebrow=intro.querySelector('.eyebrow'),details=document.createElement('details'),summary=document.createElement('summary');
- details.className='intro-disclosure';summary.append(eyebrow);
- const cue=document.createElement('span');cue.className='intro-toggle';cue.setAttribute('aria-hidden','true');summary.append(cue);
- const section=document.createElement('section');section.className='overview-section';intro.removeAttribute('id');section.id=id;section.setAttribute('aria-label',eyebrow.textContent);
- intro.before(section);section.append(details);details.append(summary,intro);
- if(contentSelector){const content=section.parentElement.querySelector(contentSelector);if(content)details.append(content)}
-}
-
 // A distinct, single scene per section. No duplicated background tiles.
 for(const id of ['experience','build','value','product-journey']){
  const art=document.querySelector('#'+id+'>.section-art');if(art)art.replaceChildren();
 }
 
 // Overview navigation targets are created after the main section controls.
-document.querySelectorAll('.overview-section,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
+document.querySelectorAll('#how-work-grew,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
 if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){revealSection(target);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}

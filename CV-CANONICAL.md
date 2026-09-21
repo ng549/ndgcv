@@ -1142,3 +1142,7 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - All eight job previews now have distinct existing company background scenes, a summary, approved work highlights and a prominent Find Out More button. Original foreground images stay in their career tabs without duplication; all32tabs and12examples retained.
 - Journey timeline restored with a continuous line and evenly distributed entries stretched to the adjacent narrative height on desktop. Language and proficiency columns both left aligned.
 - Build, preservation checks and syntax passed. Publication and rendered verification status follows in Drive.
+
+## 2026-09-21 — Single Journey minimize control
+- Removed the nested How the work grew disclosure. Journey narrative and timeline stay together under the top My journey control; the existing navigation anchor remains.
+- JS syntax and build passed; hosted verification recorded in Drive after release.
