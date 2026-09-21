@@ -1103,3 +1103,9 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Let's Connect has five concise bullets, adding business solutions and programs/apps. Six contact actions remain unchanged.
 - Scout has separate thigh/shin segments for idle knee bends, an excited 2.4-second arm/body/face reaction on click, and no visible name beneath him. Feet stay fixed; introduction remains above, with existing pause/reduced-motion support.
 - Build, preservation tests, JavaScript syntax and diff checks passed. Production and rendered verification pending at this implementation commit; exact final status is recorded in Drive after release.
+
+## 2026-09-21 — Clarified private-label gallery and plain navigation arrows
+- Nicolas clarified: one expandable sub-card contains all nine floating private-label images, with small captions underneath, rather than nine individual disclosures with headers.
+- Implemented one initially collapsed Private-label products gallery beneath the five retained process stages. Nine unique images displayed in a responsive three/two/one-column grid, with no image borders, boxes or headings. Brand captions sit below each image. No foreground images duplicated.
+- Removed circular borders/backgrounds from bottom navigation arrows, retaining accessible labels, focus affordances and46px click targets.
+- Build and preservation tests pass. Hosted rendered verification and exact release status follow in Drive canonical.

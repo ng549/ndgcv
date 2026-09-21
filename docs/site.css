@@ -1012,8 +1012,8 @@ main section[data-collapsible].is-minimized>.section-art,main section[data-colla
 #build .help-area{padding:30px 24px;margin:22px -24px;border-top:1px solid #eabb8740}
 /* Arrows keep accessible destination names but show only the arrow. */
 .section-stepper{width:100%!important;max-width:none;padding:22px 0 0;margin-top:24px;gap:20px}
-.section-stepper a{justify-content:center;flex:0 0 46px;width:46px;height:46px;padding:0;border:1px solid currentColor;border-radius:50%;opacity:.85}
-.section-stepper a:hover{opacity:1;background:#eabb871a;text-decoration:none}
+.section-stepper a{justify-content:center;flex:0 0 46px;width:46px;height:46px;padding:0;border:0;border-radius:0;opacity:.85}
+.section-stepper a:hover{opacity:1;background:transparent;text-decoration:none}
 .section-stepper .step-arrow{font-size:26px;color:inherit;line-height:1}
 .section-stepper .step-next{margin-left:auto}
 .hero>.section-stepper{width:88%!important;margin:0 6% 20px;padding:0}
@@ -1059,3 +1059,18 @@ main>#capabilities:before,main>#capabilities:after{inset:0;width:auto}
 #product-journey>.blended-scene:before{background:linear-gradient(90deg,#172b35db,#172b3580)}
 #build .help-area:before{background-repeat:no-repeat;mask-image:linear-gradient(0deg,transparent,#000 18%,#000 82%,transparent)}
 @media(max-width:760px){.intro-disclosure>summary{gap:14px}.intro-disclosure>summary>.eyebrow{font-size:12px;letter-spacing:.03em}.intro-toggle{padding:9px 10px}.idea-product-group>summary{padding:14px}.idea-product-group>summary h4{font-size:14px}#contact .contact-reasons{font-size:16px}}
+
+/* One expandable collection, with unboxed artwork and small captions below. */
+#product-journey .idea-body{display:block}
+#product-journey .idea-copy{max-width:80ch}
+.private-label-gallery{margin:32px 0;border-top:1px solid #eabb8766;border-bottom:1px solid #eabb8766}
+.private-label-gallery>summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;list-style:none}
+.private-label-gallery>summary::-webkit-details-marker{display:none}
+.private-label-gallery>summary h3{margin:0;font:600 26px/1.3 Manrope,sans-serif}
+.private-label-gallery[open]>summary .intro-toggle:after{content:'Minimize −'}
+.private-label-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 22px;padding:20px 0 32px;align-items:start}
+.private-label-sketch{margin:0;min-width:0;border:0;background:none;box-shadow:none}
+#product-journey .private-label-sketch .idea-image{margin:0;padding:0;max-width:none}
+.private-label-sketch figcaption{padding:8px 6px 0;text-align:center;font:400 13px/1.45 'Source Sans 3',sans-serif;color:#e7e0d4}
+@media(max-width:900px){.private-label-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.private-label-grid{grid-template-columns:1fr;gap:26px}.private-label-gallery>summary h3{font-size:22px}}
