@@ -235,7 +235,7 @@ main>section:not(#profile) a{color:#efc68f}
 #career-master .career-designed .company-card-copy>strong,#career-master .career-designed .company-card-copy>span{color:#f4f0e8}
 #career-master .career-open-button,#career-master .palette-stone .career-open-button{background:#14232e;color:#f4f0e8;border-color:#eabb8766}
 /* Aligned slices of one scene, with matching edge tones between bands. */
-main section[data-collapsible].is-minimized{--band-shade:#14232e85;background-image:linear-gradient(#14232e99,var(--band-shade) 50%,#14232e99),url('illustrations/collapsed-warm-scene-v2.webp')!important;background-size:100% 100%,100% var(--band-art-height,924px)!important;background-position:0 0,0 var(--band-art-offset,0px)!important;background-repeat:no-repeat!important;background-attachment:scroll!important;color:#f4f0e8!important;border:0!important;box-shadow:none!important}
+main section[data-collapsible].is-minimized{--band-shade:#14232e85;background-image:var(--band-edge,linear-gradient(transparent,transparent)),linear-gradient(#14232e99,var(--band-shade) 50%,#14232e99),url('illustrations/collapsed-warm-scene-v2.webp')!important;background-size:100% 100%,100% 100%,100% var(--band-art-height,924px)!important;background-position:0 0,0 0,0 var(--band-art-offset,0px)!important;background-repeat:no-repeat!important;background-attachment:scroll!important;color:#f4f0e8!important;border:0!important;box-shadow:none!important}
 main section[data-collapsible].is-minimized:is(#experience,#ai,#product-journey,#value,#opportunity){--band-shade:#26384370}
 main section[data-collapsible].is-minimized::before,main section[data-collapsible].is-minimized::after{display:none!important}
 main section[data-collapsible].is-minimized>:is(.section-art,.systems-backdrop,.build-backdrop,.education-backdrop){display:none!important}
@@ -253,3 +253,16 @@ main section[data-collapsible].is-minimized .section-preview{color:#e0e5e8;opaci
 .site-header #navigation>a,.section-all-controls{flex-shrink:0}
 .section-all-controls{margin-top:10px;padding-bottom:8px}
 @media(min-width:761px) and (max-width:1000px){.site-header #navigation{max-height:calc(100dvh - 100px)}}
+
+/* Soft color rhythm within the same warm palette; no collapsed plus glyph. */
+main section[data-collapsible].is-minimized{--band-title:#d9cdbc;--band-caption:#bbb9ae}
+main section[data-collapsible].is-minimized:is(#experience,#product-journey,#build){--band-title:#d9b88b;--band-caption:#c0b5a6}
+main section[data-collapsible].is-minimized:is(#career-master,#capabilities,#education){--band-title:#bbc9c3;--band-caption:#b0bcb8}
+main section[data-collapsible].is-minimized>.section-bar>span{color:var(--band-title)!important;text-shadow:0 1px 8px #07101899}
+main section[data-collapsible].is-minimized .section-preview{color:var(--band-caption)!important;text-shadow:0 1px 6px #071018}
+/* Both sides meet at precisely the same navy, fading gradually into their imagery. */
+#profile:after{height:140px;background:linear-gradient(transparent,#14232e)}
+#profile .portrait-wrap{mask-image:linear-gradient(to bottom,#000 calc(100% - 115px),transparent)}
+#about.is-minimized{--band-edge:linear-gradient(#14232e,transparent 95%);box-shadow:none!important}
+#education.is-minimized{--band-edge:linear-gradient(transparent 5%,#14232e);box-shadow:none!important}
+#contact{box-shadow:none;background-image:linear-gradient(#14232e,transparent 145px),linear-gradient(90deg,#142733eb,#142733c7),url('illustrations/contact-v3.webp')}

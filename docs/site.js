@@ -80,7 +80,7 @@ Object.entries(sections).forEach(([id, title]) => {
   button.setAttribute('aria-label', `Minimize ${title}`);
   button.addEventListener('click', () => {
     const closed = section.classList.toggle('is-minimized');
-    button.textContent = closed ? '+' : '−';
+    button.textContent = closed ? '' : '−';
     button.setAttribute('aria-expanded', String(!closed));
     button.setAttribute('aria-label', `${closed ? 'Expand' : 'Minimize'} ${title}`);
   });
@@ -88,7 +88,7 @@ Object.entries(sections).forEach(([id, title]) => {
   section.prepend(bar);
   section.addEventListener('click',event=>{if(section.classList.contains('is-minimized')&&!button.contains(event.target))button.click()});
   if(section.matches('[data-collapsible]')){
-    section.classList.add('is-minimized');button.textContent='+';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
+    section.classList.add('is-minimized');button.textContent='';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
   }
 });
 // One global control: expand any closed sections, otherwise minimize all.
