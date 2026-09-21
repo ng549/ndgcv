@@ -1,0 +1,22 @@
+{
+  "destination": "https://nicolasgoureau.com/connect",
+  "quiet_zone_modules": 4,
+  "error_correction": "Q",
+  "checks": [
+    {
+      "size_mm": 25,
+      "dpi": 300,
+      "pixels": 295,
+      "decoded": "https://nicolasgoureau.com/connect"
+    },
+    {
+      "size_mm": 30,
+      "dpi": 300,
+      "pixels": 354,
+      "decoded": "https://nicolasgoureau.com/connect"
+    }
+  ],
+  "physical_phone_scan": "pending",
+  "live_destination": "pending deployment",
+  "label": "Explore my work & connect."
+}

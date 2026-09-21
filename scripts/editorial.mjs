@@ -13,8 +13,8 @@ export function editorial(html,d,e,img){
  ];
  const roles=['moremargin','bigbox','campingworld','campingworld','lemonis','courageb','funtown','campingworld'];
  const result=`<section class="results-section shell" id="value"><div class="section-heading"><span class="eyebrow">What the work changed</span><h2>Different businesses.<br>The same attention to execution.</h2><p>The numbers sit at the end of a chain of decisions. These are the changes behind them—and the experience I would bring to the next organization.</p></div><div class="outcome-stories">${d.highlightsData.map((h,i)=>`<article class="outcome-story"><div><span class="eyebrow">${e(d.rolesData.find(r=>r.id===roles[i]).company)}</span><h3>${reasons[i][0]}</h3><p>${reasons[i][1]}</p><a class="outcome-link" href="#role-${roles[i]}">Read the work behind it ↗</a></div><div class="outcome-evidence"><strong>${e(h.num)} <small>${e(h.unit)}</small></strong><p>${e(h.desc)}</p></div></article>`).join('')}</div></section>`;
- html=html.replace(/<section class="results-section shell"[\s\S]*?(?=<section class="brand-story")/,result+'\n');
- const bg={about:'about-biography',opportunity:'opportunity',experience:'experience',build:'build',value:'value','product-journey':'product',contact:'contact'};
+ html=html.replace(/<section class="results-section shell"[\s\S]*?(?=<section class="brand-story(?:\s|"))/,result+'\n');
+ const bg={about:'about-biography',opportunity:'opportunity',experience:'experience',build:'build',value:'value','product-journey':'product'};
  for(const [id,name] of Object.entries(bg)){
   html=html.replace(new RegExp(`(<section[^>]*id="${id}"[^>]*>)`),`$1<div class="section-art" aria-hidden="true"><img src="illustrations/${id==='experience'?'My-journey':name+(['about','opportunity'].includes(id)?'-v4':'-v3')}.webp" alt="" loading="lazy" data-parallax="0.16"></div>`);
  }

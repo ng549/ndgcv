@@ -1,6 +1,6 @@
 export function education(){return `<section id="education" class="education-section" aria-labelledby="education-heading">
 <div class="education-backdrop" data-parallax="0.12" aria-hidden="true"></div>
-<div class="education-content"><header class="section-heading"><span class="eyebrow">Where business and creativity meet.</span><h2 id="education-heading">The foundations behind the work.</h2></header>
+<div class="education-content"><header class="section-heading"><span class="eyebrow">Academic background</span><h2 id="education-heading">Education</h2></header>
 <article class="education-school" aria-labelledby="education-miami"><header><h3 id="education-miami">University of Miami <span>· 2006</span></h3><p class="education-credentials">B.S.C. Advertising<br>B.B.A. in Economics<br>B.A. in Theatre Arts</p></header><div class="education-pair"><ul>
 <li><strong>Advertising:</strong> I learned to connect an audience, an offering and a persuasive message. That foundation informs how I position products, shape customer experiences and give creative work a clear commercial purpose.</li>
 <li><strong>Economics:</strong> I developed a framework for understanding markets, incentives and resource allocation. It supports the way I weigh pricing, costs and competing priorities—and examine the tradeoffs behind a business decision.</li>

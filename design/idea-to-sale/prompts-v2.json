@@ -1,0 +1,131 @@
+{
+  "rule": "Never reuse images or crops/recolors/minor variations; style references only.",
+  "generation": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "opportunity",
+      "path": "/workspace/scratch/40d032be02fb/generated_images/exec-e8a0522d-265f-464b-ad7d-05939df2c243.png",
+      "prompt": "Create ONE original 1536x1024 landscape editorial conceptual illustration for the opportunity stage of Nicolas Goureau's Interactive CV. An unusual close side-view of a retail assortment planning wall: three shallow niches, two holding plain product silhouettes and one empty illuminated niche; a small magnifying glass leaning against the empty niche, blank customer observation cards clipped to a rail. Express discovering an unmet customer need. No desks, no shop interiors. Match only the visual STYLE of supplied skateshop reference: detailed charcoal/navy drybrush linework, rich navy #172b35, warm amber light, tactile brush texture, credible dimensional perspective. Completely new composition and subjects; never recreate reference scene or crop/recolor it. Whole subject with breathing room, softly painted edges dissolving into navy. No people, faces, words, numbers, logos, borders or captions. This is a conceptual illustration, not documentary evidence.",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1LJF8aTGOr07wHW5Dl7sNoPp7oEhv39qL",
+        "title": "From-Idea-to-Sale-opportunity-v2-master.png",
+        "file_name": "From-Idea-to-Sale-opportunity-v2-master.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1LJF8aTGOr07wHW5Dl7sNoPp7oEhv39qL/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1LJF8aTGOr07wHW5Dl7sNoPp7oEhv39qL",
+          "title": "From-Idea-to-Sale-opportunity-v2-master.png",
+          "file_name": "From-Idea-to-Sale-opportunity-v2-master.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1LJF8aTGOr07wHW5Dl7sNoPp7oEhv39qL/view?usp=drivesdk",
+          "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+        }
+      }
+    },
+    {
+      "id": "economics",
+      "path": "/workspace/scratch/40d032be02fb/generated_images/exec-7553222b-dd85-4540-899a-047bed2bc7d2.png",
+      "prompt": "Create ONE original 1536x1024 landscape editorial conceptual illustration for the economics stage of Nicolas Goureau's Interactive CV. An overhead still life of a brass balance scale, a small plain shipping carton on one pan and several unmarked wooden resource blocks on the other, with a measuring tape curled beneath. Express weighing cost, resources and commercial value. No calculator, notebook, desk-room scene, graphs or coins. Match only the visual STYLE of supplied skateshop reference: detailed charcoal/navy drybrush linework, rich navy #172b35, warm amber light, tactile brush texture, credible dimensional perspective. Completely new composition and subjects; never recreate reference scene or crop/recolor it. Whole subject with breathing room, softly painted edges dissolving into navy. No people, faces, words, numbers, logos, borders or captions. This is a conceptual illustration, not documentary evidence.",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1M0nMbe_-YHlevzZsRIqsujuMDjBKwkFy",
+        "title": "From-Idea-to-Sale-economics-v2-master.png",
+        "file_name": "From-Idea-to-Sale-economics-v2-master.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1M0nMbe_-YHlevzZsRIqsujuMDjBKwkFy/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1M0nMbe_-YHlevzZsRIqsujuMDjBKwkFy",
+          "title": "From-Idea-to-Sale-economics-v2-master.png",
+          "file_name": "From-Idea-to-Sale-economics-v2-master.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1M0nMbe_-YHlevzZsRIqsujuMDjBKwkFy/view?usp=drivesdk",
+          "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+        }
+      }
+    },
+    {
+      "id": "offer",
+      "path": "/workspace/scratch/40d032be02fb/generated_images/exec-73870ef6-efe4-4d20-ba2f-7b3b0518891c.png",
+      "prompt": "Create ONE original 1536x1024 landscape editorial conceptual illustration for the offer stage of Nicolas Goureau's Interactive CV. Close-up of a freestanding sample-development rack: material swatch rings, an unfolded plain packaging dieline and a white unbranded prototype of a compact outdoor lantern suspended beside its assembled packaging. Express product specification and packaging development. No pallets, massage guns, finished retail displays or branded products. Match only the visual STYLE of supplied skateshop reference: detailed charcoal/navy drybrush linework, rich navy #172b35, warm amber light, tactile brush texture, credible dimensional perspective. Completely new composition and subjects; never recreate reference scene or crop/recolor it. Whole subject with breathing room, softly painted edges dissolving into navy. No people, faces, words, numbers, logos, borders or captions. This is a conceptual illustration, not documentary evidence.",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1FM4ZLUdUYRO8XqwHH_BoG8rAai6PW9KA",
+        "title": "From-Idea-to-Sale-offer-v2-master.png",
+        "file_name": "From-Idea-to-Sale-offer-v2-master.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1FM4ZLUdUYRO8XqwHH_BoG8rAai6PW9KA/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1FM4ZLUdUYRO8XqwHH_BoG8rAai6PW9KA",
+          "title": "From-Idea-to-Sale-offer-v2-master.png",
+          "file_name": "From-Idea-to-Sale-offer-v2-master.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1FM4ZLUdUYRO8XqwHH_BoG8rAai6PW9KA/view?usp=drivesdk",
+          "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+        }
+      }
+    },
+    {
+      "id": "operation",
+      "path": "/workspace/scratch/40d032be02fb/generated_images/exec-8a309044-8ba4-44ea-9a29-4c8f369502b8.png",
+      "prompt": "Create ONE original 1536x1024 landscape editorial conceptual illustration for the operation stage of Nicolas Goureau's Interactive CV. A wall-mounted physical handoff organizer, slotted wooden trays with blank order cards, paired key tags and route lines, with a compact wheeled picking basket at its base. Express coordinating roles and handoffs. No packing bench, warehouse aisle, tablet, desktop dashboard or generic store interior. Match only the visual STYLE of supplied skateshop reference: detailed charcoal/navy drybrush linework, rich navy #172b35, warm amber light, tactile brush texture, credible dimensional perspective. Completely new composition and subjects; never recreate reference scene or crop/recolor it. Whole subject with breathing room, softly painted edges dissolving into navy. No people, faces, words, numbers, logos, borders or captions. This is a conceptual illustration, not documentary evidence.",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1qPI3fCEPApOaoXDM8D65-z56lA_Vm6uh",
+        "title": "From-Idea-to-Sale-operation-v2-master.png",
+        "file_name": "From-Idea-to-Sale-operation-v2-master.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1qPI3fCEPApOaoXDM8D65-z56lA_Vm6uh/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1qPI3fCEPApOaoXDM8D65-z56lA_Vm6uh",
+          "title": "From-Idea-to-Sale-operation-v2-master.png",
+          "file_name": "From-Idea-to-Sale-operation-v2-master.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1qPI3fCEPApOaoXDM8D65-z56lA_Vm6uh/view?usp=drivesdk",
+          "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+        }
+      }
+    },
+    {
+      "id": "launch",
+      "path": "/workspace/scratch/40d032be02fb/generated_images/exec-decac0cd-358f-4f91-b9c2-7684b38c4ce2.png",
+      "prompt": "Create ONE original 1536x1024 landscape editorial conceptual illustration for the launch stage of Nicolas Goureau's Interactive CV. A close oblique composition of a freshly opened plain folding countertop display, a small unbranded lantern product, an empty customer feedback card slot and a circular wooden adjustment dial beside it. Express putting an offer into use and learning from customer response. No storefront, ribbon cutting, architecture, graphs or branded product. Match only the visual STYLE of supplied skateshop reference: detailed charcoal/navy drybrush linework, rich navy #172b35, warm amber light, tactile brush texture, credible dimensional perspective. Completely new composition and subjects; never recreate reference scene or crop/recolor it. Whole subject with breathing room, softly painted edges dissolving into navy. No people, faces, words, numbers, logos, borders or captions. This is a conceptual illustration, not documentary evidence.",
+      "drive": {
+        "accepted_input": "file_uri",
+        "success": true,
+        "id": "1-46cpX-ACQJaNkJxGSF5xqA3IDzSi4lJ",
+        "title": "From-Idea-to-Sale-launch-v2-master.png",
+        "file_name": "From-Idea-to-Sale-launch-v2-master.png",
+        "mime_type": "image/png",
+        "url": "https://drive.google.com/file/d/1-46cpX-ACQJaNkJxGSF5xqA3IDzSi4lJ/view?usp=drivesdk",
+        "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S",
+        "structuredContent": {
+          "accepted_input": "file_uri",
+          "success": true,
+          "id": "1-46cpX-ACQJaNkJxGSF5xqA3IDzSi4lJ",
+          "title": "From-Idea-to-Sale-launch-v2-master.png",
+          "file_name": "From-Idea-to-Sale-launch-v2-master.png",
+          "mime_type": "image/png",
+          "url": "https://drive.google.com/file/d/1-46cpX-ACQJaNkJxGSF5xqA3IDzSi4lJ/view?usp=drivesdk",
+          "parent_id": "1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S"
+        }
+      }
+    }
+  ]
+}

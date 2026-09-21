@@ -1,28 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
-const html=fs.readFileSync('docs/index.html','utf8');
-const paths=new Set(['index.html','site.css','site.js']);
-// Section 14 diagram background is referenced from its stylesheet.
-paths.add('illustrations/section14-workspace-background-v2.webp');
-// Section 17 full-section background is referenced in its stylesheet.
-paths.add('assets/systems/section-17-background.webp');
-paths.add('assets/education/section-19-background.webp');
-for(const match of html.matchAll(/(?:src|href|data-shot)="([^"#]+)"/g)){
- const file=match[1].replaceAll('&amp;','&');
- if(!/^(?:https?:|mailto:|tel:)/.test(file)&&fs.existsSync('docs/'+file))paths.add(file);
+// Explicit entrypoints, then follow local references. Source and archives never ship.
+const paths = new Set(['index.html','connect.html','site.css','site.js','connect.css','connect.js','nicolas-goureau.vcf']);
+const queue=[...paths];
+function add(raw,base='') {
+ const value=raw.replaceAll('&amp;','&');
+ if (/^(?:[a-z]+:|#|\/\/)/i.test(value)) return;
+ let file=path.posix.normalize(value.startsWith('/')?value.slice(1):path.posix.join(base,value.split(/[?#]/)[0]));
+ if(file==='.'||file==='')file='index.html';
+ if(file==='connect')file='connect.html';
+ if(!fs.existsSync('docs/'+file)) throw new Error(`Missing public asset: ${file}`);
+ if(!paths.has(file)){paths.add(file);queue.push(file);}
 }
-// Card artwork is referenced by inline CSS, so it must ship alongside img assets.
-for(const match of html.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g)){
- const file=match[1].replaceAll('&amp;','&');
- if(!/^(?:https?:|data:)/.test(file)){
-  if(!fs.existsSync('docs/'+file))throw new Error(`Missing background asset: ${file}`);
-  paths.add(file);
- }
+for(let i=0;i<queue.length;i++) {
+ const file=queue[i];
+ if(!/\.(html|css)$/.test(file))continue;
+ const text=fs.readFileSync('docs/'+file,'utf8');
+ if(file.endsWith('.html'))for(const m of text.matchAll(/(?:src|href|data-shot)="([^"]+)"/g))add(m[1],path.posix.dirname(file));
+ for(const m of text.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g))add(m[1],path.posix.dirname(file));
 }
 fs.rmSync('dist',{recursive:true,force:true});
-fs.mkdirSync('dist',{recursive:true});
-for(const file of paths){fs.mkdirSync(path.dirname('dist/'+file),{recursive:true});fs.copyFileSync('docs/'+file,'dist/'+file)}
-console.log(`Packaged ${paths.size} public site assets.`);
-
-fs.mkdirSync('dist/assets/build-process',{recursive:true});
-fs.copyFileSync('docs/assets/build-process/section-18-background.webp','dist/assets/build-process/section-18-background.webp');
+for(const file of paths){fs.mkdirSync(path.dirname('dist/'+file),{recursive:true});fs.copyFileSync('docs/'+file,'dist/'+file);}
+console.log(`Packaged ${paths.size} public assets; source and portfolio archives excluded.`);

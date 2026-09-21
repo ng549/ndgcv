@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Goureau;Nicolas;;;
+FN:Nicolas Goureau
+EMAIL;TYPE=INTERNET:ngoureau@mac.com
+TEL;TYPE=VOICE:+19175356425
+URL:https://nicolasgoureau.com/
+item1.URL:https://www.linkedin.com/in/nicolas-goureau-6ab3237/
+item1.X-ABLabel:LinkedIn
+END:VCARD

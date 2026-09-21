@@ -905,3 +905,133 @@ Standing rule: substantive bullet points and one relevant paired image per group
 - Published non-force main commit e8d2f816f65692a0a8660cc897dc1e383b79c0f8. New derivatives: docs/assets/education/section-19-miami-logo.webp and section-19-aup-logo.webp. Build and whitespace checks passed; both assets packaged; other sections unchanged.
 - New masters saved and folder readback verified: section-19-education-miami-ring-logo-master.png (1L1pfY8APvzvk9cch-JV7RXU_7ysCEp-_); section-19-education-aup-bosquet-logo-master.png (1FLN5PTJWK5h9S6NK7nsjChyoic8k_pr9). Original versions retained.
 - Actual live desktop screenshots verified both logos, and DOM confirmed both new assets loaded. Mobile visual verification remains PENDING.
+
+
+## 2026-09-20 — Downloadable CV: single QR and separate contact page
+
+- Nicolas requested one QR code on the future two-page downloadable CV, opening options to view the website, email him, request references, and other useful contact actions. He explicitly confirmed this page WILL NOT be the homepage and requested these requirements saved plus a build prompt.
+- Build a separate mobile-first contact page on nicolasgoureau.com. Proposed route: /connect (implementation choice, check existing routes first). Preserve the homepage and existing CV sections. Scope is ng549/ndgcv, not Nexus.
+- Actions: View my CV website (homepage); Email me (verified email); Request references (mailto to Nicolas with subject “Reference request”); View LinkedIn (verified public profile); Save my contact (vCard containing only verified public details). Do not invent addresses, profile URLs, phone numbers or credentials.
+- Keep references' identities and details private. Request references contacts Nicolas; it does not publish or automatically distribute reference details.
+- Use one stable direct own-domain URL in the QR, avoiding third-party redirect subscriptions. Page actions can be updated without changing the QR destination.
+- Future two-page PDF: one QR near contact details, suggested label “Explore my work & connect.” Keep visible clickable email and website as alternatives; make QR clickable in PDF. Use high-contrast vector QR with clear quiet zone; verify decoded destination, phone scanning and printed-size readability before release.
+- Page should be brief, polished, accessible and visually consistent with approved CV: name, purposeful eyebrow, short introduction, clear action list, minimal imagery; substantive bullet points where helpful. No extra QR on its own destination page.
+- Standing prompt rule retained: “Make sure the section name aligns with the one above. Treat this as a standing layout rule. This section needs an eyebrow.” On standalone page apply the established alignment/grid rather than adding artificial sections.
+- Standing images rule retained: inspect approved skateshop sketches and NDG CV → Current → Jobs sheets, image links and notes; resize/adapt relevant source imagery with consistent likeness, linework, palette and texture. Preserve source links and recognizable content. One restrained relevant illustration is sufficient; no faces, fabricated proof, generic substitution or heavy gallery. Text left/image right on desktop, image aligned with body copy; mobile actions remain easy to reach.
+- Build prompt must require current canonical and repo inspection, verified destinations, desktop/mobile and keyboard checks, and preservation of newer changes. Prepare reviewable implementation and preview; deployment is later unless separately authorized. Do not claim pending checks passed.
+- Status: requirements saved; page, QR and PDF are NOT yet built or deployed by this action. Existing sequence remains full CV review → second edits → two-page downloadable CV → LinkedIn rebuild.
+
+## 2026-09-21 — Approved illustrated contact page, Section 20 and portfolio removal
+
+- Nicolas approved implementation with “Ok go” after the handoff proposal and his refinement: background image and header, actual CV portrait in the middle with no sharp edges, name below, surrounding skateshop-style icons with hover descriptions, expandable action list. This explicitly permits the portrait on the separate contact page, superseding the earlier hero-only placement rule for this page. No production deployment authorization was given.
+- Baseline main: 73f2a2e127ff685b978e1c4b779d8c9d60f3df61 (AUP wall plaque). Work branch: cv/connect-illustrated-preview. Nexus branches untouched.
+- Education: eyebrow “Academic background”; main heading “Education”. Qualifications, all institution copy and both approved logo illustrations preserved, including section-19-aup-plaque.webp. Automated comparison confirms only these two strings changed in Education.
+- Section 20: eyebrow “Start a conversation”; headline “What would you like to build?”; introduction “I’d welcome a conversation about what you’re working toward and where I could help.” Three approved bullets cover building a business, developing new offerings and improving operations. Illustrated Email me, LinkedIn and More ways to connect controls; readable email retained. Old reference form replaced by the separate page’s email action. No biography or location repetition.
+- Separate page: docs/connect.html, served at /connect by default Workers HTML handling. Homepage remains separate. Header and short invitation; unchanged CV portrait with CSS edge feathering; name underneath; surrounding object illustrations on desktop, responsive portrait-above-grid on mobile. Existing approved illustrations/43.webp provides the subdued background. No generated face or extra decorative imagery.
+- Five actions: CV homepage; mailto:ngoureau@mac.com; reference request mailto:ngoureau@mac.com?subject=Reference%20request; https://www.linkedin.com/in/nicolas-goureau-6ab3237/; downloadable nicolas-goureau.vcf with name, published email, +19175356425 and homepage only. These contact details were verified against the actual live site. References remain private.
+- Six distinct image controls: browser, envelope, speech bubbles, freestanding LinkedIn in, tabbed contact book, and Section 20 signpost. Built-in image generation, matching visually inspected skateshop reference. Transparent alpha verified, original proportions retained. Masters and prompt set: design/connect/. Web assets: docs/assets/connect/*.webp. Shared registry: scripts/connect.mjs. Hover/focus explanations, Escape dismissal, pressed feedback, persistent labels and reduced-motion CSS implemented; interaction checks remain pending.
+- Three featured project blocks, seven full software projects and three mini examples removed from public output. Preserved full descriptions, original links/statuses, rendered markup, source renderer and all local screenshot/illustration assets in archive/the-agency/, outside the public roots. Manifest and provenance included. No Agency page or placeholder link built. Section 18 retains six process stages and toolkit.
+- One QR prepared: design/connect/connect-qr.svg and connect-qr.png, direct destination https://nicolasgoureau.com/connect. Label “Explore my work & connect.” Python qrcode (Q correction, four-module quiet zone); OpenCV decoded at digital 25/30 mm, 300 dpi samples. Physical phone scanning and production destination verification PENDING. No QR on contact page. PDF not built; future PDF must make QR clickable and retain visible clickable contact details.
+- Verified: npm run build; npm test; local HTTP 200 for both /connect and /connect.html, homepage, vCard and icon; packaged file/anchor checks; exact contact targets and vCard contents; eight-action registry markup. Entire career section byte-for-byte unchanged: eight roles, 32 panels, 12 supporting examples. Existing test checker corrected to strip query strings and recognize current role classes; obsolete software-project count replaced by preservation/removal assertions.
+- Preview exporter: scripts/export-connect-preview.mjs creates self-contained Nicolas-Goureau-Connect-Preview.html for review; all imagery and vCard embedded. Browser policy prevents local URL/file visual preview in this environment. Desktop/mobile visual QA, actual hover/keyboard/focus/contrast verification, extended-icon layout, phone vCard import and physical QR scanning remain PENDING. Do not call these tested or production-ready.
+- Exact status: IMPLEMENTED IN REVIEW BRANCH; BUILD/STRUCTURAL TESTS PASS; NOT DEPLOYED. No merge to main. Release requires visual review and remaining checks. Full scope is not declared Complete.
+- Remaining sequence retained: copilot discussion next (no design/build yet); full live-site inspection → second editing pass and section ordering → two-page downloadable CV with one QR → LinkedIn rebuild.
+
+## 2026-09-21 — Terminology correction and review delivery status
+
+- Nicolas clarified: do not call it a “CV website”; it is an “interactive CV”. Use this terminology in current visitor-facing copy. Contact-page action and header now say “View my interactive CV”; accessible homepage label updated accordingly. Historical quoted requests above remain provenance, not the current wording.
+- Implementation commit before this wording correction: 05e12fb, local branch cv/connect-illustrated-preview. Automatic approval review rejected the GitHub branch push because it interpreted authorization as local-preview work rather than publishing source/assets. Read-only remote verification showed no review branch. No push retry, merge or deployment performed. Explicit push approval remains needed.
+- Self-contained contact preview delivered as Nicolas-Goureau-Connect-Preview.html; this preview’s code, icons, portrait and vCard are embedded. Visual browser QA remains pending.
+
+## 2026-09-21 — Capitalization correction
+
+- Nicolas requires “Interactive CV”, with a capital I. Current action and header: “View my Interactive CV”. Accessible label and self-contained preview use the same capitalization. Supersedes the lowercase wording in the preceding terminology entry. No push or deployment authorized by this correction.
+
+
+
+## 2026-09-21 — Copilot requirements saved in dedicated folder
+- Folder: NDG CV → Current → Copilot, https://drive.google.com/drive/folders/1xIltRRTX-a0Xlx888q-49dV_uSAeq_l0 .
+- Requirements: https://drive.google.com/file/d/15AtcHygwN-KAop729zjWDEYJaCXFeyby/view . Contains knowledge-source scope, positive factual representation, privacy and opt-in assistance requirements.
+- Confirmed flow: Copilot asks if the visitor wants help; if accepted, the request is intended for the future CV command center. Exact fields and delivery mechanism remain undecided.
+- Build the CV command center ONLY WHEN NICOLAS SAYS. This is separate from Nexus. Do not claim delivery until the path exists and is verified. No Copilot or command-center implementation authorized or performed by this save.
+
+
+## 2026-09-21 — Interactive CV icon, full LinkedIn logo and contact card
+
+- User requested a CV-specific illustration rather than a website/browser icon, the full named LinkedIn logo, removal of “More ways to connect”, image masters retained in Drive, and a desktop/mobile contact card containing name, phone, email, website and LinkedIn.
+- Implemented a fanned résumé with CV heading and interaction pointer (docs/assets/connect/cv-v2.webp), and full LinkedIn wordmark (linkedin-v2.webp), both generated using the approved skateshop reference and transparent backgrounds. Built-in ImageGen used. Original image masters retained; current masters are design/connect/cv-v2-master.png and linkedin-v2-master.png.
+- Removed the signpost / More ways to connect control from Section 20; Email me and LinkedIn remain. Separate /connect still has five requested actions, including references and Save my contact. Responsive Section 20 controls use two columns.
+- Save my contact downloads a vCard 3.0 (.vcf) containing Nicolas Goureau, +19175356425, ngoureau@mac.com, https://nicolasgoureau.com/ and the verified LinkedIn profile. LinkedIn is a grouped URL with X-ABLabel:LinkedIn, providing a standard URL fallback. CRLF preserved. No address, invented title or additional personal data added. Desktop/mobile native import testing remains pending; no claim of tested device compatibility.
+- All eight icon masters from this work saved in existing Drive Photos and Imagery folder 1cNwAJFZ7l2pzCZb9XRfAekwi3yuZTA1S, including superseded variants. Filename/ID/status manifest: design/connect/drive-images.json.
+  - Connect-cv-v2-master.png: 19siOfmAsMTPr5PYSLdv0Z4oy7GLDEEpQ (current)
+  - Connect-linkedin-v2-master.png: 1xZfAWKjlqjHmJtvaImx-V2lYBLhJ4oVC (current)
+  - Connect-email-master.png: 1e_ETMKsJyfRx0zFyIyjeOZmPijEKwra1 (current)
+  - Connect-references-master.png: 1VQOFMRzJC8kzcDb7hj27_E3UGVnVqwex (current)
+  - Connect-contact-master.png: 1f6BNjc3CQ0PJi-kIvVP_sLFFB-UlurpG (current)
+  - Connect-website-master.png: 10rz2-nr6dpcqy6KYW88Uam2WYF4B11FU (superseded; preserved)
+  - Connect-linkedin-master.png: 1-v0YFM2rVAmf_RWb6qF6yAaZEe0_g36C (superseded; preserved)
+  - Connect-connect-master.png: 1bZfwG87MiqnwizRJ7EkqhV8-kh8kYOqY (superseded; preserved)
+- Build and structural tests pass, including card contents and absence of the removed link. Updated self-contained preview. Still local review branch only; no GitHub push, merge or deployment. Previous visual/interaction/device QA limitations remain.
+
+
+
+## 2026-09-21 — From idea to sale: implemented for review, not deployed
+
+- Authority: current handoff explicitly requests updating this section, using five proposed stages and the approved visual treatment. Section 6 standing instruction treats direct update requests as implementation instructions. No new facts or separate copy-approval claim. Deployment explicitly withheld.
+- Recovered current main at 73f2a2e127ff685b978e1c4b779d8c9d60f3df61; latest saved work recovered from local cv/connect-illustrated-preview at 817f365. Created local review branch cv/from-idea-to-sale-review from that saved work. No Nexus branches, main, remote branches or deployment changed.
+- Inspected actual live old section and approved Systems & tools treatment in browser; read current Drive canonical and More Margin, Fun Town and Camping World Jobs sheets. Old section was a private-label gallery plus seven numbered steps, with mismatched navigation label Idea to customer.
+- Scope implemented: heading and navigation From idea to sale; meaningful eyebrow; five unnumbered native expandable stages, two first-person bullets and one distinct illustration each. All stages open by default. Career-example links target existing More Margin and Fun Town roles. Short introduction makes clear the work overlaps and involves others.
+- Treatment: approved navy/amber palette and Manrope/Source Sans typography; open layout modeled on Systems & tools; desktop text left/image right, shared grid starts image with bullets below heading; mobile text and its image stay paired. Existing shared section alignment rail and section minimize/expand code preserved. Native details and focus styles implemented. Existing restrained product background/parallax retained, with scoped mobile/reduced-motion override. No content boxes, image borders, detached galleries, image footers or numbered labels.
+- Source renderer scripts/idea-to-sale.mjs; scoped styles scripts/idea-to-sale.css. Build imports renderer and styles. Necessary editorial lookahead updated to accept additional section class without changing Results output. Exact before/after comparison confirms all HTML outside this section and its navigation label remains byte-identical to 817f365, including Results, Capabilities, all eight roles/32 tabs/12 company examples, Education and contact work.
+- Old section renderer retained in archive/from-idea-to-sale/previous-renderer.txt. Original product data/images remain preserved. No additional portfolio work performed.
+- New illustration masters: design/idea-to-sale/{opportunity,economics,offer,operation,launch}-master.png. Web derivatives docs/assets/idea-to-sale/*.webp, all 1200x800 without stretching. Built-in ImageGen, one call per asset; output imagery visually inspected. Prompts and source references preserved in design/idea-to-sale/.
+- Classifications: NuvoMed product, KAMPTIME cartons and DJI exterior are source-based editorial adaptations; costing desk and fulfillment bench are explicitly concepts, not historical evidence. Alt/hover text records these distinctions. Public NuvoMed and DJI source bytes and preserved KAMPTIME original img-15.jpg inspected. Drive planning/logistics transfer URLs returned HTTP403; those images were not used or claimed inspected. Fresh KAMPTIME Drive-byte equivalence not claimed.
+- All five masters and source-reference JSON uploaded to Current/Photos and Imagery and verified by folder readback. IDs: opportunity 1hVvszUwLSy41V6D9Ij1_HflTDVNEWyhI; economics 16_5sawDBYKMAIEhciN-xtbTbAyI8mnGm; offer 1jU13_quSU2ksFN8sJMOgUMNLk1lUc-JM; operation 1K8MzRPC3zUrwNCFyqA2WRsWHNMQVHxMp; launch 1xmC7X16RiYEnMzJtRHyimUesWzhJrxzP. Complete source/prompt manifest: https://drive.google.com/file/d/14ADj5mHiO1xFUznTlpma_0E97jmJQXYm/view?usp=drivesdk.
+- Prepared review artifact: Nicolas-Goureau-From-Idea-to-Sale-Preview.html, generated by scripts/export-idea-sale-preview.mjs. Section-only HTML with embedded images and styles, native stage controls and section minimize control. Career links open existing live CV roles. Font service uses the existing external font request with fallbacks; production parallax is not simulated in this isolated export.
+- Verified: npm run build; npm test; git diff --check; JS syntax; packaged local asset/anchor checks; five stages/ten bullets/five paired illustrations; exact HTML preservation outside scope. Eight roles, 32 tabs and 12 company examples retained. Source CSS implements shared alignment, responsive stack, visible focus and reduced-motion rules; these are source checks, not rendered verification.
+- UNVERIFIED: actual new desktop/mobile visual layout, overflow, measured image/heading alignment, keyboard/focus/minimize runtime behavior, career-link clicking from new version, reduced-motion runtime. Cloud browser blocks local preview URL with ERR_BLOCKED_BY_CLIENT. No supported mobile viewport capability advertised. Do not claim these checks passed or full acceptance complete.
+- Broader saved state preserved: Education simplification, Section20/contact icons, separate /connect, one future downloadable-CV QR and portfolio archive remain in inherited local work, not production. Scout and CV command center untouched. Next sequence retained: full live-site inspection → second editing pass and section ordering → two-page downloadable CV with one QR → LinkedIn rebuild.
+- Exact status: IMPLEMENTED LOCALLY FOR REVIEW; BUILD AND STRUCTURAL/PRESERVATION CHECKS PASS; VISUAL/INTERACTION QA PENDING; NOT PUSHED, MERGED OR DEPLOYED. Stop after this section.
+
+### Implementation copy (for review; based on approved experience)
+
+Eyebrow: Connecting the idea with the operation
+Heading: From idea to sale
+
+I bring the commercial decisions and the practical work together, from shaping an offer to getting it into customers’ hands. These parts overlap: I work through them with the people responsible, returning to earlier decisions as we learn more.
+
+### Identify the opportunity
+- I start with the customer, the need and what is already available—looking for a useful gap in the offer or a new route to market.
+- I draw on the team’s knowledge, sales information and supplier relationships to understand where the business has a reason to compete.
+Career link: New retail channels for NuvoMed → #role-moremargin
+
+### Make the numbers work
+- I work through selling price, product and delivery costs, margin, inventory commitments and the resources needed to proceed.
+- I consider the wider business as well as the individual offer. For DJI, we evaluated the store on its own and its expected contribution to STC’s existing operation.
+Career link: The DJI commercial case → #role-moremargin
+
+### Develop the offer
+- I connect product selection and development with positioning, packaging and the way the customer will buy and use the offer.
+- I work with suppliers and specialists on specifications, samples, pricing and supply arrangements, keeping delivery and selling requirements in view.
+Career link: Fun Town’s house-brand products → #role-funtown
+
+### Build the operation
+- I coordinate the people, partners and systems needed to deliver—from store setup and product records to ordering, inventory and fulfillment.
+- I connect the sales channels with the operation behind them, working with teams on training, replenishment and the handoffs they will manage.
+Career link: Fun Town’s connected retail operation → #role-funtown
+
+### Launch and improve
+- I stay involved as the offer reaches customers, working with the team through the practical details of opening, availability and selling.
+- I use sales, margin, inventory and operating information to revisit the assortment, replenishment and customer channels as the business develops.
+Career link: The DJI opening and ongoing work → #role-moremargin
+
+
+## 2026-09-21 — Golden rule: no image reuse; From idea to sale correction
+- Nicolas: “We do not use the same images again. This is a golden rule.” Follow-up “Go” authorizes this correction in the review version, not deployment.
+- Standing rule across the Interactive CV: never reuse an image in another placement. Crops, recolors and minor variations do not qualify as distinct illustrations. Existing artwork is a style reference only. Apply to future edits; this correction remains scoped to From idea to sale, not a claim that all older placements have been remediated.
+- Replaced all five stage images with newly generated, distinct conceptual compositions: empty assortment niche/customer observations; scale weighing commercial resources; sample/packaging development rack; operational handoff organizer; launch display/feedback. No reused NuvoMed packaging, KAMPTIME pallets or DJI exterior. All alt/hover text explicitly identifies concepts, not historical evidence or claimed client products.
+- Built-in image_gen used, one call per image, approved 43.webp used for style only. Current masters design/idea-to-sale/*-v2-master.png, public assets docs/assets/idea-to-sale/*-v2.png. Previous masters retained as superseded. Full prompts, source reference and Drive links in design/idea-to-sale/prompts-v2.json.
+- New masters saved to Current/Photos and Imagery: opportunity 1LJF8aTGOr07wHW5Dl7sNoPp7oEhv39qL; economics 1M0nMbe_-YHlevzZsRIqsujuMDjBKwkFy; offer 1FM4ZLUdUYRO8XqwHH_BoG8rAai6PW9KA; operation 1qPI3fCEPApOaoXDM8D65-z56lA_Vm6uh; launch 1-46cpX-ACQJaNkJxGSF5xqA3IDzSi4lJ.
+- Inspected generated artwork and comparison sheet of existing local artwork. Build and structural checks pass: eight roles, 32 career panels, 12 supporting examples. Other sections preserved. Updated self-contained review preview. Browser desktop/mobile visual and interaction checks remain pending from previous handoff; no new claim those passed.
+- Status: implemented locally for review; not pushed, merged or deployed. No Scout, command-center or Nexus work.
+

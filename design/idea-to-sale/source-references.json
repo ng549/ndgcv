@@ -1,0 +1,68 @@
+{
+  "status": "Implemented for review; not deployed; visual and interaction QA pending",
+  "date": "2026-09-21",
+  "sources_inspected": [
+    "More Margin Co. Projects",
+    "Fun Town RV Projects",
+    "Camping World Projects",
+    "illustrations/43.webp",
+    "public NuvoMed and DJI source image bytes",
+    "preserved repository img-15.jpg KAMPTIME source"
+  ],
+  "limitations": [
+    "Drive planning and logistics transfer URLs returned HTTP 403; no claim those images were inspected.",
+    "KAMPTIME adaptation uses preserved repository original img-15.jpg; no fresh Drive-byte equivalence claimed."
+  ],
+  "assets": [
+    {
+      "stage": "opportunity",
+      "prompt": "Use case: style-transfer. Create ONE landscape 1536x1024 editorial illustration for Nicolas Goureau's Interactive CV, From idea to sale. Image 1 is STYLE ONLY: match the skateshop's dimensional perspective, detailed navy/charcoal drybrush linework, warm amber highlights, realistic materials, rough painterly texture. Soft brushed edges fading into navy #172b35. No border, frame, panel, captions, numbers, readable fine print, people or faces. Preserve complete subject with breathing space. Image 2 is exact subject reference: preserve the NuvoMed boxed massage gun shape, black handle, round massage head and white carton with accessory graphics. New close three-quarter product composition centered in landscape space, no extra products. An adapted product reference, not a photograph or proof of a retail placement.",
+      "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+      "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwsDhCO2tGq0SxBLTGPGWTKh107N22dhqIIoEJfXwycw&s=10",
+      "classification": "Source-based editorial adaptation; not documentary photography",
+      "local_master": "design/idea-to-sale/opportunity-master.png",
+      "web_asset": "docs/assets/idea-to-sale/opportunity.webp",
+      "drive_master": "https://drive.google.com/file/d/1hVvszUwLSy41V6D9Ij1_HflTDVNEWyhI/view?usp=drivesdk"
+    },
+    {
+      "stage": "economics",
+      "prompt": "Use case: style-transfer. Create ONE landscape 1536x1024 editorial illustration for Nicolas Goureau's Interactive CV, From idea to sale. Image 1 is STYLE ONLY: match the skateshop's dimensional perspective, detailed navy/charcoal drybrush linework, warm amber highlights, realistic materials, rough painterly texture. Soft brushed edges fading into navy #172b35. No border, frame, panel, captions, numbers, readable fine print, people or faces. Preserve complete subject with breathing space. Editorial CONCEPT, not a historical project: a commercial planning desk viewed slightly from above, simple calculator, open cost notebook with blank ruled columns, small plain sample carton, pencil and rolled retail layout. No charts suggesting results or readable invented figures. Clear simple focused composition with the calculator and costing notebook dominant. Same rich navy and amber style.",
+      "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+      "source": null,
+      "classification": "Concept; not historical evidence",
+      "local_master": "design/idea-to-sale/economics-master.png",
+      "web_asset": "docs/assets/idea-to-sale/economics.webp",
+      "drive_master": "https://drive.google.com/file/d/16_5sawDBYKMAIEhciN-xtbTbAyI8mnGm/view?usp=drivesdk"
+    },
+    {
+      "stage": "offer",
+      "prompt": "Use case: style-transfer. Create ONE landscape 1536x1024 editorial illustration for Nicolas Goureau's Interactive CV, From idea to sale. Image 1 is STYLE ONLY: match the skateshop's dimensional perspective, detailed navy/charcoal drybrush linework, warm amber highlights, realistic materials, rough painterly texture. Soft brushed edges fading into navy #172b35. No border, frame, panel, captions, numbers, readable fine print, people or faces. Preserve complete subject with breathing space. Image 2 is exact source subject: KAMPTIME packaged RV sewer-hose products on two wooden pallets in a shop. Preserve recognizable tan cartons, green product graphics, package shapes and two differently sized stacks. Compose a tighter new view of the product assortment at three-quarter angle, all key products in frame. Remove price placard entirely, background faces, unrelated cars and all legible small numbers. Source-based adaptation of existing retail product display.",
+      "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+      "source": "https://drive.google.com/file/d/1sZNvy889Sc8EVuMVoPayh6RkAr81GrEA/view?usp=drive_link",
+      "classification": "Source-based editorial adaptation; not documentary photography",
+      "local_master": "design/idea-to-sale/offer-master.png",
+      "web_asset": "docs/assets/idea-to-sale/offer.webp",
+      "drive_master": "https://drive.google.com/file/d/1jU13_quSU2ksFN8sJMOgUMNLk1lUc-JM/view?usp=drivesdk"
+    },
+    {
+      "stage": "operation",
+      "prompt": "Use case: style-transfer. Create ONE landscape 1536x1024 editorial illustration for Nicolas Goureau's Interactive CV, From idea to sale. Image 1 is STYLE ONLY: match the skateshop's dimensional perspective, detailed navy/charcoal drybrush linework, warm amber highlights, realistic materials, rough painterly texture. Soft brushed edges fading into navy #172b35. No border, frame, panel, captions, numbers, readable fine print, people or faces. Preserve complete subject with breathing space. Editorial CONCEPT informed by confirmed retail fulfillment work, not documentary premises: a small orderly dispatch work area, packing bench with open shipping carton and handheld barcode scanner, low stocked shelving with a few closed cartons, a tablet with blank simple order rows. Oblique view along bench toward shelves. No fabricated brand logos or exact software interface. Emphasize physical flow from stocked merchandise to packed order. Distinct from a finance desk.",
+      "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+      "source": null,
+      "classification": "Concept; not historical evidence",
+      "local_master": "design/idea-to-sale/operation-master.png",
+      "web_asset": "docs/assets/idea-to-sale/operation.webp",
+      "drive_master": "https://drive.google.com/file/d/1K8MzRPC3zUrwNCFyqA2WRsWHNMQVHxMp/view?usp=drivesdk"
+    },
+    {
+      "stage": "launch",
+      "prompt": "Use case: style-transfer. Create ONE landscape 1536x1024 editorial illustration for Nicolas Goureau's Interactive CV, From idea to sale. Image 1 is STYLE ONLY: match the skateshop's dimensional perspective, detailed navy/charcoal drybrush linework, warm amber highlights, realistic materials, rough painterly texture. Soft brushed edges fading into navy #172b35. No border, frame, panel, captions, numbers, readable fine print, people or faces. Preserve complete subject with breathing space. Image 2 is exact architectural source: preserve narrow DJI Fifth Avenue facade, tall vertical ribs, white DJI mark, stone surrounds and entrance proportions. New landscape composition emphasizing entrance and full distinctive ribbed facade. Omit all people, neighboring promotional imagery, vehicle and construction clutter. Do not invent an interior or grand-opening event. Source-based exterior adaptation, not historical proof of opening.",
+      "style_reference": "https://nicolasgoureau.com/illustrations/43.webp",
+      "source": "https://i0.wp.com/www.thedronegirl.com/wp-content/uploads/2024/03/DJI-NYC_5thAve_Exterior_01.jpg?resize=720%2C900&ssl=1",
+      "classification": "Source-based editorial adaptation; not documentary photography",
+      "local_master": "design/idea-to-sale/launch-master.png",
+      "web_asset": "docs/assets/idea-to-sale/launch.webp",
+      "drive_master": "https://drive.google.com/file/d/1xmC7X16RiYEnMzJtRHyimUesWzhJrxzP/view?usp=drivesdk"
+    }
+  ]
+}

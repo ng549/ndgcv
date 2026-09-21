@@ -1,0 +1,722 @@
+{
+  "aiProjectsData": [
+    {
+      "id": "parkour",
+      "name": "PARKOUR",
+      "role": "AI Agent Operations & Orchestration Console",
+      "status": "INTERACTIVE PROTOTYPE — DESIGN FREEZE V1",
+      "label": "Product Design · Systems Architecture · AI Orchestration · Prototyping",
+      "logo": "uploads/parkour/images/brand/wordmark.svg",
+      "mark": "uploads/parkour/images/brand/mark.svg",
+      "accent": "#00E5FF",
+      "statusBorder": "rgba(0,229,255,0.45)",
+      "bulletColor": "#00E5FF",
+      "panelBg": "#0B0C0F",
+      "panelBorder": "rgba(0,229,255,0.28)",
+      "consoleBg": "#12141A",
+      "roleColor": "#00E5FF",
+      "labelColor": "#9AA6B2",
+      "tabActiveText": "#0B0C0F",
+      "bodyColor": "#CBD5DE",
+      "flowCols": [
+        "#00E5FF",
+        "#A78BFA",
+        "#F43F5E"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "One console to run, watch, and audit multiple AI agents"
+        },
+        {
+          "name": "Research",
+          "desc": "Surveyed multi-agent orchestration and cost-control patterns via live research"
+        },
+        {
+          "name": "Product definition",
+          "desc": "PRODUCT_SPEC set five screens, budgets, approvals, emergency stop"
+        },
+        {
+          "name": "Architecture",
+          "desc": "ARCHITECTURE.md canonical models mirrored in replaceable mock adapters"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "ChatGPT, Grok, and Claude collaborate through Grand Central Connections"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "Specs, ADRs, and sync receipts live on agent/control-tower-v1"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Five screens wired to five mock adapters with documented attach points"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Verifier passes; truthful NOT CONFIGURED and AUTH FAILED states enforced"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Approval queue, layered budgets, and emergency stop guard agent actions"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Population pass, readability pass, then design freeze at V1"
+        }
+      ],
+      "bullets": [
+        "Five operations screens in one console: Control Tower, Grand Central, Communications, Costs, Integrations.",
+        "Grand Central runs AI-to-AI Connections (ChatGPT and Grok) with purpose, budget, and stop conditions declared upfront.",
+        "Every screen reads from a replaceable mock-data adapter, so a real backend attaches without UI changes.",
+        "Cost intelligence attributes spend per agent, provider, and project, with layered budgets and an emergency stop.",
+        "Work products publish back to GitHub as Issues, ADRs, and tasks on branch agent/control-tower-v1."
+      ],
+      "shots": [
+        {
+          "lab": "Control Tower",
+          "src": "uploads/parkour/images/product/00-control-tower.png",
+          "alt": "Live agent dashboard with fleet metrics, project cards, and activity stream"
+        },
+        {
+          "lab": "Grand Central",
+          "src": "uploads/parkour/images/product/01-grand-central.png",
+          "alt": "AI-to-AI message exchange with Connections, Bullpen, and containment zones"
+        },
+        {
+          "lab": "Communications",
+          "src": "uploads/parkour/images/product/02-communications.png",
+          "alt": "Multi-provider communications console with conversation threads and composer"
+        },
+        {
+          "lab": "Costs",
+          "src": "uploads/parkour/images/product/03-costs.png",
+          "alt": "AI cost intelligence with per-agent spend attribution and layered budgets"
+        },
+        {
+          "lab": "Integrations",
+          "src": "uploads/parkour/images/product/04-integrations.png",
+          "alt": "Provider integrations with schema-driven forms and credential status states"
+        }
+      ]
+    },
+    {
+      "id": "atomiq",
+      "name": "ATOMIQ",
+      "role": "Adaptive Audio Engine",
+      "status": "LIVE 1.0 · ADAPTIVE AUDIO ENGINE",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "DJs needed audio that adapts to the music without taking away control"
+        },
+        {
+          "name": "Research",
+          "desc": "Studied existing DJ software, browser audio limits, and MIDI hardware standards"
+        },
+        {
+          "name": "Product definition",
+          "desc": "Scoped LIVE 1.0: four decks, stems, hardware link, and the CORE engine"
+        },
+        {
+          "name": "Architecture",
+          "desc": "Designed the Adaptive Audio Engine as one shared clock for every surface"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "Grok and Claude built decks, mixer, library, and visuals side by side"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "Every module, test log, and handoff lived in one repo"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Combined decks, sampler, sequencer, and mobile into one live booth"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "400/400 hardware, 489/489 interface, 433/433 intelligence checks passed"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Nothing shipped until it felt right on real hardware, by hand"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Shipped LIVE 1.0; mix scoring proven against a 5,000-track library"
+        }
+      ],
+      "label": "Real-Time Audio · Adaptive Audio Engine · Hardware Link · AI-Assisted Build",
+      "logo": "uploads/atomiq-wordmark.png",
+      "mark": "assets/atomiq-nucleus-tight.png",
+      "accent": "#18BEF0",
+      "statusBorder": "rgba(236,19,128,0.55)",
+      "bulletColor": "#18BEF0",
+      "panelBg": "#04070A",
+      "panelBorder": "rgba(24,190,240,0.28)",
+      "consoleBg": "#080D13",
+      "roleColor": "#18BEF0",
+      "labelColor": "#8FD4E8",
+      "tabActiveText": "#04070A",
+      "defaultShot": 1,
+      "bulletsHead": "The Product",
+      "bullets": [
+        "Started as a real DJ app running in the browser — four decks, real audio, MIDI hardware support, track analysis, and saved libraries — and grew into ATOMIQ LIVE 1.0, a complete performance system.",
+        "The Adaptive Audio Engine is the system's shared clock: decks, waveforms, stems, hardware lights, and visuals all stay in time with the music's phrase, key, and energy. The software spots the moment; the DJ makes the call.",
+        "Tested like serious software: hardware control passed 400/400 checks three runs in a row, the interface 489/489, and the intelligence layer 433/433 — with mix scoring proven against a 5,000-track library.",
+        "The intelligence picks the best next track, explains exactly how to mix into it, and can even mix on its own — but the moment the DJ touches a fader, control snaps back instantly. It helps the performer, never replaces them.",
+        "The product site, the live browser booth (desktop and phone), hardware connections, video output for the crowd, and one unified music library were all built with AI as the tools (Grok + Claude) — directed like a product team, not generated as a mockup."
+      ],
+      "shots": [
+        {
+          "lab": "Live",
+          "src": "uploads/ATOMIQ-UI-Main-Performance-Core.png",
+          "alt": "Working browser booth — decks, mixer, library, CORE"
+        },
+        {
+          "lab": "Performance Core",
+          "src": "uploads/atomiq-performance-core.png",
+          "alt": "ATOMIQ Performance Core — library, dual decks, four-channel mixer, stems, CORE, mix queue"
+        },
+        {
+          "lab": "Sampler",
+          "src": "uploads/atomiq-sampler.png",
+          "alt": "ATOMIQ Sampler — session grid, clip editor, banks, CORE"
+        },
+        {
+          "lab": "Sequencer",
+          "src": "uploads/atomiq-sequencer.png",
+          "alt": "ATOMIQ Step Sequencer — pattern bank, step grid, scenes, CORE"
+        },
+        {
+          "lab": "Mobile",
+          "src": "uploads/atomiq-mobile.png",
+          "alt": "ATOMIQ Stems / Remix — dual-deck stem mixing, transition builder, CORE"
+        }
+      ]
+    },
+    {
+      "id": "merchantpro",
+      "name": "MERCHANT PRO",
+      "role": "Retail OTB, Sourcing & Private-Label Intelligence Platform",
+      "status": "IN DEVELOPMENT",
+      "label": "Retail Strategy · Sourcing · Product Architecture · AI Workflow",
+      "logo": "assets/merchantpro-wordmark.svg",
+      "mark": "assets/merchantpro-mark.svg",
+      "accent": "#2DD4BF",
+      "statusBorder": "rgba(45,212,191,0.5)",
+      "bulletColor": "#2DD4BF",
+      "panelBg": "#0B0E12",
+      "panelBorder": "rgba(45,212,191,0.3)",
+      "consoleBg": "#12161C",
+      "roleColor": "#2DD4BF",
+      "labelColor": "#9AA6B2",
+      "tabActiveText": "#0B0E12",
+      "bodyColor": "#CBD5DE",
+      "flowCols": [
+        "#2DD4BF",
+        "#38BDF8",
+        "#A78BFA"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "Framed margin, OTB, cash, and sourcing decisions as one workflow"
+        },
+        {
+          "name": "Research",
+          "desc": "Benchmarked retail planning, sourcing, freight, tariff, and data providers"
+        },
+        {
+          "name": "Product definition",
+          "desc": "Narrowed 21-module vision to standalone OTB and sourcing intelligence"
+        },
+        {
+          "name": "Architecture",
+          "desc": "Separated native decision logic from swappable external provider adapters"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "Grok researched; ChatGPT synthesized; Claude implemented repository-aware increments"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "Branches, ADRs, PRs, research packs, backlog live in GitHub"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Landed Money/Quantity kernel; staged Sheets, ERP, provider adapters"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Ran 36 kernel tests plus lint and strict TypeScript checks"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Architecture and phase changes required explicit owner review before merge"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Pivoted broad platform into faster OTB/sourcing standalone product"
+        }
+      ],
+      "bullets": [
+        "Designed a 21-module retail operating platform, then narrowed the first standalone product to Open-to-Buy, sourcing, private label, landed cost, and product-opportunity analysis.",
+        "Defined an OTB model that separates retail OTB from cost OTB, including a 30%-to-75% margin scenario that releases $4,500 of purchasing capacity on $10,000 of sales.",
+        "Built the TypeScript/Node shared financial kernel with bigint Money and Quantity value objects plus 36 passing unit and property tests.",
+        "Researched a provider-agnostic Phase-1 stack for retail price, supplier discovery, freight, and HTS/duty data using SerpApi, ImportYeti, Freightos, USITC, and optional commercial adapters.",
+        "Established Google Sheets/CSV/XLSX as the low-friction data path while preserving later ERP/POS/API integration with Oracle, SAP, NetSuite, Dynamics, Shopify, Lightspeed, and Square."
+      ],
+      "shots": [
+        {
+          "lab": "Product",
+          "src": "assets/merchantpro/00-product-thesis.png",
+          "alt": "Merchant PRO repository product thesis showing Plan, Source, Discover, and Opportunities"
+        },
+        {
+          "lab": "OTB Model",
+          "src": "assets/merchantpro/01-otb-model.png",
+          "alt": "Current branded SKU compared with private-label economics and $4,500 cost OTB released"
+        },
+        {
+          "lab": "Data Stack",
+          "src": "assets/merchantpro/02-provider-stack.png",
+          "alt": "Phase-1 provider research covering retail pricing, suppliers, freight, tariffs, and ingestion"
+        },
+        {
+          "lab": "Kernel",
+          "src": "assets/merchantpro/03-money-kernel.png",
+          "alt": "Merchant PRO shared-kernel evidence showing exact bigint money arithmetic and test controls"
+        }
+      ]
+    },
+    {
+      "id": "nexus",
+      "name": "NEXUS",
+      "role": "Two-Operator AI Discovery Console",
+      "status": "LIVE · PRIVATE DEPLOYMENT",
+      "label": "UX/UI Design · AI Orchestration · Cloudflare Workers · Google Workspace APIs",
+      "logo": "assets/nexus-console-wordmark.svg",
+      "mark": "assets/nexus-console-mark.svg",
+      "accent": "#2FB4B4",
+      "statusBorder": "rgba(47,180,180,0.5)",
+      "bulletColor": "#2FB4B4",
+      "panelBg": "#1E282D",
+      "panelBorder": "rgba(47,180,180,0.3)",
+      "consoleBg": "#243036",
+      "roleColor": "#2FB4B4",
+      "labelColor": "#9FB0B6",
+      "tabActiveText": "#1E282D",
+      "bodyColor": "#D2DCDE",
+      "flowCols": [
+        "#2FB4B4",
+        "#B0A4FF",
+        "#D9A441"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "Two operators needed one shared console for a discovery-phase venture"
+        },
+        {
+          "name": "Research",
+          "desc": "Perplexity wired in for sourced market research; 12 findings logged"
+        },
+        {
+          "name": "Product definition",
+          "desc": "Discovery 0.1 scope written to DISCOVERY-0.1.md; architecture deliberately locked"
+        },
+        {
+          "name": "Architecture",
+          "desc": "Cloudflare Workers plus Google Drive and Sheets as the data layer"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "Grok and Perplexity run as guardrailed agents inside the console"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "ng549/nexus holds specs, step docs and Worker source"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "OAuth, write APIs and Drive/Sheet mirroring shipped as staged steps"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Every deploy verified live — token refresh, per-action sync, Vault round-trip"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Two seats only; architecture locked; Grok RUN gated behind approval"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Nine shipped steps from read-only HUD to full write-back console"
+        }
+      ],
+      "bullets": [
+        "A private two-operator workspace console deployed on Cloudflare Workers, gated by Google OAuth with 7-day auto-renewing sessions.",
+        "An action board that mirrors to a Google Sheet within seconds, with fuzzy row-matching per action and a one-click full push.",
+        "A live Google Drive browser reading the real project folder tree three levels deep, with thumbnail previews and drag-to-move.",
+        "A password-gated Vault that writes entries to a Sheet tab and Drive JSON, logging every unlock, view and copy.",
+        "Built-in Grok (ask / research / run) and Perplexity panels that answer with cited sources and log outputs to Drive."
+      ],
+      "shots": [
+        {
+          "lab": "Command HUD",
+          "src": "uploads/nexus/images/product/00-command-hud.png",
+          "alt": "Main console board with KPI pulse, completion tracker, action board and live updates"
+        },
+        {
+          "lab": "Build Map",
+          "src": "uploads/nexus/images/product/01-build-map.png",
+          "alt": "Seven-module build map with per-module progress, AI tool picks and a locked architecture track"
+        },
+        {
+          "lab": "Drive Files",
+          "src": "uploads/nexus/images/product/02-drive-files.png",
+          "alt": "Live Google Drive directory of the project folder with file transfer and preview pane"
+        },
+        {
+          "lab": "Day Mode",
+          "src": "uploads/nexus/images/product/03-day-mode.png",
+          "alt": "The same console board in the light day theme with an action detail panel open"
+        }
+      ]
+    },
+    {
+      "id": "pinpoint",
+      "name": "PINPOINT",
+      "role": "AI-Assisted Pickleball Intelligence & Training",
+      "status": "EXPLORATION / PROTOTYPE",
+      "label": "Sports Intelligence · Interaction Design · AI-Assisted Coaching",
+      "logo": "assets/pinpoint-wordmark-tight.svg",
+      "mark": "uploads/PINPOINT-CV-Claude-Design/images/brand/mark.svg",
+      "accent": "#9CDD34",
+      "statusBorder": "rgba(156,221,52,0.45)",
+      "bulletColor": "#9CDD34",
+      "panelBg": "#07100D",
+      "panelBorder": "rgba(156,221,52,0.28)",
+      "consoleBg": "#0E1A16",
+      "roleColor": "#9CDD34",
+      "labelColor": "#91A098",
+      "tabActiveText": "#07100D",
+      "bodyColor": "#D9E2D8",
+      "flowCols": [
+        "#9CDD34",
+        "#E9B44C",
+        "#91A098"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "Players get match video but no idea why they lost the point"
+        },
+        {
+          "name": "Research",
+          "desc": "Studied court geometry, positioning theory, and one-phone capture limits"
+        },
+        {
+          "name": "Product definition",
+          "desc": "Picked Court IQ as the first build target with a clear success test"
+        },
+        {
+          "name": "Architecture",
+          "desc": "Designed one loop: record, calibrate, analyze, explain, train"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "AI built Court IQ scenarios, match analysis, and the player model in parallel"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "Concepts, prototypes, and the roadmap live in one repo"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Interactive Court IQ trainer with live optimal-position zones"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Every scenario checked against real positioning rules"
+        },
+        {
+          "name": "Human gates",
+          "desc": "On-court sense decides what ships, not the model"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Prove Court IQ first, then extend to Match Intelligence"
+        }
+      ],
+      "bullets": [
+        "Connects match capture, court calibration, movement analysis, plain-language explanations, and targeted training in one improvement loop.",
+        "Uses Court IQ scenarios to teach positioning, recovery, spacing, shot geometry, and the reason a point changed.",
+        "Builds Match Intelligence from player location, shot patterns, kitchen-line behavior, partner spacing, winners, errors, and pressure moments.",
+        "Develops a multidimensional player model across serve, return, dink, volley, positioning, reaction, consistency, power, accuracy, strategy, and awareness.",
+        "Extends the same intelligence layer into player profiles, equipment guidance, combine testing, and repeatable practice scenarios."
+      ],
+      "shots": [
+        {
+          "lab": "Platform",
+          "src": "assets/pinpoint-00-concept-clean.png",
+          "alt": "PinPoint concept overview — pickleball intelligence platform with Court IQ first build target"
+        },
+        {
+          "lab": "Court IQ",
+          "src": "uploads/PINPOINT-CV-Claude-Design/images/product/01-court-iq.png",
+          "alt": "Court IQ — interactive positioning and strategy trainer with live optimal-position zones"
+        },
+        {
+          "lab": "Match Intelligence",
+          "src": "uploads/PINPOINT-CV-Claude-Design/images/product/02-match-intelligence.png",
+          "alt": "Match Intelligence — one-phone match capture with player tracking and coaching feedback"
+        },
+        {
+          "lab": "Player Model",
+          "src": "uploads/PINPOINT-CV-Claude-Design/images/product/03-player-model.png",
+          "alt": "Player model — multidimensional skill profile across serve, return, positioning, strategy"
+        },
+        {
+          "lab": "Roadmap",
+          "src": "uploads/PINPOINT-CV-Claude-Design/images/evidence/00-next-build.png",
+          "alt": "PinPoint roadmap — deep dive on Court IQ, first build target and success test"
+        }
+      ]
+    },
+    {
+      "id": "mediapipeline",
+      "name": "MEDIA PRODUCTION PIPELINE",
+      "role": "Client Production Operations & AI Workflow Tracker",
+      "status": "INTERACTIVE PROTOTYPE",
+      "label": "Product Design · UX Systems · AI Workflow Ops · Front-End Prototyping",
+      "logo": "uploads/media-production/images/brand/wordmark.svg",
+      "mark": "uploads/media-production/images/brand/mark.svg",
+      "accent": "#5980A6",
+      "statusBorder": "rgba(89,128,166,0.5)",
+      "bulletColor": "#7FA3C7",
+      "panelBg": "#0B0E12",
+      "panelBorder": "rgba(89,128,166,0.3)",
+      "consoleBg": "#12161C",
+      "roleColor": "#7FA3C7",
+      "labelColor": "#9AA3AB",
+      "tabActiveText": "#0B0E12",
+      "bodyColor": "#CBD3DB",
+      "flowCols": [
+        "#7FA3C7",
+        "#5980A6",
+        "#9AA3AB"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "Agency jobs stalled across AI tools with no shared, client-safe status view"
+        },
+        {
+          "name": "Research",
+          "desc": "Mapped ten real stages, owners, tools, time and cost into a tracker CSV"
+        },
+        {
+          "name": "Product definition",
+          "desc": "One tracker; clients see only intake and delivery, all else internal"
+        },
+        {
+          "name": "Architecture",
+          "desc": "Single-file component, local state, Apps Script sheet sync, Drive-hosted media"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "Claude drafted stage checklists, prompts and four layout systems in parallel"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "No repo; versioned single-file sources and the tracker CSV are canonical"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Wired sheet sync, image-generation proxy, Drive previews and CSV export"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Exercised approvals, layout switching, sync failures and delete confirmations each pass"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Approve-to-delivery, pull-back and delete confirmations gate every irreversible action"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Two pipeline versions plus a standalone build iterated into the working prototype"
+        }
+      ],
+      "bullets": [
+        "Runs every client job through ten numbered stages, 01 Intake to 10 Delivery, and the client only ever sees those two.",
+        "A 12-service rate card (research through media buying) prices work once; clients tick services at intake without seeing rates.",
+        "One board tracks many projects at once, each with per-stage progress bars, due-date countdowns, a project ID convention and an archive.",
+        "The video variant budgets each stage in time and money — about $675 of AI generation per finished video across script, stills, motion, sound and up-res.",
+        "A Google Apps Script backend writes one sheet row per project and proxies image generation into Drive, so API keys never reach the browser."
+      ],
+      "shots": [
+        {
+          "lab": "Portal",
+          "src": "uploads/media-production/images/product/00-control-tower.png",
+          "alt": "Ten-stage hub grid with client-visible flags and per-stage progress bars"
+        },
+        {
+          "lab": "Projects",
+          "src": "uploads/media-production/images/product/01-projects-board.png",
+          "alt": "Multi-project board with stage strips, completion percentages and due-date countdowns"
+        },
+        {
+          "lab": "Stage Detail",
+          "src": "uploads/media-production/images/product/02-stage-detail.png",
+          "alt": "Stage 05 Build checklist with handoffs, owner and time-and-money panel"
+        },
+        {
+          "lab": "Client View",
+          "src": "uploads/media-production/images/product/03-client-view.png",
+          "alt": "Stage 10 Delivery, the client's read-only progress view across all stages"
+        },
+        {
+          "lab": "Rate Card",
+          "src": "uploads/media-production/images/product/04-rate-card.png",
+          "alt": "Internal 12-service rate card with unit, rate and duration per service"
+        }
+      ]
+    },
+    {
+      "id": "pos",
+      "name": "UNIT POS",
+      "role": "Unified Multi-Channel Point of Sale System",
+      "status": "INTERACTIVE PROTOTYPE",
+      "label": "Product Design · UX Prototyping · Design Systems · Retail Ops",
+      "logo": "assets/pos-wordmark.svg",
+      "mark": "assets/pos-mark.svg",
+      "accent": "#5980A6",
+      "statusBorder": "rgba(89,128,166,0.5)",
+      "bulletColor": "#8FA9C4",
+      "panelBg": "#10151B",
+      "panelBorder": "rgba(89,128,166,0.3)",
+      "consoleBg": "#171D25",
+      "roleColor": "#8FA9C4",
+      "labelColor": "#9AA3AB",
+      "tabActiveText": "#10151B",
+      "bodyColor": "#CBD3DB",
+      "flowCols": [
+        "#8FA9C4",
+        "#5980A6",
+        "#C9D4DF"
+      ],
+      "bulletsHead": "The Product",
+      "flow": [
+        {
+          "name": "Business problem",
+          "desc": "POS modules — data, payments, e-commerce — never unify; design one ledger"
+        },
+        {
+          "name": "Research",
+          "desc": "13-question intake fixed devices, inputs, tenders, catalog scale, staff needs"
+        },
+        {
+          "name": "Product definition",
+          "desc": "9 screens scoped, from order entry to end-of-day report"
+        },
+        {
+          "name": "Architecture",
+          "desc": "One state tree drives both iPad and phone shells"
+        },
+        {
+          "name": "Parallel AI agents",
+          "desc": "Builder and background verifier agents ran concurrently per iteration"
+        },
+        {
+          "name": "GitHub — source of truth",
+          "desc": "Not used; single-file prototype versioned inside the design workspace"
+        },
+        {
+          "name": "Build & integration",
+          "desc": "Composed on the Industry design system — tokens, blueprint frames, Lucide icons"
+        },
+        {
+          "name": "Tests / review",
+          "desc": "Automated verifier flagged icon and bundle-load defects; fixed same turn"
+        },
+        {
+          "name": "Human gates",
+          "desc": "Owner approved scope answers and reviewed each shipped iteration"
+        },
+        {
+          "name": "Iteration / product",
+          "desc": "Asset fixes shipped; sale-screen layout variations queued next"
+        }
+      ],
+      "bullets": [
+        "One register serves three business types — café, retail, bar — switched from a single home-screen dropdown, each with its own catalog and modifier sets.",
+        "Items enter an order five ways: tap grid, name/SKU search, barcode scan, PLU keypad, and weight scale, sized for catalogs of hundreds of items.",
+        "Payment covers card, cash with change calculation, gift card and house account, splits up to 4 ways, and 4 tip presets.",
+        "The product database syncs from a Google Sheet, and tabs, refunds and end-of-day treat counter and web-store sales as one ledger.",
+        "One codebase renders both target devices, iPad (1194×834) and phone (390×844), with a persistent sync strip for Sheet, payments, web store, kitchen and offline status."
+      ],
+      "shots": [
+        {
+          "lab": "Register",
+          "src": "uploads/pos/images/product/00-register.png",
+          "alt": "Order entry on iPad — café catalog grid with live cart, modifiers and totals"
+        },
+        {
+          "lab": "Payment",
+          "src": "uploads/pos/images/product/01-payment.png",
+          "alt": "Payment screen with split options, tip presets, tender list and totals"
+        },
+        {
+          "lab": "Open Tabs",
+          "src": "uploads/pos/images/product/02-tabs.png",
+          "alt": "Held orders from counter, web store and invoice channels on one board"
+        },
+        {
+          "lab": "Catalog Sync",
+          "src": "uploads/pos/images/product/03-catalog.png",
+          "alt": "Inventory table synced from a Google Sheet with stock status tags"
+        },
+        {
+          "lab": "End of Day",
+          "src": "uploads/pos/images/product/04-report.png",
+          "alt": "Daily report unifying counter and web sales with tender breakdown and top items"
+        }
+      ]
+    }
+  ],
+  "aiMinisData": [
+    {
+      "id": "broker",
+      "name": "FLOOR/DESK Broker Terminal",
+      "status": "Interactive prototype",
+      "img": "ndgcv/assets/ai-portfolio/screens/BROKER-TERMINAL-01-POSITION-HOME.png",
+      "alt": "FLOOR/DESK broker terminal — position home with dollars at risk and recommended actions",
+      "text": "Perishable ticket inventory treated as a trading book: dollars at risk, sell-through pace, days-to-event, floor pricing, undercutting, and recommended repricing actions. Applies inventory and margin thinking to pricing decisions."
+    },
+    {
+      "id": "eduk8",
+      "name": "EDU K8 DJ Pro",
+      "status": "Functional prototype",
+      "img": "ndgcv/assets/ai-portfolio/screens/EDUK8-01-HOME-IOS.png",
+      "alt": "EDU K8 DJ Pro — child-friendly home screen on iOS",
+      "text": "A child-friendly DJ learning companion backed by a real Web Audio analysis engine, reusing the technical foundations of the larger performance program. Uses the audio technology from the larger performance program in a learning product."
+    },
+    {
+      "id": "foundry",
+      "name": "Foundry — Agent Ecosystem",
+      "status": "Design",
+      "img": "ndgcv/assets/ai-portfolio/screens/FOUNDRY-01-AGENT-ECOSYSTEM-OVERVIEW.png",
+      "alt": "Foundry — six-agent e-commerce operating dashboard overview",
+      "text": "An AI-operated e-commerce model: six specialist agents own research, design, content, listings, scheduling, and analysis while the human retains approval and strategic control. The early expression of the agent thesis PARKOUR later formalized."
+    }
+  ]
+}
