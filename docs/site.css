@@ -1104,3 +1104,27 @@ main>section>.section-bar{margin:0 0 20px!important;padding:0!important;border:0
 #navigation{gap:5px}
 #navigation>a{line-height:1.4;padding-top:9px;padding-bottom:9px}
 @media(max-width:760px){main>section:not(#profile):not(.is-minimized){padding-top:28px!important;padding-bottom:28px!important}#experience .journey-overview{grid-template-columns:1fr;gap:24px}#experience .journey-overview>.career-route{grid-column:1;grid-row:auto}#navigation>a{padding-top:8px;padding-bottom:8px}}
+
+/* Whole sections collapse once; all of their content belongs inside that control. */
+#build>.section-bar,#value>.section-bar,#product-journey>.section-bar{visibility:visible!important;opacity:1!important}
+#build .help-intro>.eyebrow,#value>.section-heading>.eyebrow,#product-journey .section-heading>.eyebrow{display:none}
+#build .help-areas{display:block}
+#build .help-area,#build .help-area:nth-child(even),#build .help-technology.help-area{background:none;color:#f7f3eb;border:0;border-radius:0;box-shadow:none;margin:0;padding:32px 0;border-top:1px solid #f7f3eb30}
+#build .help-area:before,#build .help-area:after{display:none}
+#build .help-area h3,#build .help-area h4{color:#fff9ef;font-weight:650}
+#build .help-copy p,#build .help-tech-intro,#build .help-tech-bullets li{color:#f0ece4;font-size:18px;line-height:1.65}
+#build .help-technology>.eyebrow,#build .help-copy .help-concept-note{color:#d6dfe5}
+#build .help-tech-part,#build .help-tech-value,#build .help-copy .help-example{border-color:#f7f3eb26}
+#build .help-tech-bullets li::marker,#build .help-evidence{color:#f0bf86}
+#product-journey .idea-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:start}
+.idea-step-image{display:block;border:0;background:none;align-self:start}
+.idea-step-image img{width:100%;height:auto;object-fit:contain;mask-image:radial-gradient(ellipse,#000 52%,transparent 76%)}
+.private-label-gallery>h3{margin:0 0 20px;padding-top:20px}
+/* Different scenery, each painted once, with no repeated strips. */
+#experience>.section-art,#build>.section-art,#value>.section-art,#product-journey>.section-art{background-repeat:no-repeat!important;background-size:cover!important;background-position:center!important;background-attachment:fixed;mask-image:none;opacity:1}
+#experience>.section-art{background-image:linear-gradient(90deg,#eee9dfeb,#eee9dfb8),url('illustrations/experience-v3.webp')}
+#build>.section-art{background-image:linear-gradient(90deg,#142733ef,#142733d6),url('illustrations/opportunity-v3.webp')}
+#value>.section-art{background-image:linear-gradient(90deg,#eee9dfec,#eee9dfbd),url('illustrations/value-v3.webp')}
+#product-journey>.section-art{background-image:linear-gradient(90deg,#172b35ed,#172b35c9),url('illustrations/hero-v3.webp')}
+#contact{background-image:linear-gradient(90deg,#142733eb,#142733c7),url('illustrations/contact-v3.webp');background-repeat:no-repeat;background-size:cover}
+@media(max-width:760px){#product-journey .idea-body{grid-template-columns:1fr}#build .help-copy p,#build .help-tech-bullets li{font-size:17px}#experience>.section-art,#build>.section-art,#value>.section-art,#product-journey>.section-art{background-attachment:scroll}}

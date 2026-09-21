@@ -77,7 +77,6 @@ export function systemsTools(e) {
         <p>I organize the information, workflows and tools that help a business operate day to day. I start with what people need to accomplish, then connect the records, transactions and responsibilities that support the work.</p>
         <p>At Fun Town RV, I designed the system architecture and carried out the initial implementation, connecting product databases, image files, pricing information, applications and Shopify stores. A small team then handled routine implementation work. The operation ran largely automatically, with dashboard and health-check oversight.</p>
       </div>
-      <details class="master-card systems-master" id="systems-master"><summary><span class="eyebrow">From workflow to execution</span><h3>Explore the approach</h3><p>Six connected parts: understand the work, organize product information, connect channels, guide purchasing, make performance visible and make execution repeatable.</p><span class="find-more">Find Out More <span aria-hidden="true">↗</span></span></summary>
       <div class="systems-groups">
         ${systemGroups.map((g,i) => `<article class="systems-group" id="systems-${g.id}">
           <header class="group-heading"><h3>${e(g.heading)}</h3><p>${e(g.preview)}</p></header>
@@ -86,7 +85,7 @@ export function systemsTools(e) {
             <a class="systems-image" href="assets/systems/section-17-${g.id}-v2.webp" target="_blank" rel="noopener" aria-label="Open ${e(g.heading.toLowerCase())} illustration at full size" title="${e(g.alt)}"><img src="assets/systems/section-17-${g.id}-v2.webp" alt="${e(g.alt)}" width="1200" height="800" loading="lazy" decoding="async"></a>
           </div>
         </article>`).join('')}
-      </div></details>
+      </div>
     </div>
   </section>`;
 }

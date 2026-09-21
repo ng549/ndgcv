@@ -1128,3 +1128,11 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Excited motion no longer lifts the upper body away from the legs. Legs return to their connected neutral pose while arms/face celebrate, with a subtle anchored body expansion. Tightened arm clips to exclude adjacent compass-body pixels from moving arm pieces. Idle knee bends retained.
 - Replaced Pause/Play words with ⏸/▶ icons, retaining accessible state labels and reduced-motion behavior. No enclosing background on the icon control.
 - Build, preservation tests, syntax and diff checks pass; final hosted rendering verification pending publication.
+
+## 2026-09-21 — Consolidated section controls and distinct scenery
+- User clarified From idea to sale is one minimizable section including all five numbered steps and the private-label collection. Removed gallery disclosure and separate navigation link; nine floating images and small captions remain. Restored five unused distinct v2 concept illustrations beside the corresponding process steps.
+- Connecting opportunity with execution is one minimizable section containing its introduction and all six help blocks. Removed nested intro control, box fills, rounded panels and individual background layers; retained faint dividers and improved ivory text/gold links on a dark scene.
+- How the work changed is one minimizable section including all eight stats, with the standard112px mini-card. Removed its nested intro disclosure. About sidebar renamed About me; navigation names/targets match parent sections.
+- Removed repeated scenery tiles. Distinct one-time backgrounds now use planning room (experience-v3), Atlanta boardroom (opportunity-v3), results warehouse (value-v3), outdoor retail (hero-v3), and Atlanta street (contact-v3). No foreground image duplicated. Scenes use no-repeat; fixed desktop presentation avoids stretching across long content.
+- Removed Explore the approach box/header/disclosure entirely. Six Systems & Tools approaches sit directly inside that section under its main control.
+- Build, content preservation tests and JS syntax pass. Publication/live rendered verification follows and is recorded in Drive.

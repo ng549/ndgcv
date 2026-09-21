@@ -63,7 +63,7 @@ document.querySelector('#capabilities .cap-close')?.addEventListener('click',()=
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
 
 const sections = {
-  about: 'About me', opportunity: 'My next chapter', build: 'How I can help', capabilities: 'Capabilities', value: 'Results',
+  about: 'About me', opportunity: 'My next chapter', build: 'Connecting opportunity with execution', capabilities: 'Capabilities', value: 'How the work changed',
   'product-journey': 'From idea to sale', experience: 'My journey',
   ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education', contact: 'Let’s connect'
 };
@@ -90,6 +90,9 @@ Object.entries(sections).forEach(([id, title]) => {
   });
   bar.append(label, button);
   section.prepend(bar);
+  if(['build','value','product-journey'].includes(id)){
+    section.classList.add('is-minimized');button.textContent='Expand +';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
+  }
 });
 function revealSection(target) {
   if(target?.classList.contains('overview-section'))target.querySelector(':scope>details').open=true;
@@ -164,7 +167,7 @@ document.querySelectorAll('.role.career-designed').forEach(role=>{
  const place=()=>{if(role.open)marker.after(image);else preview.append(image)};
  role.addEventListener('toggle',place);place();
 });
-const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','How I can help'],['capabilities','Capabilities'],['value','Results'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
+const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','Connecting opportunity with execution'],['capabilities','Capabilities'],['value','How the work changed'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
 orderedSections.forEach(([id,title],i)=>{
  const section=document.getElementById(id);if(!section)return;
  const steps=document.createElement('nav');steps.className='section-stepper';steps.setAttribute('aria-label',title+' section navigation');
@@ -182,7 +185,7 @@ orderedSections.forEach(([id,title],i)=>{
 document.querySelectorAll('[data-current-year]').forEach(el=>el.textContent=new Date().getFullYear());
 
 // The four overview passages have their own compact disclosure controls.
-for(const [selector,id,contentSelector] of [['#experience .journey-overview','how-work-grew',null],['#build .help-intro','connecting-opportunity',null],['#value>.section-heading','what-work-changed','.outcome-stories'],['#product-journey .section-heading','connecting-ideas','.idea-stages']]){
+for(const [selector,id,contentSelector] of [['#experience .journey-overview','how-work-grew',null]]){
  const intro=document.querySelector(selector);if(!intro)continue;
  const eyebrow=intro.querySelector('.eyebrow'),details=document.createElement('details'),summary=document.createElement('summary');
  details.className='intro-disclosure';summary.append(eyebrow);
@@ -192,22 +195,9 @@ for(const [selector,id,contentSelector] of [['#experience .journey-overview','ho
  if(contentSelector){const content=section.parentElement.querySelector(contentSelector);if(content)details.append(content)}
 }
 
-// Overlapping, faded scenery tiles avoid visible horizontal repeat seams.
-for(const [id,file] of [['experience','My-journey.webp'],['build','build-v3.webp'],['value','value-v3.webp'],['product-journey','product-v3.webp']]){
- const section=document.getElementById(id),art=section.querySelector(':scope>.section-art');if(!art)continue;
- art.classList.add('blended-scene');art.replaceChildren();
- let previous='';
- const layout=()=>{
-  const tileHeight=Math.max(640,Math.round(section.clientWidth*.72)),step=tileHeight*.75;
-  const count=Math.ceil(section.clientHeight/step)+1,key=tileHeight+':'+count;
-  if(key===previous)return;previous=key;art.replaceChildren();
-  for(let i=0;i<count;i++){
-   const tile=document.createElement('span');tile.className='scene-tile';
-   tile.style.cssText=`top:${i*step-tileHeight*.125}px;height:${tileHeight}px;background-image:url('illustrations/${file}')`;
-   art.append(tile);
-  }
- };
- new ResizeObserver(layout).observe(section);layout();
+// A distinct, single scene per section. No duplicated background tiles.
+for(const id of ['experience','build','value','product-journey']){
+ const art=document.querySelector('#'+id+'>.section-art');if(art)art.replaceChildren();
 }
 
 // Overview navigation targets are created after the main section controls.
