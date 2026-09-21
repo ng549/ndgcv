@@ -1,9 +1,12 @@
 (()=>{
  const widget=document.querySelector('.scout-widget');if(!widget)return;
- const button=widget.querySelector('button'),eyes=widget.querySelector('.scout-blink'),icon=widget.querySelector('.scout-motion'),media=matchMedia('(prefers-reduced-motion: reduce)');
- let manual=false,timer,closing;
- function stopped(){return manual||media.matches||document.hidden}
- function schedule(){timer=setTimeout(()=>{if(stopped())return;eyes.classList.add('is-blinking');closing=setTimeout(()=>{eyes.classList.remove('is-blinking');if(!stopped())schedule()},145)},2600+Math.random()*3700)}
- function sync(){clearTimeout(timer);clearTimeout(closing);eyes.classList.remove('is-blinking');const paused=stopped();widget.classList.toggle('is-paused',paused);button.setAttribute('aria-pressed',String(manual||media.matches));const label=media.matches?'Scout — motion reduced by your device settings':manual?'Play Scout animation':'Pause Scout animation';button.setAttribute('aria-label',label);button.title=label;icon.textContent=paused?'▶':'Ⅱ';if(!paused)schedule()}
- button.addEventListener('click',()=>{if(media.matches)return;manual=!manual;sync()});media.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();
+ const toggle=widget.querySelector('.scout-toggle'),pause=widget.querySelector('.scout-pause'),bubble=widget.querySelector('.scout-bubble'),close=widget.querySelector('.scout-close'),poses=[...widget.querySelectorAll('.scout-pose')],media=matchMedia('(prefers-reduced-motion: reduce)');
+ let manual=false,blinkTimer,closing,poseTimer,current=0;
+ const stopped=()=>manual||media.matches||document.hidden;
+ function scheduleBlink(){blinkTimer=setTimeout(()=>{if(stopped())return;widget.classList.add('is-blinking');closing=setTimeout(()=>{widget.classList.remove('is-blinking');if(!stopped())scheduleBlink()},145)},2800+Math.random()*3400)}
+ function schedulePose(){poseTimer=setTimeout(()=>{if(stopped())return;poses[current].classList.remove('is-active');current=(current+1)%poses.length;poses[current].classList.add('is-active');schedulePose()},3400+Math.random()*1800)}
+ function sync(){[blinkTimer,closing,poseTimer].forEach(clearTimeout);widget.classList.remove('is-blinking');widget.classList.toggle('is-paused',stopped());pause.setAttribute('aria-pressed',String(manual||media.matches));pause.disabled=media.matches;pause.textContent=media.matches?'Still':manual?'Play':'Pause';pause.setAttribute('aria-label',media.matches?'Motion reduced by device settings':manual?'Play Scout animation':'Pause Scout animation');if(!stopped()){scheduleBlink();schedulePose()}}
+ function show(open,restore=false){bubble.hidden=!open;toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close Scout introduction':'Open Scout introduction');if(restore)toggle.focus()}
+ toggle.addEventListener('click',()=>show(bubble.hidden));close.addEventListener('click',()=>show(false,true));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!bubble.hidden)show(false,true)});document.addEventListener('pointerdown',e=>{if(!widget.contains(e.target)&&!bubble.hidden)show(false)});
+ pause.addEventListener('click',()=>{manual=!manual;sync()});media.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();
 })();

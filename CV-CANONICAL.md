@@ -1043,3 +1043,10 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Assets: docs/assets/scout/scout-open.webp and scout-blink.webp. Sources: scripts/scout.mjs, scout.css and scout.js. Original approved artwork and blink frame remain in the Scout conversation.
 - Verified before release: build, existing preservation checks (8 roles/32 tabs/12 examples), JS syntax, mocked timer/state tests (blink, pause/resume, hidden tab, reduced motion), and byte-identical page content outside Scout insertions. Browser installation timed out; rendered desktop/mobile and actual browser animation playback remain unverified.
 - This commit prepares the authorized production release. Live deployment confirmation must be reported separately after checking production.
+
+## 2026-09-21 — Scout expressive idle and bubble placement
+- Nicolas requested visible looking around, sway, hand movement and body turns; talk bubble explicitly belongs ABOVE Scout.
+- Replaced single idle pose with four illustrated key poses: forward, left glance/turn with lowered hand, open-palm greeting, and right glance/turn with relaxed hands. Added matching blink strip; pose changes every 3.4–5.2 seconds with short crossfade, stronger 2.5–2.8 degree sway. This is a key-pose animation, not a fully articulated 3D character.
+- Clicking character toggles an introduction bubble above him; pointer aims toward Scout. Bubble contains “Hi, I’m Scout.” and existing contact-page link; no unsupported chat or delivery capability is claimed. Close, outside click and Escape dismiss it. Pause control is separate. Reduced-motion and background-tab pause retained.
+- New artwork: docs/assets/scout/scout-poses-v2.webp and scout-blinks-v2.webp, generated from approved transparent octagonal Scout. Earlier assets preserved.
+- Build and content preservation checks pass. Actual rendered animation, desktop/mobile visual QA remain unverified because local browser installation is unavailable. Production release verification follows this change.
