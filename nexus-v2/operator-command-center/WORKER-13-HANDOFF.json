@@ -3,8 +3,9 @@
   "branch": "nexus-v2-p1-13-operator-command-center",
   "status": "Implemented / Unverified",
   "canonical": {
-    "version": "0.5",
-    "sha": "ca446bf296a7a337da18dd877d29bff1eb026fa1"
+    "version": "0.7",
+    "sha": "87f4c015e5a947432ce0289e6e76c70ac9710ad3",
+    "note": "re-read 2026-09-21 during Factory Test #6 integration; supersedes 0.5 pin"
   },
   "implemented": [
     "Cloudflare Access JWT origin validation with issuer audience expiry and operator checks",
@@ -12,33 +13,39 @@
     "persistent D1 command audit schema with fail-closed writes",
     "mobile-first and desktop-responsive operator UI",
     "truth-safe UNKNOWN fallback when runtime evidence is unavailable",
-    "Worker 9 work-packet adapter",
-    "RUN CONTINUE PAUSE RESUME STOP RETRY controls",
-    "RUN ALL READY and RUN PHASE controls",
-    "server-only Worker 9 credential isolation",
+    "single consolidated Worker entry src/index.mjs aligned to Worker 9 real /api routes (legacy dual entries removed after both failed node --check)",
+    "full Worker 9 command contract: RUN CONTINUE PAUSE RESUME STOP RETRY REASSIGN_MODEL ADJUST_BUDGET SEND_TO_REVIEW plus RUN_ALL_READY RUN_PHASE",
+    "capability derivation from worker9 command-contract v1 with explicit unavailability reasons; Worker 9 409 remains final",
+    "stale/missing heartbeat collapses reported RUNNING to UNKNOWN with controls disabled",
+    "NEEDS_REVIEW rendered as unverified completion claim; COMPLETE implies Worker 9 review approval",
+    "cost surface consumed/limit/remaining micro-USD with SUPERVISOR_RECORDED or UNKNOWN truth state; provider UNKNOWN",
+    "adapter error taxonomy including AUTH_REJECTED surfaced distinctly",
     "same-origin JSON write protection",
-    "Worker 9 aligned state and command contracts",
-    "unit tests for UNKNOWN behavior explicit control gating and write-origin protection"
+    "server-only Worker 9 credential isolation",
+    "bounded Worker 9 authentication proposal with reference implementation and tests (handoff/, NOT integrated)"
   ],
   "verified": [
-    "Nexus V2 canonical 0.5 inspected",
+    "Nexus V2 canonical 0.7 @ 87f4c01 re-inspected 2026-09-21",
     "Worker 8 handoff inspected and ownership boundary preserved",
-    "Worker 9 command contract work-packet schema and supervisor implementation inspected",
-    "Worker 13 branch artifacts confirmed present in GitHub",
-    "core guard tests executed locally: 5 passed 0 failed"
+    "Worker 9 command contract work-packet schema and supervisor implementation re-inspected at 72389be",
+    "npm run check passes on all five src modules (both legacy parse defects eliminated)",
+    "automated tests: 79 total, 77 pass, 0 fail, 2 todo (staging-only Access JWT paths) on Node 24",
+    "browser validation via fixture-backed harness: desktop and 390px mobile rendering, control gating, disabled reasons, UNKNOWN qualifiers, cost/budget/provider display, REASSIGN_MODEL/ADJUST_BUDGET payloads, RUN_PHASE input gating, disconnected state; two defects found and repaired (RUN PHASE dead control, mobile overflow)",
+    "ownership audit ACCEPTED: no changes outside operator-command-center plus declared workflow trigger line; canonical, worker-supervisor, ai-gateway, control-tower untouched"
   ],
   "not_verified": [
-    "GitHub Actions validation; no workflow run was observed",
     "live Cloudflare Access application behavior",
     "live D1 command audit persistence",
-    "live Worker 9 service connectivity and commands",
+    "live Worker 9 service connectivity and commands (no deployed endpoint/credential exists)",
+    "Worker 9 authentication enforcement (proposal pending Worker 9 owner)",
     "deployment on nicolasgoureau.com/operator/",
-    "live iPhone and desktop behavior"
+    "live iPhone and desktop behavior against production",
+    "GitHub Actions run on the integration branch (pending push at evaluation time)"
   ],
   "dependencies": {
-    "worker_9": "CONSUMED — contracts and API routes aligned. A deployed service endpoint and service credential are still required for live integration verification.",
-    "worker_8": "CONSUMED — AI provider and model routing remains outside Worker 13.",
-    "worker_1": "WAITING — no newer shared status or identity artifact was available during this run."
+    "worker_9": "CONSUMED \u2014 full command contract + real routes integrated via adapter. Blockers handed back: auth enforcement proposal (handoff/), capability-advertisement endpoint, cost-event read endpoint, canonical re-pin of packets.",
+    "worker_8": "CONSUMED \u2014 AI provider and model routing remains outside Worker 13.",
+    "worker_1": "WAITING \u2014 no newer shared status or identity artifact was available during this run."
   },
   "remaining_gates": [
     "configure the Cloudflare Access application and origin values",

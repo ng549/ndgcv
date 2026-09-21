@@ -127,6 +127,12 @@ test("long reason strings cannot overflow narrow viewports", () => {
   assert.match(html, /\.controls button\{[^}]*overflow-wrap:anywhere/);
 });
 
+test("REASSIGN_MODEL is labeled preference-only (Worker 8 boundary)", () => {
+  const m = model({ workers: [worker({ controls: controls({ REASSIGN_MODEL: { allowed: true, reason: null } }) })] });
+  const html = renderPage(m);
+  assert.match(html, /data-action="REASSIGN_MODEL" title="Sets the preferred model[^"]*AI Gateway still qualify/);
+});
+
 test("mobile viewport meta present", () => {
   const html = renderPage(model());
   assert.match(html, /<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">/);

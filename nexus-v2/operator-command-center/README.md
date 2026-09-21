@@ -18,11 +18,15 @@ Smallest useful private operator surface for Nicolas to supervise Nexus API work
 - Same-origin + JSON-only write protection.
 - Server-only orchestrator bearer token; it is never returned to browser code.
 - Worker state normalization with `UNKNOWN` as the fail-safe.
-- RUN / CONTINUE / PAUSE / RESUME / STOP / RETRY.
+- Full Worker 9 command contract: RUN / CONTINUE / PAUSE / RESUME / STOP / RETRY / REASSIGN_MODEL / ADJUST_BUDGET / SEND_TO_REVIEW.
 - RUN ALL READY / RUN PHASE.
-- Every action is disabled unless the orchestrator explicitly advertises it.
+- Control availability is **derived** from Worker 9's published command contract v1 state machine plus current packet state (`src/capability.mjs`), with an explicit reason whenever a control is unavailable. Worker 9 remains the enforcement authority; its 409 is final. Worker 9 does not yet advertise capabilities itself — that endpoint is a proposed Worker 9 change (see `handoff/`).
+- Reported RUNNING with a missing or stale (>10 min) heartbeat collapses to UNKNOWN with all controls disabled.
+- Completion claims render as NEEDS_REVIEW with "unverified" qualifier; COMPLETE implies independent review approval (Worker 9 review gate).
+- Cost surface: consumed / limit / remaining micro-USD with a `SUPERVISOR_RECORDED` or `UNKNOWN` truth-state label. Provider renders UNKNOWN (Worker 9 exposes no provider field). No dollars are invented.
+- Orchestrator failures surface distinctly, including AUTH_REJECTED (401/403) for when Worker 9 enforces authentication (see `handoff/WORKER-9-AUTH-PROPOSAL.md` — PROPOSED, not integrated; Worker 9 currently performs no token validation).
 - 15-second status refresh. No synthetic heartbeat is generated.
-- Worker 8 boundary preserved: this surface does not select providers/models directly.
+- Worker 8 boundary preserved: REASSIGN_MODEL sets a preference on the work packet only; Worker 9 and the AI Gateway still qualify and route. This surface never selects providers directly.
 
 ## Worker 9 integration contract
 
@@ -35,7 +39,9 @@ Expected authenticated server-to-server endpoints:
 
 The exact response/request contracts are under `schemas/`.
 
-Worker 9 has now published these routes and its command contract on `nexus-v2-p1-09-build-orchestration`; Worker 13 is aligned to that contract. Until a deployed Worker 9 service endpoint and service credential are attached, the UI still returns seeded workers with truthful `UNKNOWN` runtime state and disabled controls. Branch names are provenance hints, not proof of execution.
+Worker 9 has now published these routes and its command contract on `nexus-v2-p1-09-build-orchestration`; this branch consumes them through `src/adapter.mjs` (timeout, error taxonomy, payload validation). Until a deployed Worker 9 service endpoint and service credential are attached, the UI still returns seeded workers with truthful `UNKNOWN` runtime state and disabled controls. Branch names are provenance hints, not proof of execution.
+
+Integration-branch note (Factory Test #6): `src/index.mjs` is now the sole Worker entry; the legacy parallel entry `src/worker9-index.mjs` was removed after verification that neither legacy file parsed (`node --check`), which had kept branch CI red.
 
 ## Authentication and sessions
 
@@ -123,9 +129,12 @@ This branch intentionally does **not** modify the public CV/navigation yet becau
 ## Current blockers
 
 1. Worker 9 contract is available and consumed, but its service is not deployed/attached to this operator surface, so live worker state and command execution remain unverified.
-2. Cloudflare Access application values are not available on this branch.
-3. D1 database ID has not been provisioned/verified.
-4. The operator Worker has not been deployed to `nicolasgoureau.com/operator/*`.
-5. Worker 1 has not yet published a shared status/identity contract artifact on its branch.
+2. **Worker 9 performs no authentication** (verified at `72389be`): any client that can reach the service can issue all commands. Worker 13 already sends a bearer token that is currently never validated. Fix is Worker 9-owned; see the bounded proposal in `handoff/WORKER-9-AUTH-PROPOSAL.md`.
+3. Cloudflare Access application values are not available on this branch.
+4. D1 database ID has not been provisioned/verified.
+5. The operator Worker has not been deployed to `nicolasgoureau.com/operator/*`.
+6. Worker 1 has not yet published a shared status/identity contract artifact on its branch.
+7. Work packets pin canonical `ca446bf…` (v0.5); current canonical is v0.7 @ `87f4c01`. Worker 9's `STALE_CANONICAL` launch guard will reject launches until packets are re-pinned (Worker 9 / Control Tower authority).
+8. Worker 9 does not expose a capability-advertisement or cost-event read endpoint; Worker 13 derives capability from the published contract and shows packet budget fields only.
 
 Because of these blockers, the truthful status is **Implemented / Unverified**, not Production Verified or Complete.

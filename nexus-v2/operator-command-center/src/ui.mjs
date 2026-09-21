@@ -46,7 +46,9 @@ function commandButton(worker, action) {
   const control = worker.controls && worker.controls[action];
   const allowed = control && control.allowed === true;
   const reason = control && control.reason ? String(control.reason) : null;
-  const titleAttr = !allowed && reason ? ' title="' + escapeHtml(reason) + '"' : "";
+  const titleAttr = !allowed && reason
+    ? ' title="' + escapeHtml(reason) + '"'
+    : (action === "REASSIGN_MODEL" ? ' title="Sets the preferred model on the work packet only; Worker 9 and the AI Gateway still qualify and route" ' : "");
   const disabled = allowed ? "" : " disabled";
   let input = "";
   if (action === "REASSIGN_MODEL") {
