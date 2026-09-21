@@ -6,7 +6,8 @@ export const stages = [
       'I draw on the team’s knowledge, sales information and supplier relationships to understand where the business has a reason to compete.'
     ],
     example: 'New retail channels for NuvoMed', role: 'moremargin',
-    alt: "Concept illustration of an empty assortment niche and customer observation cards; not an actual client display."
+    products: "Nepallo \u00b7 Outfitta \u00b7 Forge",
+    alt: "Source-based editorial sketch of Nepallo \u00b7 Outfitta \u00b7 Forge. Adapted from preserved private-label product images; the arrangement is illustrative, not an actual store display."
   },
   {
     id: 'economics', title: 'Make the numbers work',
@@ -15,7 +16,8 @@ export const stages = [
       'I consider the wider business as well as the individual offer. For DJI, we evaluated the store on its own and its expected contribution to STC’s existing operation.'
     ],
     example: 'The DJI commercial case', role: 'moremargin',
-    alt: "Concept illustration of a balance scale weighing a carton against resource blocks; not actual financial results."
+    products: "Grill World \u00b7 Tow Center \u00b7 Venture Forward",
+    alt: "Source-based editorial sketch of Grill World \u00b7 Tow Center \u00b7 Venture Forward. Adapted from preserved private-label product images; the arrangement is illustrative, not an actual store display."
   },
   {
     id: 'offer', title: 'Develop the offer',
@@ -24,7 +26,8 @@ export const stages = [
       'I work with suppliers and specialists on specifications, samples, pricing and supply arrangements, keeping delivery and selling requirements in view.'
     ],
     example: 'Fun Town’s house-brand products', role: 'funtown',
-    alt: "Concept illustration of material swatches, packaging development and an unbranded lantern prototype; not a product Nicolas is claimed to have developed."
+    products: "Temp360 \u00b7 Heated base layers, socks and glove liners",
+    alt: "Source-based editorial sketch of Temp360 \u00b7 Heated base layers, socks and glove liners. Adapted from preserved private-label product images; the arrangement is illustrative, not an actual store display."
   },
   {
     id: 'operation', title: 'Build the operation',
@@ -33,7 +36,8 @@ export const stages = [
       'I connect the sales channels with the operation behind them, working with teams on training, replenishment and the handoffs they will manage.'
     ],
     example: 'Fun Town’s connected retail operation', role: 'funtown',
-    alt: "Concept illustration of an order handoff organizer and picking basket; not an actual client operation."
+    products: "Dockmate \u00b7 Covermate",
+    alt: "Source-based editorial sketch of Dockmate \u00b7 Covermate. Adapted from preserved private-label product images; the arrangement is illustrative, not an actual store display."
   },
   {
     id: 'launch', title: 'Launch and improve',
@@ -42,10 +46,25 @@ export const stages = [
       'I use sales, margin, inventory and operating information to revisit the assortment, replenishment and customer channels as the business develops.'
     ],
     example: 'The DJI opening and ongoing work', role: 'moremargin',
-    alt: "Concept illustration of an unbranded lantern display and feedback cards; not an actual client launch."
+    products: "Simple Nest \u00b7 Gladiator \u00b7 Trophy Boss \u00b7 Flex \u00b7 Sakana",
+    alt: "Source-based editorial sketch of Simple Nest \u00b7 Gladiator \u00b7 Trophy Boss \u00b7 Flex \u00b7 Sakana. Adapted from preserved private-label product images; the arrangement is illustrative, not an actual store display."
   }
 ];
 
+const additionalGroups = {
+  opportunity: {id:'apparel-extra', brands:'Ultimate Terrain · Lazy Mondays · Suntide', title:'Outdoor and leisure apparel'},
+  economics: {id:'camping-extra', brands:'Camper’s Choice · Erehwon · Perma Chill', title:'Camping and coolers', note:'Erehwon is shown as an in-development concept in the 2016 brand kit.'},
+  offer: {id:'field-extra', brands:'Hunter’s Choice · Guide Series · Sportsman 365 · Flock Boss', title:'Fieldwear and accessories'},
+  operation: {id:'marine-extra', brands:'Shademate · Toonmate', title:'Pontoon seating and shade hardware'}
+};
+function productImage(e,id,brands,note='') {
+  const alt=`Editorial sketch of ${brands}. Adapted from original private-label product and packaging references; an illustrative grouping.`;
+  return `<div class="idea-product-group"><a class="idea-image" href="assets/idea-to-sale/${id}-private-label.png" target="_blank" rel="noopener" aria-label="Open ${e(brands)} sketch at full size"><img src="assets/idea-to-sale/${id}-private-label.png" alt="${e(alt)}" width="1536" height="1024" loading="lazy" decoding="async"></a><p class="idea-products">${e(brands)}</p>${note?`<p class="idea-source-note">${e(note)}</p>`:''}</div>`;
+}
 export function ideaToSale(e) {
-  return `<section class="brand-story idea-sale-section" id="product-journey" aria-labelledby="idea-sale-heading"><div class="shell"><div class="section-heading"><span class="eyebrow">Connecting the idea with the operation</span><h2 id="idea-sale-heading">From idea to sale</h2><p>I bring the commercial decisions and the practical work together, from shaping an offer to getting it into customers’ hands. These parts overlap: I work through them with the people responsible, returning to earlier decisions as we learn more.</p></div><div class="idea-stages">${stages.map(s=>`<details class="idea-stage" id="idea-stage-${s.id}" open><summary><h3>${e(s.title)}</h3><span class="idea-disclosure" aria-hidden="true"></span></summary><div class="idea-body"><div class="idea-copy"><ul>${s.bullets.map(b=>`<li>${e(b)}</li>`).join('')}</ul><a class="idea-evidence" href="#role-${s.role}">${e(s.example)} <span aria-hidden="true">↗</span></a></div><a class="idea-image" href="assets/idea-to-sale/${s.id}-v2.png" target="_blank" rel="noopener" aria-label="Open ${e(s.title.toLowerCase())} illustration at full size" title="${e(s.alt)}"><img src="assets/idea-to-sale/${s.id}-v2.png" alt="${e(s.alt)}" width="1536" height="1024" loading="lazy" decoding="async"></a></div></details>`).join('')}</div></div></section>`;
+  return `<section class="brand-story idea-sale-section" id="product-journey" aria-labelledby="idea-sale-heading"><div class="shell"><div class="section-heading"><span class="eyebrow">Connecting the idea with the operation</span><h2 id="idea-sale-heading">From idea to sale</h2><p>I bring the commercial decisions and the practical work together, from shaping an offer to getting it into customers’ hands. These parts overlap: I work through them with the people responsible, returning to earlier decisions as we learn more.</p><p class="idea-source-note">The sketches revisit private-label products and packaging from Camping World’s 2016 brand kit in new illustrative groupings.</p></div><div class="idea-stages">${stages.map(s=>{
+    const more=additionalGroups[s.id];
+    const note=s.id==='economics'?'Tow Center is marked in development in the 2016 brand kit.':s.id==='launch'?'Simple Nest is marked in development in the 2016 brand kit.':'';
+    return `<details class="idea-stage" id="idea-stage-${s.id}" open><summary><h3>${e(s.title)}</h3><span class="idea-disclosure" aria-hidden="true"></span></summary><div class="idea-body"><div class="idea-copy"><ul>${s.bullets.map(b=>`<li>${e(b)}</li>`).join('')}</ul><a class="idea-evidence" href="#role-${s.role}">${e(s.example)} <span aria-hidden="true">↗</span></a></div><div class="idea-visuals">${productImage(e,s.id,s.products,note)}${more?`<details class="idea-more"><summary>More private-label brands <span aria-hidden="true">+</span></summary><p class="idea-group-title">${e(more.title)}</p>${productImage(e,more.id,more.brands,more.note)}</details>`:''}</div></div></details>`;
+  }).join('')}</div></div></section>`;
 }

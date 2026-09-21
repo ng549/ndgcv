@@ -37,3 +37,7 @@
 @media(prefers-reduced-motion:reduce){.illustrated-action .action-art,.illustrated-action .action-hint{transition:none}.illustrated-action:hover .action-art,.illustrated-action:focus-visible .action-art{transform:none}}
 
 .illustrated-action.action-linkedin .action-art{width:190px}
+
+/* Six shared contact actions, with no fixed orbit positions. */
+.connect-orbit{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:0;position:relative}.connect-orbit .illustrated-action:nth-child(n){grid-column:auto;grid-row:auto;width:100%;position:relative}.connect-orbit::before{display:none}.connect-hub{display:block;min-height:0;max-width:940px;margin:24px auto}.connect-identity{position:relative;left:auto;top:auto;transform:none;width:100%;margin:0 auto 20px}.connect-portrait{width:140px;height:190px}.connect-identity h2{margin-top:0}.connect-home{font-size:22px;white-space:nowrap;flex-direction:column;align-items:flex-start;gap:4px}.connect-home span{display:block;white-space:nowrap;font-size:12px}.connect-header{gap:18px}.scout-widget .scout-toggle{box-shadow:none!important}
+@media(max-width:760px){.connect-orbit{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.connect-home{font-size:19px}.connect-home span{display:block;font-size:10px}.connect-header{align-items:flex-start;flex-wrap:wrap}.connect-hub{margin-top:20px}}

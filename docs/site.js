@@ -65,7 +65,7 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCap
 const sections = {
   about: 'About me', opportunity: 'My next chapter', build: 'How I can help', capabilities: 'Capabilities', value: 'Results',
   'product-journey': 'From idea to sale', experience: 'My journey',
-  ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education', contact: 'Let’s talk'
+  ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education', contact: 'Let’s connect'
 };
 Object.entries(sections).forEach(([id, title]) => {
   const section = document.getElementById(id);
@@ -151,3 +151,29 @@ document.querySelectorAll('.career-tabs').forEach(list=>{
  const select=tab=>{tabs.forEach(t=>{const selected=t===tab;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!selected})};
  tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>select(tab));tab.addEventListener('keydown',event=>{let index;if(event.key==='ArrowRight')index=(i+1)%tabs.length;if(event.key==='ArrowLeft')index=(i+tabs.length-1)%tabs.length;if(event.key==='Home')index=0;if(event.key==='End')index=tabs.length-1;if(index!==undefined){event.preventDefault();select(tabs[index]);tabs[index].focus()}})});
 });
+
+// A single image moves between its job preview and original tab; it is never cloned.
+document.querySelectorAll('.role.career-designed').forEach(role=>{
+ const preview=role.querySelector('.role-preview-media');
+ const image=role.querySelector('.career-chapter .chapter-media img');
+ if(!preview||!image)return;
+ const home=image.parentElement,marker=document.createComment('Career image home');home.insertBefore(marker,image);
+ const place=()=>{if(role.open)marker.after(image);else preview.append(image)};
+ role.addEventListener('toggle',place);place();
+});
+const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','How I can help'],['value','Results'],['product-journey','From idea to sale'],['capabilities','Capabilities'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
+orderedSections.forEach(([id,title],i)=>{
+ const section=document.getElementById(id);if(!section)return;
+ const steps=document.createElement('nav');steps.className='section-stepper';steps.setAttribute('aria-label',title+' section navigation');
+ for(const [index,direction,symbol] of [[i-1,'previous','←'],[i+1,'next','→']]){
+  if(!orderedSections[index])continue;
+  const [targetId,label]=orderedSections[index],link=document.createElement('a');link.href='#'+targetId;link.className='step-'+direction;
+  link.setAttribute('aria-label',(direction==='next'?'Next: ':'Previous: ')+label);
+  const arrow=document.createElement('span');arrow.className='step-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent=symbol;
+  const caption=document.createElement('span');caption.textContent=label;
+  link.append(...(direction==='next'?[caption,arrow]:[arrow,caption]));
+  link.addEventListener('click',()=>{const target=document.getElementById(targetId);revealSection(target);requestAnimationFrame(()=>{target.scrollIntoView({block:'start',behavior:motion.matches?'instant':'smooth'});const heading=target.querySelector('.section-bar button,h1,h2');if(heading){heading.tabIndex=heading.tabIndex<0?-1:heading.tabIndex;heading.focus({preventScroll:true})}})});steps.append(link);
+ }
+ section.append(steps);
+});
+document.querySelectorAll('[data-current-year]').forEach(el=>el.textContent=new Date().getFullYear());

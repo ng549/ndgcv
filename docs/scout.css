@@ -1,14 +1,25 @@
 /* Character and introduction only. Conversational service remains separate. */
 .scout-widget{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:25;width:104px;isolation:isolate;text-align:center}
 .scout-toggle{display:block;width:100%;padding:0;border:0;background:transparent;color:#fff;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.scout-body{position:relative;display:block;width:100%;aspect-ratio:543/724;transform-origin:50% 90%;animation:scout-sway 6.5s ease-in-out infinite;filter:drop-shadow(0 3px 4px #0005)}
-.scout-pose{position:absolute;inset:0;display:block;width:100%;height:100%;opacity:0;transition:opacity .16s linear}.scout-pose.is-active{opacity:1}
-.scout-blink{opacity:0}.scout-widget.is-blinking .scout-blink{opacity:1}
-.scout-name{display:inline-block;padding:2px 10px;border-radius:20px;background:#152733;color:#f6f1e7;font:600 12px/1.5 system-ui,sans-serif;border:1px solid #eabb8770}
-.scout-pause{display:block;margin:3px auto 0;padding:3px 8px;min-height:24px;border:0;border-radius:12px;background:#152733;color:#f6f1e7;font:12px/1.4 system-ui,sans-serif;cursor:pointer}
-.scout-widget button:focus-visible,.scout-bubble a:focus-visible{outline:3px solid #eabb87;outline-offset:4px;border-radius:8px}
-.scout-widget.is-paused .scout-body{animation-play-state:paused}
-@keyframes scout-sway{0%,100%{transform:translateX(-2px) rotate(-2.5deg)}35%{transform:translateX(2px) translateY(-2px) rotate(2.8deg)}65%{transform:translateX(1px) rotate(.5deg)}}
+/* Continuous articulation: feet remain planted; no pose swaps or whole-body rocking. */
+.scout-toggle,.scout-toggle:hover,.scout-toggle:active{background:transparent!important;border:0!important;box-shadow:none!important;transform:none!important;border-radius:0!important}
+.scout-puppet{display:block;width:100%;height:auto;overflow:visible}.scout-name{font:600 12px/1.4 system-ui,sans-serif;color:inherit;background:transparent;border:0;padding:0}.scout-widget{color:#eabb87;background:none!important;border:0!important;box-shadow:none!important}
+.scout-upper{animation:scout-weight 14s cubic-bezier(.45,0,.25,1) infinite}.scout-leg-left{transform-origin:393px 1265px;animation:scout-knee-left 14s ease-in-out infinite}.scout-leg-right{transform-origin:628px 1265px;animation:scout-knee-right 14s ease-in-out infinite}
+.scout-eye-left{transform-origin:385px 636px}.scout-eye-right{transform-origin:637px 636px}.scout-eye{animation:scout-look 17s ease-in-out infinite}.scout-widget.is-blinking .scout-eye{animation:scout-blink .19s ease-in-out}
+.scout-brow-left{transform-origin:381px 533px;animation:scout-brow 19s ease-in-out infinite}.scout-brow-right{transform-origin:645px 533px;animation:scout-brow 19s ease-in-out -1s infinite}.scout-mouth{transform-origin:510px 735px;animation:scout-smile 19s ease-in-out infinite}.scout-needle{transform-origin:512px 646px;animation:scout-north 23s cubic-bezier(.45,0,.2,1) infinite}
+.scout-hand-left,.scout-hand-right{animation:scout-hands 14s ease-in-out infinite}.scout-finger-left-1,.scout-finger-left-2,.scout-finger-left-3,.scout-finger-right-1,.scout-finger-right-2,.scout-finger-right-3{transform-origin:50% 1075px;animation:scout-fingers 12s ease-in-out infinite}.scout-finger-left-2,.scout-finger-right-2{animation-delay:-.3s}.scout-finger-left-3,.scout-finger-right-3{animation-delay:-.6s}
+.scout-pause{display:block;margin:3px auto 0;padding:4px 8px;min-height:28px;border:0;border-radius:12px;background:#152733;color:#f6f1e7;font:12px/1.4 system-ui,sans-serif;cursor:pointer}.scout-widget button:focus-visible,.scout-bubble a:focus-visible{outline:3px solid #eabb87;outline-offset:4px}
+.scout-widget.is-paused svg g{animation-play-state:paused!important}
+@keyframes scout-weight{0%,18%,100%{transform:translate(0,0)}32%,46%{transform:translate(6px,3px)}62%,76%{transform:translate(-4px,1px)}88%{transform:translate(0,-2px)}}
+@keyframes scout-knee-left{0%,18%,100%{transform:skewX(0)}32%,46%{transform:skewX(-1.1deg) scaleY(.994)}62%,76%{transform:skewX(.7deg)}}
+@keyframes scout-knee-right{0%,18%,100%{transform:skewX(0)}32%,46%{transform:skewX(-1deg)}62%,76%{transform:skewX(.8deg) scaleY(.994)}}
+@keyframes scout-look{0%,25%,52%,80%,100%{transform:translateX(0)}31%,41%{transform:translateX(-7px)}62%,70%{transform:translateX(7px)}}
+@keyframes scout-blink{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.08)}}
+@keyframes scout-brow{0%,45%,70%,100%{transform:translateY(0)}53%,60%{transform:translateY(-5px) rotate(-2deg)}}
+@keyframes scout-smile{0%,45%,75%,100%{transform:scale(1)}53%,64%{transform:scale(1.055,1.2)}}
+@keyframes scout-north{0%,55%,86%,100%{transform:rotate(0)}62%{transform:rotate(17deg)}70%{transform:rotate(-10deg)}79%{transform:rotate(3deg)}}
+@keyframes scout-hands{0%,20%,65%,100%{transform:translateY(0)}34%,45%{transform:translateY(2px)}}
+@keyframes scout-fingers{0%,35%,65%,100%{transform:translateY(0)}44%,54%{transform:translateY(-4px)}}
 .scout-bubble{position:absolute;right:0;bottom:calc(100% + 16px);width:min(270px,calc(100vw - 30px));padding:19px 34px 18px 18px;border:1px solid #eabb87;border-radius:18px;background:#f8f2e6;color:#24313b;text-align:left;box-shadow:0 8px 30px #0004;font:16px/1.5 system-ui,sans-serif}
 .scout-bubble[hidden]{display:none}.scout-bubble::after{content:'';position:absolute;right:40px;bottom:-9px;width:16px;height:16px;background:#f8f2e6;border-right:1px solid #eabb87;border-bottom:1px solid #eabb87;transform:rotate(45deg)}
 .scout-bubble p{margin:0 0 8px;font-weight:600}.scout-bubble a{display:inline-block;color:#24313b;text-decoration:underline;text-underline-offset:3px;font-size:14px}
@@ -16,3 +27,5 @@
 @media(max-width:700px){.scout-widget{width:78px;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}.scout-bubble::after{right:28px}.scout-pause{min-height:28px}}
 @media(prefers-reduced-motion:reduce){.scout-body{animation:none!important}.scout-pose{transition:none!important}}
 @media print{.scout-widget{display:none}}
+
+@media(prefers-reduced-motion:reduce){.scout-puppet g{animation:none!important;transition:none!important}}

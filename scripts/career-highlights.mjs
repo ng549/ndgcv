@@ -8,7 +8,7 @@ export const careerHighlights = {
   [['Built usable business dashboards','Turned scattered small-business and e-commerce data into accessible reporting.'],['Earned repeat client work','STC and NuvoMed continue to call on me as new needs arise.']]
  ],
  funtown: [
-  [['65,000 sq ft brought into use','Corsicana opened in March 2022, including about 10,000 sq ft of retail.'],['6 checkout lanes established','Retail, café and service functions in one facility.']],
+  [['65,000 sq ft brought into use','Corsicana opened in March 2022, including about 10,000 sq ft of retail.'],['A broader operating brief','Separate location catalogs exposed the need for shared product information and ordering.']],
   [['30,000+ SKUs unified','Built a shared product database for the retail operation.'],['2 house brands developed','KAMPTIME and USA Rec. Supply.'],['Top 50 products targeted','Prioritized high-selling items for factory-direct sourcing.']],
   [['$3M in sourcing sales','Internal sales generated in under one year.'],['28% → 79% product margin','Reported increase on selected factory-direct products: 51 percentage points.'],['6 locations, 2 divisions','Expanded the retail platform across the business.']],
   [['Built repeatable store standards','Created merchandising guides and operating processes for teams.'],['Connected sourcing to selling','Linked product records, ordering, logistics and store execution.']]

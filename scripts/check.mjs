@@ -25,7 +25,7 @@ assert(h.includes('section-19-aup-plaque.webp'));
 assert(h.includes('I started working at twelve'));
 assert(h.includes('assets/img-00-tight.png'));
 const c=fs.readFileSync('dist/connect.html','utf8');
-assert.equal((c.match(/class="illustrated-action /g)||[]).length,5);
+assert.equal((c.match(/class="illustrated-action /g)||[]).length,6);
 assert(!c.includes('qr-'),'No QR on QR destination');
 assert.equal(actions.find(a=>a.id==='references').href,'mailto:ngoureau@mac.com?subject=Reference%20request');
 assert.equal(actions.find(a=>a.id==='linkedin').href,'https://www.linkedin.com/in/nicolas-goureau-6ab3237/');
@@ -34,12 +34,27 @@ const v=fs.readFileSync('dist/nicolas-goureau.vcf','utf8');
 assert(v.startsWith('BEGIN:VCARD\r\nVERSION:3.0\r\n'));assert(v.endsWith('END:VCARD\r\n'));
 assert(v.includes('EMAIL;TYPE=INTERNET:ngoureau@mac.com\r\n'));assert(v.includes('TEL;TYPE=VOICE:+19175356425\r\n'));
 const extended=connectPage([...actions,...['one','two','three'].map(id=>({id,label:'Future action '+id,href:'/',hint:'Test extension'}))]);
-assert.equal((extended.match(/class="illustrated-action /g)||[]).length,8,'Action registry must extend without fixed coordinates');
+assert.equal((extended.match(/class="illustrated-action /g)||[]).length,9,'Action registry must extend without fixed coordinates');
 const data=JSON.parse(fs.readFileSync('archive/the-agency/portfolio-data.json'));
 assert.equal(data.aiProjectsData.length,7);assert.equal(data.aiMinisData.length,3);
 for(const file of JSON.parse(fs.readFileSync('archive/the-agency/asset-manifest.json')))assert(fs.existsSync('archive/the-agency/assets/'+file));
 assert(!fs.existsSync('dist/archive'));assert(!fs.existsSync('dist/content.json'));
-console.log('Passed: packaged assets and anchors; 8 roles / 32 panels / 12 company examples; 6 build stages; Education; 5 contact actions; reference subject; LinkedIn target; vCard; extendable 8-action markup; portfolio archive. Visual responsive checks remain separate.');
+console.log('Passed: packaged assets and anchors; 8 roles / 32 panels / 12 company examples; 6 build stages; Education; 6 contact actions; reference subject; LinkedIn target; vCard; extendable 9-action markup; portfolio archive. Visual responsive checks remain separate.');
 
 assert(v.includes('item1.URL:https://www.linkedin.com/in/nicolas-goureau-6ab3237/\r\n'));
 assert(!h.includes('More ways to connect'));
+
+assert(h.includes('id="career-master"'));
+assert(!/<details class="role career-designed [^>]+\sopen/.test(h));
+assert.equal((h.match(/<article class="systems-group"/g)||[]).length,6);
+assert.equal((h.match(/<article class="build-group"/g)||[]).length,6);
+assert(h.includes('id="contact-heading">Let’s connect</h2>'));
+assert(!c.includes('class="connect-footer"'));
+assert.equal(actions.find(a=>a.id==='download').href,'/Nicolas-Goureau-CV.pdf');
+assert(fs.readFileSync('dist/Nicolas-Goureau-CV.pdf').subarray(0,4).toString()==='%PDF');
+assert(!h.includes('6 checkout lanes established'));
+assert(!h.match(/<footer[\s\S]*?<\/footer>/)?.[0].includes('remote'));
+console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
+
+assert.equal((h.match(/class="illustrated-action /g)||[]).length,6,"Homepage and connect share all six actions");
+assert.equal((h.match(/<img[^>]* src="assets\/idea-to-sale\/[^" ]+-private-label.png"/g)||[]).length,9,"All nine distinct private-label groups are published");

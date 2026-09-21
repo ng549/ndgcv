@@ -1050,3 +1050,15 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Clicking character toggles an introduction bubble above him; pointer aims toward Scout. Bubble contains “Hi, I’m Scout.” and existing contact-page link; no unsupported chat or delivery capability is claimed. Close, outside click and Escape dismiss it. Pause control is separate. Reduced-motion and background-tab pause retained.
 - New artwork: docs/assets/scout/scout-poses-v2.webp and scout-blinks-v2.webp, generated from approved transparent octagonal Scout. Earlier assets preserved.
 - Build and content preservation checks pass. Actual rendered animation, desktop/mobile visual QA remain unverified because local browser installation is unavailable. Production release verification follows this change.
+
+
+## 2026-09-21 — Approved NDG CV Edits and private-label restoration
+- Nicolas requested the Drive document NDG CV Edits be read, a plan returned, and work held for Go. Subsequent Go authorized the documented edits and publication. Source: https://docs.google.com/document/d/1GE8FlDqjnjLvrTVhWTyiddo5y_kR0EmlJrT1W1T6eNQ/edit.
+- Added sequential section navigation, large one-line profile name/Atlanta, Find Out More, two-column About and four personal blocks. Removed remote-work footer language.
+- Journey uses a collapsed master with eight collapsed role previews. A single image moves between its preview and original tab; no duplicate foreground image is introduced. All 32 tabs and 12 examples retained; two More of the work groups collapse independently. Replaced Fun Town checkout-lane highlight with the shared-catalog operating context.
+- Systems & Tools and Build Process each use one master disclosure containing six non-collapsing articles. Four named section backgrounds extend/repeat through content; user explicitly permitted repeated background artwork. Golden rule still applies to foreground imagery.
+- Shared six contact actions on Let's Connect and /connect, including a real two-page downloadable PDF. Connect title updated; redundant bottom contacts removed. Footer current year updates automatically.
+- Nine distinct source-based private-label grouped sketches restored to From idea to sale, including four extra groups covering twelve more brands. Original source assets preserved; captions retain development-stage distinctions. Source/Drive records: design/private-label/README.md and drive-new-masters.json.
+- Scout uses a transparent neutral master with clipped independent body, leg, finger, eye, eyebrow, mouth and compass-needle motion. Feet stay planted, no rigid-body rocking or enclosing box; bubble remains above. Reduced-motion and pause controls retained. This is layered 2D animation, not a 3D rig.
+- Build, content preservation, JS syntax and two-page PDF checks passed. Local browser preview is blocked; hosted rendered verification follows publication. No supported mobile viewport is available, so responsive source checks must not be described as a rendered phone test.
+- Scout neutral master saved in Current/Photos and Imagery: Drive file 1bZBEEajBe6aTIBct7_hWTEG_GiwtMOKE.
