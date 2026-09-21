@@ -65,3 +65,7 @@
 .scout-widget.is-excited .scout-leg-left,.scout-widget.is-excited .scout-leg-right,.scout-widget.is-excited .scout-thigh-left,.scout-widget.is-excited .scout-thigh-right{animation:none;transform:none}
 .scout-bubble:after{right:68px}
 @media(max-width:700px){.scout-widget{width:117px}.scout-bubble:after{right:49px}}
+
+/* Framed motion control beside Scout’s left foot (viewer’s right). */
+.scout-pause{position:absolute;right:0;bottom:0;margin:0;border:1px solid #eabb87;border-radius:5px;background:#152733e8;box-shadow:0 2px 6px #0003}
+.scout-pause:hover{background:#233b49;color:#fff}
