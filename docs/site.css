@@ -1128,3 +1128,5 @@ main>section>.section-bar{margin:0 0 20px!important;padding:0!important;border:0
 #product-journey>.section-art{background-image:linear-gradient(90deg,#172b35ed,#172b35c9),url('illustrations/hero-v3.webp')}
 #contact{background-image:linear-gradient(90deg,#142733eb,#142733c7),url('illustrations/contact-v3.webp');background-repeat:no-repeat;background-size:cover}
 @media(max-width:760px){#product-journey .idea-body{grid-template-columns:1fr}#build .help-copy p,#build .help-tech-bullets li{font-size:17px}#experience>.section-art,#build>.section-art,#value>.section-art,#product-journey>.section-art{background-attachment:scroll}}
+/* Section controls sit above the background even though they precede its element. */
+main>section>.section-bar{position:relative;z-index:3;color:inherit}
