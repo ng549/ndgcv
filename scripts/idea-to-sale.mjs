@@ -59,7 +59,7 @@ const additionalGroups = {
 };
 function productImage(e,id,brands,note='') {
   const alt=`Editorial sketch of ${brands}. Adapted from original private-label product and packaging references; an illustrative grouping.`;
-  return `<figure class="private-label-sketch"><a class="idea-image" href="assets/idea-to-sale/${id}-private-label.png" target="_blank" rel="noopener" aria-label="Open ${e(brands)} sketch at full size"><img src="assets/idea-to-sale/${id}-private-label.png" alt="${e(alt)}" width="1536" height="1024" loading="lazy" decoding="async"></a><figcaption>${e(brands)}</figcaption></figure>`;
+  return `<figure class="private-label-sketch"><a class="idea-image" href="assets/idea-to-sale/${id}-private-label.png" target="_blank" rel="noopener" aria-label="Open ${e(brands)} sketch at full size"><img src="assets/idea-to-sale/${id}-private-label.png" alt="${e(alt)}" width="1536" height="1024" loading="lazy" decoding="async"></a><figcaption class="private-label-caption">${e(brands)}</figcaption></figure>`;
 }
 export function ideaToSale(e) {
   return `<section class="brand-story idea-sale-section" id="product-journey" aria-labelledby="idea-sale-heading"><div class="shell"><div class="section-heading"><span class="eyebrow">Connecting the idea with the operation</span><h2 id="idea-sale-heading">From idea to sale</h2><p>I bring the commercial decisions and the practical work together, from shaping an offer to getting it into customers’ hands. These parts overlap: I work through them with the people responsible, returning to earlier decisions as we learn more.</p></div><div class="idea-stages">${stages.map(s=>{
