@@ -161,7 +161,7 @@ document.querySelectorAll('.role.career-designed').forEach(role=>{
  const place=()=>{if(role.open)marker.after(image);else preview.append(image)};
  role.addEventListener('toggle',place);place();
 });
-const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','How I can help'],['value','Results'],['product-journey','From idea to sale'],['capabilities','Capabilities'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
+const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','How I can help'],['capabilities','Capabilities'],['value','Results'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
 orderedSections.forEach(([id,title],i)=>{
  const section=document.getElementById(id);if(!section)return;
  const steps=document.createElement('nav');steps.className='section-stepper';steps.setAttribute('aria-label',title+' section navigation');
