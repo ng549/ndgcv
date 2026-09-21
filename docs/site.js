@@ -121,7 +121,7 @@ addEventListener('hashchange', () => {
   if (target) revealSection(target);
 });
 const initialTarget = document.getElementById(location.hash.slice(1));
-if (initialTarget) revealSection(initialTarget);
+if (initialTarget && initialTarget.id!=='about') revealSection(initialTarget);
 const navObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
@@ -188,4 +188,4 @@ for(const id of ['experience','build','value','product-journey']){
 
 // Overview navigation targets are created after the main section controls.
 document.querySelectorAll('#how-work-grew,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
-if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){revealSection(target);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
+if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){if(target.id!=='about')revealSection(target);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
