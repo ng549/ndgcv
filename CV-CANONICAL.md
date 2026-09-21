@@ -1146,3 +1146,8 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 ## 2026-09-21 — Single Journey minimize control
 - Removed the nested How the work grew disclosure. Journey narrative and timeline stay together under the top My journey control; the existing navigation anchor remains.
 - JS syntax and build passed; hosted verification recorded in Drive after release.
+
+## 2026-09-21 — Open build stages, complete tool marks and minimized start
+- Removed inner Build Process master box/header/disclosure; all6stages now belong directly to the main section. Added8missing brand icons with provenance; all31tool controls have local logo assets.
+- Every collapsible top-level section starts minimized on unanchored entry. Profile remains visible; navigation/deep links open their target.
+- Validation and exact hosted release status recorded in Drive after publication.

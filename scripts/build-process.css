@@ -55,3 +55,6 @@
 #software-work .tool-trigger img{filter:brightness(0) invert(1);opacity:.9}
 /* Match Section 17 heading scale; retain the intentional two-line title. */
 @media(min-width:761px){#software-work .section-heading h2{max-width:none;font-size:clamp(28px,3.3vw,46px)}}
+
+/* Brand icons retain their colors and internal detail. */
+#software-work .tool-trigger img{filter:none;opacity:1;background:#fff;border-radius:4px;padding:3px;width:28px;height:28px}

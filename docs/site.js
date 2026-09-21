@@ -90,7 +90,7 @@ Object.entries(sections).forEach(([id, title]) => {
   });
   bar.append(label, button);
   section.prepend(bar);
-  if(['build','value','product-journey'].includes(id)){
+  if(section.matches('[data-collapsible]')){
     section.classList.add('is-minimized');button.textContent='Expand +';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
   }
 });
