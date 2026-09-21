@@ -63,7 +63,7 @@ document.querySelector('#capabilities .cap-close')?.addEventListener('click',()=
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
 
 const sections = {
-  about: 'About me', opportunity: 'My next chapter', build: 'Connecting opportunity with execution', capabilities: 'Capabilities', value: 'How the work changed',
+  opportunity: 'My next chapter', build: 'Connecting opportunity with execution', capabilities: 'Capabilities', value: 'How the work changed',
   'product-journey': 'From idea to sale', experience: 'My journey', 'career-master':'Explore my career',
   ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education'
 };
