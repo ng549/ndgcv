@@ -1,7 +1,7 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.7",
-  "updated_at": "2026-09-20",
+  "version": "0.8",
+  "updated_at": "2026-09-21",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
@@ -345,9 +345,10 @@
     "economic_principle": "Save money and make money: optimize effective cost per successful outcome, reuse, replaceability, automation, and gross margin rather than sticker price alone.",
     "build_stack_evaluation": {
       "factory_droid": {
-        "status": "PASSED_READ_ONLY_ARCHITECTURE_EVALUATION_NOT_SELECTED",
+        "status": "APPROVED_FOR_BUILD_STACK_INTEGRATION",
         "role_candidate": "Replaceable conversational front door and agent execution provider; not owner of Agency governance, secrets, event truth, billing truth, or GitHub source truth.",
-        "next_gate": "Controlled disposable Test #2 covering isolation, coding/tests, interruption/resume, independent validation, telemetry, permission discipline, interventions, retries and effective cost."
+        "next_gate": "No Test #7. Begin Build Stack integration.",
+        "decision": "Six evaluation gates passed sufficiently to begin integration. Factory remains replaceable and does not own Agency governance, secrets, billing/event truth, source truth, or merge authority."
       },
       "hard_requirements": {
         "global_integration_secrets": "Agency-owned connect-once/reuse-many credential broker with Agency/client/project/environment/worker/execution scoping, BYOK, least privilege, rotation/revocation and auditability.",
@@ -367,6 +368,19 @@
         "GitHub software truth",
         "Agency Postgres operational/financial truth"
       ]
-    }
+    },
+    "build_stack_integration_priorities": [
+      "Factory adapter behind ExecutionProvider interface",
+      "Agency Work Packet service",
+      "Credential Broker and production secrets backend selection",
+      "Integration/MCP Gateway",
+      "Agency Event Store",
+      "Agency Cost Ledger and reconciliation",
+      "Factory/GitHub/Cloudflare event normalization",
+      "Cost-aware multi-provider model routing",
+      "Plugsky/OpenRouter verification and integration",
+      "NEXUS living-world visualization",
+      "Use Build Stack to accelerate Nexus V2"
+    ]
   }
 }
