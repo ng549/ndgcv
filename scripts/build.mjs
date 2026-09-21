@@ -1,3 +1,4 @@
+import {withScout} from './scout.mjs';
 import fs from 'node:fs';
 import {ideaToSale} from './idea-to-sale.mjs';
 import {education} from './education.mjs';
@@ -76,11 +77,13 @@ ${contactSection()}
 </main><footer class="shell"><a href="#profile">Nicolas Goureau</a><span>ATLANTA, GA · Open to remote or hybrid work</span><span>© ${new Date().getUTCFullYear()}</span></footer></body></html>`;
 html=editorial(html,d,e,img);
 html=html.replace(/<figcaption>[\s\S]*?<\/figcaption>/g,'');
-fs.writeFileSync('docs/connect.html',connectPage());
+fs.writeFileSync('docs/connect.html',withScout(connectPage()));
 fs.copyFileSync('scripts/connect.css','docs/connect.css');
 fs.copyFileSync('scripts/connect.js','docs/connect.js');
-fs.writeFileSync('docs/index.html',html.replace(/[ \t]+$/gm,''));
+fs.writeFileSync('docs/index.html',withScout(html.replace(/[ \t]+$/gm,'')));
 const careerCSSMarker='/* BEGIN CAREER PRESENTATION */';
 const existingCSS=fs.readFileSync('docs/site.css','utf8').split(careerCSSMarker)[0].trimEnd();
 fs.writeFileSync('docs/site.css',existingCSS+'\n\n'+careerCSSMarker+'\n'+fs.readFileSync('scripts/career-presentation.css','utf8')+'\n'+fs.readFileSync('scripts/how-i-can-help.css','utf8')+'\n'+fs.readFileSync('scripts/capabilities.css','utf8')+'\n'+fs.readFileSync('scripts/systems-tools.css','utf8')+'\n'+fs.readFileSync('scripts/build-process.css','utf8')+'\n'+fs.readFileSync('scripts/education.css','utf8')+'\n'+fs.readFileSync('scripts/connect.css','utf8')+'\n'+fs.readFileSync('scripts/idea-to-sale.css','utf8'));
 console.log('Built CV: 8 roles, 32 career stories, 12 supporting examples, build process, Education and illustrated contact pages.');
+
+for (const ext of ['css','js']) fs.copyFileSync('scripts/scout.'+ext,'docs/scout.'+ext);

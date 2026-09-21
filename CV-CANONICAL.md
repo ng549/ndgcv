@@ -1035,3 +1035,11 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Inspected generated artwork and comparison sheet of existing local artwork. Build and structural checks pass: eight roles, 32 career panels, 12 supporting examples. Other sections preserved. Updated self-contained review preview. Browser desktop/mobile visual and interaction checks remain pending from previous handoff; no new claim those passed.
 - Status: implemented locally for review; not pushed, merged or deployed. No Scout, command-center or Nexus work.
 
+
+## 2026-09-21 — Scout animated character deployment
+- Nicolas approved the octagonal brass compass concept, natural idle blinking and slight movement, then explicitly requested deployment.
+- Character-only release: fixed bottom-right on Interactive CV and /connect; 104px desktop, 74px mobile; transparent open-eye artwork and clipped blink overlay; rigid-body sway, irregular 2.6–6.3 second blink intervals, 145ms closed frame. Character button pauses/resumes motion. Respects device reduced motion, pauses in hidden tabs, excluded from print.
+- No conversational backend, visitor collection, language claims, request delivery or command center added. Those remain separate work.
+- Assets: docs/assets/scout/scout-open.webp and scout-blink.webp. Sources: scripts/scout.mjs, scout.css and scout.js. Original approved artwork and blink frame remain in the Scout conversation.
+- Verified before release: build, existing preservation checks (8 roles/32 tabs/12 examples), JS syntax, mocked timer/state tests (blink, pause/resume, hidden tab, reduced motion), and byte-identical page content outside Scout insertions. Browser installation timed out; rendered desktop/mobile and actual browser animation playback remain unverified.
+- This commit prepares the authorized production release. Live deployment confirmation must be reported separately after checking production.

@@ -1,0 +1,13 @@
+/* Scout's character only; conversation and request delivery are not enabled. */
+.scout-widget{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:25;width:104px;isolation:isolate}
+.scout-toggle{display:block;width:100%;padding:0;border:0;background:transparent;color:#fff;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.scout-toggle svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 3px 4px #0005)}
+.scout-body{transform-origin:572px 1240px;animation:scout-sway 7.8s ease-in-out infinite}
+.scout-blink{opacity:0}.scout-blink.is-blinking{opacity:1}
+.scout-name{display:inline-block;padding:3px 10px;border-radius:20px;background:#152733;color:#f6f1e7;font:600 12px/1.5 system-ui,sans-serif;border:1px solid #eabb8770}.scout-motion{margin-left:5px}
+.scout-toggle:focus-visible{outline:3px solid #eabb87;outline-offset:4px;border-radius:8px}
+.scout-widget.is-paused .scout-body{animation-play-state:paused}
+@keyframes scout-sway{0%,100%{transform:rotate(-.45deg) translateY(0)}40%{transform:rotate(.5deg) translateY(-3px)}70%{transform:rotate(.1deg) translateY(-1px)}}
+@media(max-width:700px){.scout-widget{width:74px;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){.scout-body{animation:none!important}}
+@media print{.scout-widget{display:none}}
