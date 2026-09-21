@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.internal/contracts/operator-view.v1.json",
+  "title": "Operator view: WorkerView and GET /operator/api/workers response",
+  "description": "Frozen shape produced by the operator command center (Worker 13) and consumed by its UI. Golden Rule: no fabricated capability, cost, provider, or status — absent evidence is UNKNOWN/disabled. Capability derivation provenance: controls are derived by src/capability.mjs from Worker 9's published command-contract v1; Worker 9 remains the enforcement authority (its 409 is final).",
+  "$defs": {
+    "control": {
+      "type": "object",
+      "required": ["allowed", "reason"],
+      "properties": {
+        "allowed": { "type": "boolean" },
+        "reason": {
+          "type": ["string", "null"],
+          "description": "Machine-readable explanation when allowed is false (e.g. status_unknown, stale_heartbeat, missing_heartbeat, state_paused_rejects_run, orchestrator_not_connected). Null when allowed is true."
+        }
+      },
+      "additionalProperties": false
+    },
+    "controls": {
+      "type": "object",
+      "description": "Populated ONLY by capability.deriveControls; derived from Worker 9 command-contract v1. A UI control is enabled iff allowed === true.",
+      "required": [
+        "RUN", "CONTINUE", "PAUSE", "RESUME", "STOP", "RETRY",
+        "REASSIGN_MODEL", "ADJUST_BUDGET", "SEND_TO_REVIEW"
+      ],
+      "properties": {
+        "RUN": { "$ref": "#/$defs/control" },
+        "CONTINUE": { "$ref": "#/$defs/control" },
+        "PAUSE": { "$ref": "#/$defs/control" },
+        "RESUME": { "$ref": "#/$defs/control" },
+        "STOP": { "$ref": "#/$defs/control" },
+        "RETRY": { "$ref": "#/$defs/control" },
+        "REASSIGN_MODEL": { "$ref": "#/$defs/control" },
+        "ADJUST_BUDGET": { "$ref": "#/$defs/control" },
+        "SEND_TO_REVIEW": { "$ref": "#/$defs/control" }
+      },
+      "additionalProperties": false
+    },
+    "cost": {
+      "type": "object",
+      "description": "Integer micro-USD. Never fabricated: absent evidence => null => rendered UNKNOWN. truthState SUPERVISOR_RECORDED means the figures come from Worker 9's work-packet budget fields; UNKNOWN means no evidence was available.",
+      "required": ["consumedMicros", "limitMicros", "remainingMicros", "truthState"],
+      "properties": {
+        "consumedMicros": { "type": ["integer", "null"], "minimum": 0 },
+        "limitMicros": { "type": ["integer", "null"], "minimum": 0 },
+        "remainingMicros": { "type": ["integer", "null"], "minimum": 0 },
+        "truthState": { "enum": ["SUPERVISOR_RECORDED", "UNKNOWN"] }
+      },
+      "additionalProperties": false
+    },
+    "workerView": {
+      "type": "object",
+      "description": "Normalized per-worker object (camelCase), produced by core.normalizePacket / core.unknownWorker from a raw Worker 9 packet.",
+      "required": [
+        "id", "name", "status", "reportedState", "statusEvidence",
+        "currentTask", "model", "provider", "lastHeartbeat", "heartbeatFresh",
+        "cost", "branch", "lastCheckpoint", "latestCommit", "blocker",
+        "reviewState", "controls"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "status": {
+          "description": "Effective status after staleness override: RUNNING with a stale/missing heartbeat collapses to UNKNOWN.",
+          "enum": [
+            "READY", "RUNNING", "PAUSED", "STOPPED", "WAITING_ON_DEPENDENCY",
+            "BLOCKED", "FAILED", "NEEDS_REVIEW", "COMPLETE", "UNKNOWN"
+          ]
+        },
+        "reportedState": {
+          "type": ["string", "null"],
+          "description": "Raw Worker 9 packet state before staleness override; null when no packet evidence exists."
+        },
+        "statusEvidence": {
+          "type": "string",
+          "description": "Provenance of the status claim, e.g. \"worker9-packet\" or \"none\"."
+        },
+        "currentTask": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] },
+        "provider": {
+          "type": ["string", "null"],
+          "description": "Always null today (Worker 9 exposes no provider) => UI shows UNKNOWN."
+        },
+        "lastHeartbeat": { "type": ["string", "null"], "format": "date-time" },
+        "heartbeatFresh": {
+          "type": "boolean",
+          "description": "False when the heartbeat is missing or older than HEARTBEAT_STALE_MS (10 minutes, matching Worker 9's lease)."
+        },
+        "cost": { "$ref": "#/$defs/cost" },
+        "branch": { "type": ["string", "null"] },
+        "lastCheckpoint": { "type": ["string", "null"] },
+        "latestCommit": { "type": ["string", "null"] },
+        "blocker": { "type": ["string", "null"] },
+        "reviewState": { "enum": ["NOT_SENT", "PENDING", "APPROVED", "REJECTED", "UNKNOWN"] },
+        "controls": { "$ref": "#/$defs/controls" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "description": "GET /operator/api/workers response body.",
+  "required": [
+    "connected", "reason", "observedAt", "contractVersion",
+    "capabilitySource", "workers", "globalControls"
+  ],
+  "properties": {
+    "connected": { "type": "boolean" },
+    "reason": {
+      "type": ["string", "null"],
+      "description": "Null when connected; otherwise NOT_CONFIGURED | TIMEOUT | UNAVAILABLE | AUTH_REJECTED | HTTP_<n> | INVALID_PAYLOAD."
+    },
+    "observedAt": { "type": ["string", "null"], "format": "date-time" },
+    "contractVersion": { "const": "worker9-command-contract-v1" },
+    "capabilitySource": {
+      "const": "derived-from-worker9-command-contract-v1",
+      "description": "Explicit provenance: capabilities are derived, not advertised; Worker 9 enforces."
+    },
+    "workers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workerView" }
+    },
+    "globalControls": {
+      "type": "object",
+      "required": ["RUN_ALL_READY", "RUN_PHASE"],
+      "properties": {
+        "RUN_ALL_READY": { "$ref": "#/$defs/control" },
+        "RUN_PHASE": { "$ref": "#/$defs/control" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

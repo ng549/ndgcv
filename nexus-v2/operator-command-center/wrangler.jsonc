@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nexus-v2-operator-command-center",
-  "main": "src/worker9-index.mjs",
+  "main": "src/index.mjs",
   "compatibility_date": "2026-09-19",
   "workers_dev": false,
   "vars": {

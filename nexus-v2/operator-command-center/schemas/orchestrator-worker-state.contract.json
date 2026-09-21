@@ -31,7 +31,14 @@
           },
           "checkpoint_sha": {"type":["string","null"]},
           "heartbeat_at": {"type":["string","null"],"format":"date-time"},
-          "blocker": {"type":["object","string","null"]}
+          "blocker": {"type":["object","string","null"]},
+          "review_state": {
+            "enum": ["NOT_SENT","PENDING","APPROVED","REJECTED"],
+            "description": "Optional; consumed for SEND_TO_REVIEW gating. Absent => treated as NOT_SENT by Worker 9 persistence default."
+          },
+          "packet_version": {"type":"integer","minimum":1},
+          "active_execution_id": {"type":["string","null"]},
+          "lease_expires_at": {"type":["string","null"],"format":"date-time"}
         },
         "additionalProperties": true
       }

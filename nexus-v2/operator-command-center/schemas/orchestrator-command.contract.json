@@ -1,23 +1,72 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://nexus.internal/contracts/worker9-command-request.v1.json",
+  "$id": "https://nexus.internal/contracts/worker9-command-request.v2.json",
   "title": "Worker 9 command request consumed by Worker 13",
+  "version": 2,
   "type": "object",
-  "required": ["command","payload"],
+  "required": ["command", "payload"],
   "properties": {
     "command": {
-      "enum": ["RUN","CONTINUE","PAUSE","RESUME","STOP","RETRY"]
+      "enum": [
+        "RUN", "CONTINUE", "PAUSE", "RESUME", "STOP", "RETRY",
+        "REASSIGN_MODEL", "ADJUST_BUDGET", "SEND_TO_REVIEW"
+      ]
     },
     "payload": {
       "type": "object",
       "additionalProperties": false
     }
   },
+  "allOf": [
+    {
+      "if": { "properties": { "command": { "const": "REASSIGN_MODEL" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": ["model"],
+            "properties": { "model": { "type": "string", "minLength": 1 } },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "command": { "const": "ADJUST_BUDGET" } } },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": ["budget_limit_micros"],
+            "properties": {
+              "budget_limit_micros": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "command": {
+            "enum": ["RUN", "CONTINUE", "PAUSE", "RESUME", "STOP", "RETRY", "SEND_TO_REVIEW"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": { "type": "object", "additionalProperties": false }
+        }
+      }
+    }
+  ],
   "additionalProperties": false,
   "x-worker9-routes": {
     "list": "GET /api/workers",
     "worker_command": "POST /api/workers/:id/commands",
     "run_all_ready": "POST /api/run-all-ready",
     "run_phase": "POST /api/run-phase/:phase"
-  }
+  },
+  "x-alignment": "Command set and per-command payload shapes mirror Worker 9's published contracts/command-contract.json (v1) and its commandTransition state machine. Worker 13's UI capability derivation (src/capability.mjs) is derived from this contract, but Worker 9 remains the enforcement authority: its 409 INVALID_STATE/INVALID_COMMAND response is final. Wire payloads use snake_case keys (budget_limit_micros); the operator API accepts camelCase (budgetLimitMicros) and src/adapter.mjs translates."
 }
