@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - nexus-v2-p1-13-operator-command-center
+      - integration/factory-test-06-command-center
     paths:
       - "nexus-v2/operator-command-center/**"
       - ".github/workflows/worker13-command-center-check.yml"
+  workflow_dispatch:
 jobs:
   check:
     runs-on: ubuntu-latest
