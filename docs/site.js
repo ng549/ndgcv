@@ -107,10 +107,33 @@ allControl.addEventListener('click',()=>{
  collapsibleSections.forEach(section=>{if(section.classList.contains('is-minimized')===expand)section.querySelector(':scope>.section-bar button').click()});
  syncAllControl();
 });
+// One decorative roadmap joins the section headings, including expanded sections.
+const roadmapMain=document.querySelector('main');
+const roadmap=document.createElementNS('http://www.w3.org/2000/svg','svg');
+roadmap.classList.add('section-roadmap');roadmap.setAttribute('aria-hidden','true');
+const roadmapPath=document.createElementNS(roadmap.namespaceURI,'path');roadmap.append(roadmapPath);
+const roadmapDots=collapsibleSections.map(section=>{
+ const dot=document.createElementNS(roadmap.namespaceURI,'circle');dot.dataset.section=section.id;dot.setAttribute('r','3.5');roadmap.append(dot);return dot;
+});
+roadmapMain.append(roadmap);
+function syncRoadmap(){
+ const mainRect=roadmapMain.getBoundingClientRect();
+ roadmap.setAttribute('width',String(mainRect.width));roadmap.setAttribute('height',String(mainRect.height));
+ const points=collapsibleSections.map(section=>{
+  const bar=section.querySelector(':scope>.section-bar');const label=bar.querySelector('span');
+  const rect=label.getBoundingClientRect();const style=getComputedStyle(label);
+  return {x:Math.max(10,rect.left-mainRect.left-22),y:rect.top-mainRect.top+parseFloat(style.paddingTop)+parseFloat(style.lineHeight)/2,top:section.getBoundingClientRect().top-mainRect.top};
+ });
+ let path='';points.forEach((point,index)=>{
+  path+=index?` V ${point.top} H ${point.x} V ${point.y}`:`M ${point.x} ${point.y}`;
+  roadmapDots[index].setAttribute('cx',String(point.x));roadmapDots[index].setAttribute('cy',String(point.y));
+ });roadmapPath.setAttribute('d',path);
+}
 function syncBandArtwork(){
  const heights=collapsibleSections.map(section=>section.querySelector(':scope>.section-bar').offsetHeight);
  const total=heights.reduce((sum,height)=>sum+height,0);let offset=0;
  collapsibleSections.forEach((section,index)=>{section.style.setProperty('--band-art-height',`${total}px`);section.style.setProperty('--band-art-offset',`${-offset}px`);offset+=heights[index]});
+ syncRoadmap();
 }
 const sectionStateObserver=new MutationObserver(()=>{syncAllControl();syncBandArtwork()});
 collapsibleSections.forEach(section=>sectionStateObserver.observe(section,{attributes:true,attributeFilter:['class']}));
@@ -147,6 +170,7 @@ function syncNavigation(){
  const destinations=[...document.querySelectorAll('main>section[id]')];
  const marker=innerHeight*.2;
  const current=destinations.find(section=>{const rect=section.getBoundingClientRect();return rect.top<=marker&&rect.bottom>marker})||destinations.find(section=>section.getBoundingClientRect().top>marker);
+ roadmapDots.forEach(dot=>{const active=dot.dataset.section===current?.id;dot.classList.toggle('is-current',active);dot.setAttribute('r',active?'6':'3.5')});
  nav.querySelectorAll('a').forEach(a=>{if(current&&a.hash==='#'+current.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
 }
 const navObserver=new IntersectionObserver(syncNavigation,{rootMargin:'-10% 0px -65% 0px'});

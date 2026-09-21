@@ -276,3 +276,11 @@ main section[data-collapsible].is-minimized .section-preview{margin-top:2px;font
 /* Position collapsed labels halfway between the original inset and one-third. */
 main section[data-collapsible].is-minimized{padding-left:19.666667%!important;padding-right:6%!important}
 main section[data-collapsible].is-minimized>.section-bar>span{max-width:100%;width:100%}
+
+/* A single connected roadmap in the section heading gutter. */
+main{position:relative}
+.section-roadmap{position:absolute;top:0;left:0;z-index:4;pointer-events:none;overflow:visible}
+.section-roadmap path{fill:none;stroke:#d9cdbc;stroke-opacity:.32;stroke-width:1;vector-effect:non-scaling-stroke}
+.section-roadmap circle{fill:#d9b88b;stroke:#14232e;stroke-width:2;transition:r .18s,fill .18s}
+.section-roadmap circle.is-current{fill:#14232e;stroke:#d9b88b;stroke-width:2}
+@media print{.section-roadmap{display:none}}
