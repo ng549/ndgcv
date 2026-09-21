@@ -1136,3 +1136,9 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Removed repeated scenery tiles. Distinct one-time backgrounds now use planning room (experience-v3), Atlanta boardroom (opportunity-v3), results warehouse (value-v3), outdoor retail (hero-v3), and Atlanta street (contact-v3). No foreground image duplicated. Scenes use no-repeat; fixed desktop presentation avoids stretching across long content.
 - Removed Explore the approach box/header/disclosure entirely. Six Systems & Tools approaches sit directly inside that section under its main control.
 - Build, content preservation tests and JS syntax pass. Publication/live rendered verification follows and is recorded in Drive.
+
+## 2026-09-21 — Standalone career section and illustrated previews
+- Explore my career is a top-level section after My journey, with its own section control and previous/next navigation; removed the enclosing career master disclosure.
+- All eight job previews now have distinct existing company background scenes, a summary, approved work highlights and a prominent Find Out More button. Original foreground images stay in their career tabs without duplication; all32tabs and12examples retained.
+- Journey timeline restored with a continuous line and evenly distributed entries stretched to the adjacent narrative height on desktop. Language and proficiency columns both left aligned.
+- Build, preservation checks and syntax passed. Publication and rendered verification status follows in Drive.

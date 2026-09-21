@@ -64,10 +64,10 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCap
 
 const sections = {
   about: 'About me', opportunity: 'My next chapter', build: 'Connecting opportunity with execution', capabilities: 'Capabilities', value: 'How the work changed',
-  'product-journey': 'From idea to sale', experience: 'My journey',
+  'product-journey': 'From idea to sale', experience: 'My journey', 'career-master':'Explore my career',
   ai: 'Systems & tools', 'software-work': 'Build process & AI toolkit', education: 'Education', contact: 'Let’s connect'
 };
-const sectionSummaries={about:'The person, interests and experiences behind the work.',opportunity:'The leadership role and businesses I want to help build.',experience:'Eight roles, with the context, work, outcomes and lessons.',build:'Business building, product economics and connected operations.',capabilities:'The capabilities I bring to the work.',value:'Commercial outcomes and the work behind them.','product-journey':'From the first opportunity to a product in customers’ hands.',ai:'Six approaches to connecting information, people and execution.','software-work':'From defining the problem through building, testing and release.',education:'University of Miami and the American University of Paris.',contact:'Six ways to get in touch or explore my experience.'};
+const sectionSummaries={about:'The person, interests and experiences behind the work.',opportunity:'The leadership role and businesses I want to help build.',experience:'How the work grew, from the shop floor to connected operations.','career-master':'Eight roles, with the context, work, outcomes and lessons.',build:'Business building, product economics and connected operations.',capabilities:'The capabilities I bring to the work.',value:'Commercial outcomes and the work behind them.','product-journey':'From the first opportunity to a product in customers’ hands.',ai:'Six approaches to connecting information, people and execution.','software-work':'From defining the problem through building, testing and release.',education:'University of Miami and the American University of Paris.',contact:'Six ways to get in touch or explore my experience.'};
 Object.entries(sections).forEach(([id, title]) => {
   const section = document.getElementById(id);
   section.dataset.collapsible = '';
@@ -158,16 +158,13 @@ document.querySelectorAll('.career-tabs').forEach(list=>{
  tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>select(tab));tab.addEventListener('keydown',event=>{let index;if(event.key==='ArrowRight')index=(i+1)%tabs.length;if(event.key==='ArrowLeft')index=(i+tabs.length-1)%tabs.length;if(event.key==='Home')index=0;if(event.key==='End')index=tabs.length-1;if(index!==undefined){event.preventDefault();select(tabs[index]);tabs[index].focus()}})});
 });
 
-// A single image moves between its job preview and original tab; it is never cloned.
-document.querySelectorAll('.role.career-designed').forEach(role=>{
- const preview=role.querySelector('.role-preview-media');
- const image=role.querySelector('.career-chapter .chapter-media img');
- if(!preview||!image)return;
- const home=image.parentElement,marker=document.createComment('Career image home');home.insertBefore(marker,image);
- const place=()=>{if(role.open)marker.after(image);else preview.append(image)};
- role.addEventListener('toggle',place);place();
+// Career previews use background scenes; original foreground artwork stays in its tab.
+document.querySelectorAll('.career-open-button').forEach(button=>{
+ const role=button.closest('details');
+ button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();role.open=true});
+ role.addEventListener('toggle',()=>button.setAttribute('aria-expanded',String(role.open)));
 });
-const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['build','Connecting opportunity with execution'],['capabilities','Capabilities'],['value','How the work changed'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
+const orderedSections=[['profile','Profile'],['about','About me'],['opportunity','My next chapter'],['experience','My journey'],['career-master','Explore my career'],['build','Connecting opportunity with execution'],['capabilities','Capabilities'],['value','How the work changed'],['product-journey','From idea to sale'],['ai','Systems & tools'],['software-work','Build process & AI toolkit'],['education','Education'],['contact','Let’s connect']];
 orderedSections.forEach(([id,title],i)=>{
  const section=document.getElementById(id);if(!section)return;
  const steps=document.createElement('nav');steps.className='section-stepper';steps.setAttribute('aria-label',title+' section navigation');
