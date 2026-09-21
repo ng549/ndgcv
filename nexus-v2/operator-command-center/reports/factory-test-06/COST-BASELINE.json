@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-09-21T18:42:00Z",
+  "phase": "BASELINE_BEFORE_IMPLEMENTATION",
+  "source": "~/.factory/sessions/-home-factory-user/86282046-dfc2-4de6-94a8-0ae5fae0663c.settings.json",
+  "orchestrator_session_id": "86282046-dfc2-4de6-94a8-0ae5fae0663c",
+  "model": "kimi-k3",
+  "provider": "UNKNOWN",
+  "note": "Factory session settings do not expose a provider field. tokenUsage is cumulative for this orchestrator session; childInclusiveTokenUsageBySessionId additionally accumulates child (Task) sessions. Test #6 delta = final snapshot minus this baseline, measured on the same fields.",
+  "tokenUsage": {
+    "inputTokens": 3282261,
+    "outputTokens": 453714,
+    "cacheCreationTokens": 821791,
+    "cacheReadTokens": 48500621,
+    "thinkingTokens": 16667,
+    "factoryCredits": 13930091
+  }
+}
