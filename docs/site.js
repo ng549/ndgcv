@@ -91,6 +91,14 @@ Object.entries(sections).forEach(([id, title]) => {
     section.classList.add('is-minimized');button.textContent='+';button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`Expand ${title}`);
   }
 });
+// Compact global disclosure controls in the navigator.
+const allControls=document.createElement('div');allControls.className='section-all-controls';
+for(const [expand,label,path] of [[true,'Expand all sections','M5 8l7-5 7 5M5 16l7 5 7-5'],[false,'Minimize all sections','M5 3l7 5 7-5M5 21l7-5 7 5']]){
+ const control=document.createElement('button');control.type='button';control.title=label;control.setAttribute('aria-label',label);
+ control.innerHTML=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+ control.addEventListener('click',()=>document.querySelectorAll('main>section[data-collapsible]').forEach(section=>{if(section.classList.contains('is-minimized')===expand)section.querySelector(':scope>.section-bar button').click()}));allControls.append(control);
+}
+nav.append(allControls);
 function revealSection(target) {
   if(target?.classList.contains('overview-section'))target.querySelector(':scope>details').open=true;
   for (let parent = target; parent; parent = parent.parentElement) {

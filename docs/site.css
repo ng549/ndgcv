@@ -1180,3 +1180,34 @@ main section[data-collapsible]>.section-bar>.section-toggle,main section[data-co
 main section[data-collapsible]>.section-bar>.section-toggle:hover{background:#8fb0d812}
 main section[data-collapsible]>.section-bar>.section-toggle:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 @media(max-width:760px){main section[data-collapsible].is-minimized{min-height:84px!important;padding-top:0!important;padding-bottom:0!important}main section[data-collapsible].is-minimized>.section-bar>span{font-size:19px}main section[data-collapsible].is-minimized .section-preview{font-size:13px}}
+
+/* One generated artwork for collapsed bands only; existing expanded imagery retained. */
+main>section:not(#profile){--section-dark:#14232e;--wash:#14232e;background-color:var(--section-dark)!important;color:#f4f0e8!important}
+main>section:is(#experience,#ai,#product-journey,#value,#opportunity){--section-dark:#243845;--wash:#243845}
+main>section:not(#profile) :is(h2,h3,h4,h5,p,li,.role-subtitle,.role-meta,.role-year,.role-location,.section-bar,.career-route strong,.route-role,.language-row){color:#f4f0e8!important}
+main>section:not(#profile) :is(.eyebrow,.meta,.role-context,.outcome-evidence>strong,.outcome-evidence small,.career-route small,.language-row>span:last-child){color:#d5c3a6!important}
+main>section:not(#profile) a{color:#efc68f}
+#about .personal-notes strong{color:#f4f0e8}#about .personal-notes>div{border-color:#f4f0e830}
+#about .section-art:after{background:linear-gradient(90deg,#14232ef2,#14232ed9)}
+#opportunity .section-art:after{background:linear-gradient(90deg,#243845ef,#243845cf)}
+#experience>.section-art{background-image:linear-gradient(90deg,#243845ee,#243845d9),url('illustrations/experience-v3.webp')}
+#value>.section-art{background-image:linear-gradient(90deg,#243845ed,#243845d9),url('illustrations/value-v3.webp')}
+#experience .career-route nav{border-color:#f4f0e850}#experience .career-route nav a:before{background:#efc68f}
+.outcome-story,.outcome-evidence{border-color:#eabb8755}
+#career-master .role.career-designed{--card-bg:#192c38;--card-ink:#f4f0e8;--card-muted:#d8e0e5;--card-accent:#efc68f;--card-line:#f4f0e830;background:var(--card-bg)}
+#career-master .role.career-designed.palette-stone{--card-bg:#293e4c}
+#career-master .role.career-designed>summary{background-image:linear-gradient(90deg,#192c38f5,#192c38e8 48%,#192c38a3),var(--career-scene)}
+#career-master .role.career-designed.palette-stone>summary{background-image:linear-gradient(90deg,#293e4cf5,#293e4ce8 48%,#293e4ca3),var(--career-scene)}
+#career-master .career-designed .career-backdrop:after{background:linear-gradient(90deg,#192c38ee,#192c38cc)}
+#career-master .career-designed.palette-stone .career-backdrop:after{background:linear-gradient(90deg,#293e4cee,#293e4ccc)}
+#career-master .career-designed .company-card{background:#203440;color:#f4f0e8;border-color:#eabb8755}
+#career-master .career-designed .company-card-copy>strong,#career-master .career-designed .company-card-copy>span{color:#f4f0e8}
+#career-master .career-open-button,#career-master .palette-stone .career-open-button{background:#14232e;color:#f4f0e8;border-color:#eabb8766}
+main section[data-collapsible].is-minimized{background-image:linear-gradient(#10212dcc,#10212dcc),url('illustrations/collapsed-dark-art-v1.webp')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;color:#f4f0e8!important}
+main section[data-collapsible].is-minimized:is(#experience,#ai,#product-journey,#value,#opportunity){background-image:linear-gradient(#405563aa,#405563aa),url('illustrations/collapsed-dark-art-v1.webp')!important}
+main section[data-collapsible].is-minimized::before,main section[data-collapsible].is-minimized::after{display:none!important}
+main section[data-collapsible].is-minimized>:is(.section-art,.systems-backdrop,.build-backdrop,.education-backdrop){display:none!important}
+main section[data-collapsible].is-minimized>.section-bar{color:#f4f0e8!important}
+main section[data-collapsible].is-minimized .section-preview{color:#e0e5e8;opacity:1}
+
+.section-all-controls{display:flex;gap:10px;padding:10px 4px 0;margin-top:4px}.section-all-controls button{display:grid;place-items:center;width:32px;height:32px;border:0;background:transparent;color:#dce5e9;cursor:pointer;border-radius:4px}.section-all-controls button:hover{background:#8fb0d825;color:#fff}.section-all-controls button:focus-visible{outline:2px solid #eabb87;outline-offset:2px}
