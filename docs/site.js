@@ -122,7 +122,7 @@ function syncRoadmap(){
  const points=collapsibleSections.map(section=>{
   const bar=section.querySelector(':scope>.section-bar');const label=bar.querySelector('span');
   const rect=label.getBoundingClientRect();const style=getComputedStyle(label);
-  return {x:Math.max(10,rect.left-mainRect.left-22),y:rect.top-mainRect.top+parseFloat(style.paddingTop)+parseFloat(style.lineHeight)/2,top:section.getBoundingClientRect().top-mainRect.top};
+  return {x:Math.max(10,rect.left-mainRect.left-22),y:rect.top-mainRect.top+parseFloat(style.paddingTop)+(parseFloat(style.lineHeight)||parseFloat(style.fontSize)*1.3)/2,top:section.getBoundingClientRect().top-mainRect.top};
  });
  let path='';points.forEach((point,index)=>{
   path+=index?` V ${point.top} H ${point.x} V ${point.y}`:`M ${point.x} ${point.y}`;
