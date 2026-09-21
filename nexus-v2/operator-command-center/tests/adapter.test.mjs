@@ -71,7 +71,7 @@ t("happy-path listPackets returns packets + observedAt", async () => {
     assert.ok(!Number.isNaN(Date.parse(result.observedAt)), "observedAt is ISO date-time");
     // Bearer token was presented (Worker 9 ignores it today — see auth proposal).
     assert.equal(server.requests[0].tokenPresent, true);
-    assert.equal(server.requests[0].tokenLast4, "1234");
+    assert.equal(server.requests[0].tokenLast4, "OKEN"); // last 4 of TEST_DUMMY_TOKEN
   } finally {
     await server.close();
   }
