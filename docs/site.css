@@ -1235,3 +1235,9 @@ main section[data-collapsible].is-minimized .section-preview{color:var(--band-ca
 #about.is-minimized{--band-edge:linear-gradient(#14232e,transparent 95%);box-shadow:none!important}
 #education.is-minimized{--band-edge:linear-gradient(transparent 5%,#14232e);box-shadow:none!important}
 #contact{box-shadow:none;background-image:linear-gradient(#14232e,transparent 145px),linear-gradient(90deg,#142733eb,#142733c7),url('illustrations/contact-v3.webp')}
+
+/* A tighter collapsed stack, preserving readable two-line labels. */
+main section[data-collapsible].is-minimized,main section[data-collapsible].is-minimized>.section-bar{min-height:66px!important}
+main section[data-collapsible].is-minimized>.section-bar>span{padding:9px 0;font-size:20px}
+main section[data-collapsible].is-minimized .section-preview{margin-top:2px;font-size:13px;line-height:1.35}
+@media(max-width:760px){main section[data-collapsible].is-minimized>.section-bar>span{font-size:18px;padding:10px 0}main section[data-collapsible].is-minimized .section-preview{font-size:13px}}
