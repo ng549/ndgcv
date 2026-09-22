@@ -475,7 +475,10 @@
       "drive_ready_addition": "nexus-v2/docs/DRIVE-READY-COMPONENT-GUIDE.md",
       "drive_target": {
         "document_id": "1N80_JSAO5k02yDcqJp5SPJd2Nwc1MkSY0Gdyb2sSIL8",
-        "status": "NOT_UPDATED_NO_WRITE_ACCESS — paste-ready addition staged in repo"
+        "status": "RECORDED_2026-09-22 — companion Google Doc created in Global Architecture folder; dated addendum posted as anchored comment on the canonical document (body intentionally untouched; comment anchors the STEP 1 section)",
+        "companion_document_id": "1eFgZz9mSqhvFALJgFiRUoh5Hwq2IFN8jgeo9NMHLncU",
+        "canonical_comment_id": "AAACHcecoP8",
+        "read_back_verified": true
       },
       "components": [
         {
