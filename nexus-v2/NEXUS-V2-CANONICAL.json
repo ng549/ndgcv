@@ -386,7 +386,7 @@
       "status": "IN_PROGRESS",
       "step_1": {
         "name": "Scoped Factory/GitHub execution identity",
-        "status": "IN_PROGRESS",
+        "status": "LIVE_VERIFIED_2026-09-22",
         "github_app": {
           "name": "The Agency Build Worker",
           "app_id": "5025971",
@@ -408,8 +408,293 @@
           "auth_method": "Universal Auth",
           "status": "CREATED_AUTH_NOT_YET_CONFIGURED"
         },
-        "next": "Configure Universal Auth, narrow secret access where available, then build/test the Agency GitHub Token Broker."
+        "next": "Configure Universal Auth, narrow secret access where available, then build/test the Agency GitHub Token Broker.",
+        "actuals_2026_09_22": {
+          "secrets_vault_actual_project": "Agency GitHub Token Broker",
+          "secrets_vault_environment_slug": "prod",
+          "vault_entries_present": [
+            "APP_PRIVATE_KEY",
+            "GITHUB_APP_ID",
+            "GITHUB_APP_PRIVATE_KEY",
+            "GITHUB_INSTALLATION_ID"
+          ],
+          "machine_identity_status": "UNIVERSAL_AUTH_CONFIGURED_AND_LIVE_VERIFIED",
+          "machine_identity_narrowing": "UNVERIFIED — read at target path works; deny-scope beyond path and TTL/lockout settings not read back",
+          "token_broker": "IMPLEMENTED_AND_LIVE_VERIFIED — agency-build-stack src/github/token-broker.mjs; Infisical login -> APP_PRIVATE_KEY -> RS256 app JWT -> installation token narrowed to ng549/ndgcv contents:write -> live api.github.com read",
+          "github_app_permissions_recorded": {
+            "actions": "read",
+            "checks": "read",
+            "contents": "write",
+            "metadata": "read",
+            "pull_requests": "write",
+            "statuses": "read",
+            "workflows": "write"
+          },
+          "github_app_administration": "none (branch-protection reads return 403)",
+          "installation_repositories": [
+            "ng549/ndgcv"
+          ],
+          "evidence": "agency-build-stack docs/VERIFICATION-credential-chain.md; scripts/live-verify-credentials.mjs; scripts/live-verify-app-permissions.mjs (repo local-only, gap G-1)"
+        },
+        "remaining": [
+          "Verify machine-identity narrowing to Production + /Github/agency-build-worker and read back Universal Auth settings (gap G-2)",
+          "Verify or configure branch protection on main and nexus-v2 (gap G-3)",
+          "Enable the GitHub App webhook now that the Agency Event Store exists (gap G-4)"
+        ]
       }
+    },
+    "reconciliation_2026_09_22": {
+      "source": "Component Guide and Source Directory v1.0",
+      "discrepancies": [
+        "D-1 Vault project is 'Agency GitHub Token Broker', not 'Agency Build Stack' as previously recorded",
+        "D-2 Environment slug is 'prod' (display 'Production')",
+        "D-3 Vault folder holds 4 entries incl. APP_PRIVATE_KEY, which the broker reads",
+        "D-4 machine_identity status was stale (auth configured + live-verified)",
+        "D-5 Identity narrowing and Universal Auth settings never read back",
+        "D-6 App holds workflows:write (elevated-risk) — gate in Agency policy",
+        "D-7 Merge gating rests on process/policy; branch protection unreadable with current scope",
+        "D-8 Token broker described as target elsewhere; actually implemented + live-verified",
+        "D-9 Worker 9 pins canonical 0.5 (current 0.9)",
+        "D-10 Webhook disabled_pending_event_store; event store now exists"
+      ],
+      "open_gaps": [
+        "G-1 agency-build-stack repo is local-only; GitHub repo creation needs account-level action",
+        "G-2 Machine identity narrowing unverified",
+        "G-3 Branch protection state unknown",
+        "G-4 Webhook still disabled",
+        "G-5 Postgres vendor (Supabase vs Neon) unselected",
+        "G-6 Plugsky benchmark not run; remains UNVERIFIED",
+        "G-7 Drive canonical document not updated (no write access); paste-ready addition in repo"
+      ]
+    },
+    "component_guide": {
+      "title": "Component Guide and Source Directory",
+      "version": "1.0",
+      "recorded_at": "2026-09-22",
+      "repository_document": "nexus-v2/docs/COMPONENT-GUIDE-AND-SOURCE-DIRECTORY.md",
+      "drive_ready_addition": "nexus-v2/docs/DRIVE-READY-COMPONENT-GUIDE.md",
+      "drive_target": {
+        "document_id": "1N80_JSAO5k02yDcqJp5SPJd2Nwc1MkSY0Gdyb2sSIL8",
+        "status": "NOT_UPDATED_NO_WRITE_ACCESS — paste-ready addition staged in repo"
+      },
+      "components": [
+        {
+          "id": 1,
+          "name": "Factory/Droid",
+          "layer": "execution_provider",
+          "status": "APPROVED provider #1; adapter live-verified",
+          "selected_vs_proposed": "selected",
+          "primary_evidence": "abs src/providers/factory/factory-adapter.mjs@f36fbf8"
+        },
+        {
+          "id": 2,
+          "name": "ExecutionProvider interface",
+          "layer": "execution_contract",
+          "status": "Implemented",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/providers/execution-provider.mjs@5852437"
+        },
+        {
+          "id": 3,
+          "name": "GitHub",
+          "layer": "source_truth",
+          "status": "In force",
+          "selected_vs_proposed": "selected",
+          "primary_evidence": "ng549/ndgcv branch nexus-v2"
+        },
+        {
+          "id": 4,
+          "name": "Agency Build Worker GitHub App",
+          "layer": "machine_identity",
+          "status": "Live-verified config read-back",
+          "selected_vs_proposed": "selected",
+          "primary_evidence": "abs scripts/live-verify-app-permissions.mjs"
+        },
+        {
+          "id": 5,
+          "name": "Infisical",
+          "layer": "secrets_vault",
+          "status": "Live-verified read path",
+          "selected_vs_proposed": "selected (initial)",
+          "primary_evidence": "abs src/credentials/infisical.mjs@fa9b665"
+        },
+        {
+          "id": 6,
+          "name": "Machine identity agency-github-token-broker",
+          "layer": "vault_auth",
+          "status": "Universal Auth live-verified; narrowing unverified",
+          "selected_vs_proposed": "selected",
+          "primary_evidence": "abs docs/VERIFICATION-credential-chain.md"
+        },
+        {
+          "id": 7,
+          "name": "GitHub Token Broker",
+          "layer": "temporary_access",
+          "status": "Implemented + live-verified",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/github/token-broker.mjs@e682e1e"
+        },
+        {
+          "id": 8,
+          "name": "Identity & Policy Service",
+          "layer": "authority",
+          "status": "Implemented; 87/87 tests",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/identity/@a6ffdc1"
+        },
+        {
+          "id": 9,
+          "name": "Work Packet service",
+          "layer": "work_truth",
+          "status": "Implemented in stack; Worker 9 supervisor IMPLEMENTED_UNVERIFIED",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/packets/work-packet.mjs; ndgcv@nexus-v2-p1-09-build-orchestration nexus-v2/worker-supervisor"
+        },
+        {
+          "id": 10,
+          "name": "Credential Broker",
+          "layer": "credential_resolution",
+          "status": "v0 live-verified (GitHub chain); BYOK unexercised",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/credentials/broker.mjs; ndgcv@eval/factory-build-stack-test-04"
+        },
+        {
+          "id": 11,
+          "name": "Integration/MCP Gateway",
+          "layer": "tool_governance",
+          "status": "Stack gateway implemented; Worker 7 contracts unreconciled",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/gateway/gateway.mjs@d51cf4e; ndgcv@nexus-v2-p1-07-integrations"
+        },
+        {
+          "id": 12,
+          "name": "AI Gateway & routing",
+          "layer": "model_routing",
+          "status": "Schemas + benchmark harness; NEEDS_REVIEW; no router",
+          "selected_vs_proposed": "agency-owned (planned)",
+          "primary_evidence": "ndgcv@nexus-v2-p1-08-ai-gateway nexus-v2/ai-gateway"
+        },
+        {
+          "id": 13,
+          "name": "Plugsky",
+          "layer": "model_capacity",
+          "status": "UNVERIFIED candidate; contradictions found 2026-09-19; benchmark pending",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "ndgcv@nexus-v2-p1-08-ai-gateway PLUGSKY-VERIFICATION-2026-09-19.md"
+        },
+        {
+          "id": 14,
+          "name": "OpenRouter",
+          "layer": "model_capacity",
+          "status": "Candidate specialist/frontier/fallback",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "ndgcv@nexus-v2-p1-08-ai-gateway benchmark/"
+        },
+        {
+          "id": 15,
+          "name": "Direct providers & subscriptions",
+          "layer": "model_capacity",
+          "status": "Subscriptions retained; entitlements not inventoried",
+          "selected_vs_proposed": "mixed",
+          "primary_evidence": "canonical ai_stack.build_phase_strategy"
+        },
+        {
+          "id": 16,
+          "name": "Cloudflare",
+          "layer": "runtime",
+          "status": "Proposed; wrangler configs only; no verified deploys",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "ndgcv@nexus-v2-p1-09/13 wrangler.jsonc"
+        },
+        {
+          "id": 17,
+          "name": "Supabase/Neon Postgres",
+          "layer": "data_layer",
+          "status": "Unselected; stack backend fake-verified only",
+          "selected_vs_proposed": "proposed alternatives",
+          "primary_evidence": "abs src/events/postgres-store.mjs@e682e1e"
+        },
+        {
+          "id": 18,
+          "name": "Next.js",
+          "layer": "app_framework",
+          "status": "Proposed; no repo evidence",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "none located"
+        },
+        {
+          "id": 19,
+          "name": "Tailwind + shadcn/ui",
+          "layer": "ui_tools",
+          "status": "Proposed; no repo evidence",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "none located"
+        },
+        {
+          "id": 20,
+          "name": "n8n",
+          "layer": "workflow_automation",
+          "status": "Proposed; no decision or evidence",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "none located"
+        },
+        {
+          "id": 21,
+          "name": "Stripe Connect",
+          "layer": "payments",
+          "status": "Proposed; no payment design located",
+          "selected_vs_proposed": "proposed",
+          "primary_evidence": "none located"
+        },
+        {
+          "id": 22,
+          "name": "Event Store + envelope",
+          "layer": "event_truth",
+          "status": "Implemented; hash-chained; JSONL + Postgres backends",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/events/@e682e1e"
+        },
+        {
+          "id": 23,
+          "name": "Telemetry normalization",
+          "layer": "telemetry",
+          "status": "GitHub + worker-packet normalizers implemented",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/events/normalize/@3d9f301"
+        },
+        {
+          "id": 24,
+          "name": "Cost Ledger",
+          "layer": "financial_truth",
+          "status": "Implemented; 5-state ladder; reconciliation pending invoices",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/cost/@5852437,f36fbf8"
+        },
+        {
+          "id": 25,
+          "name": "Topology projection",
+          "layer": "operational_view",
+          "status": "Implemented; realtime transport unselected (SSE proven in Test 5)",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "abs src/topology/projection.mjs@af1eb2d"
+        },
+        {
+          "id": 26,
+          "name": "Nexus / living world",
+          "layer": "user_control",
+          "status": "Direction proven (Test 5); command center MERGE CANDIDATE — NEEDS CONTROL TOWER REVIEW",
+          "selected_vs_proposed": "agency-owned",
+          "primary_evidence": "ndgcv@integration/factory-test-06-command-center@925daa9"
+        },
+        {
+          "id": 27,
+          "name": "Devil Up AI + resources",
+          "layer": "delivery_capacity",
+          "status": "Business-architecture statement only",
+          "selected_vs_proposed": "internal",
+          "primary_evidence": "canonical global_architecture.devil_up"
+        }
+      ]
     }
   }
 }
