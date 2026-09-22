@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "agency-github-token-broker-core",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {
+    "INFISICAL_API_URL": "https://app.infisical.com",
+    "INFISICAL_IDENTITY_ID": "fb4c9d5a-f397-4efd-bb31-56d3a5f5ee07",
+    "INFISICAL_PROJECT_ID": "6ca97018-6ddd-4b34-ae77-df37c681a93b",
+    "INFISICAL_ENVIRONMENT": "prod",
+    "INFISICAL_SECRET_PATH": "/Github/agency-build-worker",
+    "GITHUB_API_URL": "https://api.github.com",
+    "GITHUB_REPOSITORY_OWNER": "ng549",
+    "GITHUB_REPOSITORY_NAME": "ndgcv"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
