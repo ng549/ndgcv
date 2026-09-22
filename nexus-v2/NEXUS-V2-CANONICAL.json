@@ -434,7 +434,8 @@
           "installation_repositories": [
             "ng549/ndgcv"
           ],
-          "evidence": "agency-build-stack docs/VERIFICATION-credential-chain.md; scripts/live-verify-credentials.mjs; scripts/live-verify-app-permissions.mjs (repo local-only, gap G-1)"
+          "evidence": "agency-build-stack docs/VERIFICATION-credential-chain.md; scripts/live-verify-credentials.mjs; scripts/live-verify-app-permissions.mjs (repo local-only, gap G-1)",
+          "installation_repositories_update": "repository_selection now 'all' (see D-11); previously verified as ng549/ndgcv only"
         },
         "remaining": [
           "Verify machine-identity narrowing to Production + /Github/agency-build-worker and read back Universal Auth settings (gap G-2)",
@@ -465,6 +466,13 @@
         "G-5 Postgres vendor (Supabase vs Neon) unselected",
         "G-6 Plugsky benchmark not run; remains UNVERIFIED",
         "G-7 Drive canonical document not updated (no write access); paste-ready addition in repo"
+      ],
+      "resolutions": [
+        "G-1 RESOLVED 2026-09-22: ng549/agency-build-stack created (private); stack main pushed at a089e17 (49 files, 87/87 tests green) via broker-minted installation token; read-back verified from origin",
+        "G-7 RESOLVED 2026-09-22: Drive companion doc 1eFgZz9mSqhvFALJgFiRUoh5Hwq2IFN8jgeo9NMHLncU + canonical addendum comment AAACHcecoP8, read-back verified"
+      ],
+      "deviations": [
+        "D-11 GitHub App installation repository_selection changed 'selected' -> 'all' on 2026-09-22 (Nicolas). Canonical intent remains selective per-project grants; recommendation: revert to selected repositories (ndgcv + agency-build-stack). Recorded, not silently accepted."
       ]
     },
     "component_guide": {
@@ -697,7 +705,8 @@
           "selected_vs_proposed": "internal",
           "primary_evidence": "canonical global_architecture.devil_up"
         }
-      ]
+      ],
+      "stack_repository": "github.com/ng549/agency-build-stack @ main a089e17 (published 2026-09-22)"
     }
   }
 }
