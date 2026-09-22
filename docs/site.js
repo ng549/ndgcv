@@ -248,7 +248,7 @@ for(const [containerSelector,copySelector,mediaSelector] of [
 ]){
  document.querySelectorAll(containerSelector).forEach(container=>{
   const copy=container.querySelector(':scope>'+copySelector);
-  const media=container.querySelector(':scope>'+mediaSelector);
+  const media=container.querySelector(':scope>'+mediaSelector)||container.querySelector(':scope>.career-evidence>'+mediaSelector);
   if(!copy||!media)return;
   const marker=document.createComment('original media position');media.before(marker);
   const detail=[...media.querySelectorAll('img')].some(img=>/annotated|layout proposal|screenshot|technical plan/i.test(img.alt));
