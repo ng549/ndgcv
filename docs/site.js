@@ -47,13 +47,20 @@ function closeCapability(restoreFocus = true) {
   activeCapability = null;
 }
 capabilityButtons.forEach(button => {
+  let pointerActivation=false;
+  button.addEventListener('pointerdown',()=>{pointerActivation=true});
+  button.addEventListener('keydown',()=>{pointerActivation=false});
   button.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse') selectCapability(button);
   });
   button.addEventListener('pointerleave', event => {if(event.pointerType === 'mouse') scheduleCapabilityDismiss();});
   button.addEventListener('blur', event => {if(!capabilityDetail.contains(event.relatedTarget)) scheduleCapabilityDismiss();});
-  button.addEventListener('focus', () => {if (!restoringCapabilityFocus) selectCapability(button);});
-  button.addEventListener('click', () => selectCapability(button));
+  button.addEventListener('focus', () => {if (!restoringCapabilityFocus&&!pointerActivation) selectCapability(button);});
+  button.addEventListener('click', () => {
+    const touch=matchMedia('(hover:none), (pointer:coarse)').matches;
+    if(touch&&activeCapability===button)closeCapability(false);else selectCapability(button);
+    pointerActivation=false;
+  });
 });
 capabilityDetail?.addEventListener('pointerenter',()=>clearTimeout(capabilityDismissTimer));
 capabilityDetail?.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse')scheduleCapabilityDismiss();});
@@ -61,6 +68,13 @@ capabilityDetail?.addEventListener('focusin',()=>clearTimeout(capabilityDismissT
 capabilityDetail?.addEventListener('focusout',event=>{if(!capabilityDetail.contains(event.relatedTarget))scheduleCapabilityDismiss();});
 document.querySelector('#capabilities .cap-close')?.addEventListener('click',()=>closeCapability());
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && activeCapability) closeCapability();});
+document.addEventListener('pointerdown',event=>{
+ if(activeCapability&&!capabilityDetail.contains(event.target)&&!event.target.closest('[data-capability]'))closeCapability(false);
+});
+// Dismiss when leaving the section, including touch scrolling and navigation.
+addEventListener('scroll',()=>{if(activeCapability&&matchMedia('(max-width:1100px)').matches)closeCapability(false)},{passive:true});
+addEventListener('hashchange',()=>{if(activeCapability)closeCapability(false)});
+new MutationObserver(()=>{if(document.getElementById('capabilities').classList.contains('is-minimized')&&activeCapability)closeCapability(false)}).observe(document.getElementById('capabilities'),{attributes:true,attributeFilter:['class']});
 
 const sections = {"about": "About me", "experience": "How I got here", "career-master": "My experience", "ai": "How I work", "software-work": "Building with AI", "product-journey": "From idea to sale", "capabilities": "What I bring", "value": "The results", "build": "Where I can help", "opportunity": "What comes next", "education": "Education"};
 const sectionSummaries={"about": "The person behind the work.", "experience": "From the shop floor to building businesses and connecting operations.", "career-master": "My roles, with context, work, outcomes, and lessons.", "ai": "Connecting people, information, and systems to make things work better.", "software-work": "Applying operating experience to practical software, programs, and apps.", "product-journey": "Bringing the product, economics, and operation together.", "capabilities": "Creative thinking, commercial judgment, and hands-on execution.", "value": "What changed through the work.", "build": "Turning opportunities into businesses that can operate and grow.", "opportunity": "The next chapter I want to build—and who I want to build it with.", "education": "My academic foundation and experiences beyond the classroom.", "contact": "A conversation about what we could build together."};
@@ -251,7 +265,7 @@ for(const [containerSelector,copySelector,mediaSelector] of [
   const media=container.querySelector(':scope>'+mediaSelector)||container.querySelector(':scope>.career-evidence>'+mediaSelector);
   if(!copy||!media)return;
   const marker=document.createComment('original media position');media.before(marker);
-  const detail=[...media.querySelectorAll('img')].some(img=>/annotated|layout proposal|screenshot|technical plan/i.test(img.alt));
+  const detail=[...media.querySelectorAll('img')].some(img=>!/(?:illustrat|concept|not an? (?:exact )?(?:software )?screenshot)/i.test(img.alt)&&/annotated|layout proposal|screenshot|technical plan/i.test(img.alt));
   mobileMediaPairs.push({copy,media,marker,detail});
  });
 }

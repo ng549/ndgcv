@@ -1310,7 +1310,7 @@ main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gr
  #product-journey .private-label-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
  #product-journey .private-label-sketch figcaption{font-size:12px;line-height:1.4}
  #contact .contact-reasons{padding-right:0}
- footer.shell{padding-bottom:100px}
+ footer.shell{padding-bottom:28px}
 }
 @media screen and (max-width:359px){
  .site-header .wordmark{font-size:18px}
@@ -1318,4 +1318,14 @@ main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gr
  #profile .hero-name{font-size:21px}
  #profile h1{font-size:24px}
  main .mobile-copy>.mobile-inline-media{width:36%!important;margin-left:10px!important}
+}
+
+/* Capability details are an intentional dark surface, not white-on-ivory. */
+#capabilities .cap-detail{background:#203440;color:#f4f0e8;border-color:#d9b88b;isolation:isolate}
+#capabilities .cap-detail :is(h4,p,li,strong,span){color:#f4f0e8!important;text-shadow:none}
+#capabilities .cap-detail .cap-close{position:sticky;top:0;z-index:2;min-width:64px;min-height:44px;margin:0 0 12px auto;padding:10px 14px;background:#f4f0e8;color:#203440!important;border:1px solid #d9b88b;font-size:14px}
+@media screen and (max-width:1100px){
+ #capabilities .cap-detail{position:fixed;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom));width:auto;max-height:min(50dvh,360px);overflow-y:auto;overscroll-behavior:contain;z-index:50;padding:14px 18px 20px;box-shadow:0 8px 32px #0008}
+ #capabilities .cap-detail-panel p,#capabilities .cap-detail-panel li{font-size:16px;line-height:1.5}
+ body:has(#capabilities .cap-detail:not([hidden])) .scout-widget{visibility:hidden}
 }
