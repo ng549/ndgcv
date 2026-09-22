@@ -1,6 +1,6 @@
 {
   "title": "Nexus V2 Canonical",
-  "version": "0.8",
+  "version": "0.9",
   "updated_at": "2026-09-21",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
@@ -381,6 +381,35 @@
       "Plugsky/OpenRouter verification and integration",
       "NEXUS living-world visualization",
       "Use Build Stack to accelerate Nexus V2"
-    ]
+    ],
+    "build_stack_integration": {
+      "status": "IN_PROGRESS",
+      "step_1": {
+        "name": "Scoped Factory/GitHub execution identity",
+        "status": "IN_PROGRESS",
+        "github_app": {
+          "name": "The Agency Build Worker",
+          "app_id": "5025971",
+          "installation_id": "163609141",
+          "initial_repository": "ng549/ndgcv",
+          "webhook": "disabled_pending_event_store"
+        },
+        "secrets_vault": {
+          "provider": "Infisical Cloud",
+          "organization": "The Agency",
+          "project": "Agency Build Stack",
+          "environment": "Production",
+          "folder": "Github/agency-build-worker",
+          "development_real_credentials": false
+        },
+        "machine_identity": {
+          "name": "agency-github-token-broker",
+          "role": "Viewer",
+          "auth_method": "Universal Auth",
+          "status": "CREATED_AUTH_NOT_YET_CONFIGURED"
+        },
+        "next": "Configure Universal Auth, narrow secret access where available, then build/test the Agency GitHub Token Broker."
+      }
+    }
   }
 }
