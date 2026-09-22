@@ -14,6 +14,11 @@ const form=document.querySelector('#reference-form');form?.addEventListener('sub
 const capabilityButtons = [...document.querySelectorAll('#capabilities [data-capability]')];
 const capabilityDetail = document.querySelector('#capabilities .cap-detail');
 const capabilityInvitation = document.querySelector('#capabilities .cap-invitation');
+if(capabilityDetail&&!capabilityDetail.querySelector('.cap-close')){
+ const close=document.createElement('button');close.type='button';close.className='cap-close';
+ close.textContent='Close';close.setAttribute('aria-label','Close capability details');
+ capabilityDetail.prepend(close);
+}
 let activeCapability = null, restoringCapabilityFocus = false, capabilityDismissTimer;
 function scheduleCapabilityDismiss() {
   clearTimeout(capabilityDismissTimer);
