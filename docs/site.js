@@ -233,3 +233,44 @@ for(const id of ['experience','build','value','product-journey']){
 // Overview navigation targets are created after the main section controls.
 document.querySelectorAll('#how-work-grew,#career-master,#private-label-products').forEach(section=>navObserver.observe(section));
 if(location.hash){const target=document.getElementById(location.hash.slice(1));if(target){requestAnimationFrame(()=>target.scrollIntoView({block:'start'}))}}
+
+// Move the existing nodes, never duplicate imagery or remove copy. Restore exact
+// desktop parents/order when a phone or tablet is rotated or resized.
+const mobileMediaQuery=matchMedia('(max-width:760px)');
+const compactHeroQuery=matchMedia('(max-width:1000px)');
+const mobileMediaPairs=[];
+for(const [containerSelector,copySelector,mediaSelector] of [
+ ['.story-passage','.chapter-copy','.chapter-media'],
+ ['.systems-body','.systems-copy','.systems-image'],
+ ['.build-body','.build-copy','.build-image'],
+ ['.idea-body','.idea-copy','.idea-step-image'],
+ ['.help-passage','.help-copy','.help-image']
+]){
+ document.querySelectorAll(containerSelector).forEach(container=>{
+  const copy=container.querySelector(':scope>'+copySelector);
+  const media=container.querySelector(':scope>'+mediaSelector);
+  if(!copy||!media)return;
+  const marker=document.createComment('original media position');media.before(marker);
+  const detail=[...media.querySelectorAll('img')].some(img=>/annotated|layout proposal|screenshot|technical plan/i.test(img.alt));
+  mobileMediaPairs.push({copy,media,marker,detail});
+ });
+}
+const compactPortrait=document.querySelector('#profile>.portrait-wrap');
+const portraitMarker=document.createComment('original portrait position');
+compactPortrait?.before(portraitMarker);
+function syncMobileMedia(){
+ mobileMediaPairs.forEach(({copy,media,marker,detail})=>{
+  copy.classList.toggle('mobile-copy',mobileMediaQuery.matches);
+  media.classList.toggle('mobile-inline-media',mobileMediaQuery.matches);
+  media.classList.toggle('mobile-detail-media',mobileMediaQuery.matches&&detail);
+  if(mobileMediaQuery.matches)copy.prepend(media);else marker.after(media);
+ });
+ if(compactPortrait){
+  if(compactHeroQuery.matches)document.querySelector('#profile .hero-content').prepend(compactPortrait);
+  else portraitMarker.after(compactPortrait);
+ }
+ requestAnimationFrame(syncBandArtwork);
+}
+mobileMediaQuery.addEventListener('change',syncMobileMedia);
+compactHeroQuery.addEventListener('change',syncMobileMedia);
+syncMobileMedia();
