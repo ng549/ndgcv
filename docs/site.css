@@ -1225,7 +1225,7 @@ main section[data-collapsible].is-minimized .section-preview{color:#e0e5e8;opaci
 
 /* Soft color rhythm within the same warm palette; no collapsed plus glyph. */
 main section[data-collapsible].is-minimized{--band-title:#d9cdbc;--band-caption:#bbb9ae}
-main section[data-collapsible].is-minimized:is(#experience,#product-journey,#build){--band-title:#d9b88b;--band-caption:#c0b5a6}
+main section[data-collapsible].is-minimized:is(#experience,#ai,#product-journey,#value,#opportunity){--band-title:#d9b88b;--band-caption:#c0b5a6}
 main section[data-collapsible].is-minimized:is(#career-master,#capabilities,#education){--band-title:#d9cdbc;--band-caption:#bbb9ae}
 main section[data-collapsible].is-minimized>.section-bar>span{color:var(--band-title)!important;text-shadow:0 1px 8px #07101899}
 main section[data-collapsible].is-minimized .section-preview{color:var(--band-caption)!important;text-shadow:0 1px 6px #071018}
@@ -1242,8 +1242,8 @@ main section[data-collapsible].is-minimized>.section-bar>span{padding:9px 0;font
 main section[data-collapsible].is-minimized .section-preview{margin-top:2px;font-size:13px;line-height:1.35}
 @media(max-width:760px){main section[data-collapsible].is-minimized>.section-bar>span{font-size:18px;padding:10px 0}main section[data-collapsible].is-minimized .section-preview{font-size:13px}}
 
-/* Position collapsed labels halfway between the original inset and one-third. */
-main section[data-collapsible].is-minimized{padding-left:19.666667%!important;padding-right:6%!important}
+/* Align the roadmap labels with the page content gutter. */
+main section[data-collapsible].is-minimized{padding-left:max(6%,calc((100% - 1100px)/2))!important;padding-right:max(6%,calc((100% - 1100px)/2))!important}
 main section[data-collapsible].is-minimized>.section-bar>span{max-width:100%;width:100%}
 
 /* A single connected roadmap in the section heading gutter. */
