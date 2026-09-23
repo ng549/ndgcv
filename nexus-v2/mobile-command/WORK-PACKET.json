@@ -1,0 +1,39 @@
+{
+  "id": "nexus-mobile-command-v0",
+  "title": "Nexus mobile Agency command surface",
+  "status": "PREVIEW_IMPLEMENTED_LIVE_INTEGRATION_PENDING",
+  "repository": "ng549/ndgcv",
+  "branch": "feature/nexus-mobile-command",
+  "baseCanonicalCommit": "d55e79356103a519a735b6718bfafe5c334f6dde",
+  "scope": ["nexus-v2/mobile-command"],
+  "authority": "Nicolas authorized the workstream: Yes. Start the engine; lets do it.",
+  "product": {
+    "app": "Nexus",
+    "business": "The Agency",
+    "operatorSurface": "Agency View",
+    "productionSection": "Devil Up AI",
+    "later": ["Client jobs", "Sales", "Business operations", "Costs and profitability"]
+  },
+  "runtimeBudget": null,
+  "runtimeLaunchAuthorized": false,
+  "acceptance": [
+    "Native mobile navigation and explicit disconnected/preview states",
+    "Authenticated operator instruction creates or continues a scoped Work Packet",
+    "Active execution state and evidence originate from Agency services",
+    "Same durable approval appears in global and per-job views",
+    "Approve once/reject binds project, packet, execution and exact action version",
+    "No root secrets, autonomous merge or silent provider fallback",
+    "Disposable branch reaches PR and CI through Factory without manual Git",
+    "iPhone device verification including reconnect and background resume"
+  ],
+  "notYetImplemented": [
+    "Native authentication and API transport",
+    "Durable mobile approval API and transactional dispatch",
+    "Factory SDK interactive session bridge",
+    "Live instruction submission and transcripts",
+    "Push notifications",
+    "Signed iPhone distribution and device verification"
+  ],
+  "mergeAuthority": "Control Tower / Nicolas; no merge performed",
+  "providerEvaluation": "Closed; no Test #7"
+}

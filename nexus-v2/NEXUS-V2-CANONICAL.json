@@ -327,6 +327,21 @@
   },
   "global_architecture": {
     "name": "The Agency Global Architecture",
+    "mobile_command_workstream_2026_09_23": {
+      "authorization": "Nicolas: Yes. Start the engine; lets do it.",
+      "status": "IMPLEMENTED_PREVIEW_LOCALLY_TESTED_LIVE_INTEGRATION_PENDING",
+      "app": "Nexus",
+      "business": "The Agency",
+      "surface": "Agency View with Devil Up AI production section",
+      "branch": "feature/nexus-mobile-command",
+      "path": "nexus-v2/mobile-command",
+      "implementation_choice": "Expo SDK 57 / React Native; reversible, no shared framework mandate",
+      "implemented": ["Native navigation", "Explicit disconnected default", "Opt-in preview instructions and jobs", "Shared preview approval inbox and job detail", "Server-side pure scoped approval policy"],
+      "remaining": ["Native operator authentication", "Durable approval API with transactional dispatch", "Interactive Factory SDK session adapter", "Live job/instruction/result transport", "Push notifications", "Signed iPhone distribution and device verification"],
+      "boundaries": "No root credentials on phone, no live execution in preview, no merge/deployment authority. Agency permissions and Work Packet acceptance remain distinct.",
+      "handoff": "nexus-v2/mobile-command/README.md",
+      "integration_gate": "Isolated work branch only; no merge into nexus-v2 performed"
+    },
     "status": "INCOMPLETE_LIVING_ARCHITECTURE",
     "drive_folder_id": "1FjnMpfktz9t52Woa5eddH5wS3hwoqbpT",
     "drive_canonical_document_id": "1N80_JSAO5k02yDcqJp5SPJd2Nwc1MkSY0Gdyb2sSIL8",
