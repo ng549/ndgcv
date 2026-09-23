@@ -6,6 +6,7 @@ export interface LaunchSpec {
   cwd: string;
   autonomy: string;
   workerId: string;
+  model?: string;
 }
 
 export interface ProviderExecution {
@@ -86,6 +87,7 @@ export class FactoryProvider implements ExecutionProvider {
         sessionSettings: {
           autonomyLevel: spec.autonomy,
           interactionMode: "auto",
+          ...(spec.model ? { model: spec.model } : {}),
           tags: [{ name: "agency-worker", metadata: { worker_id: spec.workerId } }]
         }
       })

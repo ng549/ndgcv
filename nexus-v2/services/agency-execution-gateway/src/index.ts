@@ -183,7 +183,8 @@ async function handleLaunch(
         prompt,
         cwd: config.repoCwd,
         autonomy: config.factoryAutonomy,
-        workerId: parsed.worker_id
+        workerId: parsed.worker_id,
+        model: parsed.preferred_model
       });
     } catch (error) {
       return jsonResponse(

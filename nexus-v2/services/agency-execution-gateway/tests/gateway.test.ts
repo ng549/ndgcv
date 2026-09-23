@@ -300,7 +300,8 @@ describe("FactoryProvider API shapes", () => {
       prompt: "do the thing",
       cwd: "/repo",
       autonomy: "high",
-      workerId: "worker-7"
+      workerId: "worker-7",
+      model: "claude-sonnet-4-5"
     });
     expect(exec).toEqual({ provider: "factory", ref: "s-123" });
     expect(calls[0]).toMatchObject({ method: "POST" });
@@ -309,6 +310,8 @@ describe("FactoryProvider API shapes", () => {
     // three keys are accepted. A stray key (e.g. title) earns a 400.
     expect(Object.keys(createBody).sort()).toEqual(["computerId", "cwd", "sessionSettings"]);
     expect(createBody).toMatchObject({ computerId: "computer-1", cwd: "/repo" });
+    // The supervisor's chosen model must reach the session settings.
+    expect((createBody.sessionSettings as Record<string, unknown>).model).toBe("claude-sonnet-4-5");
     expect(calls[1]?.url).toContain("/api/v0/sessions/s-123/messages");
     expect(JSON.parse(calls[1]?.body ?? "{}")).toMatchObject({ text: "do the thing" });
 
