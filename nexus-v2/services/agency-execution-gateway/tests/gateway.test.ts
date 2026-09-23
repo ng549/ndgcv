@@ -304,14 +304,37 @@ describe("FactoryProvider API shapes", () => {
     });
     expect(exec).toEqual({ provider: "factory", ref: "s-123" });
     expect(calls[0]).toMatchObject({ method: "POST" });
-    expect(JSON.parse(calls[0]?.body ?? "{}")).toMatchObject({
-      computerId: "computer-1",
-      cwd: "/repo"
-    });
+    const createBody = JSON.parse(calls[0]?.body ?? "{}") as Record<string, unknown>;
+    // CreateSessionRequestBody has additionalProperties: false; only these
+    // three keys are accepted. A stray key (e.g. title) earns a 400.
+    expect(Object.keys(createBody).sort()).toEqual(["computerId", "cwd", "sessionSettings"]);
+    expect(createBody).toMatchObject({ computerId: "computer-1", cwd: "/repo" });
     expect(calls[1]?.url).toContain("/api/v0/sessions/s-123/messages");
     expect(JSON.parse(calls[1]?.body ?? "{}")).toMatchObject({ text: "do the thing" });
 
     const signal = await provider.signal(exec);
     expect(signal).toEqual({ kind: "ended" });
+  });
+
+  it("maps session status enum: pending/running -> running, idle -> idle", async () => {
+    const statuses = ["pending", "running", "idle"];
+    const mockFetch = vi.fn(async () => {
+      const status = statuses.shift() ?? "idle";
+      return Response.json({ status });
+    });
+    const provider = new FactoryProvider(
+      {
+        apiBaseUrl: "https://factory.test",
+        apiKey: "k",
+        computerId: "computer-1",
+        repoCwd: "/repo",
+        autonomy: "high"
+      },
+      { fetch: mockFetch as typeof fetch }
+    );
+    const exec: ProviderExecution = { provider: "factory", ref: "s-9" };
+    expect(await provider.signal(exec)).toEqual({ kind: "running" });
+    expect(await provider.signal(exec)).toEqual({ kind: "running" });
+    expect(await provider.signal(exec)).toEqual({ kind: "idle" });
   });
 });

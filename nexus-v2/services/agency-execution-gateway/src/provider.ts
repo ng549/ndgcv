@@ -77,13 +77,16 @@ export class FactoryProvider implements ExecutionProvider {
   async launch(spec: LaunchSpec): Promise<ProviderExecution> {
     const createResp = await factoryFetch(this.deps, this.config, "/api/v0/sessions", {
       method: "POST",
+      // NOTE: CreateSessionRequestBody allows only computerId, cwd, and
+      // sessionSettings (additionalProperties: false in the OpenAPI spec).
+      // Do not add a title field here; the API rejects unknown keys with 400.
       body: JSON.stringify({
         computerId: this.config.computerId,
         cwd: this.config.repoCwd,
-        title: `worker:${spec.workerId}`,
         sessionSettings: {
           autonomyLevel: spec.autonomy,
-          interactionMode: "auto"
+          interactionMode: "auto",
+          tags: [{ name: "agency-worker", metadata: { worker_id: spec.workerId } }]
         }
       })
     });
@@ -105,8 +108,9 @@ export class FactoryProvider implements ExecutionProvider {
     if (response.status === 404) return { kind: "ended" };
     if (!response.ok) return { kind: "error", detail: `provider_signal_${response.status}` };
     const body = await readJsonSafe(response);
-    const state = typeof body["state"] === "string" ? (body["state"] as string) : "";
-    if (state === "running" || state === "working" || state === "queued") {
+    // GetSession200ResponseBody.status enum: idle | pending | running.
+    const status = typeof body["status"] === "string" ? (body["status"] as string) : "";
+    if (status === "running" || status === "pending") {
       return { kind: "running" };
     }
     return { kind: "idle" };
