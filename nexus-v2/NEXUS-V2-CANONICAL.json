@@ -1,7 +1,7 @@
 {
   "title": "Nexus V2 Canonical",
   "version": "0.9",
-  "updated_at": "2026-09-21",
+  "updated_at": "2026-09-23",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
@@ -456,7 +456,8 @@
         "D-7 Merge gating rests on process/policy; branch protection unreadable with current scope",
         "D-8 Token broker described as target elsewhere; actually implemented + live-verified",
         "D-9 Worker 9 pins canonical 0.5 (current 0.9)",
-        "D-10 Webhook disabled_pending_event_store; event store now exists"
+        "D-10 Webhook disabled_pending_event_store; event store now exists",
+        "D-12 The in-memory Postgres fake agreed with the code and the real substrate did not: over Neon HTTP SQL, TIMESTAMPTZ returns Postgres text form, so the event hash over ts no longer matched and the first live verifyChain() reported {ok:false,brokenAt:1}. The chain was right; the transport was wrong. Fixed in src/events/neon-http-query.mjs by normalizing timestamp OIDs to Date (what a pg client returns), with regression tests that feed Postgres text-form timestamps through the fake wire. Recorded because it is evidence that green unit tests do not establish substrate truth."
       ],
       "open_gaps": [
         "G-1 agency-build-stack repo is local-only; GitHub repo creation needs account-level action",
@@ -465,7 +466,9 @@
         "G-4 Webhook still disabled",
         "G-5 Postgres vendor (Supabase vs Neon) unselected",
         "G-6 Plugsky benchmark not run; remains UNVERIFIED",
-        "G-7 Drive canonical document not updated (no write access); paste-ready addition in repo"
+        "G-7 Drive canonical document not updated (no write access); paste-ready addition in repo",
+        "G-8 Event-store credential has no machine-identity reader: EVENT_STORE_POSTGRES_URL sits in Infisical project 860b2d16, but the only machine identity is scoped to the broker project 6ca97018, so runtime reads the 0600 local cache ~/.agency-neon.json instead of the vault. Closing this needs a new Infisical identity scoped to 860b2d16 plus a reveal-once Universal Auth client secret.",
+        "G-9 No Cloudflare D1 database exists in account c8238aed298b28ab172aa56bb1e9cd22 (live inventory 2026-09-23: 8 Workers deployed, 0 D1 databases, 0 Pages projects). Worker 13 telemetry depends on D1, so this is a dependency gap, not a configuration detail."
       ],
       "resolutions": [
         "G-1 RESOLVED 2026-09-22: ng549/agency-build-stack created (private); stack main pushed at a089e17 (49 files, 87/87 tests green) via broker-minted installation token; read-back verified from origin",
@@ -473,7 +476,10 @@
         "CI live on agency-build-stack: workflow .github/workflows/check.yml ran on push of main a089e17, run 35798407348 SUCCESS (parse-check + 87 tests)",
         "CONTROL TOWER GATE BUILT 2026-09-23: agency-build-stack @ 4a525ad adds packet review semantics (reviewState/module/canonicalSha, COMPLETE requires APPROVED, STALE_CANONICAL stop), module ownership registry, and the executable integration gate (CT contract section 7). First execution: Test #6 candidate PASS on all four checks (event evt_508c847c, hash 2e7bee4f); 98/98 tests green. Docs: docs/CONTROL-TOWER-GATE.md",
         "WORKER 9 CONTRACT RECONCILED 2026-09-23: agency-build-stack @ 67c2b83 adds src/packets/translate-worker9.mjs (supervisor packet -> Agency Work Packet v1; nothing dropped silently, lossy state maps keep sourceState) + docs/WORKER-9-CONTRACT-RECONCILIATION.md field/state/review mapping; 104/104 tests green",
-        "SUPERVISOR LOOP CLOSED 2026-09-23: agency-build-stack @ 4236b4a adds src/packets/supervisor.mjs — provider-reported COMPLETE becomes NEEDS_REVIEW (a claim, never a completion); UNKNOWN provider state recorded honestly; review gate closes the loop end to end. 110/110 tests green"
+        "SUPERVISOR LOOP CLOSED 2026-09-23: agency-build-stack @ 4236b4a adds src/packets/supervisor.mjs — provider-reported COMPLETE becomes NEEDS_REVIEW (a claim, never a completion); UNKNOWN provider state recorded honestly; review gate closes the loop end to end. 110/110 tests green",
+        "D-11 RESOLVED 2026-09-23: GitHub App installation 163609141 (The Agency Build Worker) narrowed repository_selection all -> selected through the handed-over browser; live API read-back confirms exactly [ng549/ndgcv, ng549/agency-build-stack]. Confirmed against the right installation: the account also has an unrelated ChatGPT Codex Connector installation 153849272 which was left untouched. Evidence: agency-build-stack @ 9849cdc docs/VERIFICATION-access-narrowing.md.",
+        "G-2 RESOLVED 2026-09-23: identity agency-github-token-broker (fb4c9d5a) is project-scoped to 6ca97018 with role Viewer; Universal Auth TTL 900s / max 3600s, lockout 3 per 5 min; deliberate write probe REFUSED 403 (scripts/live-verify-infisical-scope.mjs); readable scope is /Github/agency-build-worker (4 secrets) and the project root holds only that folder. JWT auth was NOT unused as previously assumed: it is bound to Cloudflare Access billowing-darkness-b12a and its common_name claim was already pinned to the broker service token f64e8c3ce651237c5d1fd170f792aaff.access, so it was left unchanged. Residuals recorded, not closed: R-1 trusted IPs 0.0.0.0 and ::, R-2 client secret has no expiry, R-3 duplicate private key (APP_PRIVATE_KEY and GITHUB_APP_PRIVATE_KEY), R-4 folder-level grants are Infisical Pro-only so project Viewer is the least-privileged readable floor on the free plan.",
+        "G-5 RESOLVED 2026-09-23: Neon chosen over Supabase (Supabase would duplicate auth/realtime authority the Agency already owns) and provisioned. Project agency-event-store polished-sun-54217219, branch production br-blue-cherry-b429syrk, PostgreSQL 18.6, AWS us-east-2, free plan, Postgres service only (object storage / functions / AI gateway / Neon Auth left off). Application role agency_events_rw is not the project owner; its password was generated in the sandbox, never printed, and rotated from the sandbox after role creation so the value that passed through the browser is retired. URL stored in Infisical project 860b2d16 (Agency Build Stack) env prod key EVENT_STORE_POSTGRES_URL, deliberately NOT in the broker project. Live PostgresEventStore run over Neon HTTP SQL: migrate, 2 appends, read-back, verifyChain {ok:true,length:4,brokenAt:null}. agency-build-stack @ 9849cdc adds src/events/neon-http-query.mjs, scripts/live-verify-neon-store.mjs, docs/EVENT-STORE-NEON.md; CI run 35821372209 SUCCESS; 122/122 tests green."
       ],
       "deviations": [
         "D-11 GitHub App installation repository_selection changed 'selected' -> 'all' on 2026-09-22 (Nicolas). Canonical intent remains selective per-project grants; recommendation: revert to selected repositories (ndgcv + agency-build-stack). Recorded, not silently accepted."
