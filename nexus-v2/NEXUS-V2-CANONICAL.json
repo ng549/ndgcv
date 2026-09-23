@@ -500,7 +500,8 @@
         "G-4 DEPLOYED 2026-09-23: agency-webhook is live on the custom domain hooks.nicolasgoureau.com (Cloudflare Custom Domains reject paths, so the Worker enforces POST /github itself; /health leaks nothing). Secrets bound via wrangler: GITHUB_WEBHOOK_SECRET generated in-sandbox, EVENT_STORE_POSTGRES_URL from the local Neon config. Live test: unsigned delivery 401, HMAC-signed ping 202 -> agency_webhook_inbox -> agency webhook drain appended it to the chain (event #39 github.unhandled, correct for ping) and claimed the row; chain verify ok at length 39. Repo commit 37eea59. Remaining: register https://hooks.nicolasgoureau.com/github in the GitHub repo settings (human step; App deliberately lacks administration).",
         "G-8 CORE VERIFIED 2026-09-23: the Infisical machine identity logs in and reads live through the real chain (buildCredentialChain -> broker -> Infisical Cloud); APP_PRIVATE_KEY fetched by reference, value never displayed. The identity is read-only (write of EVENT_STORE_POSTGRES_URL refused 403), which is correct least privilege; the event-store URL stays in the local 0600 file as the deliberate resolution source.",
         "G-4 CLOSED 2026-09-23: the user registered https://hooks.nicolasgoureau.com/github on ng549/agency-build-stack (push events). The registration ping landed on the Agency chain as event #40 and the next real push (commit 4a35050, made by the GitHub App installation token) arrived via the webhook and folded in as event #41 github.push. Full path GitHub -> Cloudflare Worker -> Neon inbox -> stack drain -> hash chain verified end to end with live traffic; chain ok at length 41.",
-        "G-6 PROGRESS 2026-09-23: the canonical's benchmark harness (nexus-v2/ai-gateway/benchmark/run.mjs) does not exist in the nexus-v2 tree (484 paths enumerated). A provider-agnostic harness now lives in the stack repo (bench/) with 9 tests. OpenRouter side is funded ($10) and baselined live: small tier gpt-4o-mini, 10/10 ok, p50 ~800ms, $0.000024 total, per-call cost captured from the provider. Plugsky side is wired but SKIPPED until the day-long Plugsky API outage ends and a key can be minted. Written-terms request drafted, not sent."
+        "G-6 PROGRESS 2026-09-23: the canonical's benchmark harness (nexus-v2/ai-gateway/benchmark/run.mjs) does not exist in the nexus-v2 tree (484 paths enumerated). A provider-agnostic harness now lives in the stack repo (bench/) with 9 tests. OpenRouter side is funded ($10) and baselined live: small tier gpt-4o-mini, 10/10 ok, p50 ~800ms, $0.000024 total, per-call cost captured from the provider. Plugsky side is wired but SKIPPED until the day-long Plugsky API outage ends and a key can be minted. Written-terms request drafted, not sent.",
+        "PAYMENTS REQUIREMENT 2026-09-23: the Agency will take payments for its apps and tools (user direction). Stripe Connect entry corrected to Stripe Billing/Checkout. Design notes for when this activates: Stripe webhooks reuse the G-4 receiver pattern (HMAC verify -> durable inbox -> event chain), which puts payment events on the Agency's own chain; prerequisites are product definitions, one-time vs subscription pricing, and a Stripe account (user action)."
       ],
       "deviations": [
         "D-11 GitHub App installation repository_selection changed 'selected' -> 'all' on 2026-09-22 (Nicolas). Canonical intent remains selective per-project grants; recommendation: revert to selected repositories (ndgcv + agency-build-stack). Recorded, not silently accepted."
@@ -682,11 +683,11 @@
         },
         {
           "id": 21,
-          "name": "Stripe Connect",
+          "name": "Stripe (Billing/Checkout)",
           "layer": "payments",
-          "status": "Proposed; no payment design located",
+          "status": "REQUIREMENT CONFIRMED 2026-09-23 (user, verbatim: \"we will be taking payments for our apps and tools\"); no design yet",
           "selected_vs_proposed": "proposed",
-          "primary_evidence": "none located"
+          "primary_evidence": "user direction 2026-09-23; Connect was the wrong product (Connect pays out third parties; selling own apps/tools = Billing/Checkout/Payment Links)"
         },
         {
           "id": 22,
