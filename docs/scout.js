@@ -5,9 +5,9 @@
  const next=(label,node)=>({label,next:node});
  const nodes={
   home:{state:'greeting',copy:'Hi, I’m Scout, your guide. What can I help you with today?',choices:[
-   next('Explore Nicolas’s background','background'),next('Find relevant examples','examples'),next('Discuss a role or project','role'),next('Build a solution or tool','solution'),next('Contact Nicolas','contact'),next('Request references','references'),next('Something else','other')
+   next('Explore Nicolas’ background','background'),next('Find relevant examples','examples'),next('Discuss a role or project','role'),next('Build a solution or tool','solution'),next('Contact Nicolas','contact'),next('Request references','references'),next('Something else','other')
   ]},
-  background:{state:'listening',copy:'Of course. Would you like a short overview, or are you interested in a particular part of Nicolas’s background?',choices:[
+  background:{state:'listening',copy:'Of course. Would you like a short overview, or are you interested in a particular part of Nicolas’ background?',choices:[
    next('Short overview','background-overview'),link('Career story','/#experience'),link('Leadership and operations','/#ai'),link('Retail, products, and sourcing','/#product-journey'),link('Education and personal background','/#education')
   ]},
   'background-overview':{state:'speaking',copy:'Nicolas is a business-building and operations leader whose experience connects new concepts with the practical work required to launch and run them. His background includes business ownership, product development, sourcing, store launches, e-commerce, acquisition integration, and business systems.',choices:[
@@ -18,17 +18,17 @@
   ]},
   'example-launch':{state:'speaking',copy:'The career story shows how Nicolas moved from products and retail into business ownership, new concepts, store launches, and connected operations.',choices:[link('How the work grew','/#experience'),link('Explore all eight roles','/#career-master'),next('Contact Nicolas','contact')]},
   'example-products':{state:'speaking',copy:'The product journey and career stories document product development, private label, global sourcing, commercial terms, landed cost, allocation, and routes to market.',choices:[link('See the product journey','/#product-journey'),link('Explore his experience','/#career-master'),next('Contact Nicolas','contact')]},
-  'example-operations':{state:'speaking',copy:'Nicolas’s documented work connects people, information, workflows, and practical systems across retail, e-commerce, acquisitions, and operating teams.',choices:[link('See how he works','/#ai'),link('Review the results','/#value'),next('Contact Nicolas','contact')]},
+  'example-operations':{state:'speaking',copy:'Nicolas’ documented work connects people, information, workflows, and practical systems across retail, e-commerce, acquisitions, and operating teams.',choices:[link('See how he works','/#ai'),link('Review the results','/#value'),next('Contact Nicolas','contact')]},
   'example-retail':{state:'speaking',copy:'The CV includes documented examples involving stores, merchandising, customer experience, e-commerce, product ranges, and retail operations.',choices:[link('Explore his experience','/#career-master'),link('See the product journey','/#product-journey'),next('Contact Nicolas','contact')]},
   'example-systems':{state:'speaking',copy:'The CV describes dashboards, connected workflows, decision tools, and software Nicolas builds to make business work easier and more reliably.',choices:[link('Building with AI','/#software-work'),link('Where Nicolas can help','/#build'),next('Contact Nicolas','contact')]},
   'example-other':{state:'unknown',copy:'I don’t want to force a connection without a verified example. You can explore the documented work or send Nicolas the specific question.',choices:[link('Explore the CV','/#career-master'),next('Send Nicolas a question','contact')]},
-  role:{state:'listening',copy:'I can help you compare the opportunity with Nicolas’s documented experience. Is this a leadership role, consulting engagement, or a specific project?',choices:[
+  role:{state:'listening',copy:'I can help you compare the opportunity with Nicolas’ documented experience. Is this a leadership role, consulting engagement, or a specific project?',choices:[
    next('Leadership role','role-need'),next('Consulting engagement','role-need'),next('Specific project','role-need')
   ]},
   'role-need':{state:'clarifying',copy:'What is the organization trying to build, change, or solve?',choices:[
    next('Build a new business or offering','role-fit'),next('Improve operations','role-fit'),next('Integrate or scale businesses','role-fit'),next('Develop products or channels','role-fit'),next('Share the full opportunity','contact')
   ]},
-  'role-fit':{state:'speaking',copy:'Relevant documented experience includes business building, product development, sourcing, store launches, acquisition integration, e-commerce, and connected operations. I cannot confirm interest, availability, or fit on Nicolas’s behalf, but I can help you contact him.',choices:[
+  'role-fit':{state:'speaking',copy:'Relevant documented experience includes business building, product development, sourcing, store launches, acquisition integration, e-commerce, and connected operations. I cannot confirm interest, availability, or fit on Nicolas’ behalf, but I can help you contact him.',choices:[
    link('Review his experience','/#career-master'),link('See what comes next','/#opportunity'),next('Contact Nicolas','contact')
   ]},
   solution:{state:'listening',copy:'What business problem or workflow are you trying to improve?',choices:[
@@ -40,7 +40,7 @@
   'solution-outcome':{state:'clarifying',copy:'What would a useful result look like?',choices:[
    next('Less manual work','solution-summary'),next('Better visibility','solution-summary'),next('A connected workflow','solution-summary'),next('Faster decisions','solution-summary'),next('A practical custom tool','solution-summary')
   ]},
-  'solution-summary':{state:'speaking',copy:'This sounds like a potential fit for Nicolas’s work connecting business needs, data, people, and practical tools. This is an initial conversation, not a delivery commitment or estimate.',choices:[
+  'solution-summary':{state:'speaking',copy:'This sounds like a potential fit for Nicolas’ work connecting business needs, data, people, and practical tools. This is an initial conversation, not a delivery commitment or estimate.',choices:[
    link('See relevant capabilities','/#build'),link('Explore software work','/#software-work'),next('Prepare an inquiry','contact')
   ]},
   contact:{state:'confirmation',copy:'I can help you contact Nicolas. Nothing is submitted automatically; you choose the contact method and review your message before sending it.',choices:[
