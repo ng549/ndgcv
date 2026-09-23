@@ -360,3 +360,6 @@ main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gr
  #capabilities .cap-detail-panel p,#capabilities .cap-detail-panel li{font-size:16px;line-height:1.5}
  body:has(#capabilities .cap-detail:not([hidden])) .scout-widget{visibility:hidden}
 }
+
+/* Footer: copyright directly beneath the name, within the existing 88px height. */
+footer.shell{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:center;gap:4px;height:88px;padding:12px 0}
