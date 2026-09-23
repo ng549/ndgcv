@@ -1,0 +1,6 @@
+{
+  "name": "ndgcv-command-center", "private": true, "type": "module",
+  "scripts": {"build":"node build.mjs", "test":"node --test test/*.test.mjs", "dev":"node build.mjs && node dev.mjs", "check":"node --check worker.mjs && node --check public/app.js"},
+  "dependencies": {"jose":"^6.1.0"},
+  "devDependencies": {"@cloudflare/workers-types":"latest", "wrangler":"^4.132.0", "@playwright/test":"latest"}
+}
