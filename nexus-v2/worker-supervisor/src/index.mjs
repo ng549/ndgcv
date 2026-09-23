@@ -2,6 +2,7 @@ import {
   commandTransition, makeIdempotencyKey, nextStateAfterExecution,
   readyPackets, readyPhasePackets, validateLaunch, chooseModel, SupervisorError
 } from "./core.mjs";
+import { authorizeWorker9Request } from "./auth.mjs";
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
   status, headers: { "content-type": "application/json; charset=utf-8" }
@@ -182,6 +183,23 @@ export default {
   async fetch(request, env) {
     try {
       const url = new URL(request.url);
+      // Auth gate per Factory Test #6 handoff proposal (WORKER-9-AUTH-PROPOSAL.md):
+      // all /api/* routes require a Bearer SUPERVISOR_TOKEN when the secret is set.
+      if (url.pathname.startsWith("/api/")) {
+        const authz = await authorizeWorker9Request(request, env);
+        if (!authz.ok) {
+          try {
+            await audit(env, "(unauthenticated)", null, "AUTH_REJECTED", { code: authz.code });
+          } catch (auditError) {
+            // The rejection response must never depend on the audit write.
+            console.warn("[worker-supervisor] AUTH_REJECTED audit write failed", String(auditError));
+          }
+          return json({ error: authz.code }, authz.status);
+        }
+        if (authz.warning === "TOKEN_UNSET") {
+          console.warn("[worker-supervisor] SUPERVISOR_TOKEN is NOT set — all /api/* routes are UNAUTHENTICATED (pre-production only)");
+        }
+      }
       if (request.method === "GET" && url.pathname === "/api/workers") {
         return json({ workers: await listPackets(env) });
       }
