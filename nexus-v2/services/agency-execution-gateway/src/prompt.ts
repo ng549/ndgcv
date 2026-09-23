@@ -60,7 +60,8 @@ Run the relevant tests/type checks and only claim completion with evidence (comm
 
 At every meaningful milestone, and always before you finish:
 
-1. Commit your work locally on branch \`${request.branch}\`.
+1. Ensure a repo-local git identity: \`git config user.name ng549 && git config user.email ng@moremarginco.com\` (repo-local only).
+2. Commit your work locally on branch \`${request.branch}\`.
 2. Mint a short-lived scoped GitHub token (credentials come from your session environment; never echo them):
 
 \`\`\`bash
