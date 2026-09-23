@@ -1336,7 +1336,8 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
 /* On the desktop CV, Scout belongs to the navigation rail instead of the page corner. */
 @media(min-width:1001px){
  body:not(.connect-page) .scout-widget{left:34px;right:auto;bottom:64px;width:156px}
- body:not(.connect-page) .scout-bubble{left:calc(100% + 14px);right:auto;bottom:8px}
- body:not(.connect-page) .scout-bubble:after{left:-9px;right:auto;bottom:34px;border-right:0;border-bottom:1px solid #eabb87;border-left:1px solid #eabb87;border-top:1px solid #eabb87}
+ body:not(.connect-page) .scout-bubble{left:50%;right:auto;bottom:calc(100% + 10px);width:190px;transform:translateX(-50%)}
+ body:not(.connect-page) .scout-bubble:after{left:50%;right:auto;bottom:-7px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);border:0;border-right:1px solid #eabb87;border-bottom:1px solid #eabb87}
+ body:not(.connect-page) .scout-pause{left:-10px;right:auto;bottom:0}
  .site-header #navigation{max-height:calc(100dvh - 349px);padding-bottom:0}
 }
