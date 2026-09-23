@@ -78,10 +78,10 @@ async function acquireExecution(env, packet, model) {
 }
 
 async function launchGateway(env, packet, executionId, model) {
-  if (!env.AI_GATEWAY_URL) {
-    throw new SupervisorError("GATEWAY_UNAVAILABLE", "AI_GATEWAY_URL is not configured");
+  if (!env.AI_GATEWAY && !env.AI_GATEWAY_URL) {
+    throw new SupervisorError("GATEWAY_UNAVAILABLE", "AI_GATEWAY service binding or AI_GATEWAY_URL is not configured");
   }
-  const response = await fetch(new URL("/v1/worker-executions", env.AI_GATEWAY_URL), {
+  const init = {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -101,7 +101,14 @@ async function launchGateway(env, packet, executionId, model) {
       checkpoint_sha: packet.checkpoint_sha,
       canonical_sha: packet.canonical_sha
     })
-  });
+  };
+  // Prefer a same-account Service Binding: fetching another Worker's
+  // workers.dev hostname from inside the same account is unreliable from
+  // queue consumers (observed spurious 404s). The binding keeps traffic
+  // internal; the public URL remains as a fallback for cross-account use.
+  const response = env.AI_GATEWAY
+    ? await env.AI_GATEWAY.fetch("https://ai-gateway.internal/v1/worker-executions", init)
+    : await fetch(new URL("/v1/worker-executions", env.AI_GATEWAY_URL), init);
   if (!response.ok) throw new SupervisorError("GATEWAY_ERROR", `Gateway returned ${response.status}`);
   return response.json();
 }

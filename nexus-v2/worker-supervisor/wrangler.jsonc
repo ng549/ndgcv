@@ -12,5 +12,11 @@
   "queues": {
     "producers": [{ "binding": "SUPERVISOR_QUEUE", "queue": "nexus-supervisor" }],
     "consumers": [{ "queue": "nexus-supervisor", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 5 }]
+  },
+  "services": [
+    { "binding": "AI_GATEWAY", "service": "agency-execution-gateway" }
+  ],
+  "vars": {
+    "AI_GATEWAY_URL": "https://agency-execution-gateway.nexus-hud-mmc.workers.dev"
   }
 }
