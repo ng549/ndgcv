@@ -361,5 +361,13 @@ main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gr
  body:has(#capabilities .cap-detail:not([hidden])) .scout-widget{visibility:hidden}
 }
 
-/* Footer: copyright directly beneath the name, within the existing 88px height. */
-footer.shell{flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:center;gap:4px;height:88px;padding:12px 0}
+/* Restore the footer's original left/right balance. */
+footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;height:auto;padding:30px 0}
+
+/* On the desktop CV, Scout belongs to the navigation rail instead of the page corner. */
+@media(min-width:1001px){
+ body:not(.connect-page) .scout-widget{left:34px;right:auto;bottom:64px;width:156px}
+ body:not(.connect-page) .scout-bubble{left:calc(100% + 14px);right:auto;bottom:8px}
+ body:not(.connect-page) .scout-bubble:after{left:-9px;right:auto;bottom:34px;border-right:0;border-bottom:1px solid #eabb87;border-left:1px solid #eabb87;border-top:1px solid #eabb87}
+ .site-header #navigation{max-height:calc(100dvh - 349px);padding-bottom:0}
+}
