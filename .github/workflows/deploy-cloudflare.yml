@@ -1,0 +1,45 @@
+name: Deploy Cloudflare CV
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'wrangler.jsonc'
+      - '.github/workflows/deploy-cloudflare.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Select configured Cloudflare token
+        shell: bash
+        run: |
+          set -euo pipefail
+          token="${CLOUDFLARE_API_TOKEN:-}"
+          if [ -z "$token" ]; then token="${CF_API_TOKEN:-}"; fi
+          if [ -z "$token" ]; then token="${CLOUDFLARE_TOKEN:-}"; fi
+          if [ -z "$token" ]; then
+            echo "No Cloudflare API token repository secret is configured."
+            exit 78
+          fi
+          echo "CLOUDFLARE_API_TOKEN=$token" >> "$GITHUB_ENV"
+          echo "Cloudflare token detected; material remains masked."
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy existing ndgcv Worker
+        run: npx wrangler deploy
