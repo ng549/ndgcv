@@ -1,0 +1,40 @@
+name: Capture Portfolio Assets
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Capture screenshots and existing Deal Closer Pro
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p capture/screenshots capture/deal-closer-pro
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/importflow-lcawpq/1790246192750/web.png" -o capture/screenshots/importflow-desktop.png
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/importflow-lcawpq/1790246192750/mobile.png" -o capture/screenshots/importflow-mobile.png
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/vendorready-50e9yr/1790246264512/web.png" -o capture/screenshots/vendorready-desktop.png
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/vendorready-50e9yr/1790246264512/mobile.png" -o capture/screenshots/vendorready-mobile.png
+          curl -L -sS "https://nicolasgoureau.com/apps/deal-closer-pro/" -o capture/deal-closer-pro/index.html
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+          h=Path('capture/deal-closer-pro/index.html').read_text()
+          urls=[]
+          for x in re.findall(r'(?:src|href)="([^"]+)"',h):
+              if x.startswith('./'): urls.append(x[2:])
+              elif x.startswith('/apps/deal-closer-pro/'): urls.append(x.split('/apps/deal-closer-pro/',1)[1])
+          for rel in dict.fromkeys(urls):
+              if not rel or rel.startswith(('http:','https:','#')): continue
+              target=Path('capture/deal-closer-pro')/rel
+              target.parent.mkdir(parents=True,exist_ok=True)
+              subprocess.run(['curl','-L','-sS','https://nicolasgoureau.com/apps/deal-closer-pro/'+rel,'-o',str(target)],check=True)
+          PY
+          file capture/screenshots/*.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-assets
+          path: capture/
+          retention-days: 1
