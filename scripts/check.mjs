@@ -61,6 +61,7 @@ assert.equal((h.match(/<img[^>]* src="assets\/idea-to-sale\/[^" ]+-private-label
 
 
 const appsPage=fs.readFileSync('docs/apps/index.html','utf8');
+assert(appsPage.includes('Deal Closer Pro'));
 assert(appsPage.includes('ImportFlow'));
 assert(appsPage.includes('VendorReady'));
 assert(appsPage.includes('WarrantyDesk'));
