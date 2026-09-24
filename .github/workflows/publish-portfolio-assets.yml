@@ -19,6 +19,8 @@ jobs:
           curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/importflow-lcawpq/1790246192750/mobile.png" -o docs/apps/assets/importflow-mobile.png
           curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/vendorready-50e9yr/1790246264512/web.png" -o docs/apps/assets/vendorready-desktop.png
           curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/vendorready-50e9yr/1790246264512/mobile.png" -o docs/apps/assets/vendorready-mobile.png
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/warrantydesk-afzqxn/1790253004989/web.png" -o docs/apps/assets/warrantydesk-desktop.png
+          curl -L -sS "https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/warrantydesk-afzqxn/1790253004989/mobile.png" -o docs/apps/assets/warrantydesk-mobile.png
           curl -L -sS "https://nicolasgoureau.com/apps/assets/deal-closer-pro-preview.png" -o docs/apps/assets/deal-closer-pro-preview.png
           curl -L -sS "https://nicolasgoureau.com/apps/deal-closer-pro/" -o docs/apps/deal-closer-pro/index.html
           curl -L -sS "https://nicolasgoureau.com/apps/deal-closer-pro/assets/index-jYDVfrGi.js" -o docs/apps/deal-closer-pro/assets/index-jYDVfrGi.js
