@@ -1,7 +1,7 @@
 {
   "title": "Nexus V2 Canonical",
   "version": "0.9",
-  "updated_at": "2026-09-23",
+  "updated_at": "2026-09-24",
   "source_of_truth": true,
   "purpose": "Authoritative operating record for Nexus V2, the fractional business systems company, its modular build method, AI stack, marketing engine, client delivery model, and operator command center.",
   "authority_rule": "Explicit decisions by Nicolas override prior recommendations and assumptions.",
@@ -443,6 +443,24 @@
           "Verify or configure branch protection on main and nexus-v2 (gap G-3)",
           "Enable the GitHub App webhook now that the Agency Event Store exists (gap G-4)"
         ]
+      },
+      "nexus_command_build": {
+        "status": "IN_PROGRESS",
+        "recorded_at": "2026-09-24",
+        "directive": "Build the Nexus iPhone command app and Agency-owned backend through the Build Stack itself; workers execute Plugsky-first (Builder plan, flat rate) with OpenRouter as the funded fallback, per the 2026-09-23 routing directive. Factory credits untouched (factory_credits 0 verified on both routes).",
+        "packets": {
+          "pkt_ceefed8f": "A1 nexus domain core \u2014 worker-executed via FactoryProvider; first run cut off at the OpenRouter key cap, output recovered and validated by operator (245/245 tests), checkpoint agency-build-stack@5b37868; verification slice launched on Plugsky 2026-09-24",
+          "pkt_1e334916": "A2 nexus edge API worker (workers/nexus-api) \u2014 DRAFT, queued behind A1 verification",
+          "pkt_2a8eaec4": "B1 mobile-command live wiring \u2014 DRAFT, queued behind A2 (API contract dependency)"
+        },
+        "evidence": [
+          "agency-build-stack branch feature/nexus-command-backend; draft PR #1; commits 2c4ddaa, d40c9ea, 5b37868, 45c7026, 5412705",
+          "event chain: packet.created x3, nexus.budget.check, exec.launched/finished, nexus.budget.observation, nexus.build.blocker (capacity, since resolved), nexus.schema.migrated; chain verified ok at length 58",
+          "Nexus application schema provisioned live in Neon: 10 new agency_* tables, operator/project/grant seeded (scripts/nexus-migrate.mjs)",
+          "BYOK routes verified: droid exec -m custom:Agency-OpenRouter-Sonnet-4.5-0 and custom:Agency-Plugsky-Max-1 both report factory_credits 0; OpenRouter key usage delta matched token counts exactly. Raw model ids collide with Factory-native models; the custom: selector slug is required"
+        ],
+        "capacity_note": "2026-09-23 blockage (OpenRouter key cap) resolved same night: operator raised the cap to $20 and upgraded Plugsky to Builder. Build workers now run Plugsky-first at flat rate; cost recorded UNAVAILABLE per D-18 discipline, never zero.",
+        "factory_credits_consumed": 0
       }
     },
     "reconciliation_2026_09_22": {
