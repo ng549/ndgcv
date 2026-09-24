@@ -1,0 +1,29 @@
+name: Capture Live Apps Bundle
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Capture live Apps SPA
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p capture
+          curl -L -sS https://nicolasgoureau.com/apps -o capture/index.html
+          js=$(grep -oE 'src="[^"]+\.js"' capture/index.html | head -1 | sed 's/src="//;s/"//')
+          css=$(grep -oE 'href="[^"]+\.css"' capture/index.html | head -1 | sed 's/href="//;s/"//')
+          case "$js" in http*) jsurl="$js";; /*) jsurl="https://nicolasgoureau.com$js";; *) jsurl="https://nicolasgoureau.com/apps/$js";; esac
+          case "$css" in http*) cssurl="$css";; /*) cssurl="https://nicolasgoureau.com$css";; *) cssurl="https://nicolasgoureau.com/apps/$css";; esac
+          curl -L -sS "$jsurl" -o capture/app.js
+          curl -L -sS "$cssurl" -o capture/app.css
+          printf '%s\n%s\n' "$jsurl" "$cssurl" > capture/urls.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: live-apps-bundle
+          path: capture/
+          retention-days: 1
