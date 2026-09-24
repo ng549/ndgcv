@@ -30,6 +30,8 @@
     .chips span{padding:5px 9px;font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:800;border-radius:999px}
     .actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;justify-self:end}
     .product .button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;font-size:10.5px;font-weight:800;white-space:nowrap;border-radius:8px}
+    .product .button.license{background:transparent;border:1px solid currentColor;opacity:.75}
+    .product .button.license:hover{opacity:1}
 
     details.evidence{border-top:1px solid #efede624}
     details.evidence summary{list-style:none;cursor:pointer;padding:11px 26px;font:600 9px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;opacity:.7;display:flex;align-items:center;gap:6px}
@@ -68,7 +70,7 @@
   <div class="hero-content">
     <p class="eyebrow">Working software</p>
     <h1 id="apps-hero-heading">Practical tools.<br><span>Built to move work forward.</span></h1>
-    <p class="hero-lead apps-hero-lead">I turn real operating problems into useful software—tools that help people do their work better, faster, and with less friction. Each one below has an open, no-account demo.</p>
+    <p class="hero-lead apps-hero-lead">I turn real operating problems into useful software—tools that help people do their work better, faster, and with less friction. Each one below has an open, no-account demo, and each one is available to license for your own team or business.</p>
     <p class="apps-hero-meta"><span>LIVE PRODUCTS</span><span>GOOGLE + EMAIL SIGN-IN</span><span>DESKTOP + MOBILE</span><span>PRODUCTION QA</span></p>
   </div>
 </section>
@@ -78,20 +80,20 @@
   <article class="product deal">
     <div class="product-head">
       <div class="brand-panel"><strong>Deals to Done.</strong></div>
-      <div class="copy"><span class="eyebrow">Real estate transactions</span><h2>Deal Closer Pro</h2><p>AI-enabled real estate transaction workspace for documents, deadlines, showings, and every party in the deal.</p><div class="chips"><span>Role-based access</span><span>Showing check-in</span><span>Transaction workspace</span></div></div>
-      <div class="actions"><a class="button primary" href="/apps/deal-closer-pro/">Try the demo ↗</a></div>
+      <div class="copy"><span class="eyebrow">Real estate transactions</span><h2>Deal Closer Pro</h2><p>Every deal turns into a paper trail of texts, forwarded PDFs, and five people guessing what's current. Deal Closer Pro gives agents, sellers, buyers, lawyers, and vendors one shared workspace instead — role-based, so nobody sees more than they should — with showings, deadlines, and documents that actually stay in sync.</p><div class="chips"><span>Role-based access</span><span>Showing check-in</span><span>Transaction workspace</span></div></div>
+      <div class="actions"><a class="button primary" href="https://deal-closer-pro.PENDING-DEPLOY.workers.dev/" target="_blank" rel="noopener">Try the demo ↗</a><a class="button license" href="/#contact">License this app →</a></div>
     </div>
     <details class="evidence"><summary>Screens &amp; details</summary>
       <div class="screens"><figure class="shot" data-label="Product preview"><img src="./assets/deal-closer-pro-preview.png" alt="Deal Closer Pro sign-in screen" loading="lazy"></figure></div>
-      <div class="facts"><div><small>Status</small><strong>Demo</strong></div><div><small>Access</small><strong>No account needed — sample deal data</strong></div><div><small>Open</small><strong>/apps/deal-closer-pro/</strong></div></div>
+      <div class="facts"><div><small>Status</small><strong>Coming soon</strong></div><div><small>Access</small><strong>No-account demo with sample deal data</strong></div><div><small>Open</small><strong>https://deal-closer-pro.PENDING-DEPLOY.workers.dev/</strong></div></div>
     </details>
   </article>
 
   <article class="product import">
     <div class="product-head">
       <div class="brand-panel"><strong>IMPORTFLOW / CONTROL</strong></div>
-      <div class="copy"><span class="eyebrow">Import operations</span><h2>ImportFlow</h2><p>A shipment document and exception command center for importers coordinating suppliers, freight partners, customs-ready records, and time-sensitive shipment milestones.</p><div class="chips"><span>Persistent shipments</span><span>Document storage</span><span>Shipment-scoped partners</span><span>Server permissions</span></div></div>
-      <div class="actions"><a class="button primary" href="https://importflow-lcawpq.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a></div>
+      <div class="copy"><span class="eyebrow">Import operations</span><h2>ImportFlow</h2><p>Shipments fall apart in email threads — a customs document missed here, a freight update buried there. ImportFlow gives importers, freight partners, and customs teams one shipment record instead of a hundred forwarded messages, with each partner locked to exactly the shipment they were invited to.</p><div class="chips"><span>Persistent shipments</span><span>Document storage</span><span>Shipment-scoped partners</span><span>Server permissions</span></div></div>
+      <div class="actions"><a class="button primary" href="https://importflow-lcawpq.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a><a class="button license" href="/#contact">License this app →</a></div>
     </div>
     <details class="evidence"><summary>Screens &amp; details</summary>
       <div class="screens has-two"><figure class="shot" data-label="Production desktop QA"><img src="./assets/importflow-desktop.png" alt="ImportFlow redesigned production desktop interface" loading="lazy"></figure><figure class="shot mobile" data-label="Production mobile QA"><img src="./assets/importflow-mobile.png" alt="ImportFlow redesigned production mobile interface" loading="lazy"></figure></div>
@@ -102,8 +104,8 @@
   <article class="product vendor">
     <div class="product-head">
       <div class="brand-panel"><strong>Ready to work.</strong></div>
-      <div class="copy"><span class="eyebrow">Vendor compliance</span><h2>VendorReady</h2><p>A vendor onboarding and document-readiness workspace for SMB operations teams collecting requirements, approving submissions, and giving vendors a restricted portal of their own.</p><div class="chips"><span>Persistent vendor records</span><span>Document submissions</span><span>Readiness approvals</span><span>Restricted vendor portal</span></div></div>
-      <div class="actions"><a class="button primary" href="https://vendorready-50e9yr.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a></div>
+      <div class="copy"><span class="eyebrow">Vendor compliance</span><h2>VendorReady</h2><p>Chasing vendors for W-9s, insurance certificates, and compliance paperwork by spreadsheet doesn't scale past a handful of names. VendorReady gives operations teams one approval queue and gives every vendor their own restricted portal to submit exactly what's required — so "are they ready to work" has an answer instead of a guess.</p><div class="chips"><span>Persistent vendor records</span><span>Document submissions</span><span>Readiness approvals</span><span>Restricted vendor portal</span></div></div>
+      <div class="actions"><a class="button primary" href="https://vendorready-50e9yr.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a><a class="button license" href="/#contact">License this app →</a></div>
     </div>
     <details class="evidence"><summary>Screens &amp; details</summary>
       <div class="screens has-two"><figure class="shot" data-label="Production desktop QA"><img src="./assets/vendorready-desktop.png" alt="VendorReady redesigned production desktop interface" loading="lazy"></figure><figure class="shot mobile" data-label="Production mobile QA"><img src="./assets/vendorready-mobile.png" alt="VendorReady redesigned production mobile interface" loading="lazy"></figure></div>
@@ -114,8 +116,8 @@
   <article class="product warranty">
     <div class="product-head">
       <div class="brand-panel"><strong>CLAIM → DECISION → DONE</strong></div>
-      <div class="copy"><span class="eyebrow">Warranty operations</span><h2>WarrantyDesk</h2><p>A warranty claims operations desk for manufacturers and distributors handling customer requests, product evidence, warranty decisions, replacements, and fulfillment in one controlled case record.</p><div class="chips"><span>Persistent claims</span><span>Evidence storage</span><span>Role-based team access</span><span>Customer intake</span></div></div>
-      <div class="actions"><a class="button primary" href="https://warrantydesk-afzqxn.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a></div>
+      <div class="copy"><span class="eyebrow">Warranty operations</span><h2>WarrantyDesk</h2><p>A warranty claim shouldn't live across three inboxes and a shared drive. WarrantyDesk turns every customer request into one case record — evidence, decision, replacement, fulfillment — so manufacturers and distributors can see exactly where each claim stands instead of reconstructing it from memory.</p><div class="chips"><span>Persistent claims</span><span>Evidence storage</span><span>Role-based team access</span><span>Customer intake</span></div></div>
+      <div class="actions"><a class="button primary" href="https://warrantydesk-afzqxn.v2.appdeploy.ai/" target="_blank" rel="noopener">Open live app ↗</a><a class="button license" href="/#contact">License this app →</a></div>
     </div>
     <details class="evidence"><summary>Screens &amp; details</summary>
       <div class="screens has-two"><figure class="shot" data-label="Production desktop QA"><img src="./assets/warrantydesk-desktop.png" alt="WarrantyDesk production desktop claims interface" loading="lazy"></figure><figure class="shot mobile" data-label="Production mobile QA"><img src="./assets/warrantydesk-mobile.png" alt="WarrantyDesk production mobile interface" loading="lazy"></figure></div>
