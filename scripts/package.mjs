@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 // Explicit entrypoints, then follow local references. Source and archives never ship.
-const paths = new Set(['index.html','connect.html','site.css','site.js','connect.css','connect.js','nicolas-goureau.vcf']);
+const paths = new Set(['index.html','connect.html','apps/index.html','site.css','site.js','connect.css','connect.js','nicolas-goureau.vcf']);
 const queue=[...paths];
 function add(raw,base='') {
  const value=raw.replaceAll('&amp;','&');
