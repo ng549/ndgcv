@@ -6,7 +6,9 @@ const queue=[...paths];
 function add(raw,base='') {
  const value=raw.replaceAll('&amp;','&');
  if (/^(?:[a-z]+:|#|\/\/)/i.test(value)) return;
- let file=path.posix.normalize(value.startsWith('/')?value.slice(1):path.posix.join(base,value.split(/[?#]/)[0]));
+ const clean=value.split(/[?#]/)[0];
+ if(!clean)return;
+ let file=path.posix.normalize(clean.startsWith('/')?clean.slice(1):path.posix.join(base,clean));
  if(file==='.'||file==='')file='index.html';
  if(file==='connect')file='connect.html';
  if(file.endsWith('/'))file += 'index.html';
