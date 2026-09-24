@@ -58,3 +58,14 @@ console.log('Document edits: collapsed career master and roles, combined approac
 
 assert.equal((h.match(/class="illustrated-action /g)||[]).length,6,"Homepage and connect share all six actions");
 assert.equal((h.match(/<img[^>]* src="assets\/idea-to-sale\/[^" ]+-private-label.png"/g)||[]).length,9,"All nine distinct private-label groups are published");
+
+
+const appsPage=fs.readFileSync('docs/apps/index.html','utf8');
+assert(appsPage.includes('ImportFlow'));
+assert(appsPage.includes('VendorReady'));
+assert(appsPage.includes('https://importflow-lcawpq.v2.appdeploy.ai/'));
+assert(appsPage.includes('https://vendorready-50e9yr.v2.appdeploy.ai/'));
+assert(appsPage.includes('GOOGLE + EMAIL SIGN-IN'));
+assert(appsPage.includes('Production desktop QA'));
+assert(appsPage.includes('Production mobile QA'));
+console.log('Apps page: both live apps, sign-in disclosure and desktop/mobile QA screenshots checked.');
