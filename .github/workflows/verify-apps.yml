@@ -1,0 +1,32 @@
+name: Verify Apps Site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-apps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for public apps route
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="https://nicolasgoureau.com/apps"
+          for attempt in $(seq 1 30); do
+            code=$(curl -L -sS -o /tmp/apps.html -w "%{http_code}" "$url" || true)
+            if [ "$code" = "200" ] \
+              && grep -q "ImportFlow" /tmp/apps.html \
+              && grep -q "VendorReady" /tmp/apps.html \
+              && grep -q "https://importflow-lcawpq.v2.appdeploy.ai/" /tmp/apps.html \
+              && grep -q "https://vendorready-50e9yr.v2.appdeploy.ai/" /tmp/apps.html; then
+              echo "Verified $url with both live app links."
+              exit 0
+            fi
+            echo "Attempt $attempt: HTTP $code or expected app content not live yet."
+            sleep 10
+          done
+          echo "Public apps route did not verify."
+          if [ -f /tmp/apps.html ]; then head -c 1000 /tmp/apps.html || true; fi
+          exit 1
