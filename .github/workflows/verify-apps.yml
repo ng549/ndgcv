@@ -19,9 +19,11 @@ jobs:
             if [ "$code" = "200" ] \
               && grep -q "ImportFlow" /tmp/apps.html \
               && grep -q "VendorReady" /tmp/apps.html \
+              && grep -q "WarrantyDesk" /tmp/apps.html \
               && grep -q "https://importflow-lcawpq.v2.appdeploy.ai/" /tmp/apps.html \
-              && grep -q "https://vendorready-50e9yr.v2.appdeploy.ai/" /tmp/apps.html; then
-              echo "Verified $url with both live app links."
+              && grep -q "https://vendorready-50e9yr.v2.appdeploy.ai/" /tmp/apps.html \
+              && grep -q "https://warrantydesk-afzqxn.v2.appdeploy.ai/" /tmp/apps.html; then
+              echo "Verified $url with all three live app links."
               exit 0
             fi
             echo "Attempt $attempt: HTTP $code or expected app content not live yet."
