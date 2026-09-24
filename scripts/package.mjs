@@ -9,6 +9,7 @@ function add(raw,base='') {
  let file=path.posix.normalize(value.startsWith('/')?value.slice(1):path.posix.join(base,value.split(/[?#]/)[0]));
  if(file==='.'||file==='')file='index.html';
  if(file==='connect')file='connect.html';
+ if(file==='apps'||file==='apps/')file='apps/index.html';
  if(!fs.existsSync('docs/'+file)) throw new Error(`Missing public asset: ${file}`);
  if(!paths.has(file)){paths.add(file);queue.push(file);}
 }
