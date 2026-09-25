@@ -69,6 +69,5 @@ assert(appsPage.includes('https://importflow-lcawpq.v2.appdeploy.ai/'));
 assert(appsPage.includes('https://vendorready-50e9yr.v2.appdeploy.ai/'));
 assert(appsPage.includes('https://warrantydesk-afzqxn.v2.appdeploy.ai/'));
 assert(appsPage.includes('GOOGLE + EMAIL SIGN-IN'));
-assert(appsPage.includes('Production desktop QA'));
-assert(appsPage.includes('Production mobile QA'));
-console.log('Apps page: all three live apps, sign-in disclosure and desktop/mobile QA screenshots checked.');
+assert.equal((appsPage.match(/class="product" data-status=/g)||[]).length,4,"All four app cards use the shared card component");
+console.log('Apps page: all three live apps, sign-in disclosure and shared card component checked.');

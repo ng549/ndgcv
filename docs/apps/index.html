@@ -29,8 +29,10 @@
     .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
     .chips li{padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;color:#cbc7bd}
     .shot{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0c1015}
-    .shot img{display:block;width:100%;height:190px;object-fit:cover}
-    .meta{display:flex;flex-direction:column;gap:2px;font:500 10px "IBM Plex Mono",monospace;color:#9a978f}
+    .shot .bar{height:24px;display:flex;align-items:center;gap:5px;padding:0 11px;background:#0c1015;border-bottom:1px solid var(--line)}
+    .shot .bar span{width:6px;height:6px;border-radius:50%;background:#333a42}
+    .shot .frame{padding:14px;background:#0c1015;display:flex;align-items:center;justify-content:center}
+    .shot img{display:block;max-width:100%;height:auto;max-height:230px;border-radius:5px}
     .button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;text-decoration:none;font-size:11px;font-weight:800;border-radius:8px}
     .button.primary{background:var(--accent);color:#0d1115}
     footer{border-top:1px solid var(--line);padding:26px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:20px;color:#aaa79f;font:500 10px "IBM Plex Mono",monospace}footer a{text-decoration:none;color:#d9d4c9}
@@ -48,8 +50,7 @@
     <h2>Deal Closer Pro</h2>
     <p class="desc">AI-enabled real estate transaction workspace for documents, deadlines, showings, and every party in the deal.</p>
     <ul class="chips"><li>Role-based access</li><li>Showing check-in</li><li>Transaction workspace</li></ul>
-    <figure class="shot"><img src="./assets/deal-closer-pro-preview.png" alt="Deal Closer Pro sign-in screen" loading="lazy"></figure>
-    <div class="meta"><span>Sample data · no account required</span></div>
+    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/deal-closer-pro-preview.png" alt="Deal Closer Pro sign-in screen" loading="lazy"></div></figure>
     <a class="button primary" href="https://deal-closer-pro.nexus-hud-mmc.workers.dev/" target="_blank" rel="noopener">Open demo ↗</a>
   </article>
 
@@ -59,8 +60,7 @@
     <h2>ImportFlow</h2>
     <p class="desc">A shipment document and exception command center for importers coordinating suppliers, freight partners, and time-sensitive shipment milestones.</p>
     <ul class="chips"><li>Persistent shipments</li><li>Document storage</li><li>Server permissions</li></ul>
-    <figure class="shot"><img src="./assets/importflow-desktop.png" alt="ImportFlow production interface" loading="lazy"></figure>
-    <div class="meta"><span>Google + passwordless email · Partner restricted to invited shipment</span><span>Production desktop QA · Production mobile QA: 0 frontend · 0 network · 0 backend errors</span></div>
+    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/importflow-desktop.png" alt="ImportFlow production interface" loading="lazy"></div></figure>
     <a class="button primary" href="https://importflow-lcawpq.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
   </article>
 
@@ -70,8 +70,7 @@
     <h2>VendorReady</h2>
     <p class="desc">A vendor onboarding and document-readiness workspace for SMB operations teams collecting requirements and approving submissions.</p>
     <ul class="chips"><li>Persistent vendor records</li><li>Document submissions</li><li>Restricted vendor portal</li></ul>
-    <figure class="shot"><img src="./assets/vendorready-desktop.png" alt="VendorReady production interface" loading="lazy"></figure>
-    <div class="meta"><span>Google + passwordless email · Vendor restricted to invited vendor record</span><span>Production desktop QA · Production mobile QA: 0 frontend · 0 network · 0 backend errors</span></div>
+    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/vendorready-desktop.png" alt="VendorReady production interface" loading="lazy"></div></figure>
     <a class="button primary" href="https://vendorready-50e9yr.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
   </article>
 
@@ -81,8 +80,7 @@
     <h2>WarrantyDesk</h2>
     <p class="desc">A warranty claims operations desk for manufacturers and distributors handling customer requests, evidence, decisions, and fulfillment in one case record.</p>
     <ul class="chips"><li>Persistent claims</li><li>Evidence storage</li><li>Customer intake</li></ul>
-    <figure class="shot"><img src="./assets/warrantydesk-desktop.png" alt="WarrantyDesk production claims interface" loading="lazy"></figure>
-    <div class="meta"><span>Google + passwordless email · Public customer intake + organization-scoped team invites</span><span>Production desktop QA · Production mobile QA: 0 frontend · 0 network · 0 backend errors</span></div>
+    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/warrantydesk-desktop.png" alt="WarrantyDesk production claims interface" loading="lazy"></div></figure>
     <a class="button primary" href="https://warrantydesk-afzqxn.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
   </article>
 </section>
