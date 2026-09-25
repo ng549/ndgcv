@@ -1,5 +1,12 @@
 {
-  "name": "ndgcv",
+  // Must match the Worker actually bound to nicolasgoureau.com/apps* in
+  // Cloudflare's Workers Routes (dashboard-configured, not in this repo).
+  // Found live 2026-09-25: this field previously said "ndgcv", a
+  // DIFFERENT, unrouted script -- `wrangler deploy` was silently updating
+  // an orphaned Worker while the real production route kept serving
+  // stale content. `wrangler deploy` with no --name flag now targets the
+  // correct script.
+  "name": "nicolasgoureau-apps",
   "compatibility_date": "2026-09-16",
   "build": { "command": "npm run build" },
   "assets": { "directory": "./dist" }
