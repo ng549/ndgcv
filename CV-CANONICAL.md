@@ -1157,3 +1157,12 @@ Career link: The DJI opening and ongoing work → #role-moremargin
 - Applied approved personal subtitles. Collapsed bands target84px, whole band clickable, unboxed +/− control with accessible labels/focus; contact stays open and uses a plain navigation link. About remains minimized at startup including reload at#about.
 - University of Miami: added Played club golf, rugby, and soccer.
 - Build, content preservation checks, syntax and diff checks passed; exact release and hosted verification follows in Drive.
+
+
+## 2026-09-25 — Desktop Apps layout and split publication repair
+
+Cloudflare API verified: nicolasgoureau.com and www.nicolasgoureau.com custom domains belong to Worker `ndgcv` (production). Apps uses the separate `nicolasgoureau-apps` route Worker. The comment in wrangler.jsonc describing ndgcv as unrouted is incorrect; do not use it to omit the main CV deployment. The workflow now verifies the main custom-domain target and publishes both existing Workers without changing routes.
+
+Layout fixes: removed Apps card square/min-height sizing conflict that made 560px cards overflow 482px columns; aligned rows; balanced the headline; widened the maximum content container; gave screenshots a consistent 16:9 region; retained modest demo buttons and phone touch targets. Shared script now guards missing CV-only sections on Apps, supports the Apps parallax scene, and reveals an explicitly linked CV section on arrival while the plain homepage stays collapsed. Apps gets a build-synchronized copy of the shared script under its own route.
+
+Verified live after publication 5a2036fc7b6c748125f25fec32eef9d1e00a6282: four Apps cards fit columns without overflow, four screenshots load, background transform updates on scroll, and Apps-to-Building-with-AI navigation expands its destination. Main CV desktop checks: no horizontal overflow, eight roles, 32 career tabs, no broken loaded images. Build and existing repository tests passed. Mobile CSS was reviewed and adjusted; a mobile viewport visual test was NOT available in this browser session. Do not claim full mobile visual acceptance from this repair.
