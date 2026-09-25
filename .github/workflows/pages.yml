@@ -50,8 +50,7 @@ jobs:
           fi
           echo "CLOUDFLARE_API_TOKEN=$token" >> "$GITHUB_ENV"
           echo "Cloudflare token detected; secret remains masked."
-      - name: Inspect CV domain routing
-        continue-on-error: true
+      - name: Verify main CV domain target
         run: |
           node --input-type=module <<'NODE'
           const account=process.env.CLOUDFLARE_ACCOUNT_ID || 'c8238aed298b28ab172aa56bb1e9cd22';
@@ -60,11 +59,12 @@ jobs:
           const domains=await get('accounts/'+account+'/workers/domains');
           const cv=domains.filter(d=>d.hostname==='nicolasgoureau.com'||d.hostname==='www.nicolasgoureau.com');
           console.log('CV_CUSTOM_DOMAINS',JSON.stringify(cv.map(({hostname,service,environment,zone_id})=>({hostname,service,environment,zone_id}))));
-          const zones=await get('zones?name=nicolasgoureau.com');
-          for(const z of zones){const routes=await get('zones/'+z.id+'/workers/routes');console.log('CV_WORKER_ROUTES',JSON.stringify(routes.filter(r=>r.pattern.includes('nicolasgoureau.com')).map(({pattern,script})=>({pattern,script}))))}
+          if(!cv.some(d=>d.hostname==='nicolasgoureau.com'&&d.service==='ndgcv'))throw new Error('Main CV target changed; review routing before publication');
           NODE
-      - name: Deploy existing ndgcv Worker
-        run: npx wrangler deploy
+      - name: Deploy main CV custom-domain Worker
+        run: npx wrangler deploy --name ndgcv --keep-vars
+      - name: Deploy Apps route Worker
+        run: npx wrangler deploy --keep-vars
       - name: Verify live custom domain
         shell: bash
         run: |
@@ -76,3 +76,6 @@ jobs:
           echo "$html" | grep -q 'VendorReady'
           echo "$html" | grep -q 'WarrantyDesk'
           echo "Verified live custom domain is serving the current four-card Apps page."
+          curl -fsSL --retry 6 --retry-delay 2 https://nicolasgoureau.com/site.js -o /tmp/cv-live.js
+          grep -q "const capabilitySection=" /tmp/cv-live.js
+          echo "Verified main CV shared-script publication."
