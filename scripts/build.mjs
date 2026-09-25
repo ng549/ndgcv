@@ -99,3 +99,6 @@ fs.writeFileSync('docs/site.css',existingCSS+'\n\n'+careerCSSMarker+'\n'+fs.read
 console.log('Built CV: 8 roles, 32 career stories, 12 supporting examples, build process, Education and illustrated contact pages.');
 
 for (const ext of ['css','js']) fs.copyFileSync('scripts/scout.'+ext,'docs/scout.'+ext);
+
+// Keep the Apps route's shared behavior in sync with the main CV.
+fs.copyFileSync('docs/site.js','docs/apps/site.js');
