@@ -3,88 +3,80 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <title>Apps · Nicolas Goureau</title>
-  <meta name="description" content="Practical software tools built by Nicolas Goureau to move real work forward.">
+  <meta name="color-scheme" content="dark light">
+  <title>Apps — Nicolas Goureau</title>
+  <meta name="description" content="Apps and practical software tools built by Nicolas Goureau.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Caveat:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css?v=apps-shell-20260924">
+  <link rel="stylesheet" href="/scout.css?v=apps-shell-20260924">
+  <script src="/site.js?v=apps-shell-20260924" defer></script>
   <style>
-    :root{--bg:#11161b;--surface:#161c23;--ivory:#f1ece0;--muted:#a9aaa6;--line:rgba(241,236,224,.14);--accent:#7c93c9;--teal:#2dd4bf;--amber:#f5a623}
-    *{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ivory);font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}
-    .top{position:sticky;top:0;z-index:20;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,58px);background:rgba(17,22,27,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .wordmark{font-weight:800;text-transform:uppercase;letter-spacing:.05em;text-decoration:none}.wordmark span{color:var(--accent)}.nav{display:flex;gap:22px;font:600 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase}.nav a{text-decoration:none;color:#d8d3c8}.nav .active{color:var(--accent)}
-    .hero{max-width:1500px;margin:auto;padding:clamp(68px,9vw,128px) clamp(20px,5vw,72px) 52px}.eyebrow{font:600 11px "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}.hero h1{font-size:clamp(54px,8vw,112px);letter-spacing:-.065em;line-height:.88;margin:18px 0 26px;max-width:10ch}.hero p{max-width:760px;color:#c9c5bb;font:400 19px/1.65 "Source Sans 3",sans-serif}.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.hero-meta span{border:1px solid var(--line);padding:8px 11px;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.08em;color:#cbc7bd}
-    .catalog{max-width:1500px;margin:auto;padding:0 clamp(20px,5vw,72px) 110px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;align-items:start}
-    .product{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px}
-    .card-top{display:flex;align-items:center;justify-content:space-between}
-    .mark{width:36px;height:36px;border-radius:10px;background:rgba(124,147,201,.14);color:var(--accent);display:grid;place-items:center;font:800 12px "IBM Plex Mono",monospace}
-    .status{display:inline-flex;align-items:center;gap:6px;font:700 10px "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase}
-    .status i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
-    .product[data-status="live"] .status{color:var(--teal)}
-    .product[data-status="demo"] .status{color:var(--amber)}
-    .product .eyebrow{margin:0}
-    .product h2{font-size:26px;line-height:1.05;letter-spacing:-.03em;margin:2px 0}
-    .product .desc{margin:0;font:400 14px/1.55 "Source Sans 3",sans-serif;color:#c3bfb5}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
-    .chips li{padding:5px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;color:#cbc7bd}
-    .shot{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0c1015}
-    .shot .bar{height:24px;display:flex;align-items:center;gap:5px;padding:0 11px;background:#0c1015;border-bottom:1px solid var(--line)}
-    .shot .bar span{width:6px;height:6px;border-radius:50%;background:#333a42}
-    .shot .frame{padding:14px;background:#0c1015;display:flex;align-items:center;justify-content:center}
-    .shot img{display:block;max-width:100%;height:auto;max-height:230px;border-radius:5px}
-    .button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;text-decoration:none;font-size:11px;font-weight:800;border-radius:8px}
-    .button.primary{background:var(--accent);color:#0d1115}
-    footer{border-top:1px solid var(--line);padding:26px clamp(20px,5vw,72px);display:flex;justify-content:space-between;gap:20px;color:#aaa79f;font:500 10px "IBM Plex Mono",monospace}footer a{text-decoration:none;color:#d9d4c9}
-    @media(max-width:560px){.top{height:auto;min-height:66px;padding:14px 18px}.nav{gap:12px}.hero{padding-top:58px}.hero h1{font-size:58px}.catalog{padding-left:12px;padding-right:12px;grid-template-columns:1fr}.product{padding:20px}}
+    body.apps-page{min-height:100vh;background:#22262b;color:#efede6}
+    .apps-shell{position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end}
+    .apps-background{position:absolute;inset:-8% 0;width:100%;height:116%;z-index:0;will-change:transform}
+    .apps-background img{width:100%;height:100%;object-fit:cover;object-position:center center;opacity:.74}
+    .apps-shade{position:absolute;inset:0;z-index:1;background:
+      linear-gradient(90deg,#141b23f0 0%,#141b23c7 42%,#141b2380 72%,#141b2350 100%),
+      linear-gradient(0deg,#141b23d9 0%,transparent 46%)}
+    .apps-content{position:relative;z-index:2;width:min(1120px,86%);margin:0 auto;padding:clamp(150px,18vh,230px) 0 clamp(88px,12vh,150px)}
+    .apps-content .eyebrow{font-size:13px;letter-spacing:.18em;margin-bottom:22px;color:#d4dbe5}
+    .apps-content h1{font-size:clamp(48px,6.3vw,92px);line-height:.94;letter-spacing:-.055em;font-weight:750;max-width:9.5ch;margin:0 0 28px}
+    .apps-content p{font-size:clamp(18px,1.7vw,22px);line-height:1.45;max-width:610px;margin:0;color:#e0ded7}
+    .apps-placeholder{margin-top:34px;padding-top:18px;border-top:1px solid #efede63b;max-width:610px;font-size:13px!important;letter-spacing:.08em;text-transform:uppercase;color:#aeb8c3!important}
+    .site-header nav a[aria-current="page"]{color:#8fb0d8;background:#8fb0d812;border-left-color:#8fb0d8}
+    @media(max-width:1000px){
+      .apps-shell{min-height:100svh}
+      .apps-content{width:88%;padding-top:150px}
+      .apps-background img{object-position:62% center}
+      .apps-shade{background:linear-gradient(90deg,#141b23e8 0%,#141b23c4 58%,#141b2370 100%)}
+    }
+    @media(max-width:760px){
+      .apps-content{width:88%;padding:132px 0 92px}
+      .apps-content h1{font-size:clamp(46px,14vw,70px);max-width:8ch}
+      .apps-content p{font-size:18px;max-width:30ch}
+      .apps-background{inset:0;height:100%}
+      .apps-background img{object-position:68% center}
+      .apps-shade{background:linear-gradient(180deg,#141b23b3 0%,#141b23d6 48%,#141b23f5 100%)}
+    }
   </style>
 </head>
-<body>
-<header class="top"><a class="wordmark" href="/">Nicolas Goureau<span>.</span></a><nav class="nav" aria-label="Apps navigation"><a href="/">Home</a><a class="active" href="/apps/" aria-current="page">Apps</a><a href="/#about">About</a></nav></header>
-<main>
-<section class="hero"><span class="eyebrow">Working software</span><h1>Practical tools. Built to move work forward.</h1><p>I turn real operating problems into useful software—tools that help people do their work better, faster, and with less friction. These are live products with authenticated accounts, persistent data, server-enforced permissions, and production deployments.</p><div class="hero-meta"><span>LIVE PRODUCTS</span><span>GOOGLE + EMAIL SIGN-IN</span><span>DESKTOP + MOBILE</span><span>PRODUCTION QA</span></div></section>
-<section class="catalog" aria-label="Applications">
-  <article class="product" data-status="demo">
-    <div class="card-top"><span class="mark">DC</span><span class="status"><i></i>Demo</span></div>
-    <span class="eyebrow">Real estate transactions</span>
-    <h2>Deal Closer Pro</h2>
-    <p class="desc">AI-enabled real estate transaction workspace for documents, deadlines, showings, and every party in the deal.</p>
-    <ul class="chips"><li>Role-based access</li><li>Showing check-in</li><li>Transaction workspace</li></ul>
-    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/deal-closer-pro-preview.png" alt="Deal Closer Pro sign-in screen" loading="lazy"></div></figure>
-    <a class="button primary" href="https://deal-closer-pro.nexus-hud-mmc.workers.dev/" target="_blank" rel="noopener">Open demo ↗</a>
-  </article>
-
-  <article class="product" data-status="live">
-    <div class="card-top"><span class="mark">IF</span><span class="status"><i></i>Live</span></div>
-    <span class="eyebrow">Import operations</span>
-    <h2>ImportFlow</h2>
-    <p class="desc">A shipment document and exception command center for importers coordinating suppliers, freight partners, and time-sensitive shipment milestones.</p>
-    <ul class="chips"><li>Persistent shipments</li><li>Document storage</li><li>Server permissions</li></ul>
-    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/importflow-desktop.png" alt="ImportFlow production interface" loading="lazy"></div></figure>
-    <a class="button primary" href="https://importflow-lcawpq.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
-  </article>
-
-  <article class="product" data-status="live">
-    <div class="card-top"><span class="mark">VR</span><span class="status"><i></i>Live</span></div>
-    <span class="eyebrow">Vendor compliance</span>
-    <h2>VendorReady</h2>
-    <p class="desc">A vendor onboarding and document-readiness workspace for SMB operations teams collecting requirements and approving submissions.</p>
-    <ul class="chips"><li>Persistent vendor records</li><li>Document submissions</li><li>Restricted vendor portal</li></ul>
-    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/vendorready-desktop.png" alt="VendorReady production interface" loading="lazy"></div></figure>
-    <a class="button primary" href="https://vendorready-50e9yr.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
-  </article>
-
-  <article class="product" data-status="live">
-    <div class="card-top"><span class="mark">WD</span><span class="status"><i></i>Live</span></div>
-    <span class="eyebrow">Warranty operations</span>
-    <h2>WarrantyDesk</h2>
-    <p class="desc">A warranty claims operations desk for manufacturers and distributors handling customer requests, evidence, decisions, and fulfillment in one case record.</p>
-    <ul class="chips"><li>Persistent claims</li><li>Evidence storage</li><li>Customer intake</li></ul>
-    <figure class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="frame"><img src="./assets/warrantydesk-desktop.png" alt="WarrantyDesk production claims interface" loading="lazy"></div></figure>
-    <a class="button primary" href="https://warrantydesk-afzqxn.v2.appdeploy.ai/" target="_blank" rel="noopener">Open app ↗</a>
-  </article>
-</section>
+<body class="apps-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="wordmark" href="/#profile" aria-label="Nicolas Goureau, introduction">Nicolas Goureau</a>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button>
+  <nav id="navigation" aria-label="Main navigation">
+    <a href="/#about">About me</a>
+    <a href="/#experience">How I got here</a>
+    <a href="/#career-master">My experience</a>
+    <a href="/#ai">How I work</a>
+    <a href="/#software-work">Building with AI</a>
+    <a href="/apps/" aria-current="page">Apps</a>
+    <a href="/#product-journey">From idea to sale</a>
+    <a href="/#capabilities">What I bring</a>
+    <a href="/#value">The results</a>
+    <a href="/#build">Where I can help</a>
+    <a href="/#opportunity">What comes next</a>
+    <a href="/#education">Education</a>
+    <a href="/#contact">Let’s connect</a>
+  </nav>
+</header>
+<main id="main">
+  <section class="apps-shell" aria-labelledby="apps-heading">
+    <div class="apps-background" data-parallax="0.2" aria-hidden="true">
+      <img src="/assets/build-process/section-18-background.webp" alt="" fetchpriority="high">
+    </div>
+    <div class="apps-shade"></div>
+    <div class="apps-content">
+      <span class="eyebrow">Apps</span>
+      <h1 id="apps-heading">Practical tools. Built to move work forward.</h1>
+      <p>A growing collection of software I’ve built around real business problems, workflows, and opportunities.</p>
+      <p class="apps-placeholder">The application gallery is being rebuilt.</p>
+    </div>
+  </section>
 </main>
-<footer><a href="/">Nicolas Goureau</a><span>Working applications · Atlanta, GA · 2026</span></footer>
+<aside class="scout-widget" aria-label="Scout"><section class="scout-bubble" id="scout-bubble" aria-label="Scout guide" hidden><button class="scout-close" type="button" aria-label="Close Scout guide">×</button><div class="scout-dialog" aria-live="polite"><p class="scout-copy" tabindex="-1"></p><div class="scout-choices" role="group" aria-label="Scout choices"></div><div class="scout-dialog-nav"><button class="scout-back" type="button">Back</button><button class="scout-home" type="button">Start over</button></div></div></section><button class="scout-toggle" type="button" aria-label="Open Scout guide" aria-expanded="false" aria-controls="scout-bubble"><svg class="scout-puppet" viewBox="-256 0 1536 1536" aria-hidden="true" focusable="false"><defs><image id="scout-source" width="1024" height="1536" href="/assets/scout/scout-neutral-v3.png"/><clipPath id="scout-feet-clip"><rect x="160" y="1250" width="710" height="245"/></clipPath><clipPath id="scout-leg-left-clip"><rect x="330" y="1105" width="125" height="185"/></clipPath><clipPath id="scout-leg-right-clip"><rect x="565" y="1105" width="115" height="185"/></clipPath><clipPath id="scout-thigh-left-clip"><rect x="330" y="960" width="125" height="165"/></clipPath><clipPath id="scout-thigh-right-clip"><rect x="565" y="960" width="115" height="165"/></clipPath><clipPath id="scout-hand-left-clip"><rect x="85" y="970" width="180" height="105"/></clipPath><clipPath id="scout-hand-right-clip"><rect x="770" y="970" width="175" height="105"/></clipPath><clipPath id="scout-finger-left-1-clip"><rect x="85" y="1075" width="57" height="115"/></clipPath><clipPath id="scout-finger-left-2-clip"><rect x="142" y="1075" width="45" height="115"/></clipPath><clipPath id="scout-finger-left-3-clip"><rect x="187" y="1075" width="77" height="115"/></clipPath><clipPath id="scout-finger-right-1-clip"><rect x="770" y="1075" width="60" height="115"/></clipPath><clipPath id="scout-finger-right-2-clip"><rect x="830" y="1075" width="48" height="115"/></clipPath><clipPath id="scout-finger-right-3-clip"><rect x="878" y="1075" width="67" height="115"/></clipPath><clipPath id="scout-arm-left-clip"><polygon points="185,790 233,826 198,977 125,990 142,886"/></clipPath><clipPath id="scout-arm-right-clip"><polygon points="839,790 791,826 826,977 899,990 882,886"/></clipPath><clipPath id="scout-torso-clip"><polygon points="130,40 895,40 895,775 700,987 328,987 130,775"/></clipPath><clipPath id="scout-eye-left-clip"><rect x="325" y="557" width="120" height="147"/></clipPath><clipPath id="scout-eye-right-clip"><rect x="579" y="557" width="116" height="147"/></clipPath><clipPath id="scout-brow-left-clip"><rect x="330" y="500" width="102" height="56"/></clipPath><clipPath id="scout-brow-right-clip"><rect x="588" y="500" width="105" height="56"/></clipPath><clipPath id="scout-mouth-clip"><rect x="423" y="712" width="173" height="58"/></clipPath><clipPath id="scout-needle-clip"><rect x="467" y="405" width="87" height="219"/></clipPath><mask id="scout-face-mask"><rect width="1024" height="1536" fill="white"/><g fill="black"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g></mask></defs><g class="scout-feet "><use href="#scout-source" clip-path="url(#scout-feet-clip)"/></g><g class="scout-leg-left "><use href="#scout-source" clip-path="url(#scout-leg-left-clip)"/></g><g class="scout-leg-right "><use href="#scout-source" clip-path="url(#scout-leg-right-clip)"/></g><g class="scout-thigh-left "><use href="#scout-source" clip-path="url(#scout-thigh-left-clip)"/></g><g class="scout-thigh-right "><use href="#scout-source" clip-path="url(#scout-thigh-right-clip)"/></g><g class="scout-upper"><g class="scout-arm-left-motion"><g class="scout-arm-left "><use href="#scout-source" clip-path="url(#scout-arm-left-clip)"/></g><g class="scout-hand-left "><use href="#scout-source" clip-path="url(#scout-hand-left-clip)"/></g><g class="scout-finger-left-1 "><use href="#scout-source" clip-path="url(#scout-finger-left-1-clip)"/></g><g class="scout-finger-left-2 "><use href="#scout-source" clip-path="url(#scout-finger-left-2-clip)"/></g><g class="scout-finger-left-3 "><use href="#scout-source" clip-path="url(#scout-finger-left-3-clip)"/></g></g><g class="scout-arm-right-motion"><g class="scout-arm-right "><use href="#scout-source" clip-path="url(#scout-arm-right-clip)"/></g><g class="scout-hand-right "><use href="#scout-source" clip-path="url(#scout-hand-right-clip)"/></g><g class="scout-finger-right-1 "><use href="#scout-source" clip-path="url(#scout-finger-right-1-clip)"/></g><g class="scout-finger-right-2 "><use href="#scout-source" clip-path="url(#scout-finger-right-2-clip)"/></g><g class="scout-finger-right-3 "><use href="#scout-source" clip-path="url(#scout-finger-right-3-clip)"/></g></g><g fill="#fff0d1"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g><g mask="url(#scout-face-mask)"><g class="scout-torso "><use href="#scout-source" clip-path="url(#scout-torso-clip)"/></g></g><g class="scout-needle "><use href="#scout-source" clip-path="url(#scout-needle-clip)"/></g><g class="scout-eye-left scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-left-clip)"/></g><g class="scout-eye-right scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-right-clip)"/></g><g class="scout-brow-left "><use href="#scout-source" clip-path="url(#scout-brow-left-clip)"/></g><g class="scout-brow-right "><use href="#scout-source" clip-path="url(#scout-brow-right-clip)"/></g><g class="scout-mouth "><use href="#scout-source" clip-path="url(#scout-mouth-clip)"/></g></g></svg></button><button class="scout-pause" type="button" aria-label="Pause Scout animation" aria-pressed="false"><span aria-hidden="true">⏸</span></button></aside><script src="/scout.js" defer></script>
 </body>
 </html>
