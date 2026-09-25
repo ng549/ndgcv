@@ -70,7 +70,7 @@ jobs:
         run: |
           set -euo pipefail
           html="$(curl -fsSL --retry 6 --retry-delay 2 https://nicolasgoureau.com/apps/)"
-          echo "$html" | grep -q 'data-apps-revision="20260925-four-card-v1"'
+          echo "$html" | grep -q 'data-apps-revision="20260925-deal-video-v1"'
           echo "$html" | grep -q 'Deal Closer Pro'
           echo "$html" | grep -q 'ImportFlow'
           echo "$html" | grep -q 'VendorReady'

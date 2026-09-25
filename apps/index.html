@@ -39,6 +39,16 @@
     .features li::before{content:"✓";color:#8fb0d8;font-weight:800;margin-right:7px}
     .app-action{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid rgba(143,176,216,.72);background:rgba(143,176,216,.08);color:#dbe7f2;font:650 13px Manrope,sans-serif;letter-spacing:.02em;border-radius:2px}
     .app-action:hover{background:rgba(143,176,216,.16);color:#fff;border-color:#9ebde1}
+    .app-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+    .app-actions .app-action{margin-top:0;cursor:pointer}
+    .video-dialog{width:min(1120px,calc(100% - 32px));max-width:none;margin:auto;padding:0;border:1px solid rgba(239,237,230,.28);background:#111820;color:#efede6;box-shadow:0 32px 90px rgba(0,0,0,.66)}
+    .video-dialog::backdrop{background:rgba(6,10,14,.82);backdrop-filter:blur(6px)}
+    .video-dialog-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 18px;border-bottom:1px solid rgba(239,237,230,.18)}
+    .video-dialog-header h2{margin:0;font-size:20px;letter-spacing:-.02em}
+    .video-close{width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid rgba(239,237,230,.3);background:transparent;color:#efede6;font-size:25px;line-height:1;cursor:pointer}
+    .video-close:hover{border-color:#9ebde1;background:rgba(143,176,216,.12)}
+    .video-dialog video{display:block;width:100%;max-height:min(74vh,720px);aspect-ratio:16/9;background:#000;object-fit:contain}
+    .video-dialog:focus-visible,.video-close:focus-visible{outline:3px solid #bcd4ee;outline-offset:3px}
     @media(max-width:1100px){.apps-grid{grid-template-columns:1fr}.app-card,.app-card:nth-child(even){margin-top:0;aspect-ratio:auto;min-height:0}.app-shot{height:auto}}
     @media(min-width:761px) and (max-width:1000px){.apps-stage{padding-top:44px}}
     @media(max-width:760px){
@@ -53,13 +63,15 @@
       .app-card h2{font-size:31px}
       .summary{font-size:15px}
       .features{grid-template-columns:1fr;font-size:14px}.app-action{min-height:44px}
+      .app-actions{width:100%}.app-actions .app-action{flex:1 1 auto}
+      .video-dialog{width:calc(100% - 20px)}.video-dialog-header{padding:12px}.video-dialog-header h2{font-size:17px}
       .apps-bg img{object-position:65% center}
       .apps-shade{background:linear-gradient(180deg,#141b23c2 0%,#141b23e7 50%,#141b23f7 100%)}
     }
     @media(prefers-reduced-motion:reduce){.app-card:hover{transform:none}}
   </style>
 </head>
-<body class="apps-page" data-apps-revision="20260925-four-card-v1">
+<body class="apps-page" data-apps-revision="20260925-deal-video-v1">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="wordmark" href="/#profile" aria-label="Nicolas Goureau, introduction">Nicolas Goureau</a>
@@ -85,7 +97,10 @@
         <p class="summary">A transaction workspace that keeps documents, deadlines, showings and the people around a residential deal in one place.</p>
         <ul class="app-points"><li>Coordinate the transaction from showing through closing.</li><li>Give each participant the information relevant to their role.</li></ul>
         <ul class="features"><li>Demo data</li><li>No account required</li><li>Role-based views</li><li>Showing workflow</li></ul>
-        <a class="app-action" href="https://deal-closer-pro-demo-lpdhxc.v2.appdeploy.ai/" target="_blank" rel="noopener">Open demo</a>
+        <div class="app-actions">
+          <a class="app-action" href="https://deal-closer-pro-demo-lpdhxc.v2.appdeploy.ai/" target="_blank" rel="noopener">Open demo</a>
+          <button class="app-action" type="button" data-video-open="deal-closer-video">Watch video</button>
+        </div>
       </article>
       <article class="app-card">
         <div class="app-shot"><img src="https://appdeployai-v2-qa-screenshots.s3.us-east-1.amazonaws.com/importflow-lcawpq/1790310324770/web.png" alt="ImportFlow shipment control interface"></div>
@@ -117,7 +132,38 @@
     </section>
   </div>
 </main>
+<dialog class="video-dialog" id="deal-closer-video" aria-labelledby="deal-closer-video-title">
+  <div class="video-dialog-header">
+    <h2 id="deal-closer-video-title">Deal Closer Pro walkthrough</h2>
+    <form method="dialog"><button class="video-close" type="submit" aria-label="Close video">×</button></form>
+  </div>
+  <video controls playsinline preload="metadata" poster="/apps/assets/deal-closer-pro-showings.png">
+    <source src="/apps/assets/deal-closer-pro-demo.mp4" type="video/mp4">
+    Your browser does not support embedded video.
+  </video>
+</dialog>
 <aside class="scout-widget" aria-label="Scout"><section class="scout-bubble" id="scout-bubble" aria-label="Scout guide" hidden><button class="scout-close" type="button" aria-label="Close Scout guide">×</button><div class="scout-dialog" aria-live="polite"><p class="scout-copy" tabindex="-1"></p><div class="scout-choices" role="group" aria-label="Scout choices"></div><div class="scout-dialog-nav"><button class="scout-back" type="button">Back</button><button class="scout-home" type="button">Start over</button></div></div></section><button class="scout-toggle" type="button" aria-label="Open Scout guide" aria-expanded="false" aria-controls="scout-bubble"><svg class="scout-puppet" viewBox="-256 0 1536 1536" aria-hidden="true" focusable="false"><defs><image id="scout-source" width="1024" height="1536" href="/assets/scout/scout-neutral-v3.png"/><clipPath id="scout-feet-clip"><rect x="160" y="1250" width="710" height="245"/></clipPath><clipPath id="scout-leg-left-clip"><rect x="330" y="1105" width="125" height="185"/></clipPath><clipPath id="scout-leg-right-clip"><rect x="565" y="1105" width="115" height="185"/></clipPath><clipPath id="scout-thigh-left-clip"><rect x="330" y="960" width="125" height="165"/></clipPath><clipPath id="scout-thigh-right-clip"><rect x="565" y="960" width="115" height="165"/></clipPath><clipPath id="scout-hand-left-clip"><rect x="85" y="970" width="180" height="105"/></clipPath><clipPath id="scout-hand-right-clip"><rect x="770" y="970" width="175" height="105"/></clipPath><clipPath id="scout-finger-left-1-clip"><rect x="85" y="1075" width="57" height="115"/></clipPath><clipPath id="scout-finger-left-2-clip"><rect x="142" y="1075" width="45" height="115"/></clipPath><clipPath id="scout-finger-left-3-clip"><rect x="187" y="1075" width="77" height="115"/></clipPath><clipPath id="scout-finger-right-1-clip"><rect x="770" y="1075" width="60" height="115"/></clipPath><clipPath id="scout-finger-right-2-clip"><rect x="830" y="1075" width="48" height="115"/></clipPath><clipPath id="scout-finger-right-3-clip"><rect x="878" y="1075" width="67" height="115"/></clipPath><clipPath id="scout-arm-left-clip"><polygon points="185,790 233,826 198,977 125,990 142,886"/></clipPath><clipPath id="scout-arm-right-clip"><polygon points="839,790 791,826 826,977 899,990 882,886"/></clipPath><clipPath id="scout-torso-clip"><polygon points="130,40 895,40 895,775 700,987 328,987 130,775"/></clipPath><clipPath id="scout-eye-left-clip"><rect x="325" y="557" width="120" height="147"/></clipPath><clipPath id="scout-eye-right-clip"><rect x="579" y="557" width="116" height="147"/></clipPath><clipPath id="scout-brow-left-clip"><rect x="330" y="500" width="102" height="56"/></clipPath><clipPath id="scout-brow-right-clip"><rect x="588" y="500" width="105" height="56"/></clipPath><clipPath id="scout-mouth-clip"><rect x="423" y="712" width="173" height="58"/></clipPath><clipPath id="scout-needle-clip"><rect x="467" y="405" width="87" height="219"/></clipPath><mask id="scout-face-mask"><rect width="1024" height="1536" fill="white"/><g fill="black"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g></mask></defs><g class="scout-feet "><use href="#scout-source" clip-path="url(#scout-feet-clip)"/></g><g class="scout-leg-left "><use href="#scout-source" clip-path="url(#scout-leg-left-clip)"/></g><g class="scout-leg-right "><use href="#scout-source" clip-path="url(#scout-leg-right-clip)"/></g><g class="scout-thigh-left "><use href="#scout-source" clip-path="url(#scout-thigh-left-clip)"/></g><g class="scout-thigh-right "><use href="#scout-source" clip-path="url(#scout-thigh-right-clip)"/></g><g class="scout-upper"><g class="scout-arm-left-motion"><g class="scout-arm-left "><use href="#scout-source" clip-path="url(#scout-arm-left-clip)"/></g><g class="scout-hand-left "><use href="#scout-source" clip-path="url(#scout-hand-left-clip)"/></g><g class="scout-finger-left-1 "><use href="#scout-source" clip-path="url(#scout-finger-left-1-clip)"/></g><g class="scout-finger-left-2 "><use href="#scout-source" clip-path="url(#scout-finger-left-2-clip)"/></g><g class="scout-finger-left-3 "><use href="#scout-source" clip-path="url(#scout-finger-left-3-clip)"/></g></g><g class="scout-arm-right-motion"><g class="scout-arm-right "><use href="#scout-source" clip-path="url(#scout-arm-right-clip)"/></g><g class="scout-hand-right "><use href="#scout-source" clip-path="url(#scout-hand-right-clip)"/></g><g class="scout-finger-right-1 "><use href="#scout-source" clip-path="url(#scout-finger-right-1-clip)"/></g><g class="scout-finger-right-2 "><use href="#scout-source" clip-path="url(#scout-finger-right-2-clip)"/></g><g class="scout-finger-right-3 "><use href="#scout-source" clip-path="url(#scout-finger-right-3-clip)"/></g></g><g fill="#fff0d1"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g><g mask="url(#scout-face-mask)"><g class="scout-torso "><use href="#scout-source" clip-path="url(#scout-torso-clip)"/></g></g><g class="scout-needle "><use href="#scout-source" clip-path="url(#scout-needle-clip)"/></g><g class="scout-eye-left scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-left-clip)"/></g><g class="scout-eye-right scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-right-clip)"/></g><g class="scout-brow-left "><use href="#scout-source" clip-path="url(#scout-brow-left-clip)"/></g><g class="scout-brow-right "><use href="#scout-source" clip-path="url(#scout-brow-right-clip)"/></g><g class="scout-mouth "><use href="#scout-source" clip-path="url(#scout-mouth-clip)"/></g></g></svg></button><button class="scout-pause" type="button" aria-label="Pause Scout animation" aria-pressed="false"><span aria-hidden="true">⏸</span></button></aside><script src="/scout.js" defer></script>
+
+<script>
+  (() => {
+    const dialog = document.getElementById('deal-closer-video');
+    const opener = document.querySelector('[data-video-open="deal-closer-video"]');
+    const video = dialog?.querySelector('video');
+    if (!dialog || !opener || !video) return;
+    opener.addEventListener('click', () => {
+      dialog.showModal();
+      video.play().catch(() => {});
+    });
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      video.pause();
+      video.currentTime = 0;
+      opener.focus();
+    });
+  })();
+</script>
 
 </body>
 </html>

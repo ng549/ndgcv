@@ -68,6 +68,9 @@ assert(appsPage.includes('/assets/build-process/section-18-background.webp'),"Ap
 assert(appsPage.includes('class="scout-widget"'),"Scout is present on the Apps page");
 assert.equal((appsPage.match(/class="app-card"/g)||[]).length,4,"All four apps are published as cards");
 assert(appsPage.includes('Deal Closer Pro'));
+assert(appsPage.includes('data-video-open="deal-closer-video"'),"Deal Closer Pro card has a video action");
+assert(appsPage.includes('/apps/assets/deal-closer-pro-demo.mp4'),"Deal Closer Pro video is embedded");
+assert(fs.existsSync('dist/apps/assets/deal-closer-pro-demo.mp4'),"Deal Closer Pro video is packaged");
 assert(appsPage.includes('ImportFlow'));
 assert(appsPage.includes('VendorReady'));
 assert(appsPage.includes('WarrantyDesk'));
