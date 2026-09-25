@@ -50,6 +50,19 @@ jobs:
           fi
           echo "CLOUDFLARE_API_TOKEN=$token" >> "$GITHUB_ENV"
           echo "Cloudflare token detected; secret remains masked."
+      - name: Inspect CV domain routing
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          const account=process.env.CLOUDFLARE_ACCOUNT_ID || 'c8238aed298b28ab172aa56bb1e9cd22';
+          const headers={Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN};
+          async function get(path){const r=await fetch('https://api.cloudflare.com/client/v4/'+path,{headers});const j=await r.json();if(!j.success)throw new Error('Routing lookup failed: '+r.status);return j.result}
+          const domains=await get('accounts/'+account+'/workers/domains');
+          const cv=domains.filter(d=>d.hostname==='nicolasgoureau.com'||d.hostname==='www.nicolasgoureau.com');
+          console.log('CV_CUSTOM_DOMAINS',JSON.stringify(cv.map(({hostname,service,environment,zone_id})=>({hostname,service,environment,zone_id}))));
+          const zones=await get('zones?name=nicolasgoureau.com');
+          for(const z of zones){const routes=await get('zones/'+z.id+'/workers/routes');console.log('CV_WORKER_ROUTES',JSON.stringify(routes.filter(r=>r.pattern.includes('nicolasgoureau.com')).map(({pattern,script})=>({pattern,script}))))}
+          NODE
       - name: Deploy existing ndgcv Worker
         run: npx wrangler deploy
       - name: Verify live custom domain
