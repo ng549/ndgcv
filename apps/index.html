@@ -5,41 +5,57 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark light">
   <title>Apps — Nicolas Goureau</title>
-  <meta name="description" content="Apps and practical software tools built by Nicolas Goureau.">
+  <meta name="description" content="Practical apps and software tools built by Nicolas Goureau.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Caveat:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/site.css?v=apps-shell-20260924">
-  <link rel="stylesheet" href="/scout.css?v=apps-shell-20260924">
-  <script src="/site.js?v=apps-shell-20260924" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css?v=apps-portfolio-20260925">
+  <link rel="stylesheet" href="/scout.css?v=apps-portfolio-20260925">
+  <script src="/site.js?v=apps-portfolio-20260925" defer></script>
   <style>
     body.apps-page{min-height:100vh;background:#22262b;color:#efede6}
-    .apps-shell{position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end}
-    .apps-background{position:absolute;inset:-8% 0;width:100%;height:116%;z-index:0;will-change:transform}
-    .apps-background img{width:100%;height:100%;object-fit:cover;object-position:center center;opacity:.74}
-    .apps-shade{position:absolute;inset:0;z-index:1;background:
-      linear-gradient(90deg,#141b23f0 0%,#141b23c7 42%,#141b2380 72%,#141b2350 100%),
-      linear-gradient(0deg,#141b23d9 0%,transparent 46%)}
-    .apps-content{position:relative;z-index:2;width:min(1120px,86%);margin:0 auto;padding:clamp(150px,18vh,230px) 0 clamp(88px,12vh,150px)}
-    .apps-content .eyebrow{font-size:13px;letter-spacing:.18em;margin-bottom:22px;color:#d4dbe5}
-    .apps-content h1{font-size:clamp(48px,6.3vw,92px);line-height:.94;letter-spacing:-.055em;font-weight:750;max-width:9.5ch;margin:0 0 28px}
-    .apps-content p{font-size:clamp(18px,1.7vw,22px);line-height:1.45;max-width:610px;margin:0;color:#e0ded7}
-    .apps-placeholder{margin-top:34px;padding-top:18px;border-top:1px solid #efede63b;max-width:610px;font-size:13px!important;letter-spacing:.08em;text-transform:uppercase;color:#aeb8c3!important}
-    .site-header nav a[aria-current="page"]{color:#8fb0d8;background:#8fb0d812;border-left-color:#8fb0d8}
-    @media(max-width:1000px){
-      .apps-shell{min-height:100svh}
-      .apps-content{width:88%;padding-top:150px}
-      .apps-background img{object-position:62% center}
-      .apps-shade{background:linear-gradient(90deg,#141b23e8 0%,#141b23c4 58%,#141b2370 100%)}
-    }
+    .apps-stage{position:relative;min-height:100vh;overflow:hidden;padding:112px 0 92px}
+    .apps-bg{position:fixed;inset:-10% 0;width:100%;height:120%;z-index:0;will-change:transform}
+    .apps-bg img{width:100%;height:100%;object-fit:cover;opacity:.62}
+    .apps-shade{position:fixed;inset:0;z-index:1;background:linear-gradient(90deg,#141b23e8 0%,#141b23bd 52%,#141b2390 100%),linear-gradient(0deg,#141b23ef 0%,transparent 52%)}
+    .apps-wrap{position:relative;z-index:2;width:min(1180px,88%);margin:0 auto}
+    .apps-intro{max-width:760px;margin:0 0 44px}
+    .apps-intro .eyebrow{font-size:13px;letter-spacing:.18em;margin-bottom:16px}
+    .apps-intro h1{font-size:clamp(42px,5vw,72px);line-height:.98;letter-spacing:-.05em;margin:0 0 20px;max-width:12ch}
+    .apps-intro p{font-size:20px;line-height:1.5;max-width:620px;color:#dde2e7;margin:0}
+    .apps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+    .app-card{position:relative;display:flex;flex-direction:column;min-height:560px;aspect-ratio:1/1;padding:22px;background:rgba(22,29,36,.88);border:1px solid rgba(239,237,230,.24);box-shadow:0 24px 70px rgba(0,0,0,.34);backdrop-filter:blur(14px);overflow:hidden}
+    .app-card:hover{transform:translateY(-4px);border-color:#8fb0d8;transition:transform .2s ease,border-color .2s ease}
+    .app-card:nth-child(even){margin-top:34px}
+    .app-shot{height:162px;margin:-6px -6px 18px;overflow:hidden;border:1px solid rgba(239,237,230,.18);background:#111820}
+    .app-shot img{width:100%;height:100%;object-fit:cover;object-position:top center}
+    .app-kicker{display:flex;align-items:center;justify-content:space-between;gap:14px;font:600 11px/1.2 Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#aebdca}
+    .demo-badge{padding:5px 8px;border:1px solid #8fb0d877;color:#bcd4ee;white-space:nowrap}
+    .app-card h2{font-size:clamp(28px,2.5vw,40px);line-height:1;letter-spacing:-.045em;margin:12px 0 12px}
+    .summary{font-size:16px;line-height:1.48;color:#d9d7d0;margin:0 0 12px}
+    .app-points{margin:0 0 12px;padding-left:18px;color:#c7cdd3;font-size:14px;line-height:1.45}
+    .app-points li{margin:4px 0}
+    .features{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;margin:0 0 18px;padding:0;list-style:none;font-size:13px;color:#edf0f2}
+    .features li::before{content:"✓";color:#8fb0d8;font-weight:800;margin-right:7px}
+    .app-action{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;background:#8fb0d8;color:#142332;font:700 13px Manrope,sans-serif;border-radius:3px}
+    .app-action:hover{background:#b0caea;color:#142332}
+    @media(max-width:900px){.apps-grid{grid-template-columns:1fr}.app-card,.app-card:nth-child(even){margin-top:0;aspect-ratio:auto;min-height:0}.apps-stage{padding-top:112px}.app-shot{height:190px}}
     @media(max-width:760px){
-      .apps-content{width:88%;padding:132px 0 92px}
-      .apps-content h1{font-size:clamp(34px,9.5vw,48px);line-height:1.02;letter-spacing:-.04em;max-width:12ch;margin-bottom:22px}
-      .apps-content p{font-size:17px;line-height:1.5;max-width:32ch}
-      .apps-background{inset:0;height:100%}
-      .apps-background img{object-position:68% center}
-      .apps-shade{background:linear-gradient(180deg,#141b23b3 0%,#141b23d6 48%,#141b23f5 100%)}
+      .apps-stage{padding:108px 0 72px}
+      .apps-wrap{width:88%}
+      .apps-intro{margin-bottom:30px}
+      .apps-intro h1{font-size:clamp(32px,9vw,44px);line-height:1.04;letter-spacing:-.04em;max-width:13ch;margin-bottom:16px}
+      .apps-intro p{font-size:17px;line-height:1.5}
+      .apps-grid{gap:18px}
+      .app-card{padding:17px}
+      .app-shot{height:150px;margin:-2px -2px 16px}
+      .app-card h2{font-size:31px}
+      .summary{font-size:15px}
+      .features{grid-template-columns:1fr;font-size:13px}
+      .apps-bg img{object-position:65% center}
+      .apps-shade{background:linear-gradient(180deg,#141b23c2 0%,#141b23e7 50%,#141b23f7 100%)}
     }
+    @media(prefers-reduced-motion:reduce){.app-card:hover{transform:none}}
   </style>
 </head>
 <body class="apps-page">
@@ -48,35 +64,59 @@
   <a class="wordmark" href="/#profile" aria-label="Nicolas Goureau, introduction">Nicolas Goureau</a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button>
   <nav id="navigation" aria-label="Main navigation">
-    <a href="/#about">About me</a>
-    <a href="/#experience">How I got here</a>
-    <a href="/#career-master">My experience</a>
-    <a href="/#ai">How I work</a>
-    <a href="/#software-work">Building with AI</a>
-    <a href="/#product-journey">From idea to sale</a>
-    <a href="/#capabilities">What I bring</a>
-    <a href="/#value">The results</a>
-    <a href="/#build">Where I can help</a>
-    <a href="/#opportunity">What comes next</a>
-    <a href="/#education">Education</a>
-    <a href="/#contact">Let’s connect</a>
-    <a href="/apps/" aria-current="page">Apps</a>
+    <a href="/#about">About me</a><a href="/#experience">How I got here</a><a href="/#career-master">My experience</a><a href="/#ai">How I work</a><a href="/#software-work">Building with AI</a><a href="/#product-journey">From idea to sale</a><a href="/#capabilities">What I bring</a><a href="/#value">The results</a><a href="/#build">Where I can help</a><a href="/#opportunity">What comes next</a><a href="/#education">Education</a><a href="/#contact">Let’s connect</a><a href="/apps/" aria-current="page">Apps</a>
   </nav>
 </header>
-<main id="main">
-  <section class="apps-shell" aria-labelledby="apps-heading">
-    <div class="apps-background" data-parallax="0.2" aria-hidden="true">
-      <img src="/assets/build-process/section-18-background.webp" alt="" fetchpriority="high">
-    </div>
-    <div class="apps-shade"></div>
-    <div class="apps-content">
+<main id="main" class="apps-stage">
+  <div class="apps-bg" data-parallax="0.2" aria-hidden="true"><img src="/assets/build-process/section-18-background.webp" alt=""></div>
+  <div class="apps-shade"></div>
+  <div class="apps-wrap">
+    <header class="apps-intro">
       <span class="eyebrow">Apps</span>
-      <h1 id="apps-heading">Practical tools. Built to move work forward.</h1>
-      <p>A growing collection of software I’ve built around real business problems, workflows, and opportunities.</p>
-      <p class="apps-placeholder">The application gallery is being rebuilt.</p>
-    </div>
-  </section>
+      <h1>Practical tools built around real work.</h1>
+      <p>Four working concepts built to simplify specific business workflows. Each opens in demo mode so you can explore without creating an account.</p>
+    </header>
+    <section class="apps-grid" aria-label="Application demos">
+      <article class="app-card">
+        <div class="app-shot"><img src="/apps/assets/deal-closer-pro-preview.png" alt="Deal Closer Pro interface preview"></div>
+        <div class="app-kicker"><span>Real estate transactions</span><span class="demo-badge">Demo</span></div>
+        <h2>Deal Closer Pro</h2>
+        <p class="summary">A transaction workspace that keeps documents, deadlines, showings and the people around a residential deal in one place.</p>
+        <ul class="app-points"><li>Coordinate the transaction from showing through closing.</li><li>Give each participant the information relevant to their role.</li></ul>
+        <ul class="features"><li>Demo data</li><li>No account required</li><li>Role-based views</li><li>Showing workflow</li></ul>
+        <a class="app-action" href="https://deal-closer-pro.nexus-hud-mmc.workers.dev/" target="_blank" rel="noopener">Try demo ↗</a>
+      </article>
+      <article class="app-card">
+        <div class="app-shot"><img src="/apps/assets/importflow-desktop.png" alt="ImportFlow shipment control interface"></div>
+        <div class="app-kicker"><span>Import operations</span><span class="demo-badge">Demo</span></div>
+        <h2>ImportFlow</h2>
+        <p class="summary">A shipment document and exception workspace for importers coordinating suppliers, freight partners and customs-ready records.</p>
+        <ul class="app-points"><li>Track shipment milestones and missing documents.</li><li>Keep supplier, lane and exception details together.</li></ul>
+        <ul class="features"><li>Demo mode</li><li>No account required</li><li>Shipment control</li><li>Document tracking</li></ul>
+        <a class="app-action" href="https://importflow-lcawpq.v2.appdeploy.ai/" target="_blank" rel="noopener">Try demo ↗</a>
+      </article>
+      <article class="app-card">
+        <div class="app-shot"><img src="/apps/assets/vendorready-desktop.png" alt="VendorReady vendor readiness interface"></div>
+        <div class="app-kicker"><span>Vendor compliance</span><span class="demo-badge">Demo</span></div>
+        <h2>VendorReady</h2>
+        <p class="summary">A vendor onboarding and readiness workspace for teams collecting requirements, reviewing submissions and tracking who is ready to work.</p>
+        <ul class="app-points"><li>See missing, submitted and approved requirements at a glance.</li><li>Keep onboarding status tied to each vendor record.</li></ul>
+        <ul class="features"><li>Demo mode</li><li>No account required</li><li>Readiness tracking</li><li>Requirement review</li></ul>
+        <a class="app-action" href="https://vendorready-50e9yr.v2.appdeploy.ai/" target="_blank" rel="noopener">Try demo ↗</a>
+      </article>
+      <article class="app-card">
+        <div class="app-shot"><img src="/apps/assets/warrantydesk-desktop.png" alt="WarrantyDesk claims interface"></div>
+        <div class="app-kicker"><span>Warranty operations</span><span class="demo-badge">Demo</span></div>
+        <h2>WarrantyDesk</h2>
+        <p class="summary">A claims desk for manufacturers and distributors handling customer requests, evidence, warranty decisions, replacements and fulfillment.</p>
+        <ul class="app-points"><li>Move each claim from intake through decision and fulfillment.</li><li>Keep product details, evidence and case status together.</li></ul>
+        <ul class="features"><li>Demo mode</li><li>No account required</li><li>Claims workflow</li><li>Decision tracking</li></ul>
+        <a class="app-action" href="https://warrantydesk-afzqxn.v2.appdeploy.ai/" target="_blank" rel="noopener">Try demo ↗</a>
+      </article>
+    </section>
+  </div>
 </main>
 <aside class="scout-widget" aria-label="Scout"><section class="scout-bubble" id="scout-bubble" aria-label="Scout guide" hidden><button class="scout-close" type="button" aria-label="Close Scout guide">×</button><div class="scout-dialog" aria-live="polite"><p class="scout-copy" tabindex="-1"></p><div class="scout-choices" role="group" aria-label="Scout choices"></div><div class="scout-dialog-nav"><button class="scout-back" type="button">Back</button><button class="scout-home" type="button">Start over</button></div></div></section><button class="scout-toggle" type="button" aria-label="Open Scout guide" aria-expanded="false" aria-controls="scout-bubble"><svg class="scout-puppet" viewBox="-256 0 1536 1536" aria-hidden="true" focusable="false"><defs><image id="scout-source" width="1024" height="1536" href="/assets/scout/scout-neutral-v3.png"/><clipPath id="scout-feet-clip"><rect x="160" y="1250" width="710" height="245"/></clipPath><clipPath id="scout-leg-left-clip"><rect x="330" y="1105" width="125" height="185"/></clipPath><clipPath id="scout-leg-right-clip"><rect x="565" y="1105" width="115" height="185"/></clipPath><clipPath id="scout-thigh-left-clip"><rect x="330" y="960" width="125" height="165"/></clipPath><clipPath id="scout-thigh-right-clip"><rect x="565" y="960" width="115" height="165"/></clipPath><clipPath id="scout-hand-left-clip"><rect x="85" y="970" width="180" height="105"/></clipPath><clipPath id="scout-hand-right-clip"><rect x="770" y="970" width="175" height="105"/></clipPath><clipPath id="scout-finger-left-1-clip"><rect x="85" y="1075" width="57" height="115"/></clipPath><clipPath id="scout-finger-left-2-clip"><rect x="142" y="1075" width="45" height="115"/></clipPath><clipPath id="scout-finger-left-3-clip"><rect x="187" y="1075" width="77" height="115"/></clipPath><clipPath id="scout-finger-right-1-clip"><rect x="770" y="1075" width="60" height="115"/></clipPath><clipPath id="scout-finger-right-2-clip"><rect x="830" y="1075" width="48" height="115"/></clipPath><clipPath id="scout-finger-right-3-clip"><rect x="878" y="1075" width="67" height="115"/></clipPath><clipPath id="scout-arm-left-clip"><polygon points="185,790 233,826 198,977 125,990 142,886"/></clipPath><clipPath id="scout-arm-right-clip"><polygon points="839,790 791,826 826,977 899,990 882,886"/></clipPath><clipPath id="scout-torso-clip"><polygon points="130,40 895,40 895,775 700,987 328,987 130,775"/></clipPath><clipPath id="scout-eye-left-clip"><rect x="325" y="557" width="120" height="147"/></clipPath><clipPath id="scout-eye-right-clip"><rect x="579" y="557" width="116" height="147"/></clipPath><clipPath id="scout-brow-left-clip"><rect x="330" y="500" width="102" height="56"/></clipPath><clipPath id="scout-brow-right-clip"><rect x="588" y="500" width="105" height="56"/></clipPath><clipPath id="scout-mouth-clip"><rect x="423" y="712" width="173" height="58"/></clipPath><clipPath id="scout-needle-clip"><rect x="467" y="405" width="87" height="219"/></clipPath><mask id="scout-face-mask"><rect width="1024" height="1536" fill="white"/><g fill="black"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g></mask></defs><g class="scout-feet "><use href="#scout-source" clip-path="url(#scout-feet-clip)"/></g><g class="scout-leg-left "><use href="#scout-source" clip-path="url(#scout-leg-left-clip)"/></g><g class="scout-leg-right "><use href="#scout-source" clip-path="url(#scout-leg-right-clip)"/></g><g class="scout-thigh-left "><use href="#scout-source" clip-path="url(#scout-thigh-left-clip)"/></g><g class="scout-thigh-right "><use href="#scout-source" clip-path="url(#scout-thigh-right-clip)"/></g><g class="scout-upper"><g class="scout-arm-left-motion"><g class="scout-arm-left "><use href="#scout-source" clip-path="url(#scout-arm-left-clip)"/></g><g class="scout-hand-left "><use href="#scout-source" clip-path="url(#scout-hand-left-clip)"/></g><g class="scout-finger-left-1 "><use href="#scout-source" clip-path="url(#scout-finger-left-1-clip)"/></g><g class="scout-finger-left-2 "><use href="#scout-source" clip-path="url(#scout-finger-left-2-clip)"/></g><g class="scout-finger-left-3 "><use href="#scout-source" clip-path="url(#scout-finger-left-3-clip)"/></g></g><g class="scout-arm-right-motion"><g class="scout-arm-right "><use href="#scout-source" clip-path="url(#scout-arm-right-clip)"/></g><g class="scout-hand-right "><use href="#scout-source" clip-path="url(#scout-hand-right-clip)"/></g><g class="scout-finger-right-1 "><use href="#scout-source" clip-path="url(#scout-finger-right-1-clip)"/></g><g class="scout-finger-right-2 "><use href="#scout-source" clip-path="url(#scout-finger-right-2-clip)"/></g><g class="scout-finger-right-3 "><use href="#scout-source" clip-path="url(#scout-finger-right-3-clip)"/></g></g><g fill="#fff0d1"><rect x="325" y="557" width="120" height="147"/><rect x="579" y="557" width="116" height="147"/><rect x="330" y="500" width="102" height="56"/><rect x="588" y="500" width="105" height="56"/><rect x="423" y="712" width="173" height="58"/><rect x="467" y="405" width="87" height="219"/></g><g mask="url(#scout-face-mask)"><g class="scout-torso "><use href="#scout-source" clip-path="url(#scout-torso-clip)"/></g></g><g class="scout-needle "><use href="#scout-source" clip-path="url(#scout-needle-clip)"/></g><g class="scout-eye-left scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-left-clip)"/></g><g class="scout-eye-right scout-eye"><use href="#scout-source" clip-path="url(#scout-eye-right-clip)"/></g><g class="scout-brow-left "><use href="#scout-source" clip-path="url(#scout-brow-left-clip)"/></g><g class="scout-brow-right "><use href="#scout-source" clip-path="url(#scout-brow-right-clip)"/></g><g class="scout-mouth "><use href="#scout-source" clip-path="url(#scout-mouth-clip)"/></g></g></svg></button><button class="scout-pause" type="button" aria-label="Pause Scout animation" aria-pressed="false"><span aria-hidden="true">⏸</span></button></aside><script src="/scout.js" defer></script>
+
 </body>
 </html>
