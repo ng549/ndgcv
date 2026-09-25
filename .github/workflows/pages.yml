@@ -52,3 +52,14 @@ jobs:
           echo "Cloudflare token detected; secret remains masked."
       - name: Deploy existing ndgcv Worker
         run: npx wrangler deploy
+      - name: Verify live custom domain
+        shell: bash
+        run: |
+          set -euo pipefail
+          html="$(curl -fsSL --retry 6 --retry-delay 2 https://nicolasgoureau.com/apps/)"
+          echo "$html" | grep -q 'data-apps-revision="20260925-four-card-v1"'
+          echo "$html" | grep -q 'Deal Closer Pro'
+          echo "$html" | grep -q 'ImportFlow'
+          echo "$html" | grep -q 'VendorReady'
+          echo "$html" | grep -q 'WarrantyDesk'
+          echo "Verified live custom domain is serving the current four-card Apps page."
