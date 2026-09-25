@@ -61,13 +61,12 @@ assert.equal((h.match(/<img[^>]* src="assets\/idea-to-sale\/[^" ]+-private-label
 
 
 const appsPage=fs.readFileSync('docs/apps/index.html','utf8');
-assert(appsPage.includes('Deal Closer Pro'));
-assert(appsPage.includes('ImportFlow'));
-assert(appsPage.includes('VendorReady'));
-assert(appsPage.includes('WarrantyDesk'));
-assert(appsPage.includes('https://importflow-lcawpq.v2.appdeploy.ai/'));
-assert(appsPage.includes('https://vendorready-50e9yr.v2.appdeploy.ai/'));
-assert(appsPage.includes('https://warrantydesk-afzqxn.v2.appdeploy.ai/'));
-assert(appsPage.includes('GOOGLE + EMAIL SIGN-IN'));
-assert.equal((appsPage.match(/class="product" data-status=/g)||[]).length,4,"All four app cards use the shared card component");
-console.log('Apps page: all three live apps, sign-in disclosure and shared card component checked.');
+assert(appsPage.includes('class="apps-page"'),"Apps page uses the CV-continuation shell");
+assert(appsPage.includes('<span class="eyebrow">Apps</span>'),"Apps eyebrow is present");
+assert(appsPage.includes('Practical tools. Built to move work forward.'),"Apps shell headline is present");
+assert(appsPage.includes('/assets/build-process/section-18-background.webp'),"Apps shell background image is present");
+assert(appsPage.includes('class="scout-widget"'),"Scout is present on the Apps shell");
+assert(appsPage.includes('<a href="/apps/" aria-current="page">Apps</a>'),"Apps nav entry is present and current");
+const appsNav=appsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
+assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),"Apps is the final navigation item");
+console.log('Apps page: CV-continuation shell, background, Scout and final-nav placement checked.');
