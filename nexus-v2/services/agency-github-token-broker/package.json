@@ -1,0 +1,26 @@
+{
+  "name": "agency-github-token-broker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npm run types && npm run typecheck && npm test",
+    "types": "npm run types:core && npm run types:gateway",
+    "types:core": "wrangler types apps/core/worker-configuration.d.ts --env-interface CoreEnv --config apps/core/wrangler.jsonc",
+    "types:gateway": "wrangler types apps/gateway/worker-configuration.d.ts --env-interface GatewayEnv --config apps/gateway/wrangler.jsonc",
+    "typecheck": "npm run typecheck:core && npm run typecheck:gateway && npm run typecheck:tests",
+    "typecheck:core": "tsc --noEmit -p apps/core/tsconfig.json",
+    "typecheck:gateway": "tsc --noEmit -p apps/gateway/tsconfig.json",
+    "typecheck:tests": "tsc --noEmit -p tsconfig.tests.json",
+    "test": "vitest run",
+    "deploy:core:dry": "wrangler deploy --dry-run --config apps/core/wrangler.jsonc",
+    "deploy:gateway:dry": "wrangler deploy --dry-run --config apps/gateway/wrangler.jsonc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "@vitest/coverage-v8": "^5.0.1",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1",
+    "wrangler": "^4.136.1"
+  }
+}
