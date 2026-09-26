@@ -1,0 +1,30 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "agency-execution-gateway",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "FACTORY_API_BASE_URL": "https://api.factory.ai",
+    "FACTORY_COMPUTER_ID": "aecebe4f-e42c-47ac-a76c-155ecc5fb492",
+    "FACTORY_AUTONOMY": "high",
+    "REPO_CWD": "/home/factory-user/repos/ndgcv",
+    "GITHUB_REPOSITORY_OWNER": "ng549",
+    "GITHUB_REPOSITORY_NAME": "ndgcv",
+    "BROKER_URL": "https://agency-github-token-broker-gateway.nexus-hud-mmc.workers.dev/v1/github/installation-token",
+    "SLICE_SECONDS": "240",
+    "POLL_INTERVAL_MS": "8000"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "EXECUTIONS",
+      "id": "0ffc0a10edfa4f92847a546e36a1621b"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
