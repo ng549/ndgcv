@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/contracts/work-packet.schema.json",
+  "title": "Nexus Worker Work Packet",
+  "type": "object",
+  "required": [
+    "worker_id","phase","module","scope","branch","allowed_files","context_refs",
+    "acceptance_criteria","dependencies","budget_limit_micros","canonical_sha","state"
+  ],
+  "properties": {
+    "worker_id": {"type":"string","minLength":1},
+    "phase": {"type":"string","minLength":1},
+    "module": {"type":"string","minLength":1},
+    "scope": {"type":"string","minLength":1},
+    "branch": {"type":"string","minLength":1},
+    "allowed_files": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "context_refs": {"type":"array","items":{"type":"string"}},
+    "acceptance_criteria": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "dependencies": {"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "preferred_model": {"type":["string","null"]},
+    "fallback_models": {"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "budget_limit_micros": {"type":"integer","minimum":0},
+    "budget_consumed_micros": {"type":"integer","minimum":0},
+    "canonical_sha": {"type":"string","minLength":7},
+    "state": {"enum":["READY","RUNNING","PAUSED","STOPPED","WAITING_ON_DEPENDENCY","BLOCKED","FAILED","NEEDS_REVIEW","COMPLETE"]},
+    "checkpoint_sha": {"type":["string","null"]},
+    "heartbeat_at": {"type":["string","null"],"format":"date-time"},
+    "retry_count": {"type":"integer","minimum":0},
+    "max_retries": {"type":"integer","minimum":0},
+    "blocker": {"type":["object","null"]},
+    "review_state": {"enum":["NOT_SENT","PENDING","APPROVED","REJECTED"]},
+    "packet_version": {"type":"integer","minimum":1}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "commands": {
+    "RUN": {"payload":{},"meaning":"Launch from the persisted packet after dependency/context/budget/conflict checks."},
+    "CONTINUE": {"payload":{},"meaning":"Launch the next bounded execution from the last verified checkpoint."},
+    "PAUSE": {"payload":{},"meaning":"Prevent further launches; active runtime cancellation is implementation-specific."},
+    "RESUME": {"payload":{},"meaning":"Return a paused packet to READY."},
+    "STOP": {"payload":{},"meaning":"Stop future continuation and request cancellation of any active execution."},
+    "RETRY": {"payload":{},"meaning":"Return failed/blocked/stopped work to READY subject to launch guards."},
+    "REASSIGN_MODEL": {"payload":{"model":"string"},"meaning":"Change preferred model; Gateway still applies qualification and policy."},
+    "ADJUST_BUDGET": {"payload":{"budget_limit_micros":"integer"},"meaning":"Change hard worker budget; cannot go below already-consumed spend."},
+    "SEND_TO_REVIEW": {"payload":{},"meaning":"Mark a NEEDS_REVIEW candidate PENDING for independent review."}
+  },
+  "bulk": {
+    "RUN_ALL_READY":"Launch only dependency-ready, funded, non-conflicting READY packets.",
+    "RUN_PHASE":"Same eligibility rules, filtered to the requested phase."
+  },
+  "completion_rule":"Worker self-report can create NEEDS_REVIEW only. COMPLETE requires an independent approved review decision.",
+  "worker13_alignment":{
+    "current_worker13_actions_seen":["RUN","CONTINUE","PAUSE","RESUME","STOP","RETRY"],
+    "worker9_extension_required":["REASSIGN_MODEL","ADJUST_BUDGET","SEND_TO_REVIEW","RUN_ALL_READY","RUN_PHASE"]
+  }
+}
