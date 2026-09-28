@@ -70,12 +70,17 @@ jobs:
         run: |
           set -euo pipefail
           html="$(curl -fsSL --retry 6 --retry-delay 2 https://nicolasgoureau.com/apps/)"
-          echo "$html" | grep -q 'data-apps-revision="20260925-deal-video-v1"'
+          echo "$html" | grep -q 'data-apps-revision="20260928-five-demos-v1"'
           echo "$html" | grep -q 'Deal Closer Pro'
           echo "$html" | grep -q 'ImportFlow'
           echo "$html" | grep -q 'VendorReady'
           echo "$html" | grep -q 'WarrantyDesk'
-          echo "Verified live custom domain is serving the current four-card Apps page."
+          echo "$html" | grep -q 'RestoreFlow'
+          echo "$html" | grep -q 'FactoryQ'
+          echo "$html" | grep -q 'FranchiseOps'
+          echo "$html" | grep -q 'RentalOps'
+          echo "$html" | grep -q 'PermitPath'
+          echo "Verified live custom domain is serving the current nine-card Apps page."
           curl -fsSL --retry 6 --retry-delay 2 https://nicolasgoureau.com/site.js -o /tmp/cv-live.js
           grep -q "const capabilitySection=" /tmp/cv-live.js
           echo "Verified main CV shared-script publication."
