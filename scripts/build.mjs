@@ -90,6 +90,7 @@ html=html.slice(0,mainBody)+narrativeOrder.map(id=>{if(!sectionMarkup.has(id))th
 
 html=html.replace(/<figcaption>[\s\S]*?<\/figcaption>/g,'');
 fs.writeFileSync('docs/connect.html',withScout(connectPage()));
+fs.copyFileSync('apps/index.html','docs/apps/index.html');
 fs.copyFileSync('scripts/connect.css','docs/connect.css');
 fs.copyFileSync('scripts/connect.js','docs/connect.js');
 fs.writeFileSync('docs/index.html',withScout(html.replace(/[ \t]+$/gm,'')));

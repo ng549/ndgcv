@@ -8,6 +8,7 @@ function add(raw,base='') {
  if (/^(?:[a-z]+:|#|\/\/)/i.test(value)) return;
  const clean=value.split(/[?#]/)[0];
  if(!clean)return;
+ if(/^\/apps\/(?:restoreflow|factoryq|franchiseops|rentalops|permitpath)(?:\/|$)/.test(clean))return;
  let file=path.posix.normalize(clean.startsWith('/')?clean.slice(1):path.posix.join(base,clean));
  if(file==='.'||file==='')file='index.html';
  if(file==='connect')file='connect.html';

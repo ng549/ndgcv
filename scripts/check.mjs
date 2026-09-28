@@ -66,7 +66,7 @@ assert(appsPage.includes('<span class="eyebrow">Apps</span>'),"Apps eyebrow is p
 assert(appsPage.includes('Practical tools built around real work.'),"Apps portfolio headline is present");
 assert(appsPage.includes('/assets/build-process/section-18-background.webp'),"Apps parallax background is present");
 assert(appsPage.includes('class="scout-widget"'),"Scout is present on the Apps page");
-assert.equal((appsPage.match(/class="app-card"/g)||[]).length,4,"All four apps are published as cards");
+assert.equal((appsPage.match(/class="app-card"/g)||[]).length,9,"All nine apps are published as cards");
 assert(appsPage.includes('Deal Closer Pro'));
 assert(appsPage.includes('data-video-open="deal-closer-video"'),"Deal Closer Pro card has a video action");
 assert(appsPage.includes('/apps/assets/deal-closer-pro-demo.mp4'),"Deal Closer Pro video is embedded");
@@ -74,8 +74,14 @@ assert(fs.existsSync('dist/apps/assets/deal-closer-pro-demo.mp4'),"Deal Closer P
 assert(appsPage.includes('ImportFlow'));
 assert(appsPage.includes('VendorReady'));
 assert(appsPage.includes('WarrantyDesk'));
-assert.equal((appsPage.match(/No account required/g)||[]).length,4,"All four cards disclose no-account demo access");
+for(const name of ['RestoreFlow','FactoryQ','FranchiseOps','RentalOps','PermitPath'])assert(appsPage.includes(name));
+for(const slug of ['restoreflow','factoryq','franchiseops','rentalops','permitpath']){
+ assert(appsPage.includes(`/apps/${slug}/`),`${slug} demo route is listed`);
+ assert(fs.existsSync(`dist/apps/assets/${slug}/preview-desktop.webp`),`${slug} desktop preview is packaged`);
+ assert(fs.existsSync(`docs/apps/assets/${slug}/preview-mobile.webp`),`${slug} mobile QA preview is retained`);
+}
+assert.equal((appsPage.match(/No account required/g)||[]).length,9,"All nine cards disclose no-account demo access");
 assert(!appsPage.includes('<footer'),"Apps page has no footer");
 const appsNav=appsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),"Apps is the final navigation item");
-console.log('Apps page: four demo cards, parallax shell, Scout, no footer and final-nav placement checked.');
+console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and final-nav placement checked.');
