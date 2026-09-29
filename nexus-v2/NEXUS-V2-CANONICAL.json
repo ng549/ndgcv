@@ -153,7 +153,7 @@
     "autonomous_worker_directive": "Workers continue autonomously through their entire assigned scope; after each subtask they proceed to the next incomplete item, do not stop for reversible low-risk decisions, document a blocker and continue other independent work, checkpoint valid work at meaningful milestones, and only stop when acceptance criteria are satisfied, all remaining work is genuinely blocked, or the platform ends execution.",
     "checkpoint_rule": "Commit valid incremental work at meaningful milestones so another worker can resume from the last verified checkpoint.",
     "model_allocation": "Capability first; provider second. Model assignments are preferences, not blockers. If a provider/model is quota-limited, route work to another qualified model rather than pausing.",
-    "autonomous_task_ownership": "Apply task_ownership_requirement to every work packet and supervisor run; conversation guidance or memory alone is insufficient enforcement."
+    "autonomous_task_ownership": "Enforce agency_task_ownership_requirement for every Agency task through the Nexus work packet and supervisor; conversation guidance or memory alone is insufficient enforcement."
   },
   "reuse_rule": {
     "title": "Research Before Build",
@@ -256,7 +256,7 @@
       "implementation_boundary": "Durable one-click execution should use API/agent workers through Nexus AI Gateway, not UI automation of consumer ChatGPT/Claude/Grok apps.",
       "mvp_priority": "P0 — build the smallest real supervisor/control slice first: persistent work packet, API worker launch, checkpoint, execution-end detection, acceptance-state check, automatic continuation, budget cap, genuine-blocker stop, and mobile status/control.",
       "target_first_slice": "Prioritize functional worker supervision over broad dashboard polish.",
-      "task_ownership_enforcement": "Enforce task_ownership_requirement at intake, dependency scheduling, worker dispatch, review, continuation, and completion gates."
+      "task_ownership_enforcement": "Enforce agency_task_ownership_requirement at intake, dependency scheduling, worker dispatch, review, continuation, and completion gates."
     }
   },
   "phase_one": {
@@ -771,22 +771,23 @@
       "stack_repository": "github.com/ng549/agency-build-stack @ main a089e17 (published 2026-09-22)"
     }
   },
-  "task_ownership_requirement": {
+  "agency_task_ownership_requirement": {
     "status": "MANDATORY",
-    "scope": "Every Nexus task, including internal Agency work, client work, research, brand work, content, design, build, operations, and recurring workflows.",
-    "owner": "Nexus Work Packet Service and Worker Supervisor",
-    "directive": "Once Nicolas states a goal, Nexus owns decomposition, briefs, research, specialist/model selection, execution, review, verification, and continuation. Nicolas must not be required to identify the next step, supply a routine prompt, assign a model, repeat 'Go', or manually restart an unfinished worker. A conversational assistant must not silently execute a Nexus-owned deliverable in its place.",
-    "intake": "Create or update a persistent work packet from the goal and conversation context. Record intended outcome, task owner, ordered/dependent steps, responsible worker or capability per step, required inputs, evidence, acceptance criteria, permissions, budget, and review gates. Nexus produces any prerequisite brief as a tracked deliverable before routing downstream production.",
+    "scope": "Every Agency task across internal projects, client work, research, branding, content, design, builds, operations, and recurring workflows.",
+    "owner": "The Agency",
+    "directive": "Once Nicolas states a goal, the Agency owns decomposition, briefs, research, specialist/model selection, execution, review, verification, and continuation. Nicolas must not be required to identify the next step, supply a routine prompt, assign a model, repeat 'Go', or manually restart unfinished work. A conversational assistant must not silently take an Agency-owned deliverable as its own.",
+    "intake": "Create or update a persistent work packet from the goal and conversation context. Record intended outcome, task owner, ordered/dependent steps, responsible worker or capability per step, required inputs, evidence, acceptance criteria, permissions, budget, and review gates. The Agency produces any prerequisite brief as a tracked deliverable before routing downstream production.",
     "execution": "Supervisor launches every ready authorized step, selects a qualified provider/model through the AI Gateway, checkpoints progress, checks acceptance, retries/fails over or reassigns as appropriate, and continues from the last verified checkpoint until the packet is complete or genuinely blocked. A prerequisite correction changes the packet and its dependency order; it must not transfer ownership of that step to the current chat assistant.",
     "human_boundary": "Nicolas reviews concrete outputs and makes decisions that require his judgment or explicit authority. Ask only for missing information that cannot be reasonably inferred or obtained by Nexus, or an approval required by policy. A required review pauses only dependent steps; independent authorized work continues.",
     "completion": "A task cannot be marked Complete until every required step and acceptance criterion is satisfied, evidence recorded, integrations and production behavior verified where applicable, and remaining work disclosed. A draft answer, model output, or successful tool call alone is not completion.",
     "acceptance_tests": [
-      "Given a new goal, Nexus creates a persistent packet and advances the first authorized step without asking Nicolas to map the workflow.",
-      "Given a prerequisite discovered or corrected mid-task, Nexus updates dependencies, assigns the prerequisite, and resumes downstream work after it passes review.",
-      "Given a branding goal, Nexus creates the brand brief before dispatching a visual specialist; the conversational assistant does not produce the Nexus-owned brief.",
-      "Given a session ending before acceptance, Nexus resumes from the last verified checkpoint without another 'Go'.",
-      "Given a required Nicolas decision, Nexus presents the concrete reviewable result and continues independent work.",
-      "Given incomplete or unverified work, Nexus cannot mark the packet Complete and reports exact remaining work."
-    ]
+      "Given a new goal, The Agency creates a persistent packet and advances the first authorized step without asking Nicolas to map the workflow.",
+      "Given a prerequisite discovered or corrected mid-task, The Agency updates dependencies, assigns the prerequisite, and resumes downstream work after it passes review.",
+      "Given a branding goal, The Agency creates the brand brief before dispatching a visual specialist; the conversational assistant does not produce the Agency-owned brief.",
+      "Given a session ending before acceptance, the Agency resumes from the last verified checkpoint without another 'Go'.",
+      "Given a required Nicolas decision, the Agency presents the concrete reviewable result and continues independent work.",
+      "Given incomplete or unverified work, the Agency cannot mark the packet Complete and reports exact remaining work."
+    ],
+    "execution_system": "Nexus provides intake, work packets, supervisor, AI Gateway, routing, review, and status for Agency-owned tasks."
   }
 }
