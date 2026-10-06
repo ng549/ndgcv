@@ -1351,3 +1351,27 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
 .site-header #navigation .private-workspace-link:focus-visible{outline:2px solid #f4e0c2;outline-offset:3px}
 @media(min-width:1001px){.site-header #navigation .private-workspace-link{margin:16px 0 0}}
 @media(max-width:1000px){.site-header #navigation .private-workspace-link{margin-top:10px}}
+
+/* Lower navigation keeps the growing collection distinct from the CV sections. */
+.sidebar-primary-links,.sidebar-apps-links{display:flex;flex-direction:column;align-items:stretch;gap:5px}
+.site-header #navigation :is(.sidebar-primary-links>a,.sidebar-apps-links>a){line-height:1.4;padding:9px 9px}
+.sidebar-apps-group{flex-shrink:0;margin-top:auto;padding:14px 0;border-top:1px solid #eabb873d;border-bottom:1px solid #eabb873d}
+.sidebar-apps-group>summary{display:flex;align-items:center;min-height:32px;padding:0 9px;color:#eabb87;cursor:pointer;font:600 11px/1.3 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.sidebar-apps-group[open]>summary{margin-bottom:7px}
+.sidebar-future-link{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:38px;padding:8px 9px;color:#aeb4b4;font:14px/1.4 Manrope,sans-serif;cursor:not-allowed}
+.sidebar-future-link small{color:#d0a86f;font:600 10px/1.2 Manrope,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+@media(min-width:1001px){
+ .site-header #navigation{max-height:calc(100dvh - 470px);padding-bottom:0}
+ .site-header #navigation::after{position:fixed;left:22px;bottom:64px;width:180px;border-top:1px solid #eabb8747;content:""}
+ .site-header #navigation .private-workspace-link{position:fixed;left:22px;bottom:20px;display:grid;place-items:center;width:36px;min-width:36px;height:36px;min-height:36px;margin:0;padding:0;border:0;background:transparent;color:#eabb87}
+ .site-header #navigation .private-workspace-link:hover,.site-header #navigation .private-workspace-link:focus-visible{background:#8fb0d818;color:#f7d39a}
+ .site-header #navigation .private-workspace-link svg{width:18px;height:18px;stroke-width:1.65}
+ .site-header .section-all-controls{position:fixed;left:64px;bottom:20px;gap:0;margin:0;padding:0;background:transparent}
+ .site-header .section-all-controls button{width:36px;height:36px;color:#eabb87}
+ body:not(.connect-page) .scout-widget{bottom:112px}
+}
+@media(max-width:1000px){
+ .sidebar-apps-group{margin-top:10px;padding:12px 0}
+ .site-header #navigation .sidebar-primary-links>a,.site-header #navigation .sidebar-apps-links>a{min-height:44px;display:flex;align-items:center;padding:10px 0}
+ .sidebar-future-link{min-height:44px;padding:10px 0}
+}

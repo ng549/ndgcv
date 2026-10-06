@@ -89,7 +89,8 @@ if(sectionMarkup.size!==narrativeOrder.length)throw new Error('Unexpected top-le
 html=html.slice(0,mainBody)+narrativeOrder.map(id=>{if(!sectionMarkup.has(id))throw new Error('Missing section '+id);return sectionMarkup.get(id)}).join('\n')+html.slice(mainEnd);
 
 html=html.replace(/<figcaption>[\s\S]*?<\/figcaption>/g,'');
-html=html.replace('<a href="/apps/">Apps</a>','<a href="/apps/">Apps</a><a href="/media/">Media</a>');
+html=html.replace('<nav id="navigation" aria-label="Main navigation">','<nav id="navigation" aria-label="Main navigation"><div class="sidebar-primary-links">');
+html=html.replace('<a href="/apps/">Apps</a><a class="private-workspace-link"','</div><details class="sidebar-apps-group" open><summary>Explore more</summary><div class="sidebar-apps-links"><a href="/apps/">Apps</a><a href="/media/">Media</a><span class="sidebar-future-link" aria-disabled="true"><span>Products</span><small>Coming soon</small></span></div></details><a class="private-workspace-link"');
 fs.writeFileSync('docs/connect.html',withScout(connectPage()));
 fs.copyFileSync('apps/index.html','docs/apps/index.html');
 fs.mkdirSync('docs/media',{recursive:true});

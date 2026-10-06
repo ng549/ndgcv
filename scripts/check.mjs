@@ -73,6 +73,14 @@ const privateWorkspaceLink=homepageNav.match(/<a class="private-workspace-link"[
 assert(privateWorkspaceLink.includes('data-tooltip="Private workspace"'),"Private workspace entry exposes a hover and focus tooltip");
 assert(privateWorkspaceLink.includes('<svg '),"Private workspace entry uses an icon, not visible link text");
 assert(!/>Private workspace</.test(privateWorkspaceLink),"Private workspace entry remains visually discreet");
+assert(homepageNav.includes('class="sidebar-primary-links"'),"Homepage navigation separates core CV links from lower navigation");
+assert(homepageNav.includes('class="sidebar-apps-group"'),"Homepage navigation has an expandable lower Apps group");
+assert(homepageNav.includes('<a href="/apps/">Apps</a>'),"Lower Apps group retains its working destination");
+assert.equal((homepageNav.match(/class="sidebar-future-link" aria-disabled="true"/g)||[]).length,1,"Products remains visibly inactive until it has a destination");
+const visualCorrections=fs.readFileSync('scripts/visual-corrections.css','utf8');
+assert(visualCorrections.includes('.sidebar-apps-group{'),"Sidebar styles include the lower group");
+assert(visualCorrections.includes('bottom:112px'),"Desktop Scout clears the bottom utility controls");
+assert(visualCorrections.includes('bottom:64px;width:180px;border-top'),"Desktop utility controls have one subtle divider above them");
 console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
 
 assert.equal((h.match(/class="illustrated-action /g)||[]).length,6,"Homepage and connect share all six actions");
@@ -103,7 +111,9 @@ assert.equal((appsPage.match(/No account required/g)||[]).length,9,"All nine car
 assert(!appsPage.includes('<footer'),"Apps page has no footer");
 const appsNav=appsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),"Apps is the final navigation item");
+assert(appsNav.includes('class="sidebar-apps-group"'),"Apps page keeps the expandable lower group");
 assert(appsNav.includes('href="/media/"'),"Apps navigation links to the Media destination");
+assert.equal((appsNav.match(/class="sidebar-future-link" aria-disabled="true"/g)||[]).length,1,"Apps page marks Products as unavailable");
 console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and Apps/Media navigation checked.');
 
 const mediaPage=fs.readFileSync('docs/media/index.html','utf8');
