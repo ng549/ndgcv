@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Media — Nicolas Goureau</title>
+  <meta name="description" content="A forthcoming collection of Nicolas Goureau's work, ideas and media.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/site.css?v=media-coming-soon-20261006">
+  <script src="/site.js?v=layout-20260925" defer></script>
+  <style>
+    body.media-page{min-height:100vh;background:#181e24;color:#f4f0e8}
+    .media-stage{position:relative;display:grid;min-height:100vh;overflow:hidden;isolation:isolate;place-items:center;padding:72px 0}
+    .media-image,.media-shade{position:absolute;inset:0;z-index:-2}.media-image{overflow:hidden}
+    .media-image img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.72;filter:saturate(.78)}
+    .media-shade{z-index:-1;background:linear-gradient(90deg,#16232ef4 0%,#16232edc 46%,#16232ea8 100%),linear-gradient(0deg,#10161be8 0%,transparent 54%,#10161b7d 100%)}
+    .media-card{width:min(720px,88%);padding:clamp(30px,6vw,70px);border:1px solid #eabb8766;background:#17222adb;box-shadow:0 28px 90px #0009;backdrop-filter:blur(12px)}
+    .media-card .eyebrow{margin:0 0 18px;color:#eabb87;font:650 12px/1.3 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+    .media-card h1{max-width:12ch;margin:0 0 22px;font:700 clamp(42px,6vw,74px)/.98 Manrope,sans-serif;letter-spacing:-.065em;text-wrap:balance}
+    .media-card p{max-width:50ch;margin:0;color:#e6e1d7;font-size:clamp(18px,2vw,22px);line-height:1.48}.media-card p+p{margin-top:14px;font-size:17px;color:#c8d2d6}
+    .media-rule{width:72px;height:2px;margin:30px 0;background:#eabb87}
+    .media-status{display:inline-flex;align-items:center;gap:10px;margin-top:34px;color:#f4e0c2;font:600 13px/1.3 Manrope,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+    .media-status::before{width:8px;height:8px;border-radius:50%;background:#eabb87;box-shadow:0 0 0 5px #eabb8726;content:""}
+    @media(max-width:760px){.media-stage{align-items:end;padding:110px 0 48px}.media-image img{object-position:58% center}.media-shade{background:linear-gradient(0deg,#10161bf7 0%,#10161bd9 58%,#10161b69 100%)}.media-card{padding:30px 24px}.media-card h1{font-size:clamp(42px,12vw,58px)}.media-card p{font-size:18px}}
+  </style>
+</head>
+<body class="media-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="wordmark" href="/#profile" aria-label="Nicolas Goureau, introduction">Nicolas Goureau</a>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button>
+  <nav id="navigation" aria-label="Main navigation">
+    <a href="/#about">About me</a><a href="/#experience">How I got here</a><a href="/#career-master">My experience</a><a href="/#ai">How I work</a><a href="/#software-work">Building with AI</a><a href="/#product-journey">From idea to sale</a><a href="/#capabilities">What I bring</a><a href="/#value">The results</a><a href="/#build">Where I can help</a><a href="/#opportunity">What comes next</a><a href="/#education">Education</a><a href="/#contact">Let’s connect</a><a href="/apps/">Apps</a><a href="/media/" aria-current="page">Media</a>
+  </nav>
+</header>
+<main id="main" class="media-stage">
+  <div class="media-image" aria-hidden="true"><img src="/illustrations/build-v3.webp" alt=""></div><div class="media-shade" aria-hidden="true"></div>
+  <section class="media-card" aria-labelledby="media-heading"><span class="eyebrow">Media</span><h1 id="media-heading">A place for the work in motion.</h1><div class="media-rule" aria-hidden="true"></div><p>Selected conversations, working ideas and stories from building products, stores and practical operating systems are being gathered here.</p><p>This collection is in development. In the meantime, explore the interactive CV or the existing app demos.</p><span class="media-status">Coming soon</span></section>
+</main>
+</body>
+</html>

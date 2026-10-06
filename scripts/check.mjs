@@ -68,6 +68,7 @@ const homepageNav=h.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(homepageNav.includes('class="private-workspace-link"'),"Homepage navigation includes the private workspace entry");
 assert(homepageNav.includes('href="/hud/"'),"Private workspace entry targets the packaged HUD route");
 assert(homepageNav.includes('aria-label="Open private workspace"'),"Private workspace entry has an accessible name");
+assert(homepageNav.includes('href="/media/"'),"Homepage navigation includes the Media destination");
 const privateWorkspaceLink=homepageNav.match(/<a class="private-workspace-link"[\s\S]*?<\/a>/)?.[0]||'';
 assert(privateWorkspaceLink.includes('data-tooltip="Private workspace"'),"Private workspace entry exposes a hover and focus tooltip");
 assert(privateWorkspaceLink.includes('<svg '),"Private workspace entry uses an icon, not visible link text");
@@ -102,7 +103,18 @@ assert.equal((appsPage.match(/No account required/g)||[]).length,9,"All nine car
 assert(!appsPage.includes('<footer'),"Apps page has no footer");
 const appsNav=appsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),"Apps is the final navigation item");
-console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and final-nav placement checked.');
+assert(appsNav.includes('href="/media/"'),"Apps navigation links to the Media destination");
+console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and Apps/Media navigation checked.');
+
+const mediaPage=fs.readFileSync('docs/media/index.html','utf8');
+assert(mediaPage.includes('class="media-page"'),"Media page uses the established site shell");
+assert(mediaPage.includes('A place for the work in motion.'),"Media page has its Coming soon headline");
+assert(mediaPage.includes('Coming soon'),"Media page labels its availability honestly");
+assert(mediaPage.includes('/illustrations/build-v3.webp'),"Media page uses an existing local brand image");
+assert(mediaPage.includes('href="/apps/"'),"Media page retains the Apps destination");
+assert(fs.existsSync('dist/media/index.html'),"Media page is packaged");
+assert(fs.existsSync('dist/illustrations/build-v3.webp'),"Media page background image is packaged");
+console.log('Media page: local brand image, responsive Coming soon shell, and existing Apps route checked.');
 
 const hud=fs.readFileSync('dist/hud/index.html','utf8');
 const hudCSS=fs.readFileSync('dist/hud/hud.css','utf8');

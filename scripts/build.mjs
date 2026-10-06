@@ -89,8 +89,11 @@ if(sectionMarkup.size!==narrativeOrder.length)throw new Error('Unexpected top-le
 html=html.slice(0,mainBody)+narrativeOrder.map(id=>{if(!sectionMarkup.has(id))throw new Error('Missing section '+id);return sectionMarkup.get(id)}).join('\n')+html.slice(mainEnd);
 
 html=html.replace(/<figcaption>[\s\S]*?<\/figcaption>/g,'');
+html=html.replace('<a href="/apps/">Apps</a>','<a href="/apps/">Apps</a><a href="/media/">Media</a>');
 fs.writeFileSync('docs/connect.html',withScout(connectPage()));
 fs.copyFileSync('apps/index.html','docs/apps/index.html');
+fs.mkdirSync('docs/media',{recursive:true});
+fs.writeFileSync('docs/media/index.html',withScout(fs.readFileSync('media/index.html','utf8')));
 fs.copyFileSync('scripts/connect.css','docs/connect.css');
 fs.copyFileSync('scripts/connect.js','docs/connect.js');
 fs.writeFileSync('docs/index.html',withScout(html.replace(/[ \t]+$/gm,'')));
