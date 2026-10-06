@@ -372,3 +372,13 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
  body:not(.connect-page) .scout-pause{left:-10px;right:auto;bottom:0}
  .site-header #navigation{max-height:calc(100dvh - 349px);padding-bottom:0}
 }
+
+/* A deliberately discreet route: the icon is visible, its function appears on hover/focus, and Access—not obscurity—provides privacy. */
+.site-header #navigation .private-workspace-link{position:relative;display:grid;place-items:center;align-self:flex-start;width:44px;min-width:44px;height:44px;min-height:44px;margin-top:12px;padding:0;border:1px solid #d9b88b66;color:#eabb87;background:#d9b88b0c}
+.site-header #navigation .private-workspace-link svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round}
+.site-header #navigation .private-workspace-link::after{position:absolute;z-index:4;top:50%;left:calc(100% + 8px);max-width:112px;padding:6px 7px;border:1px solid #d9b88b78;border-radius:3px;background:#18222b;color:#f4e0c2;box-shadow:0 6px 18px #0005;content:attr(data-tooltip);font:600 11px/1.2 'Source Sans 3',sans-serif;letter-spacing:.015em;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-4px,-50%);transition:opacity .14s ease,transform .14s ease}
+.site-header #navigation .private-workspace-link:hover,.site-header #navigation .private-workspace-link:focus-visible{border-color:#eabb87;background:#d9b88b22;color:#f7d39a}
+.site-header #navigation .private-workspace-link:hover::after,.site-header #navigation .private-workspace-link:focus-visible::after{opacity:1;transform:translate(0,-50%)}
+.site-header #navigation .private-workspace-link:focus-visible{outline:2px solid #f4e0c2;outline-offset:3px}
+@media(min-width:1001px){.site-header #navigation .private-workspace-link{margin:16px 0 0}}
+@media(max-width:1000px){.site-header #navigation .private-workspace-link{margin-top:10px}}

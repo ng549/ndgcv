@@ -11,6 +11,7 @@ http.createServer((req,res) => {
     let file = path.resolve(root, '.' + decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname));
     if (!file.startsWith(root + path.sep)) { res.writeHead(403);res.end();return; }
     if (!path.extname(file) && fs.existsSync(file + '.html')) file += '.html';
+    if (fs.existsSync(file) && fs.statSync(file).isDirectory() && fs.existsSync(path.join(file,'index.html'))) file = path.join(file,'index.html');
     if (!fs.existsSync(file) || !fs.statSync(file).isFile()) {res.writeHead(404);res.end('Not found');return;}
     res.writeHead(200, {'Content-Type':types[path.extname(file)] || 'application/octet-stream','Cache-Control':'no-cache'});
     fs.createReadStream(file).pipe(res);

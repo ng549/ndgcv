@@ -6,9 +6,13 @@
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs && node scripts/package.mjs",
     "deploy:preview": "npm run build && wrangler deploy --config wrangler.preview.jsonc",
-    "test": "node scripts/check.mjs"
+    "verify:hud-release": "node scripts/check-hud-release.mjs",
+    "test": "node scripts/check.mjs && node scripts/check-hud-access.mjs && node scripts/check-hud-data-contract.mjs && node scripts/check-hud-sheets-reader.mjs"
   },
   "devDependencies": {
-    "wrangler": "^4.132.0"
+    "wrangler": "4.147.0"
+  },
+  "dependencies": {
+    "jose": "6.2.12"
   }
 }

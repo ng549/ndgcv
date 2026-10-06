@@ -22,3 +22,31 @@ Live follow-up: c300e22 initially omitted the stylesheet-only background from th
 
 ## User correction pass — 2026-09-18
 User screenshot showed excessive negative space, rejected pills, and background restricted to diagram. Updated to immersive skateshop-style studio behind entire section, compact groups and underlined text controls. User supplied screenshot and rendered local correction inspected. Narrowed central panel after initial comparison showed it covering edge of neighboring labels. Real pointer movement verifies open → enter panel (stays open) → leave (closes). Entire HTML content unchanged; mobile remains unverified. Prior style acceptance superseded by this correction. Desktop correction final result: passed.
+
+## Career HUD preview QA — 2026-10-06
+
+Source visual truth: user-attached approved `nicolas-hud-soft-workbench-v4.png` (version 3), inspected directly in this conversation at 1488×1059. The reference establishes the navy rail, slate retail-photo header, ochre controls, warm stone panels, dark readable body copy, shallow flat-3D depth, and Tuesday sample-state layout.
+
+Implementation: `docs/hud/index.html`, `docs/hud/hud.css`, and `docs/hud/hud.js`, packaged as `/hud/`. The UI uses the reused retail photograph at `docs/hud/assets/storefront.webp` so the document, script, stylesheet, and photo remain under the same future protected route; the supplied HUD image is not embedded as the interface. All displayed records are clearly labeled sample-only, held in browser memory, and make no network calls.
+
+Desktop capture: `design/career-hud/hud-desktop-qa.png` at the matched 1488×1059 viewport, 1× density. The 279px navigation rail, 278px header, 103px week strip, warm two-column content layout, gold review action, date treatment, active Tuesday card, and working-note panel align to the reference’s main geometry. A first capture exposed an oversized preview notice and overlapping timeline markers; both were corrected before this capture. The static preview server was also fixed to resolve directory routes such as `/hud/` to their `index.html` instead of returning 404.
+
+Mobile capture: `design/career-hud/hud-mobile-qa.png` at 390×844, 1× density. The rail becomes a compact horizontally scrollable top navigation; the hero, week strip, schedule controls, and sample-only state remain readable with stable controls. Decorative navigation icons from the mockup are intentionally omitted rather than replaced with drawn or text-glyph icons; this is a P3 visual difference only.
+
+Interaction verification in local Chromium: Today/Career navigation passed; search/filter-ready opportunity list passed; add opportunity opened and closed correctly, increased the sample list from three to four records, and selected the new detail; complete/reopen next step passed; Escape cancelled the dialog; keyboard focus reached navigation; duplicate-action protection is present through `runOnce`; and no browser script errors were recorded. Reduced-motion emulation reduced the photo transition to `0.00001s`; parallax affects only the background photo.
+
+Build and regression verification: `npm run build` passed (182 public assets) and `npm test` passed, including HUD packaging, real photo-asset inclusion, sample-only disclosure, no-fetch check, and reduced-motion coverage. The preview was inspected in executor-local Chromium because this session has no cloud-browser connector; no cross-executor or public preview URL is claimed.
+
+final result: passed
+
+## Homepage private-workspace entry QA — 2026-10-06
+
+Implementation: the generated homepage navigation now includes an icon-only gold workspace mark linking to `/hud/`. It has the explicit accessible label `Open private workspace`, a native title, and a hover/focus tooltip. The small design feature remains deliberate but unobtrusive; it does not claim or provide security by obscurity. The navigation script closes the compact menu for both same-page and route-changing links.
+
+Desktop capture: `design/career-hud/home-navbar-desktop-qa.png`, 1440×1000 at 1× density. The 44px icon sits beneath Apps in the existing left navigation rail and preserves the rail’s spacing, dark surface, and gold accent language without becoming a visible menu item.
+
+Mobile capture: `design/career-hud/home-navbar-mobile-qa.png`, 390×844 at 1× density. The compact Menu opens to a scrollable navigation sheet. The icon-only private-workspace route retains its 44px touch target and does not cover the menu control.
+
+Interaction verification in executor-local Chromium: the icon has no visible text; its computed accessible label is present; keyboard focus reveals the tooltip without increasing the rail’s horizontal scroll width; Enter navigates to `/hud/`; and the mobile open navigation sheet includes the 44px target. `npm run build` and `npm test` passed after the addition. This is a local visual check only; it does not claim a public deployment or an authentication check.
+
+final result: passed

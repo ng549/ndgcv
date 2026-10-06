@@ -1,6 +1,16 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {actions,connectPage} from './connect.mjs';
+const packageJson=JSON.parse(fs.readFileSync('package.json','utf8'));
+assert.equal(packageJson.dependencies.jose,'6.2.12','JWT verifier is pinned to the vetted jose package');
+assert.equal(packageJson.devDependencies.wrangler,'4.147.0','Local Worker tooling uses the current official Wrangler release');
+const previewWorkerConfig=fs.readFileSync('wrangler.preview.jsonc','utf8');
+assert(previewWorkerConfig.includes('"main": "worker/index.js"'),'Preview deploy runs the HUD access gate instead of static-only assets');
+assert(previewWorkerConfig.includes('"run_worker_first": true'),'Preview HUD requests reach the Worker access gate before assets');
+assert(previewWorkerConfig.includes('"compatibility_date": "2026-09-28"'),'Preview uses the production compatibility date');
+const deployWorkflow=fs.readFileSync('.github/workflows/pages.yml','utf8');
+assert(deployWorkflow.includes("- 'worker/**'"),'Production workflow runs when Worker protection changes');
+assert(deployWorkflow.includes('npx wrangler deploy --name ndgcv --keep-vars'),'Production workflow deploys the root Worker that contains the HUD gate');
 for(const page of ['index.html','connect.html']) {
  const h=fs.readFileSync('dist/'+page,'utf8');
  const ids=[...h.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
@@ -54,6 +64,14 @@ assert.equal(actions.find(a=>a.id==='download').href,'/Nicolas_Goureau_Executive
 assert(fs.readFileSync('dist/Nicolas_Goureau_Executive_CV.pdf').subarray(0,4).toString()==='%PDF');
 assert(!h.includes('6 checkout lanes established'));
 assert(!h.match(/<footer[\s\S]*?<\/footer>/)?.[0].includes('remote'));
+const homepageNav=h.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
+assert(homepageNav.includes('class="private-workspace-link"'),"Homepage navigation includes the private workspace entry");
+assert(homepageNav.includes('href="/hud/"'),"Private workspace entry targets the packaged HUD route");
+assert(homepageNav.includes('aria-label="Open private workspace"'),"Private workspace entry has an accessible name");
+const privateWorkspaceLink=homepageNav.match(/<a class="private-workspace-link"[\s\S]*?<\/a>/)?.[0]||'';
+assert(privateWorkspaceLink.includes('data-tooltip="Private workspace"'),"Private workspace entry exposes a hover and focus tooltip");
+assert(privateWorkspaceLink.includes('<svg '),"Private workspace entry uses an icon, not visible link text");
+assert(!/>Private workspace</.test(privateWorkspaceLink),"Private workspace entry remains visually discreet");
 console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
 
 assert.equal((h.match(/class="illustrated-action /g)||[]).length,6,"Homepage and connect share all six actions");
@@ -85,3 +103,20 @@ assert(!appsPage.includes('<footer'),"Apps page has no footer");
 const appsNav=appsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),"Apps is the final navigation item");
 console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and final-nav placement checked.');
+
+const hud=fs.readFileSync('dist/hud/index.html','utf8');
+const hudCSS=fs.readFileSync('dist/hud/hud.css','utf8');
+const hudJS=fs.readFileSync('dist/hud/hud.js','utf8');
+assert(hud.includes('data-hud-preview="sample-only"'),"Career HUD is explicitly sample-only");
+assert(hud.includes('Today, in focus.'),"Career HUD includes the Today view");
+assert(hud.includes('Career &amp; direction'),"Career HUD includes career navigation");
+assert(hud.includes('Contacts &amp; references'),"Career HUD includes relationship navigation");
+assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state");
+assert(hud.includes('not connected'),"Career HUD honestly labels disconnected integrations");
+assert(fs.existsSync('dist/hud/hud.css'),"Career HUD stylesheet is packaged");
+assert(fs.existsSync('dist/hud/hud.js'),"Career HUD script is packaged");
+assert(fs.existsSync('dist/hud/assets/storefront.webp'),"Career HUD retail photo remains under the protected HUD route");
+assert(hudCSS.includes('prefers-reduced-motion'),"Career HUD honors reduced motion");
+assert(hudJS.includes('runOnce'),"Career HUD protects duplicate actions");
+assert(!hudJS.includes('fetch('),"Career HUD preview makes no network calls");
+console.log('Career HUD: packaged /hud/ preview, actual retail photo asset, sample-only state, reduced motion, and local-only interaction checks passed.');
