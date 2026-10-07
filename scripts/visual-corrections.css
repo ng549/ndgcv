@@ -393,6 +393,8 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
 .sidebar-future-link small{color:#d0a86f;font:600 10px/1.2 Manrope,sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 @media(min-width:1001px){
  .site-header #navigation{max-height:calc(100dvh - 470px);padding-bottom:0}
+ .site-header #navigation .sidebar-primary-links{min-height:0;overflow-y:auto;padding-right:4px}
+ .sidebar-apps-group{margin-top:8px}
  .site-header #navigation::after{position:fixed;left:22px;bottom:64px;width:180px;border-top:1px solid #eabb8747;content:""}
  .site-header #navigation .private-workspace-link{position:fixed;left:22px;bottom:20px;display:grid;place-items:center;width:36px;min-width:36px;height:36px;min-height:36px;margin:0;padding:0;border:0;background:transparent;color:#eabb87}
  .site-header #navigation .private-workspace-link:hover,.site-header #navigation .private-workspace-link:focus-visible{background:#8fb0d818;color:#f7d39a}
@@ -405,4 +407,9 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
  .sidebar-apps-group{margin-top:10px;padding:12px 0}
  .site-header #navigation .sidebar-primary-links>a,.site-header #navigation .sidebar-apps-links>a{min-height:44px;display:flex;align-items:center;padding:10px 0}
  .sidebar-future-link{min-height:44px;padding:10px 0}
+ .site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #eabb873d}
+ .site-header #navigation .private-workspace-link{margin:0}
+ .site-header .section-all-controls{display:flex;flex:0 0 auto;flex-direction:row;gap:4px;margin:0;padding:0}
+ .site-header .section-all-controls button{flex:0 0 44px;color:#eabb87}
+ .site-header .menu-toggle{border-color:#eabb87;color:#eabb87;background:#d9b88b0c}
 }

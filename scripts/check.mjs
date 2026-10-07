@@ -81,6 +81,7 @@ const visualCorrections=fs.readFileSync('scripts/visual-corrections.css','utf8')
 assert(visualCorrections.includes('.sidebar-apps-group{'),"Sidebar styles include the lower group");
 assert(visualCorrections.includes('bottom:112px'),"Desktop Scout clears the bottom utility controls");
 assert(visualCorrections.includes('bottom:64px;width:180px;border-top'),"Desktop utility controls have one subtle divider above them");
+assert(visualCorrections.includes('.site-header #navigation .sidebar-primary-links{min-height:0;overflow-y:auto'),"Desktop primary links scroll independently from Explore more");
 console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
 
 assert.equal((h.match(/class="illustrated-action /g)||[]).length,6,"Homepage and connect share all six actions");
@@ -114,6 +115,8 @@ assert(appsNav.lastIndexOf('>Apps<') > appsNav.lastIndexOf('>Let’s connect<'),
 assert(appsNav.includes('class="sidebar-apps-group"'),"Apps page keeps the expandable lower group");
 assert(appsNav.includes('href="/media/"'),"Apps navigation links to the Media destination");
 assert.equal((appsNav.match(/class="sidebar-future-link" aria-disabled="true"/g)||[]).length,1,"Apps page marks Products as unavailable");
+assert(appsNav.includes('class="private-workspace-link"'),"Apps page retains the private workspace action");
+assert(appsNav.includes('aria-label="Open private workspace"'),"Apps private workspace action has an accessible name");
 console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and Apps/Media navigation checked.');
 
 const mediaPage=fs.readFileSync('docs/media/index.html','utf8');
@@ -122,8 +125,17 @@ assert(mediaPage.includes('A place for the work in motion.'),"Media page has its
 assert(mediaPage.includes('Coming soon'),"Media page labels its availability honestly");
 assert(mediaPage.includes('/illustrations/build-v3.webp'),"Media page uses an existing local brand image");
 assert(mediaPage.includes('href="/apps/"'),"Media page retains the Apps destination");
+const mediaNav=mediaPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
+assert(mediaNav.includes('class="sidebar-primary-links"'),"Media page separates primary navigation");
+assert(mediaNav.includes('class="sidebar-apps-group"'),"Media page includes the Explore more group");
+assert(mediaNav.includes('href="/media/" aria-current="page"'),"Media is marked as the current destination");
+assert.equal((mediaNav.match(/class="sidebar-future-link" aria-disabled="true"/g)||[]).length,1,"Media page marks Products as unavailable");
+assert(mediaNav.includes('class="private-workspace-link"'),"Media page retains the private workspace action");
 assert(fs.existsSync('dist/media/index.html'),"Media page is packaged");
 assert(fs.existsSync('dist/illustrations/build-v3.webp'),"Media page background image is packaged");
+assert(fs.readFileSync('docs/site.js','utf8').includes('sidebarUtilities||nav'),"Homepage keeps mobile utility controls with the private workspace action");
+assert(visualCorrections.includes('.site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px'),"Mobile utility controls stay in one row");
+assert(visualCorrections.includes('.site-header .menu-toggle{border-color:#eabb87;color:#eabb87'),"Mobile menu toggle uses the gold navigation accent");
 console.log('Media page: local brand image, responsive Coming soon shell, and existing Apps route checked.');
 
 const hud=fs.readFileSync('dist/hud/index.html','utf8');

@@ -115,7 +115,8 @@ Object.entries(sections).forEach(([id, title]) => {
 // One global control: expand any closed sections, otherwise minimize all.
 const allControls=document.createElement('div');allControls.className='section-all-controls';
 const allControl=document.createElement('button');allControl.type='button';
-allControls.append(allControl);if(document.querySelector('main>section[data-collapsible]'))nav.append(allControls);
+const sidebarUtilities=nav.querySelector('.sidebar-utilities');
+allControls.append(allControl);if(document.querySelector('main>section[data-collapsible]'))(sidebarUtilities||nav).append(allControls);
 const collapsibleSections=[...document.querySelectorAll('main>section[data-collapsible]')];
 function syncAllControl(){
  const expand=collapsibleSections.some(section=>section.classList.contains('is-minimized'));
