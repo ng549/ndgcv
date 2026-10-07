@@ -192,6 +192,7 @@ assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state")
 assert(hud.includes('not connected'),"Career HUD honestly labels disconnected integrations");
 assert(hud.includes('data-hud-opportunities-endpoint="/api/hud/opportunities"'),"Career HUD declares its protected opportunities endpoint");
 assert(hud.includes('id="hud-runtime-status"'),"Career HUD includes the lower-rail connection status box");
+assert(hud.includes('Connection status'),"Career HUD labels the lower-rail connection status box");
 assert(hud.includes('id="hud-location"')&&hud.includes('id="hud-current-time"')&&hud.includes('id="hud-weather"'),"Career HUD includes location, time, and weather header states");
 assert(hud.includes('private-photo-slot'),"Career HUD reserves a protected photo slot without packaging private photo pixels");
 assert(fs.existsSync('dist/hud/hud.css'),"Career HUD stylesheet is packaged");

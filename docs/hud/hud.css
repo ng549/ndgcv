@@ -479,7 +479,9 @@ select, input, textarea { border-color: rgba(20,35,46,.14); border-radius: 9px; 
   .primary-nav { margin-bottom: 0; }
   .nav-item { min-height: 39px; padding: 8px 10px; }
   .nav-item:hover:not(:disabled), .nav-item.is-active { padding-left: 10px; }
-  .future-nav, .rail-divider, .private-photo-slot, .hud-runtime-links, .public-site { display: none; }
+  .future-nav, .rail-divider, .hud-runtime-links, .public-site { display: none; }
+  .private-photo-slot { grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: 11px; margin-top: 14px; }
+  .private-photo-frame { min-height: 88px; }
   .hud-runtime-status { margin-top: 13px; }
   .hero { min-height: 270px; border-radius: 18px; }
   .hero-content { padding: 20px; }
