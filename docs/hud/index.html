@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,6 +34,16 @@
         <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
         <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
       </div>
+
+      <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Private source status">
+        <p class="eyebrow">Private opportunities</p>
+        <strong id="hud-runtime-title">Not connected</strong>
+        <span id="hud-runtime-detail">Live opportunities and the protected source link are unavailable in this preview.</span>
+        <time id="hud-runtime-last-success" hidden></time>
+      </section>
+      <nav class="hud-runtime-links" id="hud-runtime-links" aria-label="Private workspace links" hidden>
+        <a id="hud-career-sheet-link" hidden>Open connected opportunities sheet</a>
+      </nav>
 
       <a class="public-site" href="../">Public website</a>
     </aside>

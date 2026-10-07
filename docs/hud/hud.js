@@ -1,5 +1,6 @@
 const state = {
   activeView: 'today',
+  liveOpportunities: false,
   selectedDay: 'Tue',
   schedule: 'today',
   focusFilter: 'all',
@@ -69,6 +70,160 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 let toastTimer;
 
+function formatActualSyncTime(value) {
+  if (typeof value !== 'string' || !value) return null;
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) return null;
+  return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(timestamp));
+}
+
+function renderRuntimeStatus({ state: syncState = 'unconnected', lastSuccessfulAt = null } = {}) {
+  const allowedStates = new Set(['loading', 'fresh', 'stale', 'error']);
+  const phase = allowedStates.has(syncState) ? syncState : 'unconnected';
+  const copy = {
+    loading: ['Checking private source', 'No sync result is available yet.'],
+    fresh: ['Private opportunities loaded', 'Records came from the protected source for this visit.'],
+    stale: ['Private source needs refresh', 'The last successful refresh is older than the source policy.'],
+    error: ['Private source is unavailable', 'No new data or links were loaded.'],
+    unconnected: ['Not connected', 'Live records and private links are unavailable in this preview.']
+  }[phase];
+  const status = $('#hud-runtime-status');
+  const lastSuccess = formatActualSyncTime(lastSuccessfulAt);
+  status.dataset.syncState = phase;
+  $('#hud-runtime-title').textContent = copy[0];
+  $('#hud-runtime-detail').textContent = copy[1];
+  const time = $('#hud-runtime-last-success');
+  time.hidden = !lastSuccess;
+  if (lastSuccess) {
+    time.dateTime = new Date(lastSuccessfulAt).toISOString();
+    time.textContent = `Last successful sync: ${lastSuccess}`;
+  }
+}
+
+function trustedCareerSheetUrl(value) {
+  if (typeof value !== 'string' || !value) return null;
+  try {
+    const url = new URL(value, window.location.origin);
+    if (url.protocol === 'https:' && url.hostname === 'docs.google.com' && /^\/spreadsheets\/d\/[^/]+\/edit$/.test(url.pathname)) return url.href;
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function renderRuntimeLinks(links) {
+  const group = $('#hud-runtime-links');
+  const sheet = $('#hud-career-sheet-link');
+  const href = trustedCareerSheetUrl(links?.careerSheetUrl);
+  sheet.hidden = !href;
+  if (href) sheet.href = href;
+  else sheet.removeAttribute('href');
+  group.hidden = !href;
+}
+
+function recordText(value) {
+  return value === undefined || value === null ? '' : String(value).trim();
+}
+
+function statusClass(value) {
+  const allowed = new Set(['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined']);
+  const status = recordText(value).toLowerCase();
+  return allowed.has(status) ? status : 'research';
+}
+
+function opportunityIndex(values) {
+  if (!Array.isArray(values) || !Array.isArray(values[0])) throw new TypeError('Invalid opportunities payload.');
+  const index = new Map(values[0].map((value, position) => [recordText(value).toLowerCase(), position]));
+  for (const field of ['opportunity_id', 'company', 'title', 'status', 'next_action']) {
+    if (!index.has(field)) throw new TypeError('Invalid opportunities payload.');
+  }
+  return index;
+}
+
+function valueAt(row, index, field) {
+  const position = index.get(field);
+  return position === undefined ? '' : recordText(row[position]);
+}
+
+function normalizeLiveOpportunities(values) {
+  const index = opportunityIndex(values);
+  return values.slice(1).flatMap(rawRow => {
+    const row = Array.isArray(rawRow) ? rawRow : [];
+    const id = valueAt(row, index, 'opportunity_id');
+    if (!/^opp_[A-Za-z0-9_-]{8,128}$/.test(id)) return [];
+    const company = valueAt(row, index, 'company');
+    const role = valueAt(row, index, 'title');
+    const location = valueAt(row, index, 'location');
+    const arrangement = valueAt(row, index, 'work_arrangement');
+    const fit = valueAt(row, index, 'fit_rationale');
+    const status = valueAt(row, index, 'status') || 'research';
+    const nextAction = valueAt(row, index, 'next_action');
+    return [{
+      id,
+      companyId: `live_${id}`,
+      company: company || 'Company not supplied',
+      role: role || 'Title not supplied',
+      status,
+      statusClass: statusClass(status),
+      summary: [location, arrangement].filter(Boolean).join(' · ') || 'No location or work arrangement supplied.',
+      fit: fit || 'No fit rationale supplied.',
+      contact: 'Private opportunities source',
+      nextAction: { id: `next_${id}`, label: nextAction || 'No next action supplied.', complete: false },
+      activity: []
+    }];
+  });
+}
+
+function normalizeLiveToday(value) {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap(item => {
+    const opportunityId = recordText(item?.opportunityId);
+    const title = recordText(item?.title);
+    if (!/^opp_[A-Za-z0-9_-]{8,128}$/.test(opportunityId) || !title) return [];
+    return [{
+      id: recordText(item.id) || `followup_${opportunityId}`,
+      time: 'Next',
+      title,
+      detail: recordText(item.detail) || 'No company or role detail supplied.',
+      expanded: 'This follow-up is supplied by the protected opportunities source.',
+      complete: false
+    }];
+  });
+}
+
+function applyOpportunityPayload(payload) {
+  if (!payload || typeof payload !== 'object') throw new TypeError('Invalid opportunities payload.');
+  const opportunities = normalizeLiveOpportunities(payload.values);
+  state.opportunities = opportunities;
+  state.selectedOpportunity = opportunities[0]?.id ?? null;
+  state.liveOpportunities = true;
+  state.focusItems = normalizeLiveToday(payload.today);
+  state.expandedFocus = state.focusItems[0]?.id ?? '';
+  renderRuntimeStatus({ state: 'fresh' });
+  renderRuntimeLinks(payload.links);
+  renderToday();
+  renderOpportunities();
+}
+
+async function loadOpportunities() {
+  const endpoint = document.documentElement.dataset.hudOpportunitiesEndpoint;
+  if (!endpoint) return;
+  renderRuntimeStatus({ state: 'loading' });
+  try {
+    const response = await fetch(endpoint, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    if (response.status === 204 || response.status === 404 || response.status === 409) {
+      renderRuntimeStatus();
+      renderRuntimeLinks();
+      return;
+    }
+    if (!response.ok) throw new Error(`Private runtime request failed (${response.status}).`);
+    applyOpportunityPayload(await response.json());
+  } catch {
+    renderRuntimeStatus({ state: 'error' });
+    renderRuntimeLinks();
+  }
+}
+
 function announce(message) {
   const toast = $('#toast');
   clearTimeout(toastTimer);
@@ -126,9 +281,13 @@ function renderToday() {
         <span class="focus-time">${item.time}</span>
         <span><strong>${escapeHTML(item.title)}</strong><span>${item.complete ? 'Completed in this sample session.' : escapeHTML(item.detail)}</span></span>
       </button>
-      ${expanded ? `<div class="focus-expanded"><p>${escapeHTML(item.expanded)}</p><button class="complete-link" type="button" data-complete-focus="${item.id}">${item.complete ? 'Reopen this sample focus block' : 'Complete this focus block'}</button></div>` : ''}
+      ${expanded ? `<div class="focus-expanded"><p>${escapeHTML(item.expanded)}</p>${state.liveOpportunities ? '<p class="note-prompt">Connected opportunities are read-only in this HUD release.</p>' : `<button class="complete-link" type="button" data-complete-focus="${item.id}">${item.complete ? 'Reopen this sample focus block' : 'Complete this focus block'}</button>`}</div>` : ''}
     </li>`;
-  }).join('') : '<li class="empty-state">No sample focus blocks match this filter.</li>';
+  }).join('') : `<li class="empty-state">${state.liveOpportunities ? 'No live follow-ups are currently available from the protected source.' : 'No sample focus blocks match this filter.'}</li>`;
+
+  const addFocus = $('.add-focus');
+  addFocus.disabled = state.liveOpportunities;
+  addFocus.textContent = state.liveOpportunities ? 'Connected opportunities are read-only' : 'Add a focus block';
 
   const noteActions = $('#note-actions');
   noteActions.innerHTML = `<ul class="check-list">${state.note.actions.map(action => `<li><input id="${action.id}" type="checkbox" data-note-action="${action.id}" ${action.complete ? 'checked' : ''}><label for="${action.id}">${escapeHTML(action.label)}</label></li>`).join('')}</ul>`;
@@ -159,26 +318,31 @@ function filteredOpportunities() {
 function populateCompanyFilter() {
   const select = $('#company-filter');
   const current = select.value;
-  select.innerHTML = '<option value="all">All companies</option>' + state.targets.map(target => `<option value="${target.id}">${escapeHTML(target.name)}</option>`).join('');
+  const companies = state.liveOpportunities ? state.opportunities.map(opportunity => ({ id: opportunity.companyId, name: opportunity.company })) : state.targets;
+  select.innerHTML = '<option value="all">All companies</option>' + companies.map(target => `<option value="${target.id}">${escapeHTML(target.name)}</option>`).join('');
   select.value = [...select.options].some(option => option.value === current) ? current : 'all';
 }
 
 function renderOpportunities() {
+  const addOpportunity = $('[data-open-dialog="opportunity"]');
+  addOpportunity.disabled = state.liveOpportunities;
+  addOpportunity.title = state.liveOpportunities ? 'Connected opportunities are read-only in this HUD release.' : '';
   populateCompanyFilter();
   const opportunities = filteredOpportunities();
   if (!opportunities.some(opportunity => opportunity.id === state.selectedOpportunity)) state.selectedOpportunity = opportunities[0]?.id ?? null;
   $('#opportunity-list').innerHTML = opportunities.length ? opportunities.map(opportunity => `<button class="opportunity-card ${opportunity.id === state.selectedOpportunity ? 'is-selected' : ''}" type="button" data-opportunity-id="${opportunity.id}">
-      <span class="opportunity-card-top"><span class="status-pill ${opportunity.status}">${escapeHTML(opportunity.status)}</span><span>${escapeHTML(opportunity.company)}</span></span>
+      <span class="opportunity-card-top"><span class="status-pill ${opportunity.statusClass ?? statusClass(opportunity.status)}">${escapeHTML(opportunity.status)}</span><span>${escapeHTML(opportunity.company)}</span></span>
       <h3>${escapeHTML(opportunity.role)}</h3><p>${escapeHTML(opportunity.summary)}</p>
-    </button>`).join('') : '<div class="empty-state">No sample opportunities match these filters. Clear a filter or add a sample opportunity.</div>';
+    </button>`).join('') : `<div class="empty-state">${state.liveOpportunities ? 'No live opportunities are currently available from the protected source.' : 'No sample opportunities match these filters. Clear a filter or add a sample opportunity.'}</div>`;
 
   const detail = state.opportunities.find(opportunity => opportunity.id === state.selectedOpportunity);
-  $('#opportunity-detail').innerHTML = detail ? `<div class="detail-meta"><span class="status-pill ${detail.status}">${escapeHTML(detail.status)}</span><span>${escapeHTML(detail.company)}</span></div>
+  const liveDetail = state.liveOpportunities && detail;
+  $('#opportunity-detail').innerHTML = detail ? `<div class="detail-meta"><span class="status-pill ${detail.statusClass ?? statusClass(detail.status)}">${escapeHTML(detail.status)}</span><span>${escapeHTML(detail.company)}</span></div>
     <h3>${escapeHTML(detail.role)}</h3><p class="detail-summary">${escapeHTML(detail.summary)}</p>
     <div class="detail-section"><h4>Why it could fit</h4><p>${escapeHTML(detail.fit)}</p></div>
     <div class="detail-section"><h4>Relationship context</h4><p>${escapeHTML(detail.contact)}</p></div>
-    <div class="detail-section"><h4>Sample activity</h4><ul>${detail.activity.map(activity => `<li>${escapeHTML(activity)}</li>`).join('')}</ul></div>
-    <div class="detail-actions"><button class="button button-navy" type="button" data-complete-opportunity-action="${detail.id}">${detail.nextAction.complete ? 'Reopen next step' : 'Complete next step'}</button><button class="button button-quiet" type="button" data-open-dialog="opportunity" data-edit-opportunity="${detail.id}">Edit sample</button></div>` : '<div class="empty-state">Choose a sample opportunity to see its detail.</div>';
+    <div class="detail-section"><h4>Next action</h4><p>${escapeHTML(detail.nextAction.label)}</p></div>
+    ${liveDetail ? '<p class="note-prompt">Connected source records are read-only in this HUD release.</p>' : `<div class="detail-section"><h4>Sample activity</h4><ul>${detail.activity.map(activity => `<li>${escapeHTML(activity)}</li>`).join('')}</ul></div><div class="detail-actions"><button class="button button-navy" type="button" data-complete-opportunity-action="${detail.id}">${detail.nextAction.complete ? 'Reopen next step' : 'Complete next step'}</button><button class="button button-quiet" type="button" data-open-dialog="opportunity" data-edit-opportunity="${detail.id}">Edit sample</button></div>`}` : `<div class="empty-state">${state.liveOpportunities ? 'Choose a live opportunity to see its detail.' : 'Choose a sample opportunity to see its detail.'}</div>`;
 }
 
 function renderContacts() {
@@ -205,6 +369,10 @@ function setDay(day) {
 }
 
 function openDialog(kind, editId = '') {
+  if (state.liveOpportunities && ['action', 'opportunity'].includes(kind)) {
+    announce('Connected opportunities are read-only in this HUD release.');
+    return;
+  }
   const dialog = $('#hud-dialog');
   const title = $('#dialog-title');
   const entryKind = $('#entry-kind');
@@ -310,6 +478,7 @@ function handleClick(event) {
   if (focusButton) { state.expandedFocus = state.expandedFocus === focusButton.dataset.focusId ? '' : focusButton.dataset.focusId; renderToday(); return; }
   const completeFocus = event.target.closest('[data-complete-focus]');
   if (completeFocus) {
+    if (state.liveOpportunities) { announce('Connected opportunities are read-only in this HUD release.'); return; }
     runOnce(completeFocus, () => {
       const item = state.focusItems.find(value => value.id === completeFocus.dataset.completeFocus);
       item.complete = !item.complete;
@@ -324,6 +493,7 @@ function handleClick(event) {
   if (opportunity) { state.selectedOpportunity = opportunity.dataset.opportunityId; renderOpportunities(); return; }
   const completeOpportunity = event.target.closest('[data-complete-opportunity-action]');
   if (completeOpportunity) {
+    if (state.liveOpportunities) { announce('Connected opportunities are read-only in this HUD release.'); return; }
     runOnce(completeOpportunity, () => {
       const item = state.opportunities.find(value => value.id === completeOpportunity.dataset.completeOpportunityAction);
       item.nextAction.complete = !item.nextAction.complete;
@@ -367,6 +537,7 @@ function init() {
   renderContacts();
   renderMaterials();
   renderDirection();
+  loadOpportunities();
   document.addEventListener('click', handleClick);
   document.addEventListener('change', event => {
     if (event.target.matches('#focus-status')) { state.focusFilter = event.target.value; renderToday(); }

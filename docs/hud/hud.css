@@ -95,6 +95,16 @@ a { color: inherit; }
 .nav-item.is-muted { display: grid; gap: 2px; color: #f1e4cf; opacity: .92; }
 .nav-item small { color: #aeb8bd; font-size: 15px; font-weight: 400; letter-spacing: .14em; }
 .rail-divider { height: 1px; margin: 140px 15px 32px; background: rgba(208, 225, 225, .3); }
+.hud-runtime-status { display: grid; gap: 4px; margin: 28px 15px 0; padding: 14px; border: 1px solid rgba(208, 225, 225, .28); border-radius: 7px; color: #f4ead9; background: rgba(255,255,255,.06); }
+.hud-runtime-status .eyebrow { color: #b7cbd5; }
+.hud-runtime-status strong { font-family: Manrope, sans-serif; font-size: 15px; }
+.hud-runtime-status span, .hud-runtime-status time { color: #c7d1d5; font-size: 14px; line-height: 1.25; }
+.hud-runtime-status[data-sync-state="fresh"] { border-color: rgba(163, 196, 178, .62); background: rgba(91, 128, 108, .24); }
+.hud-runtime-status[data-sync-state="stale"] { border-color: rgba(239, 198, 143, .62); background: rgba(132, 100, 49, .27); }
+.hud-runtime-status[data-sync-state="error"] { border-color: rgba(229, 160, 160, .62); background: rgba(122, 66, 66, .3); }
+.hud-runtime-links { display: grid; gap: 7px; margin: 9px 15px 0; }
+.hud-runtime-links a { padding: 8px 10px; border: 1px solid rgba(208, 225, 225, .28); border-radius: 5px; color: #f4ead9; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; }
+.hud-runtime-links a:hover { color: #fff; background: rgba(255,255,255,.09); }
 .public-site {
   margin: auto 15px 0;
   color: #f4e8d5;
@@ -297,6 +307,8 @@ dialog form { display: grid; gap: 16px; padding: 8px; }
   .primary-nav { display: flex; overflow-x: auto; gap: 7px; padding-bottom: 4px; }
   .nav-item { flex: 0 0 auto; min-height: 42px; padding: 9px 12px; font-size: 15px; white-space: nowrap; }
   .future-nav, .rail-divider { display: none; }
+  .hud-runtime-status { margin: 16px 0 0; }
+  .hud-runtime-links { margin: 9px 0 0; }
   .public-site { display: none; }
   .hero { grid-template-columns: 1fr; min-height: 270px; }
   .hero-content { padding: 27px 23px 19px; }
