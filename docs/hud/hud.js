@@ -261,6 +261,8 @@ function showPrivateSlide(index, { initial = false } = {}) {
   const image = layers[nextLayer];
   image.src = slide.src;
   image.alt = slide.alt;
+  image.referrerPolicy = 'no-referrer';
+  image.decoding = 'async';
   image.hidden = false;
   if (initial) image.classList.add('is-visible');
   else requestAnimationFrame(() => {
@@ -271,7 +273,7 @@ function showPrivateSlide(index, { initial = false } = {}) {
   privateMedia.currentIndex = index;
 }
 
-function installPrivateSlides(slides) {
+function installPrivateSlides(slides, { sourceConfigured = false } = {}) {
   window.clearInterval(privateMedia.timer);
   privateMedia.timer = 0;
   privateMedia.currentIndex = -1;
@@ -281,9 +283,9 @@ function installPrivateSlides(slides) {
   const layers = $$('[data-photo-layer]');
   layers.forEach(layer => { layer.removeAttribute('src'); layer.alt = ''; layer.hidden = true; layer.classList.remove('is-visible'); });
   if (!privateMedia.slides.length) {
-    frame.dataset.privatePhotoState = 'unconnected';
-    $('#memory-frame-title').textContent = 'Photos are not connected';
-    $('#photo-frame-detail').textContent = 'This protected preview does not load personal photos.';
+    frame.dataset.privatePhotoState = sourceConfigured ? 'empty' : 'unconnected';
+    $('#memory-frame-title').textContent = sourceConfigured ? 'No authorized photos available' : 'Photos are not connected';
+    $('#photo-frame-detail').textContent = sourceConfigured ? 'The protected source returned no photos for this session.' : 'This protected preview does not load personal photos.';
     return;
   }
   frame.dataset.privatePhotoState = 'ready';
@@ -295,15 +297,74 @@ function installPrivateSlides(slides) {
   }
 }
 
+function trustedRuntimeUrl(value, kind) {
+  if (typeof value !== 'string' || !value) return null;
+  try {
+    const url = new URL(value, window.location.origin);
+    if (kind === 'drive' && url.protocol === 'https:' && url.hostname === 'drive.google.com') return url.href;
+    if (kind === 'planning' && url.origin === window.location.origin && url.pathname.startsWith('/')) return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function renderPrivateLinks(links) {
+  const group = $('#private-links');
+  const drive = $('#drive-home-link');
+  const planning = $('#module-planning-link');
+  const driveHref = trustedRuntimeUrl(links?.driveHome, 'drive');
+  const planningHref = trustedRuntimeUrl(links?.modulePlanning, 'planning');
+  drive.hidden = !driveHref;
+  planning.hidden = !planningHref;
+  if (driveHref) drive.href = driveHref;
+  else drive.removeAttribute('href');
+  if (planningHref) planning.href = planningHref;
+  else planning.removeAttribute('href');
+  group.hidden = !driveHref && !planningHref;
+}
+
+function applyPrivateRuntime(payload) {
+  if (!payload || typeof payload !== 'object' || !payload.sync || typeof payload.sync !== 'object' || !Array.isArray(payload.photos)) throw new TypeError('Invalid private runtime payload.');
+  renderSyncStatus(payload.sync);
+  installPrivateSlides(payload.photos, { sourceConfigured: true });
+  renderPrivateLinks(payload.links);
+}
+
+async function loadPrivateRuntime() {
+  const endpoint = document.documentElement.dataset.privateRuntimeEndpoint;
+  if (!endpoint) return;
+  renderSyncStatus({ state: 'loading' });
+  try {
+    const response = await fetch(endpoint, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    if (response.status === 204 || response.status === 404) {
+      renderSyncStatus();
+      installPrivateSlides([]);
+      renderPrivateLinks();
+      return;
+    }
+    if (!response.ok) throw new Error(`Private runtime request failed (${response.status}).`);
+    applyPrivateRuntime(await response.json());
+  } catch {
+    renderSyncStatus({ state: 'error' });
+    installPrivateSlides([]);
+    renderPrivateLinks();
+  }
+}
+
 function setupPrivateMedia() {
   const supplied = window.__CAREER_HUD_PRIVATE_MEDIA__;
   if (!supplied || typeof supplied !== 'object') {
-    renderSyncStatus();
-    installPrivateSlides([]);
+    loadPrivateRuntime();
     return;
   }
-  renderSyncStatus(supplied.sync);
-  installPrivateSlides(supplied.photos);
+  try {
+    applyPrivateRuntime(supplied);
+  } catch {
+    renderSyncStatus({ state: 'error' });
+    installPrivateSlides([]);
+    renderPrivateLinks();
+  }
 }
 
 function updateNoteTabs() {

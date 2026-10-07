@@ -190,10 +190,13 @@ assert(hud.includes('Career &amp; direction'),"Career HUD includes career naviga
 assert(hud.includes('Contacts &amp; references'),"Career HUD includes relationship navigation");
 assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state");
 assert(hud.includes('not connected'),"Career HUD honestly labels disconnected integrations");
+assert(hud.includes('data-private-runtime-endpoint="/api/hud/connections"'),"Career HUD declares one protected runtime endpoint");
 assert(fs.existsSync('dist/hud/hud.css'),"Career HUD stylesheet is packaged");
 assert(fs.existsSync('dist/hud/hud.js'),"Career HUD script is packaged");
 assert(fs.existsSync('dist/hud/assets/storefront.webp'),"Career HUD retail photo remains under the protected HUD route");
 assert(hudCSS.includes('prefers-reduced-motion'),"Career HUD honors reduced motion");
 assert(hudJS.includes('runOnce'),"Career HUD protects duplicate actions");
-assert(!hudJS.includes('fetch('),"Career HUD preview makes no network calls");
-console.log('Career HUD: packaged /hud/ preview, actual retail photo asset, sample-only state, reduced motion, and local-only interaction checks passed.');
+assert(hudJS.includes("fetch(endpoint, { credentials: 'same-origin'"),"Career HUD requests only its protected same-origin runtime endpoint");
+assert(!hud.includes('https://drive.google.com/'),"Career HUD does not package a Drive URL");
+assert(!hud.includes('spreadsheets.google.com'),"Career HUD does not package a Sheet URL");
+console.log('Career HUD: packaged /hud/ preview, protected runtime contract, no public Drive or Sheet URL, reduced motion, and local-only sample state checks passed.');

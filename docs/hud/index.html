@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-private-photo-endpoint="/api/hud/photos">
+<html lang="en" data-private-runtime-endpoint="/api/hud/connections">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,6 +57,11 @@
           <span id="sync-status-detail">No private source is available in this preview.</span>
           <time id="sync-last-success" hidden></time>
         </section>
+
+        <nav class="private-links" id="private-links" aria-label="Private workspace links" hidden>
+          <a id="drive-home-link" hidden>Open Drive home</a>
+          <a id="module-planning-link" hidden>Open planning module</a>
+        </nav>
 
         <a class="public-site" href="../">View public CV</a>
       </div>

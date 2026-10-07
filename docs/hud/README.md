@@ -10,7 +10,9 @@ The date is taken from the device clock. Location permission is requested only a
 
 ## Private-photo and sync contract
 
-`index.html` declares the future protected endpoint path as `/api/hud/photos`, but this static preview never calls it. A private authenticated server may inject a `window.__CAREER_HUD_PRIVATE_MEDIA__` object before `hud.js` runs:
+`index.html` declares `/api/hud/connections` as the private runtime endpoint. The HUD requests it only with same-origin credentials; `/api/hud/*` is already owner-gated and no-store at the Worker boundary. While that endpoint is absent it returns `404`, which the UI renders as **Not connected**. A `5xx`, invalid response, or unavailable connection renders the separate **error** state.
+
+The backend may alternatively inject the same object as `window.__CAREER_HUD_PRIVATE_MEDIA__` before `hud.js` runs:
 
 ```js
 {
@@ -20,11 +22,15 @@ The date is taken from the device clock. Location permission is requested only a
   },
   photos: [
     { id: 'opaque-id', src: 'https://protected.example/photo', alt: 'Optional private description' }
-  ]
+  ],
+  links: {
+    driveHome: '<runtime-only HTTPS Drive URL>',
+    modulePlanning: '/private/planning'
+  }
 }
 ```
 
-The authenticated backend, not the public repository, must validate access and return short-lived protected image URLs. The UI uses the actual sync state supplied by that backend; it does not derive a success timestamp. With two or more authorized slides it randomizes a 20-second crossfade and does not repeat the currently visible image. Reduced-motion settings disable automatic crossfades.
+The authenticated backend, not the public repository, must validate access and return short-lived protected image URLs. The UI uses the actual sync state supplied by that backend; it does not derive a success timestamp. Runtime links are rendered only when they pass a narrow allowlist: an HTTPS `drive.google.com` link for Drive home and a same-origin path for the planning module. No Drive, Sheet, or planning URL is committed to the static bundle. With two or more authorized slides it randomizes a 20-second crossfade and does not repeat the currently visible image. Reduced-motion settings disable automatic crossfades.
 
 ## Deliberate limits
 
