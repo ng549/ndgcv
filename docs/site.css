@@ -1364,7 +1364,7 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
  .site-header #navigation .sidebar-utilities{position:fixed;left:16px;bottom:12px;display:flex;align-items:center;gap:4px;margin:0;padding:0;background:transparent}
  .site-header #navigation .sidebar-utilities .private-workspace-link,.site-header #navigation .sidebar-utilities .section-all-controls{position:static;display:flex;align-items:center;justify-content:center;width:44px;min-width:44px;height:44px;min-height:44px;margin:0;padding:0;border:0;background:transparent;color:#eabb87}
  .site-header #navigation .sidebar-utilities .section-all-controls{gap:0}
- .site-header #navigation .sidebar-utilities .private-workspace-link svg{width:18px;height:18px;stroke-width:1.65}
+ .site-header #navigation .sidebar-utilities .private-workspace-link svg{width:20px;height:20px;stroke-width:1.6}
  .site-header #navigation .sidebar-utilities :is(.private-workspace-link,.section-all-controls button):hover{background:transparent;color:#f7d39a}
  .site-header #navigation .sidebar-utilities .section-all-controls button{width:44px;height:44px;padding:0;border:0;border-radius:0;background:transparent;color:#eabb87}
  .site-header #navigation .sidebar-utilities :is(.private-workspace-link,.section-all-controls button):focus-visible{outline:2px solid #f4e0c2;outline-offset:-4px;background:transparent;color:#f7d39a}
@@ -1375,9 +1375,12 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
  .site-header #navigation .sidebar-primary-links>a,.site-header #navigation .sidebar-apps-links>a{min-height:44px;display:flex;align-items:center;padding:10px 0}
  .site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #eabb873d}
  .site-header #navigation .private-workspace-link{margin:0;border:0;background:transparent;color:#eabb87}
- .site-header #navigation .private-workspace-link:hover{background:transparent;color:#f7d39a}
+.site-header #navigation .private-workspace-link:hover{background:transparent;color:#f7d39a}
  .site-header .section-all-controls{display:flex;flex:0 0 auto;flex-direction:row;gap:4px;margin:0;padding:0}
  .site-header .section-all-controls button{flex:0 0 44px;border:0;background:transparent;color:#eabb87}
  .site-header .section-all-controls button:hover{background:transparent;color:#f7d39a}
  .site-header .menu-toggle{border-color:#eabb87;color:#eabb87;background:#d9b88b0c}
 }
+
+/* The secondary destinations use the same utility control to minimize their one page-level content region. */
+main[data-page-collapsible].is-minimized>:is(.apps-wrap,.holding-content){display:none!important}

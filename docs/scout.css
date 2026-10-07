@@ -73,6 +73,7 @@
 .scout-bubble:after{right:68px}
 @media(max-width:700px){.scout-widget{width:117px}.scout-bubble:after{right:49px}}
 
-/* Framed motion control beside Scout’s left foot (viewer’s right). */
-.scout-pause{position:absolute;right:0;bottom:0;margin:0;border:1px solid #eabb87;border-radius:5px;background:#152733e8;box-shadow:0 2px 6px #0003}
-.scout-pause:hover{background:#233b49;color:#fff}
+/* Plain motion glyph beside Scout’s left foot (viewer’s right). */
+.scout-pause{position:absolute;right:0;bottom:0;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#eabb87}
+.scout-pause:hover{background:transparent;color:#fff}
+.scout-pause-glyph{position:relative;display:block;width:13px;height:14px;margin:auto}.scout-pause-glyph:before,.scout-pause-glyph:after{position:absolute;top:1px;width:3px;height:12px;border-radius:1px;background:currentColor;content:''}.scout-pause-glyph:before{left:2px}.scout-pause-glyph:after{right:2px}.scout-pause.is-playing .scout-pause-glyph{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid currentColor}.scout-pause.is-playing .scout-pause-glyph:before,.scout-pause.is-playing .scout-pause-glyph:after{display:none}

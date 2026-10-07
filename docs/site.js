@@ -116,15 +116,24 @@ Object.entries(sections).forEach(([id, title]) => {
 const allControls=document.createElement('div');allControls.className='section-all-controls';
 const allControl=document.createElement('button');allControl.type='button';
 const sidebarUtilities=nav.querySelector('.sidebar-utilities');
-allControls.append(allControl);if(document.querySelector('main>section[data-collapsible]'))(sidebarUtilities||nav).append(allControls);
 const collapsibleSections=[...document.querySelectorAll('main>section[data-collapsible]')];
+const pageCollapsible=document.querySelector('main[data-page-collapsible]');
+allControls.append(allControl);if(collapsibleSections.length||pageCollapsible)(sidebarUtilities||nav).prepend(allControls);
 function syncAllControl(){
+ if(!collapsibleSections.length&&pageCollapsible){
+  const expand=pageCollapsible.classList.contains('is-minimized');
+  const label=expand?'Expand page content':'Minimize page content';
+  allControl.title=label;allControl.setAttribute('aria-label',label);
+  allControl.innerHTML=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${expand?'M5 8l7-5 7 5M5 16l7 5 7-5':'M5 3l7 5 7 5M5 21l7-5 7 5'}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return;
+ }
  const expand=collapsibleSections.some(section=>section.classList.contains('is-minimized'));
  const label=expand?'Expand all sections':'Minimize all sections';
  allControl.title=label;allControl.setAttribute('aria-label',label);
  allControl.innerHTML=`<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${expand?'M5 8l7-5 7 5M5 16l7 5 7-5':'M5 3l7 5 7-5M5 21l7-5 7 5'}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 allControl.addEventListener('click',()=>{
+ if(!collapsibleSections.length&&pageCollapsible){pageCollapsible.classList.toggle('is-minimized');syncAllControl();return;}
  const expand=collapsibleSections.some(section=>section.classList.contains('is-minimized'));
  collapsibleSections.forEach(section=>{if(section.classList.contains('is-minimized')===expand)section.querySelector(':scope>.section-bar button').click()});
  syncAllControl();

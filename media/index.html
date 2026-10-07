@@ -10,30 +10,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;650;700;750;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/site.css?v=nav-final-corrections-20261007">
+  <link rel="stylesheet" href="/holding-page.css?v=holding-polish-20261007">
   <script src="/site.js?v=layout-20260925" defer></script>
-  <style>
-    body.media-page{min-height:100vh;background:#181e24;color:#f4f0e8}
-    .media-stage{position:relative;display:grid;min-height:100vh;overflow:hidden;isolation:isolate;place-items:center;padding:72px 0}
-    .media-image,.media-shade{position:absolute;inset:0;z-index:-2}.media-image{overflow:hidden}
-    .media-image img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.72;filter:saturate(.78)}
-    .media-shade{z-index:-1;background:linear-gradient(90deg,#16232ef4 0%,#16232edc 46%,#16232ea8 100%),linear-gradient(0deg,#10161be8 0%,transparent 54%,#10161b7d 100%)}
-    .media-message{width:min(760px,88%);margin:0;color:#f4f0e8;font:700 clamp(38px,5vw,72px)/1.05 Manrope,sans-serif;letter-spacing:-.055em;text-align:center;text-wrap:balance}
-    @media(max-width:760px){.media-stage{align-items:end;padding:110px 0 48px}.media-image img{object-position:58% center}.media-shade{background:linear-gradient(0deg,#10161bf7 0%,#10161bd9 58%,#10161b69 100%)}.media-message{font-size:clamp(36px,10vw,54px)}}
-  </style>
 </head>
-<body class="media-page">
+<body class="holding-page media-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="wordmark" href="/#profile" aria-label="Nicolas Goureau, introduction">Nicolas Goureau</a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button>
   <nav id="navigation" aria-label="Main navigation">
     <div class="sidebar-primary-links"><a href="/#about">About me</a><a href="/#experience">How I got here</a><a href="/#career-master">My experience</a><a href="/#ai">How I work</a><a href="/#software-work">Building with AI</a><a href="/#product-journey">From idea to sale</a><a href="/#capabilities">What I bring</a><a href="/#value">The results</a><a href="/#build">Where I can help</a><a href="/#opportunity">What comes next</a><a href="/#education">Education</a><a href="/#contact">Let’s connect</a></div>
-    <div class="sidebar-apps-group"><div class="sidebar-apps-links"><a href="/apps/">Apps</a><a href="/media/" aria-current="page">Media</a><a href="/products/">Products</a></div></div><div class="sidebar-utilities"><a class="private-workspace-link" href="/hud/" aria-label="Open private workspace" data-tooltip="Private workspace" title="Open private workspace"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 5h14v14H5z"></path><path d="M9 12h6m-3-3 3 3-3 3"></path></svg></a></div>
+    <div class="sidebar-apps-group"><div class="sidebar-apps-links"><a href="/apps/">Apps</a><a href="/media/" aria-current="page">Media</a><a href="/products/">Products</a></div></div><div class="sidebar-utilities"><a class="private-workspace-link" href="/hud/" aria-label="Open private workspace" data-tooltip="Private workspace" title="Open private workspace"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 8.5h6l2-2h3l2 2h5v10.5H3z"></path><path d="M3 8.5V6.5h6l2 2"></path></svg></a></div>
   </nav>
 </header>
-<main id="main" class="media-stage">
-  <div class="media-image" aria-hidden="true"><img src="/illustrations/build-v3.webp" alt=""></div><div class="media-shade" aria-hidden="true"></div>
-  <h1 id="media-heading" class="media-message">Exciting things are coming. Check back soon.</h1>
+<main id="main" class="holding-stage" data-page-collapsible>
+  <div class="holding-image" aria-hidden="true"><img src="/illustrations/build-v3.webp" alt=""></div><div class="holding-shade" aria-hidden="true"></div>
+  <div class="holding-content"><h1 id="media-heading" class="holding-message">Exciting things are coming. Check back soon.</h1><p class="holding-support">A new chapter is taking shape.</p><p class="holding-signature">Nicolas</p></div>
 </main>
 </body>
 </html>

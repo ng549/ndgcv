@@ -72,6 +72,8 @@ assert(homepageNav.includes('href="/media/"'),"Homepage navigation includes the 
 const privateWorkspaceLink=homepageNav.match(/<a class="private-workspace-link"[\s\S]*?<\/a>/)?.[0]||'';
 assert(privateWorkspaceLink.includes('data-tooltip="Private workspace"'),"Private workspace entry exposes a hover and focus tooltip");
 assert(privateWorkspaceLink.includes('<svg '),"Private workspace entry uses an icon, not visible link text");
+assert(privateWorkspaceLink.includes('M3 8.5h6l2-2h3l2 2h5v10.5H3z'),"Private workspace entry uses the unboxed folder glyph");
+assert(!privateWorkspaceLink.includes('M5 5h14v14H5z'),"Private workspace entry no longer uses the boxed glyph");
 assert(!/>Private workspace</.test(privateWorkspaceLink),"Private workspace entry remains visually discreet");
 assert(homepageNav.includes('class="sidebar-primary-links"'),"Homepage navigation separates core CV links from lower navigation");
 assert(homepageNav.includes('class="sidebar-apps-group"'),"Homepage navigation has a lower Apps, Media and Products group");
@@ -88,6 +90,7 @@ assert(visualCorrections.includes('bottom:64px;width:180px;border-top'),"Desktop
 assert(visualCorrections.includes('.site-header #navigation .sidebar-primary-links{min-height:0;overflow-y:auto'),"Desktop primary links scroll independently from the lower group");
 assert(visualCorrections.includes('.sidebar-utilities .private-workspace-link,.site-header #navigation .sidebar-utilities .section-all-controls'),"Desktop utilities share the same icon row");
 assert(visualCorrections.includes('width:44px;min-width:44px;height:44px;min-height:44px'),"Desktop utility icons retain an accessible hit area");
+assert(visualCorrections.includes('.private-workspace-link svg{width:20px;height:20px;stroke-width:1.6}'),"Desktop utility glyphs share the same visual scale");
 assert(visualCorrections.includes(':focus-visible{outline:2px solid #f4e0c2'),"Desktop utility icons retain a visible keyboard focus state");
 console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
 
@@ -128,10 +131,14 @@ assert(appsNav.includes('aria-label="Open private workspace"'),"Apps private wor
 console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and Apps/Media/Products navigation checked.');
 
 const mediaPage=fs.readFileSync('docs/media/index.html','utf8');
-assert(mediaPage.includes('class="media-page"'),"Media page uses the established site shell");
+assert(mediaPage.includes('class="holding-page media-page"'),"Media page uses the established site shell");
 assert(mediaPage.includes('Exciting things are coming. Check back soon.'),"Media page has the agreed single message");
+assert(mediaPage.includes('class="holding-support">A new chapter is taking shape.</p>'),"Media page adds its restrained supporting line");
+assert(mediaPage.includes('class="holding-signature">Nicolas</p>'),"Media page includes Nicolas's restrained signature");
+assert(mediaPage.includes('data-page-collapsible'),"Media page supports the shared minimize control");
 assert(!mediaPage.includes('A place for the work in motion.')&&!mediaPage.includes('This collection is in development')&&!mediaPage.includes('Coming soon'),"Media page has no verbose roadmap copy or availability badge");
 assert(mediaPage.includes('/illustrations/build-v3.webp'),"Media page uses an existing local brand image");
+assert(mediaPage.includes('/holding-page.css?v=holding-polish-20261007'),"Media page uses the shared holding-page treatment");
 assert(mediaPage.includes('href="/apps/"'),"Media page retains the Apps destination");
 const mediaNav=mediaPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(mediaNav.includes('class="sidebar-primary-links"'),"Media page separates primary navigation");
@@ -143,16 +150,23 @@ assert(mediaNav.includes('class="private-workspace-link"'),"Media page retains t
 assert(fs.existsSync('dist/media/index.html'),"Media page is packaged");
 assert(fs.existsSync('dist/illustrations/build-v3.webp'),"Media page background image is packaged");
 const productsPage=fs.readFileSync('docs/products/index.html','utf8');
-assert(productsPage.includes('class="products-page"'),"Products page uses the established site shell");
+assert(productsPage.includes('class="holding-page products-page"'),"Products page uses the established site shell");
 assert(productsPage.includes('Exciting things are coming. Check back soon.'),"Products page has the agreed single message");
+assert(productsPage.includes('class="holding-support">A new chapter is taking shape.</p>'),"Products page adds its restrained supporting line");
+assert(productsPage.includes('class="holding-signature">Nicolas</p>'),"Products page includes Nicolas's restrained signature");
+assert(productsPage.includes('data-page-collapsible'),"Products page supports the shared minimize control");
 assert(productsPage.includes('/illustrations/product-v3.webp'),"Products page uses an existing local brand image");
+assert(productsPage.includes('/holding-page.css?v=holding-polish-20261007'),"Products page uses the shared holding-page treatment");
 const productsNav=productsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(productsNav.includes('href="/products/" aria-current="page"'),"Products is marked as the current destination");
 assert(productsNav.includes('href="/apps/"')&&productsNav.includes('href="/media/"'),"Products navigation retains Apps and Media destinations");
 assert(!productsNav.includes('Explore more')&&!productsNav.includes('Coming soon')&&!productsNav.includes('sidebar-future-link'),"Products navigation has no heading, availability badge or disabled product link");
 assert(fs.existsSync('dist/products/index.html'),"Products page is packaged");
 assert(fs.existsSync('dist/illustrations/product-v3.webp'),"Products page background image is packaged");
+assert(fs.existsSync('dist/holding-page.css'),"Shared holding-page stylesheet is packaged");
 assert(fs.readFileSync('docs/site.js','utf8').includes('sidebarUtilities||nav'),"Homepage keeps mobile utility controls with the private workspace action");
+assert(fs.readFileSync('docs/site.js','utf8').includes('(sidebarUtilities||nav).prepend(allControls)'),"Minimize is placed before the private workspace utility");
+assert(fs.readFileSync('docs/scout.js','utf8').includes('scout-pause-glyph'),"Scout uses a drawn control glyph instead of an emoji tile");
 assert(visualCorrections.includes('.site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px'),"Mobile utility controls stay in one row");
 assert(visualCorrections.includes('.site-header .menu-toggle{border-color:#eabb87;color:#eabb87'),"Mobile menu toggle uses the gold navigation accent");
 console.log('Media and Products: branded image, one agreed message, packaged routes, and shared navigation checked.');
