@@ -91,6 +91,7 @@ assert(visualCorrections.includes('.site-header #navigation .sidebar-primary-lin
 assert(visualCorrections.includes('.sidebar-utilities .private-workspace-link,.site-header #navigation .sidebar-utilities .section-all-controls'),"Desktop utilities share the same icon row");
 assert(visualCorrections.includes('width:44px;min-width:44px;height:44px;min-height:44px'),"Desktop utility icons retain an accessible hit area");
 assert(visualCorrections.includes('.private-workspace-link svg{width:20px;height:20px;stroke-width:1.6}'),"Desktop utility glyphs share the same visual scale");
+assert.equal((visualCorrections.match(/\.sidebar-utilities \.private-workspace-link svg\{width:20px;height:20px;stroke-width:1\.6\}/g)||[]).length,2,"Utility glyphs stay matched at desktop and mobile breakpoints");
 assert(visualCorrections.includes(':focus-visible{outline:2px solid #f4e0c2'),"Desktop utility icons retain a visible keyboard focus state");
 console.log('Document edits: collapsed career master and roles, combined approaches/stages, PDF download, contact cleanup and footer checked.');
 

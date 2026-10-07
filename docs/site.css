@@ -1375,6 +1375,7 @@ footer.shell{flex-direction:row;flex-wrap:wrap;align-items:center;justify-conten
  .site-header #navigation .sidebar-primary-links>a,.site-header #navigation .sidebar-apps-links>a{min-height:44px;display:flex;align-items:center;padding:10px 0}
  .site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #eabb873d}
  .site-header #navigation .private-workspace-link{margin:0;border:0;background:transparent;color:#eabb87}
+ .site-header #navigation .sidebar-utilities .private-workspace-link svg{width:20px;height:20px;stroke-width:1.6}
 .site-header #navigation .private-workspace-link:hover{background:transparent;color:#f7d39a}
  .site-header .section-all-controls{display:flex;flex:0 0 auto;flex-direction:row;gap:4px;margin:0;padding:0}
  .site-header .section-all-controls button{flex:0 0 44px;border:0;background:transparent;color:#eabb87}
