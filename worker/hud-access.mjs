@@ -50,6 +50,14 @@ export function hudNotFoundResponse() {
   return noStoreResponse('Not found.', 404);
 }
 
+export function hudNotConnectedResponse() {
+  return noStoreResponse('HUD opportunities are not connected.', 409);
+}
+
+export function hudBackendUnavailableResponse() {
+  return noStoreResponse('HUD opportunities are unavailable.', 502);
+}
+
 export function noStoreHudResponse(response) {
   const headers = new Headers(response.headers);
   headers.set('Cache-Control', cacheControl);

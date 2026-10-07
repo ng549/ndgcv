@@ -14,8 +14,11 @@ Do not set any value until it is copied from the saved Cloudflare Access applica
 | `HUD_ACCESS_TEAM_DOMAIN` | Exact Access issuer/team domain, including `https://`, for example `https://&lt;team&gt;.cloudflareaccess.com`. |
 | `HUD_ACCESS_AUD` | The Access application's **Application Audience (AUD) Tag**. |
 | `HUD_OWNER_EMAIL` | The one owner email allowed by policy. |
+| `HUD_BACKEND_ORIGIN` | Optional exact origin `https://agency-nexus-command.fly.dev`. When unset or malformed, an authenticated `GET /api/hud/opportunities` returns a no-store `409` and makes no backend request. |
 
 The Worker fetches the signing JWKS only from the configured Access team domain, verifies `RS256`, issuer, audience, `nbf`, `iat`, and `exp`, requires an `app` token, and compares the verified JWT `email` claim with `HUD_OWNER_EMAIL`.
+
+After that gate succeeds, the Worker may proxy only `GET /api/hud/opportunities` to the configured fixed backend origin. It forwards only the verified request's Access JWT assertion and `Accept: application/json`; it does not forward cookies, browser credentials, caller-selected paths, or CORS headers. Any other `/api/hud/*` request remains a no-store `404`.
 
 The current Google identity-provider `invalid_client` error must be resolved in Cloudflare using the real matching Google OAuth client ID and secret before these values are enabled. This repository contains neither OAuth credentials nor Access metadata.
 

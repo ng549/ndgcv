@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { exportJWK, generateKeyPair, SignJWT } from 'jose';
-import worker from '../worker/index.js';
+import worker, { proxyHudOpportunities } from '../worker/index.js';
 import { isHudEncodedAlias, requireHudAccess, resetHudAccessKeyCacheForTests } from '../worker/hud-access.mjs';
 
 const issuer = 'https://career-hud-test.cloudflareaccess.com';
@@ -36,16 +36,19 @@ async function token(overrides = {}) {
     .sign(privateKey);
 }
 
-async function withAccessJwks(run) {
+async function withAccessJwks(run, upstreamFetch) {
   const originalFetch = globalThis.fetch;
   let requests = 0;
-  globalThis.fetch = async input => {
+  globalThis.fetch = async (input, init) => {
     requests += 1;
-    assert.equal(String(input), `${issuer}/cdn-cgi/access/certs`);
-    return new Response(JSON.stringify({ keys: [publicJwk] }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    if (String(input) === `${issuer}/cdn-cgi/access/certs`) {
+      return new Response(JSON.stringify({ keys: [publicJwk] }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    assert(upstreamFetch, `Unexpected network request: ${input}`);
+    return upstreamFetch(input, init);
   };
   resetHudAccessKeyCacheForTests();
   try {
@@ -160,10 +163,18 @@ response = await worker.fetch(request('/apps/restoreflow/example'), {
 assert.equal(response.status, 200, 'HUD middleware leaves Apps proxy routes available.');
 assert.equal(appCalls, 1, 'Apps proxy binding receives its request.');
 
+const backendOrigin = 'https://agency-nexus-command.fly.dev';
+const backendCalls = [];
+let backendResponse = new Response(JSON.stringify({ values: [], today: [], revisions: {}, links: {} }), {
+  headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8' },
+  status: 200,
+});
+
 await withAccessJwks(async () => {
   let protectedAssetCalls = 0;
   const protectedEnv = {
     ...env,
+    HUD_BACKEND_ORIGIN: backendOrigin,
     ASSETS: {
       fetch: async () => {
         protectedAssetCalls += 1;
@@ -178,10 +189,54 @@ await withAccessJwks(async () => {
   response = await worker.fetch(request('/api/hud/', { token: await token() }), protectedEnv);
   assert.equal(response.status, 404, 'Future HUD API remains unavailable even to the owner');
   assertNoStore(response, 'Future API response is never cacheable.');
+
+  const ownerAssertion = await token();
+  response = await worker.fetch(request('/api/hud/opportunities', {
+    headers: { Cookie: 'untrusted=browser-cookie' },
+    token: ownerAssertion,
+  }), protectedEnv);
+  assert.equal(response.status, 200, 'The owner may read the one proxied opportunities endpoint.');
+  assertNoStore(response, 'Proxied opportunities are never cacheable.');
+  assert.equal(response.headers.get('Access-Control-Allow-Origin'), null, 'The proxy does not add or relay CORS headers.');
+  assert.equal(backendCalls.length, 1, 'The protected request reaches the fixed backend once.');
+  assert.equal(String(backendCalls[0].input), `${backendOrigin}/api/hud/opportunities`, 'The proxy cannot use a caller-selected backend path.');
+  assert.equal(backendCalls[0].init.method, 'GET', 'The proxy permits only a GET read.');
+  assert.equal(new Headers(backendCalls[0].init.headers).get('Accept'), 'application/json');
+  assert.equal(new Headers(backendCalls[0].init.headers).get('cf-access-jwt-assertion'), ownerAssertion, 'The existing owner assertion is forwarded to the backend.');
+  assert.equal(new Headers(backendCalls[0].init.headers).get('Cookie'), null, 'Browser cookies are never forwarded to the backend.');
+
+  response = await worker.fetch(request('/api/hud/opportunities', { method: 'PATCH', token: await token() }), protectedEnv);
+  assert.equal(response.status, 404, 'The same-origin proxy does not expose backend writes.');
+  assertNoStore(response, 'Unsupported proxy methods are never cacheable.');
+  assert.equal(backendCalls.length, 1, 'Unsupported methods never reach the backend.');
+
+  response = await worker.fetch(request('/api/hud/opportunities', { token: await token() }), { ...protectedEnv, HUD_BACKEND_ORIGIN: undefined });
+  assert.equal(response.status, 409, 'An owner sees an honest unconnected state when the backend origin is absent.');
+  assertNoStore(response, 'A missing backend origin is never cacheable.');
+  assert.equal(backendCalls.length, 1, 'A missing backend origin makes no backend request.');
+
+  response = await proxyHudOpportunities(request('/api/hud/opportunities', { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: 'https://example.invalid' }, async () => {
+    assert.fail('An invalid backend origin must not be fetched.');
+  });
+  assert.equal(response.status, 409, 'An untrusted backend origin fails closed.');
+
+  backendResponse = new Response(JSON.stringify({ error: 'hud_source_unavailable' }), { status: 502 });
+  response = await worker.fetch(request('/api/hud/opportunities', { token: await token() }), protectedEnv);
+  assert.equal(response.status, 502, 'An upstream source error remains an honest unavailable state.');
+  assertNoStore(response, 'Upstream failures are never cacheable.');
+
+  response = await proxyHudOpportunities(request('/api/hud/opportunities', { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: backendOrigin }, async () => {
+    throw new Error('backend offline');
+  });
+  assert.equal(response.status, 502, 'A network failure becomes an honest unavailable state.');
+  assertNoStore(response, 'Network failures are never cacheable.');
   response = await worker.fetch(request('/hud/', { host: 'www.nicolasgoureau.com', token: await token() }), protectedEnv);
   assert.equal(response.status, 404, 'Worker rejects alternate hosts even with a valid owner JWT');
   assertNoStore(response, 'Alternate-host Worker response is never cacheable.');
   assert.equal(protectedAssetCalls, 1);
+}, async (input, init) => {
+  backendCalls.push({ init, input });
+  return backendResponse;
 });
 
-console.log('Career HUD Access gate: missing configuration, alternate and encoded aliases, raw identity header, unsigned/tampered/expired/wrong-owner/wrong-audience/wrong-issuer/non-app tokens, HEAD, valid signed owner token, protected no-store HUD assets, public-site and Apps-proxy preservation, and future API fail-closed behavior passed.');
+console.log('Career HUD Access gate: missing configuration, alternate and encoded aliases, raw identity header, unsigned/tampered/expired/wrong-owner/wrong-audience/wrong-issuer/non-app tokens, HEAD, valid signed owner token, protected no-store HUD assets, public-site and Apps-proxy preservation, and the bounded opportunities proxy passed.');
