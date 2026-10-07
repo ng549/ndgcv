@@ -100,6 +100,11 @@ assert.equal((h.match(/<img[^>]* src="assets\/idea-to-sale\/[^" ]+-private-label
 
 
 const appsPage=fs.readFileSync('docs/apps/index.html','utf8');
+for(const [label,page] of Object.entries({homepage:h,apps:appsPage})){
+ assert(page.includes('site.css?v=nav-mobile-refresh-20261007'),`${label} requests the refreshed shared stylesheet`);
+ assert(page.includes('site.js?v=nav-mobile-refresh-20261007'),`${label} requests the refreshed shared navigation script`);
+ assert(!page.includes('nav-final-corrections-20261007')&&!page.includes('layout-20260925'),`${label} has no stale navigation asset URL`);
+}
 assert(appsPage.includes('class="apps-page"'),"Apps page uses the CV-continuation shell");
 assert(appsPage.includes('<span class="eyebrow">Apps</span>'),"Apps eyebrow is present");
 assert(appsPage.includes('Practical tools built around real work.'),"Apps portfolio headline is present");
@@ -132,6 +137,10 @@ assert(appsNav.includes('aria-label="Open private workspace"'),"Apps private wor
 console.log('Apps page: nine demo cards, screenshots, routes, parallax shell, Scout, no footer and Apps/Media/Products navigation checked.');
 
 const mediaPage=fs.readFileSync('docs/media/index.html','utf8');
+for(const [label,page] of Object.entries({media:mediaPage,products:fs.readFileSync('docs/products/index.html','utf8')})){
+ assert(page.includes('site.css?v=nav-mobile-refresh-20261007')&&page.includes('site.js?v=nav-mobile-refresh-20261007'),`${label} requests refreshed shared navigation assets`);
+ assert(!page.includes('nav-final-corrections-20261007')&&!page.includes('layout-20260925'),`${label} has no stale shared navigation asset URL`);
+}
 assert(mediaPage.includes('class="holding-page media-page"'),"Media page uses the established site shell");
 assert(mediaPage.includes('Exciting things are coming. Check back soon.'),"Media page has the agreed single message");
 assert(mediaPage.includes('class="holding-support">A new chapter is taking shape.</p>'),"Media page adds its restrained supporting line");
@@ -139,7 +148,7 @@ assert(mediaPage.includes('class="holding-signature">Nicolas</p>'),"Media page i
 assert(mediaPage.includes('data-page-collapsible'),"Media page supports the shared minimize control");
 assert(!mediaPage.includes('A place for the work in motion.')&&!mediaPage.includes('This collection is in development')&&!mediaPage.includes('Coming soon'),"Media page has no verbose roadmap copy or availability badge");
 assert(mediaPage.includes('/illustrations/build-v3.webp'),"Media page uses an existing local brand image");
-assert(mediaPage.includes('/holding-page.css?v=holding-polish-20261007'),"Media page uses the shared holding-page treatment");
+assert(mediaPage.includes('/holding-page.css?v=holding-mobile-refresh-20261007'),"Media page uses the cache-refreshed holding-page treatment");
 assert(mediaPage.includes('href="/apps/"'),"Media page retains the Apps destination");
 const mediaNav=mediaPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(mediaNav.includes('class="sidebar-primary-links"'),"Media page separates primary navigation");
@@ -157,7 +166,7 @@ assert(productsPage.includes('class="holding-support">A new chapter is taking sh
 assert(productsPage.includes('class="holding-signature">Nicolas</p>'),"Products page includes Nicolas's restrained signature");
 assert(productsPage.includes('data-page-collapsible'),"Products page supports the shared minimize control");
 assert(productsPage.includes('/illustrations/product-v3.webp'),"Products page uses an existing local brand image");
-assert(productsPage.includes('/holding-page.css?v=holding-polish-20261007'),"Products page uses the shared holding-page treatment");
+assert(productsPage.includes('/holding-page.css?v=holding-mobile-refresh-20261007'),"Products page uses the cache-refreshed holding-page treatment");
 const productsNav=productsPage.match(/<nav id="navigation"[\s\S]*?<\/nav>/)?.[0]||'';
 assert(productsNav.includes('href="/products/" aria-current="page"'),"Products is marked as the current destination");
 assert(productsNav.includes('href="/apps/"')&&productsNav.includes('href="/media/"'),"Products navigation retains Apps and Media destinations");
