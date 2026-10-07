@@ -64,6 +64,13 @@ const state = {
   ]
 };
 
+const privateMedia = {
+  currentIndex: -1,
+  visibleLayer: 0,
+  slides: [],
+  timer: 0
+};
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
@@ -134,7 +141,169 @@ function renderToday() {
   noteActions.innerHTML = `<ul class="check-list">${state.note.actions.map(action => `<li><input id="${action.id}" type="checkbox" data-note-action="${action.id}" ${action.complete ? 'checked' : ''}><label for="${action.id}">${escapeHTML(action.label)}</label></li>`).join('')}</ul>`;
   $('#note-notes').innerHTML = `<p class="note-prompt">${escapeHTML(state.note.prompts[0])}</p><p class="note-prompt">${escapeHTML(state.note.prompts[1])}</p>`;
   $('#note-heading').textContent = state.note.title;
+  const nextFocus = state.focusItems.find(item => !item.complete);
+  const incompleteNote = state.note.actions.find(action => !action.complete);
+  $('#opportunity-status-count').textContent = `${state.opportunities.length} sample opportunities`;
+  $('#next-action-title').textContent = incompleteNote?.label || nextFocus?.title || 'No open sample action';
+  $('#today-progress').textContent = `${state.focusItems.filter(item => item.complete).length} of ${state.focusItems.length} sample blocks complete`;
   updateNoteTabs();
+}
+
+function setCurrentDate() {
+  const now = new Date();
+  const date = $('#current-date');
+  const month = $('#month-label');
+  date.dateTime = now.toISOString().slice(0, 10);
+  date.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(now);
+  month.textContent = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' }).format(now);
+  const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(now);
+  if ($(`[data-day="${day}"]`)) setDay(day, { announceSelection: false });
+}
+
+function setManualLocation(value, announcement = '') {
+  const location = value.trim();
+  if (!location) return;
+  $('#location-display').textContent = location;
+  $('#weather-display').textContent = 'Weather unavailable';
+  if (announcement) announce(announcement);
+}
+
+function setupLocationControls() {
+  const controls = $('#location-controls');
+  const toggle = $('#location-toggle');
+  toggle.addEventListener('click', () => {
+    controls.hidden = !controls.hidden;
+    toggle.setAttribute('aria-expanded', String(!controls.hidden));
+    if (!controls.hidden) $('#location-input').focus();
+  });
+  controls.addEventListener('submit', event => {
+    event.preventDefault();
+    const field = $('#location-input');
+    if (!field.value.trim()) { field.focus(); return; }
+    setManualLocation(field.value, 'Location saved for this preview session. Weather remains unavailable.');
+    controls.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+  });
+  $('#use-device-location').addEventListener('click', () => {
+    if (!navigator.geolocation) { announce('Device location is unavailable. Enter a location manually.'); return; }
+    const deviceButton = $('#use-device-location');
+    runOnce(deviceButton, () => {
+      $('#location-display').textContent = 'Requesting device location…';
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const latitude = position.coords.latitude.toFixed(3);
+          const longitude = position.coords.longitude.toFixed(3);
+          setManualLocation(`Device location · ${latitude}, ${longitude}`, 'Device location saved for this preview session. Weather remains unavailable.');
+        },
+        () => {
+          $('#location-display').textContent = 'Location not set';
+          announce('Device location was unavailable. Enter a location manually.');
+        },
+        { enableHighAccuracy: false, maximumAge: 300000, timeout: 10000 }
+      );
+    });
+  });
+}
+
+function formatActualSyncTime(value) {
+  if (typeof value !== 'string' || !value) return null;
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) return null;
+  return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(timestamp));
+}
+
+function renderSyncStatus({ state: syncState = 'unconnected', lastSuccessfulAt = null } = {}) {
+  const allowedStates = new Set(['loading', 'fresh', 'stale', 'error']);
+  const phase = allowedStates.has(syncState) ? syncState : 'unconnected';
+  const copy = {
+    loading: ['Checking private source', 'No sync result is available yet.'],
+    fresh: ['Private source is current', 'The private source reported a successful refresh.'],
+    stale: ['Private source needs refresh', 'The last successful refresh is older than the source policy.'],
+    error: ['Private source is unavailable', 'No new data was loaded.'],
+    unconnected: ['Not connected', 'No private source is available in this preview.']
+  }[phase];
+  const element = $('#sync-status');
+  const lastSuccess = formatActualSyncTime(lastSuccessfulAt);
+  element.dataset.syncState = phase;
+  $('#sync-status-title').textContent = copy[0];
+  $('#sync-status-detail').textContent = copy[1];
+  const time = $('#sync-last-success');
+  time.hidden = !lastSuccess;
+  if (lastSuccess) {
+    time.dateTime = new Date(lastSuccessfulAt).toISOString();
+    time.textContent = `Last successful sync: ${lastSuccess}`;
+  }
+}
+
+function normalizedPrivateSlides(value) {
+  if (!Array.isArray(value)) return [];
+  return value.filter(item => item && typeof item.src === 'string' && /^https:\/\//.test(item.src)).map(item => ({
+    id: typeof item.id === 'string' ? item.id : item.src,
+    src: item.src,
+    alt: typeof item.alt === 'string' ? item.alt : ''
+  }));
+}
+
+function chooseNextPrivateSlide() {
+  if (!privateMedia.slides.length) return -1;
+  if (privateMedia.currentIndex < 0) return Math.floor(Math.random() * privateMedia.slides.length);
+  if (privateMedia.slides.length < 2) return privateMedia.currentIndex;
+  const options = privateMedia.slides.map((_, index) => index).filter(index => index !== privateMedia.currentIndex);
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+function showPrivateSlide(index, { initial = false } = {}) {
+  const slide = privateMedia.slides[index];
+  if (!slide) return;
+  const layers = $$('[data-photo-layer]');
+  const previousLayer = privateMedia.visibleLayer;
+  const nextLayer = initial ? 0 : 1 - privateMedia.visibleLayer;
+  const image = layers[nextLayer];
+  image.src = slide.src;
+  image.alt = slide.alt;
+  image.hidden = false;
+  if (initial) image.classList.add('is-visible');
+  else requestAnimationFrame(() => {
+    image.classList.add('is-visible');
+    layers[previousLayer].classList.remove('is-visible');
+  });
+  privateMedia.visibleLayer = nextLayer;
+  privateMedia.currentIndex = index;
+}
+
+function installPrivateSlides(slides) {
+  window.clearInterval(privateMedia.timer);
+  privateMedia.timer = 0;
+  privateMedia.currentIndex = -1;
+  privateMedia.visibleLayer = 0;
+  privateMedia.slides = normalizedPrivateSlides(slides);
+  const frame = $('.memory-frame');
+  const layers = $$('[data-photo-layer]');
+  layers.forEach(layer => { layer.removeAttribute('src'); layer.alt = ''; layer.hidden = true; layer.classList.remove('is-visible'); });
+  if (!privateMedia.slides.length) {
+    frame.dataset.privatePhotoState = 'unconnected';
+    $('#memory-frame-title').textContent = 'Photos are not connected';
+    $('#photo-frame-detail').textContent = 'This protected preview does not load personal photos.';
+    return;
+  }
+  frame.dataset.privatePhotoState = 'ready';
+  $('#memory-frame-title').textContent = 'Private photos connected';
+  $('#photo-frame-detail').textContent = 'Shown only by the protected HUD session.';
+  showPrivateSlide(chooseNextPrivateSlide(), { initial: true });
+  if (privateMedia.slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    privateMedia.timer = window.setInterval(() => showPrivateSlide(chooseNextPrivateSlide()), 20000);
+  }
+}
+
+function setupPrivateMedia() {
+  const supplied = window.__CAREER_HUD_PRIVATE_MEDIA__;
+  if (!supplied || typeof supplied !== 'object') {
+    renderSyncStatus();
+    installPrivateSlides([]);
+    return;
+  }
+  renderSyncStatus(supplied.sync);
+  installPrivateSlides(supplied.photos);
 }
 
 function updateNoteTabs() {
@@ -190,18 +359,18 @@ function renderMaterials() {
 }
 
 function renderDirection() {
-  $('#direction-content').innerHTML = `<section class="mandate-card panel"><p class="eyebrow">Career mandate</p><p>${escapeHTML(state.mandate)}</p><button class="text-action gold-text" type="button" data-open-dialog="mandate">Edit sample mandate</button></section>
-    <section class="targets-card panel"><p class="eyebrow">Target companies</p><h3>Situations to explore</h3><ul class="target-list">${state.targets.map(target => `<li><strong>${escapeHTML(target.name)}</strong><span>${escapeHTML(target.reason)}</span></li>`).join('')}</ul></section>`;
+  $('#direction-content').innerHTML = `<section class="mandate-card panel glass-panel"><p class="eyebrow">Career mandate</p><p>${escapeHTML(state.mandate)}</p><button class="text-action gold-text" type="button" data-open-dialog="mandate">Edit sample mandate</button></section>
+    <section class="targets-card panel glass-panel"><p class="eyebrow">Target companies</p><h3>Situations to explore</h3><ul class="target-list">${state.targets.map(target => `<li><strong>${escapeHTML(target.name)}</strong><span>${escapeHTML(target.reason)}</span></li>`).join('')}</ul></section>`;
 }
 
-function setDay(day) {
+function setDay(day, { announceSelection = true } = {}) {
   state.selectedDay = day;
   $$('[data-day]').forEach(button => {
     const selected = button.dataset.day === day;
     button.classList.toggle('is-selected', selected);
     button.setAttribute('aria-pressed', String(selected));
   });
-  announce(`${day} selected in the sample week.`);
+  if (announceSelection) announce(`${day} selected in the sample week.`);
 }
 
 function openDialog(kind, editId = '') {
@@ -349,16 +518,21 @@ function handleClick(event) {
   if (contact) { announce('Sample follow-up logged locally; no person was contacted.'); return; }
 }
 
-function setupParallax() {
+function setupGlassDepth() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const photo = $('.hero-photo');
-  window.addEventListener('pointermove', event => {
+  const hero = $('.hero');
+  hero.addEventListener('pointermove', event => {
     if (event.pointerType === 'touch') return;
-    const x = ((event.clientX / window.innerWidth) - .5) * -6;
-    const y = ((event.clientY / window.innerHeight) - .5) * -4;
-    photo.style.setProperty('--parallax-x', `${x}px`);
-    photo.style.setProperty('--parallax-y', `${y}px`);
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - .5) * .7;
+    const y = ((event.clientY - bounds.top) / bounds.height - .5) * -.55;
+    hero.style.setProperty('--glass-tilt-x', `${x.toFixed(3)}deg`);
+    hero.style.setProperty('--glass-tilt-y', `${y.toFixed(3)}deg`);
   }, { passive: true });
+  hero.addEventListener('pointerleave', () => {
+    hero.style.setProperty('--glass-tilt-x', '0deg');
+    hero.style.setProperty('--glass-tilt-y', '0deg');
+  });
 }
 
 function init() {
@@ -367,12 +541,17 @@ function init() {
   renderContacts();
   renderMaterials();
   renderDirection();
+  setCurrentDate();
+  setupLocationControls();
+  setupPrivateMedia();
+  setupGlassDepth();
   document.addEventListener('click', handleClick);
   document.addEventListener('change', event => {
     if (event.target.matches('#focus-status')) { state.focusFilter = event.target.value; renderToday(); }
     if (event.target.matches('[data-note-action]')) {
       const action = state.note.actions.find(value => value.id === event.target.dataset.noteAction);
       action.complete = event.target.checked;
+      renderToday();
       announce(action.complete ? 'Sample note action completed.' : 'Sample note action reopened.');
     }
     if (event.target.matches('#opportunity-search, #status-filter, #company-filter')) renderOpportunities();
@@ -390,7 +569,6 @@ function init() {
     $('#focus-list').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     announce('Today is ready for review in this sample workspace.');
   }));
-  setupParallax();
 }
 
 init();

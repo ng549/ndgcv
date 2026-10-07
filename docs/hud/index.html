@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-private-photo-endpoint="/api/hud/photos">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Sample-only Career HUD preview for Nicolas Goureau.">
   <title>Career HUD — Sample Preview</title>
+  <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,41 +16,75 @@
 <body data-hud-preview="sample-only">
   <a class="skip-link" href="#hud-main">Skip to workspace</a>
   <div class="hud-shell">
-    <aside class="rail" aria-label="Career HUD navigation">
-      <a class="brand" href="#today" data-view="today">
-        <span>Nicolas Goureau</span>
-        <small>Private HUD</small>
-      </a>
+    <aside class="rail glass-panel" aria-label="Career HUD navigation">
+      <div class="rail-navigation">
+        <a class="brand" href="#today" data-view="today">
+          <span>Nicolas Goureau</span>
+          <small>Personal career HUD</small>
+        </a>
 
-      <nav class="primary-nav" aria-label="Workspace sections">
-        <button class="nav-item is-active" type="button" data-view="today" aria-current="page">Today</button>
-        <button class="nav-item" type="button" data-view="career">Career &amp; direction</button>
-        <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
-        <button class="nav-item" type="button" data-view="materials">Materials</button>
-      </nav>
+        <nav class="primary-nav" aria-label="Workspace sections">
+          <button class="nav-item is-active" type="button" data-view="today" aria-current="page">Today</button>
+          <button class="nav-item" type="button" data-view="career">Career &amp; direction</button>
+          <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
+          <button class="nav-item" type="button" data-view="materials">Materials</button>
+        </nav>
 
-      <div class="rail-divider"></div>
+        <div class="rail-divider"></div>
 
-      <div class="future-nav" aria-label="Future workspaces">
-        <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
-        <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
+        <div class="future-nav" aria-label="Future workspaces">
+          <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
+          <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
+        </div>
       </div>
 
-      <a class="public-site" href="../">Public website</a>
+      <div class="rail-private-stack">
+        <figure class="memory-frame glass-panel" data-private-photo-state="unconnected" aria-labelledby="memory-frame-title">
+          <div class="photo-slides" aria-hidden="true">
+            <img class="photo-layer" alt="" data-photo-layer="0" hidden>
+            <img class="photo-layer" alt="" data-photo-layer="1" hidden>
+          </div>
+          <figcaption class="memory-frame-copy">
+            <p class="eyebrow">Private memories</p>
+            <strong id="memory-frame-title">Photos are not connected</strong>
+            <span id="photo-frame-detail">This protected preview does not load personal photos.</span>
+          </figcaption>
+        </figure>
+
+        <section class="sync-status glass-panel" id="sync-status" data-sync-state="unconnected" aria-live="polite" aria-label="Private source status">
+          <p class="eyebrow">Live sync</p>
+          <strong id="sync-status-title">Not connected</strong>
+          <span id="sync-status-detail">No private source is available in this preview.</span>
+          <time id="sync-last-success" hidden></time>
+        </section>
+
+        <a class="public-site" href="../">View public CV</a>
+      </div>
     </aside>
 
-    <main id="hud-main" class="hud-main">
-      <header class="hero" aria-labelledby="workspace-title">
-        <div class="hero-photo" aria-hidden="true"></div>
-        <div class="hero-content">
-          <div>
-            <p class="date-line"><time datetime="2026-10-06">Tuesday, October 6, 2026</time></p>
-            <p class="eyebrow sample-badge">Sample data</p>
+    <main id="hud-main" class="hud-main" tabindex="-1">
+      <header class="hero glass-panel" aria-labelledby="workspace-title">
+        <div class="hero-context">
+          <p class="eyebrow sample-badge">Sample data · live sources unavailable</p>
+          <div class="context-line">
+            <time id="current-date" datetime="">Loading today…</time>
+            <span aria-hidden="true">·</span>
+            <span id="location-display">Location not set</span>
+            <span aria-hidden="true">·</span>
+            <span id="weather-display">Weather unavailable</span>
           </div>
-          <div class="hero-copy">
-            <h1 id="workspace-title">Today, in focus.</h1>
-            <p>A clear plan, with room to adjust.</p>
+          <div class="location-actions">
+            <button id="location-toggle" class="text-action" type="button" aria-expanded="false" aria-controls="location-controls">Set location</button>
+            <form id="location-controls" class="location-controls" hidden>
+              <label for="location-input">Location <input id="location-input" name="location" maxlength="70" autocomplete="address-level2" placeholder="Enter a city or place"></label>
+              <button class="mini-control" type="submit">Save</button>
+              <button id="use-device-location" class="text-action" type="button">Use this device</button>
+            </form>
           </div>
+        </div>
+        <div class="hero-copy">
+          <h1 id="workspace-title">Today, in focus.</h1>
+          <p>A clear plan, with room to adjust.</p>
         </div>
         <div class="hero-actions">
           <button id="review-today" class="button button-gold" type="button">Review today</button>
@@ -57,24 +92,30 @@
         </div>
       </header>
 
-      <section class="week-strip" aria-label="Week of October 5, 2026">
-        <p>October 2026</p>
+      <section class="week-strip glass-panel" aria-label="Week overview">
+        <p id="month-label">This week</p>
         <div class="week-days" role="group" aria-label="Select a day">
-          <button type="button" data-day="Mon"><strong>Mon</strong><span>October 5</span></button>
-          <button class="is-selected" type="button" data-day="Tue" aria-pressed="true"><strong>Tue</strong><span>October 6</span><em>Today</em></button>
-          <button type="button" data-day="Wed"><strong>Wed</strong><span>October 7</span></button>
-          <button type="button" data-day="Thu"><strong>Thu</strong><span>October 8</span></button>
-          <button type="button" data-day="Fri"><strong>Fri</strong><span>October 9</span></button>
+          <button type="button" data-day="Mon"><strong>Mon</strong><span>Plan ahead</span></button>
+          <button class="is-selected" type="button" data-day="Tue" aria-pressed="true"><strong>Tue</strong><span>Current focus</span><em>Today</em></button>
+          <button type="button" data-day="Wed"><strong>Wed</strong><span>Next up</span></button>
+          <button type="button" data-day="Thu"><strong>Thu</strong><span>In view</span></button>
+          <button type="button" data-day="Fri"><strong>Fri</strong><span>Wrap up</span></button>
         </div>
       </section>
 
       <section class="view-panel is-active" data-view-panel="today" aria-labelledby="today-heading">
+        <div class="hud-overview" aria-label="Preview summary">
+          <article class="overview-card glass-panel"><p class="eyebrow">Opportunity status</p><strong id="opportunity-status-count">Sample data</strong><span>Live opportunities unavailable</span></article>
+          <article class="overview-card glass-panel"><p class="eyebrow">Next action</p><strong id="next-action-title">Loading sample focus…</strong><span>Local preview state only</span></article>
+          <article class="overview-card glass-panel"><p class="eyebrow">Today</p><strong id="today-progress">Preview plan</strong><span>No calendar connected</span></article>
+        </div>
+
         <div class="today-grid">
-          <section class="focus-panel panel">
+          <section class="focus-panel panel glass-panel">
             <header class="section-header">
               <div>
+                <p class="eyebrow">Today flow</p>
                 <h2 id="today-heading">Planned focus</h2>
-                <p class="eyebrow">Sample schedule</p>
               </div>
               <div class="schedule-controls">
                 <div class="segmented-control" role="group" aria-label="Schedule range">
@@ -97,10 +138,10 @@
             <button class="add-focus" type="button" data-open-dialog="action">Add a focus block</button>
           </section>
 
-          <aside class="working-note panel" aria-labelledby="note-heading">
+          <aside class="working-note panel glass-panel" aria-labelledby="note-heading">
             <div class="note-heading-row">
               <div>
-                <p class="eyebrow">Working note</p>
+                <p class="eyebrow">Next action</p>
                 <h2 id="note-heading">Career follow-ups</h2>
               </div>
               <button class="text-action" type="button" data-open-dialog="note">Edit note</button>
@@ -117,15 +158,15 @@
       </section>
 
       <section class="view-panel" data-view-panel="career" aria-labelledby="career-heading" hidden>
-        <header class="view-heading">
+        <header class="view-heading glass-panel">
           <div>
-            <p class="eyebrow">Career workspace</p>
+            <p class="eyebrow">Career workspace · sample only</p>
             <h2 id="career-heading">Opportunities with room to build.</h2>
-            <p>Sample companies, conversations, and next steps for the preview.</p>
+            <p>Sample companies, conversations, and next steps for this local preview. Live opportunity data is unavailable.</p>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="opportunity">Add opportunity</button>
         </header>
-        <div class="filters" aria-label="Opportunity filters">
+        <div class="filters glass-panel" aria-label="Opportunity filters">
           <label>Search <input id="opportunity-search" type="search" placeholder="Company or role"></label>
           <label>Status
             <select id="status-filter">
@@ -141,48 +182,48 @@
         </div>
         <div class="opportunity-layout">
           <div id="opportunity-list" class="opportunity-list" aria-live="polite"></div>
-          <aside id="opportunity-detail" class="opportunity-detail panel" aria-live="polite"></aside>
+          <aside id="opportunity-detail" class="opportunity-detail panel glass-panel" aria-live="polite"></aside>
         </div>
       </section>
 
       <section class="view-panel" data-view-panel="contacts" aria-labelledby="contacts-heading" hidden>
-        <header class="view-heading compact-heading">
+        <header class="view-heading compact-heading glass-panel">
           <div>
-            <p class="eyebrow">Relationships</p>
+            <p class="eyebrow">Connections · sample only</p>
             <h2 id="contacts-heading">Contacts &amp; references</h2>
             <p>Sample relationship context only. Existing reference records remain unconnected.</p>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="action">Log a follow-up</button>
         </header>
         <div id="contacts-list" class="contacts-grid"></div>
-        <section class="integration-card panel" aria-labelledby="reference-sync-heading">
+        <section class="integration-card panel glass-panel" aria-labelledby="reference-sync-heading">
           <p class="eyebrow">Reference records</p>
-          <h3 id="reference-sync-heading">Google Sheet connection is not set up</h3>
-          <p>The approved future source is a Google Sheet. This preview does not read its rows, create a connection, or contact anyone.</p>
+          <h3 id="reference-sync-heading">Private source is not connected</h3>
+          <p>The approved future source is private. This preview does not read its records, create a connection, or contact anyone.</p>
           <button class="button button-disabled" type="button" disabled>Connect references later</button>
         </section>
       </section>
 
       <section class="view-panel" data-view-panel="materials" aria-labelledby="materials-heading" hidden>
-        <header class="view-heading compact-heading">
+        <header class="view-heading compact-heading glass-panel">
           <div>
-            <p class="eyebrow">Approved source materials</p>
+            <p class="eyebrow">Approved source materials · sample only</p>
             <h2 id="materials-heading">Versions ready to use.</h2>
-            <p>Sample tracking only. Files will live in Drive when a private backend is connected.</p>
+            <p>Sample tracking only. Files will remain unavailable until a private backend is connected.</p>
           </div>
         </header>
         <div id="materials-list" class="materials-grid"></div>
-        <section class="integration-card panel">
+        <section class="integration-card panel glass-panel">
           <p class="eyebrow">Future connections</p>
-          <h3>Drive, email, and calendar are not connected</h3>
-          <p>Drafts, sending, inbox reading, Google Calendar, and iCloud Calendar parity need secure setup outside this public preview.</p>
+          <h3>Private services are not connected</h3>
+          <p>Drive, email, calendars, sending, and sync require secure setup outside this preview.</p>
         </section>
       </section>
 
       <section class="view-panel" data-view-panel="direction" aria-labelledby="direction-heading" hidden>
-        <header class="view-heading compact-heading">
+        <header class="view-heading compact-heading glass-panel">
           <div>
-            <p class="eyebrow">Career direction</p>
+            <p class="eyebrow">Career direction · sample only</p>
             <h2 id="direction-heading">What to build toward.</h2>
             <p>Keep the search focused on situations where operating leadership can make a difference.</p>
           </div>
