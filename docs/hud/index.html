@@ -22,8 +22,8 @@
       </a>
 
       <nav class="primary-nav" aria-label="Workspace sections">
-        <button class="nav-item is-active" type="button" data-view="today" aria-current="page">Today</button>
-        <button class="nav-item" type="button" data-view="career">Career &amp; direction</button>
+        <button class="nav-item" type="button" data-view="today">Today</button>
+        <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Career &amp; direction</button>
         <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
         <button class="nav-item" type="button" data-view="materials">Materials</button>
       </nav>
@@ -35,6 +35,11 @@
         <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
       </div>
 
+      <section class="private-photo-slot" aria-label="Private photo">
+        <div class="private-photo-frame" aria-hidden="true"></div>
+        <p><strong>Private photo</strong><span>Not connected</span></p>
+      </section>
+
       <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Private source status">
         <p class="eyebrow">Private opportunities</p>
         <strong id="hud-runtime-title">Not connected</strong>
@@ -45,7 +50,7 @@
         <a id="hud-career-sheet-link" hidden>Open connected opportunities sheet</a>
       </nav>
 
-      <a class="public-site" href="../">Public website</a>
+      <a class="public-site" href="../">View public CV</a>
     </aside>
 
     <main id="hud-main" class="hud-main">
@@ -53,7 +58,14 @@
         <div class="hero-photo" aria-hidden="true"></div>
         <div class="hero-content">
           <div>
-            <p class="date-line"><time datetime="2026-10-06">Tuesday, October 6, 2026</time></p>
+            <p class="date-line"><time id="hud-current-date">Loading date</time></p>
+            <div class="hud-context" aria-live="polite">
+              <span id="hud-location">Location not set</span>
+              <span id="hud-current-time">Loading time</span>
+              <span id="hud-weather">Weather unavailable</span>
+              <button id="hud-use-location" type="button">Use device location</button>
+              <button id="hud-manual-location" type="button">Set location</button>
+            </div>
             <p class="eyebrow sample-badge">Sample data</p>
           </div>
           <div class="hero-copy">
@@ -78,7 +90,7 @@
         </div>
       </section>
 
-      <section class="view-panel is-active" data-view-panel="today" aria-labelledby="today-heading">
+      <section class="view-panel" data-view-panel="today" aria-labelledby="today-heading" hidden>
         <div class="today-grid">
           <section class="focus-panel panel">
             <header class="section-header">
@@ -126,7 +138,7 @@
         </div>
       </section>
 
-      <section class="view-panel" data-view-panel="career" aria-labelledby="career-heading" hidden>
+      <section class="view-panel is-active" data-view-panel="career" aria-labelledby="career-heading">
         <header class="view-heading">
           <div>
             <p class="eyebrow">Career workspace</p>

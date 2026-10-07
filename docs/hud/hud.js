@@ -1,5 +1,5 @@
 const state = {
-  activeView: 'today',
+  activeView: 'career',
   liveOpportunities: false,
   selectedDay: 'Tue',
   schedule: 'today',
@@ -69,6 +69,47 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 let toastTimer;
+let clockTimer;
+
+function updateHeaderContext() {
+  const now = new Date();
+  const date = $('#hud-current-date');
+  const time = $('#hud-current-time');
+  if (date) {
+    date.dateTime = now.toISOString().slice(0, 10);
+    date.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(now);
+  }
+  if (time) time.textContent = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(now);
+}
+
+function setManualLocation() {
+  const value = window.prompt('Enter a city or location for this private HUD.');
+  const location = value?.trim();
+  if (!location) return;
+  $('#hud-location').textContent = location;
+  announce('Manual location saved in this browser session. Weather remains unavailable.');
+}
+
+function requestDeviceLocation() {
+  if (!navigator.geolocation) {
+    announce('Device location is unavailable in this browser. Set a location manually instead.');
+    return;
+  }
+  const button = $('#hud-use-location');
+  button.disabled = true;
+  navigator.geolocation.getCurrentPosition(
+    () => {
+      $('#hud-location').textContent = 'Device location available';
+      button.disabled = false;
+      announce('Device location is available for this browser session. Weather remains unavailable.');
+    },
+    () => {
+      button.disabled = false;
+      announce('Location permission was not granted. Set a location manually instead.');
+    },
+    { enableHighAccuracy: false, maximumAge: 15 * 60 * 1000, timeout: 10_000 }
+  );
+}
 
 function formatActualSyncTime(value) {
   if (typeof value !== 'string' || !value) return null;
@@ -532,6 +573,9 @@ function setupParallax() {
 }
 
 function init() {
+  updateHeaderContext();
+  clockTimer = window.setInterval(updateHeaderContext, 30_000);
+  showView(state.activeView);
   renderToday();
   renderOpportunities();
   renderContacts();
@@ -561,6 +605,8 @@ function init() {
     $('#focus-list').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     announce('Today is ready for review in this sample workspace.');
   }));
+  $('#hud-use-location').addEventListener('click', requestDeviceLocation);
+  $('#hud-manual-location').addEventListener('click', setManualLocation);
   setupParallax();
 }
 

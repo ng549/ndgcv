@@ -191,6 +191,9 @@ assert(hud.includes('Contacts &amp; references'),"Career HUD includes relationsh
 assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state");
 assert(hud.includes('not connected'),"Career HUD honestly labels disconnected integrations");
 assert(hud.includes('data-hud-opportunities-endpoint="/api/hud/opportunities"'),"Career HUD declares its protected opportunities endpoint");
+assert(hud.includes('id="hud-runtime-status"'),"Career HUD includes the lower-rail connection status box");
+assert(hud.includes('id="hud-location"')&&hud.includes('id="hud-current-time"')&&hud.includes('id="hud-weather"'),"Career HUD includes location, time, and weather header states");
+assert(hud.includes('private-photo-slot'),"Career HUD reserves a protected photo slot without packaging private photo pixels");
 assert(fs.existsSync('dist/hud/hud.css'),"Career HUD stylesheet is packaged");
 assert(fs.existsSync('dist/hud/hud.js'),"Career HUD script is packaged");
 assert(fs.existsSync('dist/hud/assets/storefront.webp'),"Career HUD retail photo remains under the protected HUD route");
@@ -198,6 +201,8 @@ assert(hudCSS.includes('prefers-reduced-motion'),"Career HUD honors reduced moti
 assert(hudJS.includes('runOnce'),"Career HUD protects duplicate actions");
 assert(hudJS.includes("fetch(endpoint, { credentials: 'same-origin'"),"Career HUD requests only its protected same-origin runtime endpoint");
 assert(hudJS.includes('trustedCareerSheetUrl'),"Career HUD validates the runtime-only opportunities-sheet link");
+assert(hudJS.includes('navigator.geolocation.getCurrentPosition'),"Career HUD requests device location only from the explicit header action");
+assert(hud.includes('Weather unavailable'),"Career HUD does not invent weather data without a provider");
 assert(!hud.includes('https://drive.google.com/'),"Career HUD does not package a Drive URL");
 assert(!hud.includes('https://docs.google.com/spreadsheets/'),"Career HUD does not package an opportunities-sheet URL");
 assert(!hud.includes('spreadsheets.google.com'),"Career HUD does not package a Sheet URL");
