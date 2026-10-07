@@ -177,6 +177,8 @@ assert(fs.existsSync('dist/holding-page.css'),"Shared holding-page stylesheet is
 assert(fs.readFileSync('docs/site.js','utf8').includes('sidebarUtilities||nav'),"Homepage keeps mobile utility controls with the private workspace action");
 assert(fs.readFileSync('docs/site.js','utf8').includes('(sidebarUtilities||nav).prepend(allControls)'),"Minimize is placed before the private workspace utility");
 assert(fs.readFileSync('docs/scout.js','utf8').includes('scout-pause-glyph'),"Scout uses a drawn control glyph instead of an emoji tile");
+assert(!visualCorrections.includes('body:has(#navigation.is-open) .scout-widget{visibility:hidden}'),"Scout remains visible when the mobile navigation is open");
+for(const [label,page] of Object.entries({homepage:h,apps:appsPage,media:mediaPage,products:productsPage}))assert(page.includes('/scout.css?v=scout-visible-20261007'),`${label} requests the mobile-visible Scout stylesheet`);
 assert(visualCorrections.includes('.site-header #navigation .sidebar-utilities{display:flex;align-items:center;gap:8px'),"Mobile utility controls stay in one row");
 assert(visualCorrections.includes('.site-header .menu-toggle{border-color:#eabb87;color:#eabb87'),"Mobile menu toggle uses the gold navigation accent");
 console.log('Media and Products: branded image, one agreed message, packaged routes, and shared navigation checked.');

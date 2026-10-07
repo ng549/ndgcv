@@ -319,7 +319,6 @@ main>#education.is-minimized{padding-bottom:36px!important;--band-edge:linear-gr
  .scout-widget .scout-pause{width:36px;height:36px;min-height:36px;line-height:36px;font-size:16px;right:-2px;bottom:-2px}
  .scout-widget .scout-bubble:after{right:34px}
  .scout-widget:has(.scout-bubble:not([hidden])){z-index:35}
- body:has(#navigation.is-open) .scout-widget{visibility:hidden}
 }
 @media screen and (max-width:760px){
  main>section:not(#profile) h2{font-size:clamp(27px,7.5vw,34px);line-height:1.15;overflow-wrap:break-word}
