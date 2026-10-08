@@ -71,10 +71,30 @@ async function boundedHudUpdateBody(request) {
   if (!hudUpdateContentType.test(request.headers.get('Content-Type') || '') || !isSameOriginHudWrite(request)) return null;
   const declaredLength = request.headers.get('Content-Length');
   if (declaredLength && (!/^\d+$/.test(declaredLength) || Number(declaredLength) > hudUpdateMaxBytes)) return null;
+  if (!request.body) return new Uint8Array();
+  const reader = request.body.getReader();
+  const chunks = [];
+  let byteLength = 0;
   try {
-    const body = new Uint8Array(await request.arrayBuffer());
-    return body.byteLength <= hudUpdateMaxBytes ? body : null;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      byteLength += value.byteLength;
+      if (byteLength > hudUpdateMaxBytes) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+    const body = new Uint8Array(byteLength);
+    let offset = 0;
+    for (const chunk of chunks) {
+      body.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return body;
   } catch {
+    try { await reader.cancel(); } catch { /* The request stream already failed or ended. */ }
     return null;
   }
 }

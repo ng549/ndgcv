@@ -272,6 +272,27 @@ await withAccessJwks(async () => {
   }), protectedEnv);
   assert.equal(response.status, 400, 'An oversized save is rejected before the backend.');
   assert.equal(backendCalls.length, 3, 'An oversized save never reaches the backend.');
+  let chunkedSaveCancelled = false;
+  const chunkedSave = new ReadableStream({
+    cancel() { chunkedSaveCancelled = true; },
+    start(controller) {
+      controller.enqueue(new Uint8Array(8 * 1024));
+      controller.enqueue(new Uint8Array((8 * 1024) + 1));
+    },
+  });
+  response = await worker.fetch(new Request(`https://${canonicalHost}${patchPath}`, {
+    body: chunkedSave,
+    duplex: 'half',
+    headers: {
+      'cf-access-jwt-assertion': await token(),
+      'Content-Type': 'application/json',
+      Origin: `https://${canonicalHost}`,
+    },
+    method: 'PATCH',
+  }), protectedEnv);
+  assert.equal(response.status, 400, 'An oversized chunked save is rejected before the backend.');
+  assert.equal(chunkedSaveCancelled, true, 'An oversized chunked save is cancelled without buffering the remaining stream.');
+  assert.equal(backendCalls.length, 3, 'An oversized chunked save never reaches the backend.');
   response = await worker.fetch(request(`${patchPath}?retry=attacker`, {
     body: patch,
     headers: { 'Content-Type': 'application/json', Origin: `https://${canonicalHost}` },
