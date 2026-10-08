@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday };'
+  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, localDateKey, mondayFor };'
 );
 const context = {
   window: { location: { origin: 'https://nicolasgoureau.com' } },
@@ -20,7 +20,11 @@ const context = {
   URL
 };
 vm.runInNewContext(source, context, { filename: 'docs/hud/hud.js' });
-const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday } = context.globalThis.__hudTest;
+const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, localDateKey, mondayFor } = context.globalThis.__hudTest;
+
+const wednesday = new Date('2026-10-07T12:00:00');
+assert.equal(localDateKey(wednesday), '2026-10-07', 'The sample-week key is derived from the actual local date.');
+assert.equal(localDateKey(mondayFor(wednesday)), '2026-10-05', 'A Wednesday header derives its Monday-to-Friday strip rather than a stale Tuesday sample.');
 
 const values = [
   ['opportunity_id', 'company', 'title', 'location', 'work_arrangement', 'fit_rationale', 'status', 'next_action'],
