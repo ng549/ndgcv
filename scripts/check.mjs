@@ -4,6 +4,8 @@ import {actions,connectPage} from './connect.mjs';
 const packageJson=JSON.parse(fs.readFileSync('package.json','utf8'));
 assert.equal(packageJson.dependencies.jose,'6.2.12','JWT verifier is pinned to the vetted jose package');
 assert.equal(packageJson.devDependencies.wrangler,'4.147.0','Local Worker tooling uses the current official Wrangler release');
+const productionWorkerConfig=fs.readFileSync('wrangler.jsonc','utf8');
+assert(/"keep_vars"\s*:\s*true\b/.test(productionWorkerConfig),'Production Wrangler config preserves existing runtime variables for Cloudflare Builds deploys');
 const previewWorkerConfig=fs.readFileSync('wrangler.preview.jsonc','utf8');
 assert(previewWorkerConfig.includes('"main": "worker/index.js"'),'Preview deploy runs the HUD access gate instead of static-only assets');
 assert(previewWorkerConfig.includes('"run_worker_first": true'),'Preview HUD requests reach the Worker access gate before assets');
