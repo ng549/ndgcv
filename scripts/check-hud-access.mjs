@@ -63,7 +63,9 @@ function request(path = '/hud/', options = {}) {
   const host = options.host || canonicalHost;
   const headers = new Headers(options.headers);
   if (options.token) headers.set('cf-access-jwt-assertion', options.token);
-  return new Request(`https://${host}${path}`, { headers, method: options.method });
+  const init = { headers, method: options.method };
+  if (options.body !== undefined) init.body = options.body;
+  return new Request(`https://${host}${path}`, init);
 }
 
 function assertNoStore(denial, message) {
@@ -165,7 +167,7 @@ assert.equal(appCalls, 1, 'Apps proxy binding receives its request.');
 
 const backendOrigin = 'https://agency-nexus-command.fly.dev';
 const backendCalls = [];
-let backendResponse = new Response(JSON.stringify({ values: [], today: [], revisions: {}, links: {} }), {
+let backendResponse = () => new Response(JSON.stringify({ values: [], today: [], revisions: {}, links: {} }), {
   headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8' },
   status: 200,
 });
@@ -205,22 +207,115 @@ await withAccessJwks(async () => {
   assert.equal(new Headers(backendCalls[0].init.headers).get('cf-access-jwt-assertion'), ownerAssertion, 'The existing owner assertion is forwarded to the backend.');
   assert.equal(new Headers(backendCalls[0].init.headers).get('Cookie'), null, 'Browser cookies are never forwarded to the backend.');
 
+  backendResponse = () => new Response('jpeg', {
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'image/jpeg' },
+    status: 200,
+  });
+  response = await worker.fetch(request('/api/hud/photo', { token: await token() }), protectedEnv);
+  assert.equal(response.status, 200, 'The owner may load only the fixed protected photo route.');
+  assert.equal(response.headers.get('Content-Type'), 'image/jpeg', 'The proxy preserves only the upstream JPEG type.');
+  assert.equal(response.headers.get('Access-Control-Allow-Origin'), null, 'The photo proxy does not add or relay CORS headers.');
+  assert.equal(String(backendCalls[1].input), `${backendOrigin}/api/hud/photo`, 'The photo proxy cannot use a caller-selected source.');
+  assert.equal(backendCalls[1].init.method, 'GET', 'The photo proxy permits only a GET read.');
+  assert.equal(new Headers(backendCalls[1].init.headers).get('Accept'), 'image/jpeg', 'The photo proxy requests only JPEG bytes.');
+  response = await worker.fetch(request('/api/hud/photo?fileId=attacker', { token: await token() }), protectedEnv);
+  assert.equal(response.status, 404, 'A photo query cannot select a private Drive file.');
+  assert.equal(backendCalls.length, 2, 'A rejected photo query never reaches the backend.');
+
+  const patchPath = '/api/hud/opportunities/opp_sheet001';
+  const patch = JSON.stringify({
+    actionId: 'action_update001',
+    expectedRevision: 'a'.repeat(64),
+    nextAction: 'Send a focused follow-up',
+    status: 'conversation',
+  });
+  backendResponse = () => new Response(JSON.stringify({ values: [], today: [], revisions: { opp_sheet001: 'b'.repeat(64) }, revision: 'b'.repeat(64), replayed: false, links: {} }), {
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8' },
+    status: 200,
+  });
+  response = await worker.fetch(request(patchPath, {
+    body: patch,
+    headers: { 'Content-Type': 'application/json', Cookie: 'untrusted=browser-cookie', Origin: `https://${canonicalHost}` },
+    method: 'PATCH',
+    token: ownerAssertion,
+  }), protectedEnv);
+  assert.equal(response.status, 200, 'The owner may save the two approved opportunity fields.');
+  assertNoStore(response, 'Proxied opportunity saves are never cacheable.');
+  assert.equal(response.headers.get('Access-Control-Allow-Origin'), null, 'The save proxy does not add or relay CORS headers.');
+  assert.equal(String(backendCalls[2].input), `${backendOrigin}${patchPath}`, 'The save proxy uses only the stable opportunity path.');
+  assert.equal(backendCalls[2].init.method, 'PATCH', 'The save proxy permits only PATCH for the stable opportunity route.');
+  assert.equal(new Headers(backendCalls[2].init.headers).get('Accept'), 'application/json');
+  assert.equal(new Headers(backendCalls[2].init.headers).get('Content-Type'), 'application/json');
+  assert.equal(new Headers(backendCalls[2].init.headers).get('Cookie'), null, 'Browser cookies are never forwarded on save.');
+  assert.equal(new Headers(backendCalls[2].init.headers).get('cf-access-jwt-assertion'), ownerAssertion, 'The verified owner assertion is forwarded on save.');
+  assert.deepEqual(JSON.parse(new TextDecoder().decode(backendCalls[2].init.body)), JSON.parse(patch), 'The proxy preserves the bounded JSON command for the fixed backend route.');
+
+  const blockedWrite = async (options, message) => {
+    response = await worker.fetch(request(patchPath, {
+      body: patch,
+      headers: { 'Content-Type': 'application/json', ...options.headers },
+      method: 'PATCH',
+      token: await token(),
+    }), protectedEnv);
+    assert.equal(response.status, 400, message);
+    assertNoStore(response, message);
+    assert.equal(backendCalls.length, 3, `${message} does not reach the backend.`);
+  };
+  await blockedWrite({}, 'A save without same-origin proof is rejected.');
+  await blockedWrite({ headers: { Origin: 'https://attacker.invalid' } }, 'A cross-origin save is rejected.');
+  await blockedWrite({ headers: { 'Content-Type': 'text/plain', Origin: `https://${canonicalHost}` } }, 'A non-JSON save is rejected.');
+  response = await worker.fetch(request(patchPath, {
+    body: JSON.stringify({ padding: 'x'.repeat(16 * 1024) }),
+    headers: { 'Content-Type': 'application/json', Origin: `https://${canonicalHost}` },
+    method: 'PATCH',
+    token: await token(),
+  }), protectedEnv);
+  assert.equal(response.status, 400, 'An oversized save is rejected before the backend.');
+  assert.equal(backendCalls.length, 3, 'An oversized save never reaches the backend.');
+  response = await worker.fetch(request(`${patchPath}?retry=attacker`, {
+    body: patch,
+    headers: { 'Content-Type': 'application/json', Origin: `https://${canonicalHost}` },
+    method: 'PATCH',
+    token: await token(),
+  }), protectedEnv);
+  assert.equal(response.status, 404, 'A save query cannot alter the fixed backend route.');
+  assert.equal(backendCalls.length, 3, 'A queried save never reaches the backend.');
+
+  backendResponse = () => new Response(JSON.stringify({ error: 'hud_conflict' }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+  response = await worker.fetch(request(patchPath, {
+    body: patch,
+    headers: { 'Content-Type': 'application/json', Origin: `https://${canonicalHost}` },
+    method: 'PATCH',
+    token: await token(),
+  }), protectedEnv);
+  assert.equal(response.status, 409, 'A backend revision conflict remains visible to the owner.');
+  assert.equal(backendCalls.length, 4, 'A valid same-origin save reaches the backend once.');
+
   response = await worker.fetch(request('/api/hud/opportunities', { method: 'PATCH', token: await token() }), protectedEnv);
   assert.equal(response.status, 404, 'The same-origin proxy does not expose backend writes.');
   assertNoStore(response, 'Unsupported proxy methods are never cacheable.');
-  assert.equal(backendCalls.length, 1, 'Unsupported methods never reach the backend.');
+  assert.equal(backendCalls.length, 4, 'Unsupported methods never reach the backend.');
 
   response = await worker.fetch(request('/api/hud/opportunities', { token: await token() }), { ...protectedEnv, HUD_BACKEND_ORIGIN: undefined });
   assert.equal(response.status, 409, 'An owner sees an honest unconnected state when the backend origin is absent.');
   assertNoStore(response, 'A missing backend origin is never cacheable.');
-  assert.equal(backendCalls.length, 1, 'A missing backend origin makes no backend request.');
+  assert.equal(backendCalls.length, 4, 'A missing backend origin makes no backend request.');
+
+  response = await worker.fetch(request(patchPath, {
+    body: patch,
+    headers: { 'Content-Type': 'application/json', Origin: `https://${canonicalHost}` },
+    method: 'PATCH',
+    token: await token(),
+  }), { ...protectedEnv, HUD_BACKEND_ORIGIN: undefined });
+  assert.equal(response.status, 409, 'A missing backend origin keeps an owner save truthful.');
+  assert.equal(backendCalls.length, 4, 'An unconnected save makes no backend request.');
 
   response = await proxyHudOpportunities(request('/api/hud/opportunities', { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: 'https://example.invalid' }, async () => {
     assert.fail('An invalid backend origin must not be fetched.');
   });
   assert.equal(response.status, 409, 'An untrusted backend origin fails closed.');
 
-  backendResponse = new Response(JSON.stringify({ error: 'hud_source_unavailable' }), { status: 502 });
+  backendResponse = () => new Response(JSON.stringify({ error: 'hud_source_unavailable' }), { status: 502 });
   response = await worker.fetch(request('/api/hud/opportunities', { token: await token() }), protectedEnv);
   assert.equal(response.status, 502, 'An upstream source error remains an honest unavailable state.');
   assertNoStore(response, 'Upstream failures are never cacheable.');
@@ -236,7 +331,7 @@ await withAccessJwks(async () => {
   assert.equal(protectedAssetCalls, 1);
 }, async (input, init) => {
   backendCalls.push({ init, input });
-  return backendResponse;
+  return backendResponse();
 });
 
 console.log('Career HUD Access gate: missing configuration, alternate and encoded aliases, raw identity header, unsigned/tampered/expired/wrong-owner/wrong-audience/wrong-issuer/non-app tokens, HEAD, valid signed owner token, protected no-store HUD assets, public-site and Apps-proxy preservation, and the bounded opportunities proxy passed.');

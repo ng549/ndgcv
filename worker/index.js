@@ -14,6 +14,9 @@ const noStoreHeaders = {
   'Content-Type': 'application/json; charset=utf-8',
   'X-Content-Type-Options': 'nosniff',
 };
+const hudOpportunityIdPattern = /^opp_[A-Za-z0-9_-]{8,128}$/;
+const hudUpdateContentType = /^application\/json(?:\s*;\s*charset=utf-8)?$/i;
+const hudUpdateMaxBytes = 16 * 1024;
 
 function hudBackendOrigin(env) {
   const raw = typeof env?.HUD_BACKEND_ORIGIN === 'string' ? env.HUD_BACKEND_ORIGIN.trim() : '';
@@ -47,25 +50,74 @@ function proxyResponse(upstream) {
   });
 }
 
-export async function proxyHudOpportunities(request, env, fetchImpl = fetch) {
+function hudInvalidUpdateResponse() {
+  return new Response('HUD update is invalid.', {
+    status: 400,
+    headers: noStoreHeaders,
+  });
+}
+
+function isSameOriginHudWrite(request) {
+  const origin = request.headers.get('Origin');
+  if (!origin) return false;
+  try {
+    return new URL(origin).origin === new URL(request.url).origin;
+  } catch {
+    return false;
+  }
+}
+
+async function boundedHudUpdateBody(request) {
+  if (!hudUpdateContentType.test(request.headers.get('Content-Type') || '') || !isSameOriginHudWrite(request)) return null;
+  const declaredLength = request.headers.get('Content-Length');
+  if (declaredLength && (!/^\d+$/.test(declaredLength) || Number(declaredLength) > hudUpdateMaxBytes)) return null;
+  try {
+    const body = new Uint8Array(await request.arrayBuffer());
+    return body.byteLength <= hudUpdateMaxBytes ? body : null;
+  } catch {
+    return null;
+  }
+}
+
+async function proxyHudRequest(request, env, pathname, { method = 'GET', body = undefined, contentType = null } = {}, fetchImpl = fetch) {
   const origin = hudBackendOrigin(env);
   if (!origin) return hudNotConnectedResponse();
 
   const assertion = request.headers.get('cf-access-jwt-assertion');
   if (!assertion) return hudNotConnectedResponse();
+  const headers = new Headers({
+    Accept: method === 'GET' && pathname === '/api/hud/photo' ? 'image/jpeg' : 'application/json',
+    'cf-access-jwt-assertion': assertion,
+  });
+  if (contentType) headers.set('Content-Type', contentType);
   try {
-    const upstream = await fetchImpl(new URL('/api/hud/opportunities', origin), {
-      headers: {
-        Accept: 'application/json',
-        'cf-access-jwt-assertion': assertion,
-      },
-      method: 'GET',
+    const upstream = await fetchImpl(new URL(pathname, origin), {
+      body,
+      headers,
+      method,
       redirect: 'error',
     });
     return proxyResponse(upstream);
   } catch {
     return hudBackendUnavailableResponse();
   }
+}
+
+export async function proxyHudOpportunities(request, env, fetchImpl = fetch) {
+  return proxyHudRequest(request, env, '/api/hud/opportunities', {}, fetchImpl);
+}
+
+export async function proxyHudPhoto(request, env, fetchImpl = fetch) {
+  return proxyHudRequest(request, env, '/api/hud/photo', {}, fetchImpl);
+}
+
+export async function proxyHudOpportunityUpdate(request, env, opportunityId, body, fetchImpl = fetch) {
+  if (!hudOpportunityIdPattern.test(opportunityId)) return hudInvalidUpdateResponse();
+  return proxyHudRequest(request, env, `/api/hud/opportunities/${opportunityId}`, {
+    body,
+    contentType: 'application/json',
+    method: 'PATCH',
+  }, fetchImpl);
 }
 
 export default {
@@ -81,7 +133,14 @@ export default {
       const denied = await requireHudAccess(request, env);
       if (denied) return denied;
       if (hudApiRoute) {
-        if (pathname === '/api/hud/opportunities' && request.method === 'GET') return proxyHudOpportunities(request, env);
+        if (pathname === '/api/hud/opportunities' && request.method === 'GET' && !url.search) return proxyHudOpportunities(request, env);
+        if (pathname === '/api/hud/photo' && request.method === 'GET' && !url.search) return proxyHudPhoto(request, env);
+        const opportunityMatch = /^\/api\/hud\/opportunities\/(opp_[A-Za-z0-9_-]{8,128})$/.exec(pathname);
+        if (opportunityMatch && request.method === 'PATCH' && !url.search) {
+          const body = await boundedHudUpdateBody(request);
+          if (!body) return hudInvalidUpdateResponse();
+          return proxyHudOpportunityUpdate(request, env, opportunityMatch[1], body);
+        }
         return new Response('HUD API is not connected.', {
           status: 404,
           headers: {

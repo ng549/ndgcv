@@ -28,7 +28,11 @@ The endpoint must return a no-store JSON object shaped like:
 }
 ```
 
-The HUD shows connected records read-only. It renders the optional Sheet link only when it is an HTTPS `docs.google.com/spreadsheets/d/<id>/edit` URL. Unsupported URLs are hidden. The Sheet identifier and URL are never committed to the public bundle.
+Connected records expose exactly two editable fields in their detail panel: `status` and `next action`. A save sends the fixed same-origin `PATCH /api/hud/opportunities/<opp_id>` route with `{ status, nextAction, expectedRevision, actionId }`. The revision is supplied only by the protected GET response and the action ID is retained for an identical retry. The HUD never sends a Sheet ID, range, Drive URL, or another editable field.
+
+The source re-reads a row before and after its limited write. A successful response replaces the rendered records and revisions. On a conflict—or an ambiguous source/network failure—the HUD refreshes the protected record, keeps the local draft visible, and asks the owner to reconcile deliberately. It never claims that an ambiguous save did not change the source. Sample records retain their local-only controls and never show a live Save action.
+
+The HUD renders the optional Sheet link only when it is an HTTPS `docs.google.com/spreadsheets/d/<id>/edit` URL. Unsupported URLs are hidden. The Sheet identifier and URL are never committed to the public bundle.
 
 ### Private photo stream
 
@@ -40,5 +44,5 @@ The image endpoint must remain fixed and owner-gated, return only `image/jpeg` b
 
 - Google Sheets, Drive, photos, email, and calendars are private sources. This release only reads the protected opportunities response and the fixed protected photo stream when those backend routes are available.
 - Email and Google/iCloud calendar functions are not connected here.
-- Contacts, materials, and controls outside the protected opportunities response remain fictional sample records. When the protected response is available, its opportunities and follow-ups are rendered read-only.
+- Contacts, materials, and controls outside the protected opportunities response remain fictional sample records. When the protected response is available, only an opportunity's status and next action may be saved; its follow-ups remain view-only.
 - In this repository's protected `/hud/` release, the HUD remains a sample experience rather than a private-data workspace. Local static opening has no access control; access is enforced by the deployed Worker.

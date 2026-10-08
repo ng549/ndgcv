@@ -14,11 +14,17 @@ Do not set any value until it is copied from the saved Cloudflare Access applica
 | `HUD_ACCESS_TEAM_DOMAIN` | Exact Access issuer/team domain, including `https://`, for example `https://&lt;team&gt;.cloudflareaccess.com`. |
 | `HUD_ACCESS_AUD` | The Access application's **Application Audience (AUD) Tag**. |
 | `HUD_OWNER_EMAIL` | The one owner email allowed by policy. |
-| `HUD_BACKEND_ORIGIN` | Optional exact origin `https://agency-nexus-command.fly.dev`. When unset or malformed, an authenticated `GET /api/hud/opportunities` returns a no-store `409` and makes no backend request. |
+| `HUD_BACKEND_ORIGIN` | Optional exact origin `https://agency-nexus-command.fly.dev`. When unset or malformed, an authenticated HUD runtime request returns a no-store `409` and makes no backend request. |
 
 The Worker fetches the signing JWKS only from the configured Access team domain, verifies `RS256`, issuer, audience, `nbf`, `iat`, and `exp`, requires an `app` token, and compares the verified JWT `email` claim with `HUD_OWNER_EMAIL`.
 
-After that gate succeeds, the Worker may proxy only `GET /api/hud/opportunities` to the configured fixed backend origin. It forwards only the verified request's Access JWT assertion and `Accept: application/json`; it does not forward cookies, browser credentials, caller-selected paths, or CORS headers. Any other `/api/hud/*` request remains a no-store `404`.
+After that gate succeeds, the Worker may proxy only these fixed backend paths:
+
+- `GET /api/hud/opportunities`, with the verified Access assertion and `Accept: application/json`;
+- `PATCH /api/hud/opportunities/<stable opp_ id>`, with the same assertion and a bounded (16 KiB), same-origin `application/json` body; and
+- `GET /api/hud/photo`, with the same assertion and `Accept: image/jpeg`.
+
+It never forwards browser cookies, caller-selected paths, arbitrary URLs, or CORS headers. The photo route rejects query strings. The PATCH route rejects query strings, non-JSON bodies, cross-origin or origin-less browser writes, and oversized bodies before contacting the backend. Any other `/api/hud/*` request remains a no-store `404`.
 
 The current Google identity-provider `invalid_client` error must be resolved in Cloudflare using the real matching Google OAuth client ID and secret before these values are enabled. This repository contains neither OAuth credentials nor Access metadata.
 

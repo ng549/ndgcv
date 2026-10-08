@@ -216,6 +216,9 @@ assert(hudJS.includes("redirect: 'error'"),"Career HUD rejects a protected photo
 assert(hudJS.includes('const PHOTO_ROTATION_MS = 20_000'),"Career HUD refreshes its protected photo stream every twenty seconds");
 assert(!hudJS.includes('drive.google.com'),"Career HUD contains no Drive photo URL or client-selected source");
 assert(hudJS.includes('trustedCareerSheetUrl'),"Career HUD validates the runtime-only opportunities-sheet link");
+assert(hudJS.includes("method: 'PATCH'")&&hudJS.includes('expectedRevision')&&hudJS.includes('actionId'),"Career HUD saves only the revision-guarded live opportunity contract");
+assert(hudJS.includes('data-live-opportunity-form')&&hudJS.includes('Save changes'),"Career HUD exposes a bounded live status and next-action save control");
+assert(hudJS.includes('refreshAfterLiveSaveIssue'),"Career HUD refreshes after a live conflict or ambiguous save instead of claiming a clean failure");
 assert(hudJS.includes('navigator.geolocation.getCurrentPosition'),"Career HUD requests device location only from the explicit header action");
 assert(hud.includes('Weather unavailable'),"Career HUD does not invent weather data without a provider");
 assert(!hud.includes('https://drive.google.com/'),"Career HUD does not package a Drive URL");

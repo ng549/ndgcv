@@ -31,7 +31,7 @@ const values = [
   ['opp_runtime_001', 'Example Company', 'Example role', 'Remote', 'Hybrid', 'Actual fit rationale', 'research', 'Review the listing'],
   ['untrusted', 'Ignored Company', 'Ignored role', '', '', '', '', '']
 ];
-const opportunities = normalizeLiveOpportunities(values);
+const opportunities = normalizeLiveOpportunities(values, { opp_runtime_001: 'a'.repeat(64) });
 assert.equal(opportunities.length, 1, 'Only stable opportunity IDs are rendered.');
 assert.deepEqual(
   JSON.parse(JSON.stringify(opportunities[0])),
@@ -45,6 +45,7 @@ assert.deepEqual(
     summary: 'Remote · Hybrid',
     fit: 'Actual fit rationale',
     contact: 'Private opportunities source',
+    revision: 'a'.repeat(64),
     nextAction: { id: 'next_opp_runtime_001', label: 'Review the listing', complete: false },
     activity: []
   },
@@ -54,9 +55,10 @@ assert.deepEqual(
 const legacyStatus = normalizeLiveOpportunities([
   values[0],
   ['opp_runtime_002', 'Example Company', 'Example role', '', '', '', 'legacy status\"><script', 'Review the listing']
-]);
+], { opp_runtime_002: 'not-a-revision' });
 assert.equal(legacyStatus[0].status, 'legacy status"><script', 'Legacy labels remain readable.');
 assert.equal(legacyStatus[0].statusClass, 'research', 'Only an approved status can become a CSS class.');
+assert.equal(legacyStatus[0].revision, null, 'An invalid source revision never enables a blind live save.');
 
 const today = normalizeLiveToday([
   { id: 'followup_runtime_001', opportunityId: 'opp_runtime_001', title: 'Review the listing', detail: 'Example Company — Example role' },

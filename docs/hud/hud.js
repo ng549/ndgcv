@@ -1,6 +1,8 @@
 const state = {
   activeView: 'career',
   liveOpportunities: false,
+  liveDrafts: new Map(),
+  liveSaves: new Map(),
   selectedDay: '',
   renderedWeekDate: '',
   schedule: 'today',
@@ -77,6 +79,20 @@ let activePhotoObjectUrl = null;
 let photoRequestInFlight = false;
 
 const PHOTO_ROTATION_MS = 20_000;
+const LIVE_STATUS_VALUES = ['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined'];
+const LIVE_REVISION_PATTERN = /^[a-f0-9]{64}$/;
+
+function hudRuntimeEndpoint(dataKey, pathname) {
+  const configured = document.documentElement.dataset[dataKey];
+  if (configured !== pathname) return null;
+  try {
+    const endpoint = new URL(configured, window.location.origin);
+    if (endpoint.origin === window.location.origin && endpoint.pathname === pathname && !endpoint.search && !endpoint.hash) return endpoint;
+  } catch {
+    return null;
+  }
+  return null;
+}
 
 function updateHeaderContext() {
   const now = new Date();
@@ -221,9 +237,13 @@ function recordText(value) {
 }
 
 function statusClass(value) {
-  const allowed = new Set(['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined']);
   const status = recordText(value).toLowerCase();
-  return allowed.has(status) ? status : 'research';
+  return LIVE_STATUS_VALUES.includes(status) ? status : 'research';
+}
+
+function liveRevision(value) {
+  const revision = recordText(value);
+  return LIVE_REVISION_PATTERN.test(revision) ? revision : null;
 }
 
 function opportunityIndex(values) {
@@ -240,8 +260,9 @@ function valueAt(row, index, field) {
   return position === undefined ? '' : recordText(row[position]);
 }
 
-function normalizeLiveOpportunities(values) {
+function normalizeLiveOpportunities(values, revisions = {}) {
   const index = opportunityIndex(values);
+  const revisionMap = revisions && typeof revisions === 'object' && !Array.isArray(revisions) ? revisions : {};
   return values.slice(1).flatMap(rawRow => {
     const row = Array.isArray(rawRow) ? rawRow : [];
     const id = valueAt(row, index, 'opportunity_id');
@@ -263,6 +284,7 @@ function normalizeLiveOpportunities(values) {
       summary: [location, arrangement].filter(Boolean).join(' · ') || 'No location or work arrangement supplied.',
       fit: fit || 'No fit rationale supplied.',
       contact: 'Private opportunities source',
+      revision: liveRevision(revisionMap[id]),
       nextAction: { id: `next_${id}`, label: nextAction || 'No next action supplied.', complete: false },
       activity: []
     }];
@@ -288,12 +310,15 @@ function normalizeLiveToday(value) {
 
 function applyOpportunityPayload(payload) {
   if (!payload || typeof payload !== 'object') throw new TypeError('Invalid opportunities payload.');
-  const opportunities = normalizeLiveOpportunities(payload.values);
+  const opportunities = normalizeLiveOpportunities(payload.values, payload.revisions);
+  const previouslySelected = state.selectedOpportunity;
   state.opportunities = opportunities;
-  state.selectedOpportunity = opportunities[0]?.id ?? null;
+  state.selectedOpportunity = opportunities.some(opportunity => opportunity.id === previouslySelected) ? previouslySelected : opportunities[0]?.id ?? null;
   state.liveOpportunities = true;
   state.focusItems = normalizeLiveToday(payload.today);
   state.expandedFocus = state.focusItems[0]?.id ?? '';
+  $('#hud-data-mode').textContent = 'Private source connected';
+  $('#career-intro').textContent = 'Protected opportunities, conversations, and next steps from the connected source.';
   renderRuntimeStatus({ state: 'fresh' });
   renderRuntimeLinks(payload.links);
   renderToday();
@@ -301,11 +326,11 @@ function applyOpportunityPayload(payload) {
 }
 
 async function loadOpportunities() {
-  const endpoint = document.documentElement.dataset.hudOpportunitiesEndpoint;
+  const endpoint = hudRuntimeEndpoint('hudOpportunitiesEndpoint', '/api/hud/opportunities');
   if (!endpoint) return;
   renderRuntimeStatus({ state: 'loading' });
   try {
-    const response = await fetch(endpoint, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    const response = await fetch(endpoint, { credentials: 'same-origin', cache: 'no-store', headers: { Accept: 'application/json' }, redirect: 'error' });
     if (response.status === 204 || response.status === 404 || response.status === 409) {
       renderRuntimeStatus();
       renderRuntimeLinks();
@@ -313,10 +338,12 @@ async function loadOpportunities() {
     }
     if (!response.ok) throw new Error(`Private runtime request failed (${response.status}).`);
     applyOpportunityPayload(await response.json());
+    return true;
   } catch {
     renderRuntimeStatus({ state: 'error' });
     renderRuntimeLinks();
   }
+  return false;
 }
 
 function renderPrivatePhotoState(message) {
@@ -329,7 +356,7 @@ function photoContentType(response) {
 }
 
 async function loadPrivatePhoto() {
-  const endpoint = document.documentElement.dataset.hudPhotoEndpoint;
+  const endpoint = hudRuntimeEndpoint('hudPhotoEndpoint', '/api/hud/photo');
   const frame = $('#hud-private-photo-frame');
   if (!endpoint || !frame || photoRequestInFlight) return;
 
@@ -448,13 +475,13 @@ function renderToday() {
         <span class="focus-time">${item.time}</span>
         <span><strong>${escapeHTML(item.title)}</strong><span>${item.complete ? 'Completed in this sample session.' : escapeHTML(item.detail)}</span></span>
       </button>
-      ${expanded ? `<div class="focus-expanded"><p>${escapeHTML(item.expanded)}</p>${state.liveOpportunities ? '<p class="note-prompt">Connected opportunities are read-only in this HUD release.</p>' : `<button class="complete-link" type="button" data-complete-focus="${item.id}">${item.complete ? 'Reopen this sample focus block' : 'Complete this focus block'}</button>`}</div>` : ''}
+      ${expanded ? `<div class="focus-expanded"><p>${escapeHTML(item.expanded)}</p>${state.liveOpportunities ? '<p class="note-prompt">Connected follow-ups are view-only here. Update status or next action in Career.</p>' : `<button class="complete-link" type="button" data-complete-focus="${item.id}">${item.complete ? 'Reopen this sample focus block' : 'Complete this focus block'}</button>`}</div>` : ''}
     </li>`;
   }).join('') : `<li class="empty-state">${state.liveOpportunities ? 'No live follow-ups are currently available from the protected source.' : 'No sample focus blocks match this filter.'}</li>`;
 
   const addFocus = $('.add-focus');
   addFocus.disabled = state.liveOpportunities;
-  addFocus.textContent = state.liveOpportunities ? 'Connected opportunities are read-only' : 'Add a focus block';
+  addFocus.textContent = state.liveOpportunities ? 'Update live opportunities in Career' : 'Add a focus block';
 
   const noteActions = $('#note-actions');
   noteActions.innerHTML = `<ul class="check-list">${state.note.actions.map(action => `<li><input id="${action.id}" type="checkbox" data-note-action="${action.id}" ${action.complete ? 'checked' : ''}><label for="${action.id}">${escapeHTML(action.label)}</label></li>`).join('')}</ul>`;
@@ -470,6 +497,151 @@ function updateNoteTabs() {
     button.setAttribute('aria-selected', String(selected));
   });
   $$('[data-note-panel]').forEach(panel => { panel.hidden = panel.dataset.notePanel !== state.noteTab; });
+}
+
+function liveDraftFor(opportunity) {
+  const draft = state.liveDrafts.get(opportunity.id);
+  return {
+    nextAction: recordText(draft && Object.hasOwn(draft, 'nextAction') ? draft.nextAction : opportunity.nextAction.label),
+    status: recordText(draft && Object.hasOwn(draft, 'status') ? draft.status : opportunity.status),
+  };
+}
+
+function liveSaveFor(opportunityId) {
+  return state.liveSaves.get(opportunityId) || { phase: 'idle', message: 'Changes are saved only when you use Save changes.' };
+}
+
+function liveStatusOptions(status) {
+  const current = recordText(status);
+  const normalized = current.toLowerCase();
+  const legacy = current && !LIVE_STATUS_VALUES.includes(normalized) ? `<option value="${escapeHTML(current)}" selected>${escapeHTML(current)} (existing status)</option>` : '';
+  return legacy + LIVE_STATUS_VALUES.map(value => `<option value="${value}" ${value === current ? 'selected' : ''}>${escapeHTML(value.replaceAll('_', ' '))}</option>`).join('');
+}
+
+function liveSaveMessage(save) {
+  const messages = {
+    idle: 'Changes are saved only when you use Save changes.',
+    saving: 'Saving to the protected source…',
+    saved: 'Saved to the protected source.',
+    conflict: 'The source changed. Latest data is loaded; review your preserved draft before saving again.',
+    uncertain: 'Save outcome is unknown. Latest data is loaded; review it before trying again.',
+    unavailable: 'The private source is unavailable. Your draft is preserved; no save was confirmed.',
+    unconnected: 'The private source is not connected. Your draft is preserved locally.',
+    access: 'Private access is required before a change can be saved.',
+    invalid: 'The source rejected this update. Check the two fields and try again.',
+    error: 'This change could not be saved. Your draft is preserved locally.',
+  };
+  return save.message || messages[save.phase] || messages.error;
+}
+
+function createLiveActionId() {
+  if (!globalThis.crypto?.getRandomValues) return null;
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  return `action_${[...bytes].map(byte => byte.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function sameLiveCommand(left, right) {
+  return Boolean(left && right && left.actionId === right.actionId && left.status === right.status && left.nextAction === right.nextAction && left.expectedRevision === right.expectedRevision);
+}
+
+function liveCommandFor(opportunity, draft) {
+  const status = recordText(draft.status);
+  const nextAction = recordText(draft.nextAction);
+  const revision = liveRevision(opportunity.revision);
+  const existing = state.liveSaves.get(opportunity.id)?.command;
+  const candidate = { expectedRevision: revision, nextAction, status };
+  if (!status || status.length > 64 || !nextAction || nextAction.length > 500 || !revision) return null;
+  if (!LIVE_STATUS_VALUES.includes(status) && status !== recordText(opportunity.status)) return null;
+  if (sameLiveCommand(existing, { ...candidate, actionId: existing?.actionId })) return existing;
+  const actionId = createLiveActionId();
+  return actionId ? { ...candidate, actionId } : null;
+}
+
+async function responseJSON(response) {
+  try { return await response.json(); } catch { return null; }
+}
+
+async function refreshAfterLiveSaveIssue(opportunityId, phase, command) {
+  const refreshed = await loadOpportunities();
+  const message = refreshed
+    ? (phase === 'conflict' ? 'The source changed. Latest data is loaded; review your preserved draft before saving again.' : 'Save outcome is unknown. Latest data is loaded; review it before trying again.')
+    : (phase === 'conflict' ? 'The source changed, but the latest data could not be loaded. Your draft is preserved.' : 'Save outcome is unknown and the latest data could not be loaded. Your draft is preserved.');
+  state.liveSaves.set(opportunityId, { command, phase, message });
+  renderOpportunities();
+}
+
+async function saveLiveOpportunity(opportunityId, form) {
+  const opportunity = state.opportunities.find(item => item.id === opportunityId);
+  if (!state.liveOpportunities || !opportunity || !form) return;
+  const draft = {
+    nextAction: recordText(form.elements.nextAction?.value),
+    status: recordText(form.elements.status?.value),
+  };
+  state.liveDrafts.set(opportunityId, draft);
+  const command = liveCommandFor(opportunity, draft);
+  if (!command) {
+    state.liveSaves.set(opportunityId, { phase: 'invalid' });
+    renderOpportunities();
+    return;
+  }
+  const endpoint = hudRuntimeEndpoint('hudOpportunitiesEndpoint', '/api/hud/opportunities');
+  if (!endpoint) {
+    state.liveSaves.set(opportunityId, { command, phase: 'unconnected' });
+    renderOpportunities();
+    return;
+  }
+
+  state.liveSaves.set(opportunityId, { command, phase: 'saving' });
+  renderOpportunities();
+  let response;
+  let body;
+  try {
+    response = await fetch(`${endpoint.href}/${encodeURIComponent(opportunityId)}`, {
+      body: JSON.stringify(command),
+      cache: 'no-store',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      method: 'PATCH',
+      redirect: 'error',
+    });
+    body = await responseJSON(response);
+  } catch {
+    await refreshAfterLiveSaveIssue(opportunityId, 'uncertain', command);
+    return;
+  }
+
+  if (response.ok) {
+    try {
+      applyOpportunityPayload(body);
+      state.liveDrafts.delete(opportunityId);
+      state.liveSaves.set(opportunityId, {
+        command,
+        message: body?.replayed ? 'Saved to the protected source (confirmed after retry).' : 'Saved to the protected source.',
+        phase: 'saved',
+      });
+      renderOpportunities();
+    } catch {
+      state.liveSaves.set(opportunityId, { command, phase: 'uncertain', message: 'The server confirmed a response, but the latest record could not be read. Your draft is preserved.' });
+      renderOpportunities();
+    }
+    return;
+  }
+  if (response.status === 409 && body?.error === 'hud_conflict') {
+    await refreshAfterLiveSaveIssue(opportunityId, 'conflict', command);
+    return;
+  }
+  const phase = response.status === 403 ? 'access'
+    : response.status === 409 ? 'unconnected'
+      : response.status === 400 ? 'invalid'
+        : response.status === 502 || response.status === 500 ? 'uncertain'
+          : response.status === 503 ? 'unavailable' : 'error';
+  if (phase === 'uncertain') {
+    await refreshAfterLiveSaveIssue(opportunityId, phase, command);
+    return;
+  }
+  state.liveSaves.set(opportunityId, { command, phase });
+  renderOpportunities();
 }
 
 function filteredOpportunities() {
@@ -490,10 +662,28 @@ function populateCompanyFilter() {
   select.value = [...select.options].some(option => option.value === current) ? current : 'all';
 }
 
+function renderLiveOpportunityEditor(detail) {
+  if (!liveRevision(detail.revision)) return '<p class="live-save-status is-error" role="status">This live record has no safe revision, so it cannot be saved from the HUD.</p>';
+  const draft = liveDraftFor(detail);
+  const save = liveSaveFor(detail.id);
+  const saving = save.phase === 'saving';
+  return `<form class="live-opportunity-editor" data-live-opportunity-form="${escapeHTML(detail.id)}">
+      <p class="eyebrow">Update opportunity</p>
+      <p class="live-edit-note">Only status and next action are saved to the protected source.</p>
+      <label>Status
+        <select name="status" ${saving ? 'disabled' : ''}>${liveStatusOptions(draft.status)}</select>
+      </label>
+      <label>Next action
+        <textarea name="nextAction" maxlength="500" rows="3" ${saving ? 'disabled' : ''}>${escapeHTML(draft.nextAction)}</textarea>
+      </label>
+      <div class="live-save-actions"><button class="button button-navy" type="submit" ${saving ? 'disabled' : ''}>${saving ? 'Saving…' : 'Save changes'}</button><p class="live-save-status is-${escapeHTML(save.phase)}" role="status" aria-live="polite">${escapeHTML(liveSaveMessage(save))}</p></div>
+    </form>`;
+}
+
 function renderOpportunities() {
   const addOpportunity = $('[data-open-dialog="opportunity"]');
   addOpportunity.disabled = state.liveOpportunities;
-  addOpportunity.title = state.liveOpportunities ? 'Connected opportunities are read-only in this HUD release.' : '';
+  addOpportunity.title = state.liveOpportunities ? 'Connected opportunities support status and next-action saves only.' : '';
   populateCompanyFilter();
   const opportunities = filteredOpportunities();
   if (!opportunities.some(opportunity => opportunity.id === state.selectedOpportunity)) state.selectedOpportunity = opportunities[0]?.id ?? null;
@@ -509,7 +699,7 @@ function renderOpportunities() {
     <div class="detail-section"><h4>Why it could fit</h4><p>${escapeHTML(detail.fit)}</p></div>
     <div class="detail-section"><h4>Relationship context</h4><p>${escapeHTML(detail.contact)}</p></div>
     <div class="detail-section"><h4>Next action</h4><p>${escapeHTML(detail.nextAction.label)}</p></div>
-    ${liveDetail ? '<p class="note-prompt">Connected source records are read-only in this HUD release.</p>' : `<div class="detail-section"><h4>Sample activity</h4><ul>${detail.activity.map(activity => `<li>${escapeHTML(activity)}</li>`).join('')}</ul></div><div class="detail-actions"><button class="button button-navy" type="button" data-complete-opportunity-action="${detail.id}">${detail.nextAction.complete ? 'Reopen next step' : 'Complete next step'}</button><button class="button button-quiet" type="button" data-open-dialog="opportunity" data-edit-opportunity="${detail.id}">Edit sample</button></div>`}` : `<div class="empty-state">${state.liveOpportunities ? 'Choose a live opportunity to see its detail.' : 'Choose a sample opportunity to see its detail.'}</div>`;
+    ${liveDetail ? renderLiveOpportunityEditor(detail) : `<div class="detail-section"><h4>Sample activity</h4><ul>${detail.activity.map(activity => `<li>${escapeHTML(activity)}</li>`).join('')}</ul></div><div class="detail-actions"><button class="button button-navy" type="button" data-complete-opportunity-action="${detail.id}">${detail.nextAction.complete ? 'Reopen next step' : 'Complete next step'}</button><button class="button button-quiet" type="button" data-open-dialog="opportunity" data-edit-opportunity="${detail.id}">Edit sample</button></div>`}` : `<div class="empty-state">${state.liveOpportunities ? 'Choose a live opportunity to see its detail.' : 'Choose a sample opportunity to see its detail.'}</div>`;
 }
 
 function renderContacts() {
@@ -539,7 +729,7 @@ function setDay(day) {
 
 function openDialog(kind, editId = '') {
   if (state.liveOpportunities && ['action', 'opportunity'].includes(kind)) {
-    announce('Connected opportunities are read-only in this HUD release.');
+    announce('Connected records can update status and next action in Career; this control is unavailable.');
     return;
   }
   const dialog = $('#hud-dialog');
@@ -647,7 +837,7 @@ function handleClick(event) {
   if (focusButton) { state.expandedFocus = state.expandedFocus === focusButton.dataset.focusId ? '' : focusButton.dataset.focusId; renderToday(); return; }
   const completeFocus = event.target.closest('[data-complete-focus]');
   if (completeFocus) {
-    if (state.liveOpportunities) { announce('Connected opportunities are read-only in this HUD release.'); return; }
+    if (state.liveOpportunities) { announce('Connected follow-ups are view-only here. Update status or next action in Career.'); return; }
     runOnce(completeFocus, () => {
       const item = state.focusItems.find(value => value.id === completeFocus.dataset.completeFocus);
       item.complete = !item.complete;
@@ -662,7 +852,7 @@ function handleClick(event) {
   if (opportunity) { state.selectedOpportunity = opportunity.dataset.opportunityId; renderOpportunities(); return; }
   const completeOpportunity = event.target.closest('[data-complete-opportunity-action]');
   if (completeOpportunity) {
-    if (state.liveOpportunities) { announce('Connected opportunities are read-only in this HUD release.'); return; }
+    if (state.liveOpportunities) { announce('Connected records can update status and next action in Career; completing a sample step is unavailable.'); return; }
     runOnce(completeOpportunity, () => {
       const item = state.opportunities.find(value => value.id === completeOpportunity.dataset.completeOpportunityAction);
       item.nextAction.complete = !item.nextAction.complete;
@@ -700,6 +890,18 @@ function setupParallax() {
   }, { passive: true });
 }
 
+function captureLiveDraft(event) {
+  const form = event.target.closest?.('[data-live-opportunity-form]');
+  if (!form || !['status', 'nextAction'].includes(event.target.name)) return;
+  const opportunityId = form.dataset.liveOpportunityForm;
+  state.liveDrafts.set(opportunityId, {
+    nextAction: recordText(form.elements.nextAction?.value),
+    status: recordText(form.elements.status?.value),
+  });
+  const save = state.liveSaves.get(opportunityId);
+  if (save && save.phase !== 'saving') state.liveSaves.set(opportunityId, { phase: 'idle' });
+}
+
 function init() {
   updateHeaderContext();
   clockTimer = window.setInterval(updateHeaderContext, 30_000);
@@ -714,6 +916,7 @@ function init() {
   photoTimer = window.setInterval(loadPrivatePhoto, PHOTO_ROTATION_MS);
   document.addEventListener('click', handleClick);
   document.addEventListener('change', event => {
+    captureLiveDraft(event);
     if (event.target.matches('#focus-status')) { state.focusFilter = event.target.value; renderToday(); }
     if (event.target.matches('[data-note-action]')) {
       const action = state.note.actions.find(value => value.id === event.target.dataset.noteAction);
@@ -722,7 +925,16 @@ function init() {
     }
     if (event.target.matches('#opportunity-search, #status-filter, #company-filter')) renderOpportunities();
   });
-  document.addEventListener('input', event => { if (event.target.matches('#opportunity-search')) renderOpportunities(); });
+  document.addEventListener('input', event => {
+    captureLiveDraft(event);
+    if (event.target.matches('#opportunity-search')) renderOpportunities();
+  });
+  document.addEventListener('submit', event => {
+    const form = event.target.closest?.('[data-live-opportunity-form]');
+    if (!form) return;
+    event.preventDefault();
+    saveLiveOpportunity(form.dataset.liveOpportunityForm, form);
+  });
   $('#hud-form').addEventListener('submit', saveDialog);
   $('#hud-menu-toggle').addEventListener('click', event => {
     setHudMenu(event.currentTarget.getAttribute('aria-expanded') !== 'true');
