@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities">
+<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities" data-hud-photo-endpoint="/api/hud/photo">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,41 +16,49 @@
   <a class="skip-link" href="#hud-main">Skip to workspace</a>
   <div class="hud-shell">
     <aside class="rail" aria-label="Career HUD navigation">
-      <a class="brand" href="#today" data-view="today">
-        <span>Nicolas Goureau</span>
-        <small>Private HUD</small>
-      </a>
-
-      <nav class="primary-nav" aria-label="Workspace sections">
-        <button class="nav-item" type="button" data-view="today">Today</button>
-        <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Career &amp; direction</button>
-        <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
-        <button class="nav-item" type="button" data-view="materials">Materials</button>
-      </nav>
-
-      <div class="rail-divider"></div>
-
-      <div class="future-nav" aria-label="Future workspaces">
-        <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
-        <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
+      <div class="rail-top">
+        <a class="brand" href="#today" data-view="today">
+          <span>Nicolas Goureau</span>
+          <small>Private HUD</small>
+        </a>
+        <button class="hud-menu-toggle" id="hud-menu-toggle" type="button" aria-expanded="false" aria-controls="hud-mobile-menu">Menu</button>
       </div>
 
-      <section class="private-photo-slot" aria-label="Private photo">
-        <div class="private-photo-frame" aria-hidden="true"></div>
-        <p><strong>Private photo</strong><span>Not connected</span></p>
-      </section>
+      <div class="hud-mobile-menu" id="hud-mobile-menu">
+        <nav class="primary-nav" aria-label="Workspace sections">
+          <button class="nav-item" type="button" data-view="today">Today</button>
+          <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Career &amp; direction</button>
+          <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
+          <button class="nav-item" type="button" data-view="materials">Materials</button>
+        </nav>
 
-      <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
-        <p class="eyebrow">Connection status</p>
-        <strong id="hud-runtime-title">Not connected</strong>
-        <span id="hud-runtime-detail">Live opportunities and the protected source link are unavailable in this preview.</span>
-        <time id="hud-runtime-last-success" hidden></time>
-      </section>
-      <nav class="hud-runtime-links" id="hud-runtime-links" aria-label="Private workspace links" hidden>
-        <a id="hud-career-sheet-link" hidden>Open connected opportunities sheet</a>
-      </nav>
+        <div class="rail-divider"></div>
 
-      <a class="public-site" href="../">View public CV</a>
+        <div class="future-nav" aria-label="Future workspaces">
+          <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
+          <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
+        </div>
+
+        <section class="private-photo-slot" aria-label="Private photo">
+          <div class="private-photo-frame" id="hud-private-photo-frame" aria-hidden="true">
+            <img id="hud-private-photo-a" class="private-photo-image" alt="">
+            <img id="hud-private-photo-b" class="private-photo-image" alt="">
+          </div>
+          <p><strong>Private photo</strong><span id="hud-private-photo-state">Not connected</span></p>
+        </section>
+
+        <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
+          <p class="eyebrow">Connection status</p>
+          <strong id="hud-runtime-title">Not connected</strong>
+          <span id="hud-runtime-detail">Live opportunities and the protected source link are unavailable in this preview.</span>
+          <time id="hud-runtime-last-success" hidden></time>
+        </section>
+        <nav class="hud-runtime-links" id="hud-runtime-links" aria-label="Private workspace links" hidden>
+          <a id="hud-career-sheet-link" hidden>Open connected opportunities sheet</a>
+        </nav>
+
+        <a class="public-site" href="../">View public CV</a>
+      </div>
     </aside>
 
     <main id="hud-main" class="hud-main">
@@ -79,15 +87,9 @@
         </div>
       </header>
 
-      <section class="week-strip" aria-label="Week of October 5, 2026">
-        <p>October 2026</p>
-        <div class="week-days" role="group" aria-label="Select a day">
-          <button type="button" data-day="Mon"><strong>Mon</strong><span>October 5</span></button>
-          <button class="is-selected" type="button" data-day="Tue" aria-pressed="true"><strong>Tue</strong><span>October 6</span><em>Today</em></button>
-          <button type="button" data-day="Wed"><strong>Wed</strong><span>October 7</span></button>
-          <button type="button" data-day="Thu"><strong>Thu</strong><span>October 8</span></button>
-          <button type="button" data-day="Fri"><strong>Fri</strong><span>October 9</span></button>
-        </div>
+      <section class="week-strip" id="hud-week-strip" aria-label="Current workweek">
+        <p id="hud-week-label">Current workweek</p>
+        <div class="week-days" id="hud-week-days" role="group" aria-label="Select a day"></div>
       </section>
 
       <section class="view-panel" data-view-panel="today" aria-labelledby="today-heading" hidden>

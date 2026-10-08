@@ -1,7 +1,8 @@
 const state = {
   activeView: 'career',
   liveOpportunities: false,
-  selectedDay: 'Tue',
+  selectedDay: '',
+  renderedWeekDate: '',
   schedule: 'today',
   focusFilter: 'all',
   expandedFocus: 'focus_followups',
@@ -70,6 +71,12 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 let toastTimer;
 let clockTimer;
+let photoTimer;
+let activePhotoSlot = 'b';
+let activePhotoObjectUrl = null;
+let photoRequestInFlight = false;
+
+const PHOTO_ROTATION_MS = 20_000;
 
 function updateHeaderContext() {
   const now = new Date();
@@ -80,6 +87,53 @@ function updateHeaderContext() {
     date.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(now);
   }
   if (time) time.textContent = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(now);
+  renderWeekStrip(now);
+}
+
+function localDateKey(date) {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+function mondayFor(date) {
+  const monday = new Date(date);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+  return monday;
+}
+
+function renderWeekStrip(now) {
+  const todayKey = localDateKey(now);
+  if (state.renderedWeekDate === todayKey) return;
+  state.renderedWeekDate = todayKey;
+
+  const monday = mondayFor(now);
+  const days = Array.from({ length: 5 }, (_, index) => {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + index);
+    return date;
+  });
+  const currentWeekday = now.getDay();
+  const selectedDate = currentWeekday >= 1 && currentWeekday <= 5 ? now : days[0];
+  state.selectedDay = localDateKey(selectedDate);
+
+  const weekLabel = $('#hud-week-label');
+  const strip = $('#hud-week-strip');
+  const dayGroup = $('#hud-week-days');
+  const fullDate = new Intl.DateTimeFormat(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+  const monthYear = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' });
+  const weekday = new Intl.DateTimeFormat(undefined, { weekday: 'short' });
+  const monthDay = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' });
+
+  weekLabel.textContent = monthYear.format(now);
+  strip.setAttribute('aria-label', `Week of ${fullDate.format(monday)}`);
+  dayGroup.innerHTML = days.map(date => {
+    const key = localDateKey(date);
+    const isToday = key === todayKey;
+    const isSelected = key === state.selectedDay;
+    return `<button class="${isSelected ? 'is-selected ' : ''}${isToday ? 'is-today' : ''}" type="button" data-day="${key}" aria-pressed="${isSelected}"><strong>${weekday.format(date)}</strong><span>${monthDay.format(date)}</span><em>Today</em></button>`;
+  }).join('');
 }
 
 function setManualLocation() {
@@ -265,6 +319,69 @@ async function loadOpportunities() {
   }
 }
 
+function renderPrivatePhotoState(message) {
+  const stateLabel = $('#hud-private-photo-state');
+  if (stateLabel) stateLabel.textContent = message;
+}
+
+function photoContentType(response) {
+  return response.headers.get('content-type')?.toLowerCase().split(';', 1)[0] ?? '';
+}
+
+async function loadPrivatePhoto() {
+  const endpoint = document.documentElement.dataset.hudPhotoEndpoint;
+  const frame = $('#hud-private-photo-frame');
+  if (!endpoint || !frame || photoRequestInFlight) return;
+
+  photoRequestInFlight = true;
+  renderPrivatePhotoState('Checking private source');
+  try {
+    const response = await fetch(endpoint, {
+      credentials: 'same-origin',
+      cache: 'no-store',
+      redirect: 'error',
+      headers: { Accept: 'image/jpeg' }
+    });
+    if (response.status === 403) {
+      renderPrivatePhotoState('Private access required');
+      return;
+    }
+    if (response.status === 204 || response.status === 404 || response.status === 409) {
+      renderPrivatePhotoState('Not connected');
+      return;
+    }
+    if (!response.ok || photoContentType(response) !== 'image/jpeg') throw new Error('Private photo request failed.');
+
+    const blob = await response.blob();
+    if (!blob.size || blob.type !== 'image/jpeg') throw new Error('Private photo response was not a JPEG.');
+
+    const nextSlot = activePhotoSlot === 'a' ? 'b' : 'a';
+    const incoming = $(`#hud-private-photo-${nextSlot}`);
+    const outgoing = $(`#hud-private-photo-${activePhotoSlot}`);
+    const nextObjectUrl = URL.createObjectURL(blob);
+    await new Promise((resolve, reject) => {
+      incoming.onload = resolve;
+      incoming.onerror = () => reject(new Error('Private photo could not be rendered.'));
+      incoming.src = nextObjectUrl;
+    });
+
+    incoming.classList.add('is-visible');
+    outgoing.classList.remove('is-visible');
+    const priorObjectUrl = activePhotoObjectUrl;
+    activePhotoObjectUrl = nextObjectUrl;
+    activePhotoSlot = nextSlot;
+    window.setTimeout(() => {
+      if (priorObjectUrl) URL.revokeObjectURL(priorObjectUrl);
+      if (outgoing.src.startsWith('blob:')) outgoing.removeAttribute('src');
+    }, 850);
+    renderPrivatePhotoState('Private photo loaded');
+  } catch {
+    renderPrivatePhotoState('Private source unavailable');
+  } finally {
+    photoRequestInFlight = false;
+  }
+}
+
 function announce(message) {
   const toast = $('#toast');
   clearTimeout(toastTimer);
@@ -291,7 +408,16 @@ function runOnce(button, work) {
   }
 }
 
+function setHudMenu(open) {
+  const menu = $('#hud-mobile-menu');
+  const toggle = $('#hud-menu-toggle');
+  if (!menu || !toggle) return;
+  menu.classList.toggle('is-open', open);
+  toggle.setAttribute('aria-expanded', String(open));
+}
+
 function showView(view) {
+  setHudMenu(false);
   state.activeView = view;
   $$('[data-view-panel]').forEach(panel => {
     const active = panel.dataset.viewPanel === view;
@@ -406,7 +532,9 @@ function setDay(day) {
     button.classList.toggle('is-selected', selected);
     button.setAttribute('aria-pressed', String(selected));
   });
-  announce(`${day} selected in the sample week.`);
+  const selectedButton = $(`[data-day="${day}"]`);
+  const label = selectedButton ? `${selectedButton.querySelector('strong').textContent} ${selectedButton.querySelector('span').textContent}` : 'Day';
+  announce(`${label} selected in the sample week.`);
 }
 
 function openDialog(kind, editId = '') {
@@ -582,6 +710,8 @@ function init() {
   renderMaterials();
   renderDirection();
   loadOpportunities();
+  loadPrivatePhoto();
+  photoTimer = window.setInterval(loadPrivatePhoto, PHOTO_ROTATION_MS);
   document.addEventListener('click', handleClick);
   document.addEventListener('change', event => {
     if (event.target.matches('#focus-status')) { state.focusFilter = event.target.value; renderToday(); }
@@ -594,6 +724,12 @@ function init() {
   });
   document.addEventListener('input', event => { if (event.target.matches('#opportunity-search')) renderOpportunities(); });
   $('#hud-form').addEventListener('submit', saveDialog);
+  $('#hud-menu-toggle').addEventListener('click', event => {
+    setHudMenu(event.currentTarget.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') setHudMenu(false);
+  });
   $('#filter-toggle').addEventListener('click', event => {
     const form = $('#focus-filter');
     form.hidden = !form.hidden;

@@ -30,9 +30,15 @@ The endpoint must return a no-store JSON object shaped like:
 
 The HUD shows connected records read-only. It renders the optional Sheet link only when it is an HTTPS `docs.google.com/spreadsheets/d/<id>/edit` URL. Unsupported URLs are hidden. The Sheet identifier and URL are never committed to the public bundle.
 
+### Private photo stream
+
+The reserved photo frame requests only the fixed same-origin `/api/hud/photo` endpoint. It sends an owner-gated, no-store JPEG request on load and every 20 seconds; a second in-memory image layer crossfades the returned bytes into view. The browser receives no Drive ID, source URL, or image list, and the repository contains no private image pixels. A missing or unavailable endpoint is shown truthfully in the frame as **Not connected** or **Private source unavailable**.
+
+The image endpoint must remain fixed and owner-gated, return only `image/jpeg` bytes with `Cache-Control: no-store`, and decide image selection server-side. The client rejects redirects, does not send arbitrary source URLs, and does not attempt to pick or retain a photo.
+
 ## Deliberate limits
 
-- Google Sheets, Drive, photos, email, and calendars are private sources. This release only reads the protected opportunities response when that backend is available.
+- Google Sheets, Drive, photos, email, and calendars are private sources. This release only reads the protected opportunities response and the fixed protected photo stream when those backend routes are available.
 - Email and Google/iCloud calendar functions are not connected here.
 - Contacts, materials, and controls outside the protected opportunities response remain fictional sample records. When the protected response is available, its opportunities and follow-ups are rendered read-only.
 - In this repository's protected `/hud/` release, the HUD remains a sample experience rather than a private-data workspace. Local static opening has no access control; access is enforced by the deployed Worker.

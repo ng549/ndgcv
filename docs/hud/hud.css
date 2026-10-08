@@ -42,6 +42,7 @@ a { color: inherit; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
 .hud-shell { display: grid; grid-template-columns: 279px minmax(0, 1fr); min-height: 100vh; }
+.rail-top, .hud-mobile-menu { display: contents; }
 .rail {
   display: flex;
   position: sticky;
@@ -74,6 +75,7 @@ a { color: inherit; }
   text-transform: uppercase;
 }
 .brand small { color: #bbbfbd; letter-spacing: .32em; }
+.hud-menu-toggle { display: none; }
 .primary-nav, .future-nav { display: grid; gap: 8px; }
 .nav-item {
   display: flex;
@@ -187,7 +189,8 @@ a { color: inherit; }
 .week-days button span { color: #67778a; font-size: 17px; }
 .week-days button em { display: none; color: var(--gold-dark); font-family: Manrope, sans-serif; font-size: 12px; font-style: normal; font-weight: 800; letter-spacing: .23em; text-transform: uppercase; }
 .week-days button.is-selected { z-index: 1; align-content: center; margin: 6px 10px; border: 0; border-radius: 5px; background: #ddd5c8; box-shadow: 0 3px 0 var(--gold-dark), 0 8px 16px rgba(20, 30, 35, .12); }
-.week-days button.is-selected em { display: block; }
+.week-days button.is-selected em { display: none; }
+.week-days button.is-today em { display: block; }
 
 .view-panel { padding: 26px 48px 48px; }
 .today-grid { display: grid; grid-template-columns: minmax(0, 1.23fr) minmax(400px, 1fr); gap: 32px; align-items: start; }
@@ -398,12 +401,16 @@ body::after { position: fixed; z-index: -1; inset: 0; content: ""; background: r
 .future-nav { margin-top: auto; }
 .private-photo-slot { display: grid; gap: 8px; margin-top: 24px; }
 .private-photo-frame {
+  position: relative;
   min-height: 156px;
+  overflow: hidden;
   border: 2px solid rgba(239,198,143,.86);
   border-radius: 18px;
   background: rgba(143,176,216,.16);
   box-shadow: inset 0 0 0 4px rgba(244,240,232,.2), inset 0 1px 0 rgba(255,255,255,.85), 0 10px 22px rgba(2,14,24,.35);
 }
+.private-photo-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s ease; }
+.private-photo-image.is-visible { opacity: 1; }
 .private-photo-slot p { display: grid; gap: 1px; margin: 0; color: #eef5f8; font-family: Manrope, sans-serif; font-size: 12px; }
 .private-photo-slot span { color: #c7d9e2; }
 .hud-runtime-status { gap: 5px; margin: 13px 0 0; padding: 13px; border-color: rgba(191,215,227,.65); border-radius: 13px; color: #f4f0e8; background: rgba(20,35,46,.72); box-shadow: inset 0 1px 0 rgba(255,255,255,.45); }
@@ -475,22 +482,39 @@ select, input, textarea { border-color: rgba(20,35,46,.14); border-radius: 9px; 
 
 @media (max-width: 760px) {
   .hud-shell { display: block; padding: 10px; }
-  .rail { position: static; min-height: 0; max-height: none; margin-bottom: 10px; padding: 18px; border-radius: 18px; }
-  .primary-nav { margin-bottom: 0; }
-  .nav-item { min-height: 39px; padding: 8px 10px; }
+  .rail { position: relative; z-index: 10; min-height: 68px; max-height: none; margin-bottom: 10px; padding: 0; overflow: visible; border-radius: 18px; }
+  .rail-top { display: flex; align-items: center; justify-content: space-between; min-height: 68px; padding: 10px 14px; }
+  .brand { margin: 0; font-size: 18px; }
+  .brand small { font-size: 9px; }
+  .hud-menu-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 61px; min-height: 44px; padding: 8px 12px; border: 1px solid rgba(239,198,143,.9); border-radius: 4px; color: #efc68f; background: rgba(239,198,143,.05); font-family: Manrope, sans-serif; font-size: 14px; font-weight: 700; }
+  .hud-menu-toggle:hover, .hud-menu-toggle[aria-expanded="true"] { color: #fff4e5; background: rgba(239,198,143,.16); }
+  .hud-mobile-menu { display: none; position: absolute; z-index: 2; top: 68px; left: 0; width: min(310px, calc(100vw - 64px)); max-height: calc(100dvh - 68px); overflow-y: auto; padding: 16px 20px 24px; border-radius: 0 0 18px 0; background: #14232e; box-shadow: 12px 20px 28px rgba(2,14,24,.28); }
+  .hud-mobile-menu.is-open { display: block; }
+  .primary-nav { display: grid; gap: 2px; margin: 0; overflow: visible; padding: 0; }
+  .nav-item { width: 100%; min-height: 44px; padding: 10px 0; border-radius: 0; font-size: 16px; white-space: normal; }
   .nav-item:hover:not(:disabled), .nav-item.is-active { padding-left: 10px; }
   .future-nav, .rail-divider, .hud-runtime-links, .public-site { display: none; }
-  .private-photo-slot { grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: 11px; margin-top: 14px; }
-  .private-photo-frame { min-height: 88px; }
-  .hud-runtime-status { margin-top: 13px; }
-  .hero { min-height: 270px; border-radius: 18px; }
-  .hero-content { padding: 20px; }
+  .private-photo-slot { grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 11px; margin-top: 18px; }
+  .private-photo-frame { min-height: 68px; }
+  .hud-runtime-status { margin-top: 16px; }
+  .hero { min-height: 228px; border-radius: 18px; }
+  .hero-content { padding: 16px 18px 12px; }
   .hud-context { gap: 5px 9px; font-size: 12px; }
   .hud-context > span::after { margin-left: 9px; }
-  .hero-actions { padding: 0 20px 18px; }
+  .hero-copy h1 { font-size: clamp(34px, 10vw, 42px); }
+  .hero-copy p { margin-top: 5px; font-size: clamp(19px, 5.8vw, 23px); }
+  .hero-actions { gap: 10px; padding: 0 18px 15px; }
+  .hero-actions .button { min-height: 44px; padding: 10px 15px; font-size: 15px; }
+  .button-gold { min-width: 0; }
   .week-strip { border-radius: 17px; }
   .view-panel[data-view-panel="career"] .view-heading { padding: 20px 18px 8px; border-radius: 18px 18px 0 0; }
   .view-panel[data-view-panel="career"] .filters { padding: 12px 18px 18px; border-radius: 0 0 18px 18px; }
+  .view-heading h2 { font-size: clamp(28px, 8vw, 32px); }
+  .view-heading > div > p:last-child { font-size: 18px; }
   .opportunity-layout { margin-top: 10px; }
   .opportunity-card, .opportunity-detail { border-radius: 16px; }
+  .opportunity-card { min-height: 0; padding: 14px 16px; }
+  .opportunity-card h3 { font-size: 20px; }
+  .opportunity-detail { min-height: 0; padding: 20px; }
+  .opportunity-detail h3 { font-size: 28px; }
 }
