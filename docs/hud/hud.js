@@ -103,7 +103,6 @@ const CONNECTION_SOURCE_NAMES = Object.keys(CONNECTION_SOURCE_DETAILS);
 const CONNECTION_STATES = new Set(['default', 'active']);
 const CONNECTION_STATUSES = new Set(['not_tested', 'ready', 'unavailable', 'invalid']);
 const CONNECTION_URL_MAX_LENGTH = 4096;
-const CONNECTION_REVISION_MAX_LENGTH = 512;
 
 function hudRuntimeEndpoint(dataKey, pathname) {
   const configured = document.documentElement.dataset[dataKey];
@@ -725,14 +724,18 @@ function connectionText(value, maxLength = CONNECTION_URL_MAX_LENGTH) {
   return typeof value === 'string' && value.length <= maxLength ? value : null;
 }
 
+function connectionRevision(value) {
+  return Number.isSafeInteger(value) && value >= 0 ? value : null;
+}
+
 function validConnectionSource(source) {
   return CONNECTION_SOURCE_NAMES.includes(source);
 }
 
 function normalizeConnectionSettings(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new TypeError('Invalid private connection settings.');
-  const revision = connectionText(payload.revision, CONNECTION_REVISION_MAX_LENGTH);
-  if (!revision || !payload.sources || typeof payload.sources !== 'object' || Array.isArray(payload.sources)) throw new TypeError('Invalid private connection settings.');
+  const revision = connectionRevision(payload.revision);
+  if (revision === null || !payload.sources || typeof payload.sources !== 'object' || Array.isArray(payload.sources)) throw new TypeError('Invalid private connection settings.');
   const sources = {};
   for (const source of CONNECTION_SOURCE_NAMES) {
     const item = payload.sources[source];
@@ -913,7 +916,7 @@ async function testConnection(source) {
 async function saveConnection(source) {
   const endpoint = connectionEndpoint(source);
   const url = connectionDraft(source).trim();
-  if (!endpoint || !url || !state.connections.revision || connectionTest(source).phase !== 'ready') return;
+  if (!endpoint || !url || state.connections.revision === null || connectionTest(source).phase !== 'ready') return;
   state.connections.tests.set(source, { phase: 'saving' });
   renderConnections();
   let response;

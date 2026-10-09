@@ -8,7 +8,14 @@ const env = { HUD_BACKEND_ORIGIN: backendOrigin };
 const calls = [];
 const fetchImpl = async (input, init) => {
   calls.push({ input: String(input), init });
-  return new Response('{"revision":"settings_revision_001","sources":{}}', {
+  return new Response(JSON.stringify({
+    revision: 0,
+    sources: {
+      opportunities: { url: 'https://docs.google.com/spreadsheets/d/synthetic-opportunities/edit', state: 'default', status: 'not_tested' },
+      references: { url: 'https://docs.google.com/spreadsheets/d/synthetic-references/edit', state: 'default', status: 'not_tested' },
+      photos: { url: 'https://drive.google.com/drive/folders/synthetic-photos', state: 'default', status: 'not_tested' },
+    },
+  }), {
     headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8' },
     status: 200,
   });
@@ -45,7 +52,7 @@ assert.equal(new Headers(calls[1].init.headers).get('Content-Type'), 'applicatio
 assert.equal(new Headers(calls[1].init.headers).get('Origin'), 'https://nicolasgoureau.com', 'Connections tests forward only the validated canonical origin for backend defense in depth.');
 assert.deepEqual(JSON.parse(new TextDecoder().decode(calls[1].init.body)), JSON.parse(new TextDecoder().decode(testBody)), 'The bounded test payload is preserved for the fixed route.');
 
-const updateBody = new TextEncoder().encode(JSON.stringify({ url: 'https://drive.google.com/drive/folders/private-source', expectedRevision: 'settings_revision_001' }));
+const updateBody = new TextEncoder().encode(JSON.stringify({ url: 'https://drive.google.com/drive/folders/private-source', expectedRevision: 0 }));
 response = await proxyHudConnectionUpdate(request('/api/hud/connections/photos', { body: updateBody, method: 'PUT' }), env, 'photos', updateBody, fetchImpl);
 assert.equal(response.status, 200, 'Only the fixed source update route is proxied.');
 assert.equal(calls[2].input, `${backendOrigin}/api/hud/connections/photos`);

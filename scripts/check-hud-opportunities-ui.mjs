@@ -79,18 +79,29 @@ assert.equal(trustedCareerSheetUrl('https://example.invalid/not-a-sheet'), null,
 assert.equal(trustedCareerSheetUrl('/spreadsheets/d/runtime_only_001/edit'), null, 'Relative links are hidden.');
 
 const connections = normalizeConnectionSettings({
-  revision: 'settings_revision_001',
+  revision: 0,
   sources: {
     opportunities: { url: 'https://docs.google.com/spreadsheets/d/opportunities/edit', state: 'active', status: 'ready' },
     references: { url: 'https://docs.google.com/spreadsheets/d/references/edit', state: 'default', status: 'not_tested' },
     photos: { url: 'https://drive.google.com/drive/folders/photos', state: 'active', status: 'unavailable' },
   },
 });
+assert.equal(connections.revision, 0, 'Initial private connection settings accept revision zero.');
 assert.equal(connections.sources.photos.status, 'unavailable', 'Connection state comes only from the protected settings response.');
 assert.throws(
   () => normalizeConnectionSettings({ ...connections, sources: { ...connections.sources, photos: { ...connections.sources.photos, status: 'connected' } } }),
   /Invalid private connection settings/,
   'Unrecognized connection states are not rendered as successful private setup.'
+);
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, revision: '0' }),
+  /Invalid private connection settings/,
+  'Connection revisions are safe integers, not opaque strings.'
+);
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, revision: -1 }),
+  /Invalid private connection settings/,
+  'Negative connection revisions are rejected.'
 );
 assert.deepEqual(
   JSON.parse(JSON.stringify(normalizeConnectionTest({ source: 'photos', status: 'ready' }, 'photos'))),
