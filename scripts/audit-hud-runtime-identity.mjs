@@ -40,6 +40,26 @@ function validPageMetadata(info, page, totalPages) {
     && Number.isSafeInteger(info?.count) && info.count >= 0;
 }
 
+function safeNumberOrType(value) {
+  if (Number.isSafeInteger(value)) return value;
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value;
+}
+
+function sanitizedPagination(readResult, accumulatedCount) {
+  const info = readResult?.resultInfo;
+  return {
+    accumulatedCount,
+    count: safeNumberOrType(info?.count),
+    page: safeNumberOrType(info?.page),
+    per_page: safeNumberOrType(info?.per_page),
+    resultIsArray: Array.isArray(readResult?.result),
+    total_count: safeNumberOrType(info?.total_count),
+    total_pages: safeNumberOrType(info?.total_pages),
+  };
+}
+
 function hudRelevantPath(pathname) {
   const path = pathname || '/';
   return path === '/' || path === '/*'
@@ -141,27 +161,75 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
     const pages = [];
     let totalPages = null;
     let totalCount = null;
+    let pagination = sanitizedPagination(null, 0);
+    const unknown = (failureReason, { ok = true, status = 200, unsupported = true } = {}) => ({
+      apps: null,
+      completePagination: null,
+      failureReason,
+      ok,
+      pagination,
+      status,
+      unsupported,
+    });
     for (let page = 1; page <= maxAppPages; page += 1) {
       const readResult = await read(`accounts/${accountId}/access/apps?per_page=${appPageSize}&page=${page}`);
-      if (!readResult.ok) return { apps: null, completePagination: null, ok: false, status: readResult.status, unsupported: false };
-      if (!Array.isArray(readResult.result)) return { apps: null, completePagination: null, ok: true, status: 200, unsupported: true };
+      pagination = sanitizedPagination(readResult, pages.length);
+      if (!readResult.ok) return unknown('request_failed', { ok: false, status: readResult.status, unsupported: false });
+      if (!Array.isArray(readResult.result)) return unknown('result_not_array');
       const info = readResult.resultInfo;
       if (page === 1) {
-        if (!Number.isSafeInteger(info?.total_pages) || info.total_pages < 1) return { apps: null, completePagination: null, ok: true, status: 200, unsupported: true };
+        if (!info || typeof info !== 'object' || Array.isArray(info)) {
+          return unknown(readResult.result.length === 0 ? 'empty_result_missing_pagination' : 'missing_pagination_metadata');
+        }
+        const hasPaginationField = ['page', 'per_page', 'count', 'total_count', 'total_pages']
+          .some(field => info[field] !== undefined);
+        if (!hasPaginationField) {
+          return unknown(readResult.result.length === 0 ? 'empty_result_missing_pagination' : 'missing_pagination_metadata');
+        }
+        if (!Number.isSafeInteger(info.total_pages) || info.total_pages < 1) return unknown('invalid_total_pages');
         totalPages = info.total_pages;
         totalCount = info.total_count;
-        if (totalPages > maxAppPages) return { apps: null, completePagination: false, ok: true, status: 200, unsupported: false };
+        if (totalPages > maxAppPages) {
+          return {
+            apps: null,
+            completePagination: false,
+            failureReason: 'page_limit_exceeded',
+            ok: true,
+            pagination,
+            status: 200,
+            unsupported: false,
+          };
+        }
       }
       if (!validPageMetadata(info, page, totalPages) || info.total_count !== totalCount || info.count !== readResult.result.length) {
-        return { apps: null, completePagination: null, ok: true, status: 200, unsupported: true };
+        return unknown(!validPageMetadata(info, page, totalPages)
+          ? 'invalid_pagination_metadata'
+          : info.total_count !== totalCount ? 'inconsistent_total_count' : 'count_mismatch');
       }
       pages.push(...readResult.result);
       if (page === totalPages) {
-        if (pages.length !== totalCount) return { apps: null, completePagination: null, ok: true, status: 200, unsupported: true };
-        return { apps: pages, completePagination: true, ok: true, status: 200, unsupported: false };
+        pagination = sanitizedPagination(readResult, pages.length);
+        if (pages.length !== totalCount) return unknown('accumulated_count_mismatch');
+        return {
+          apps: pages,
+          completePagination: true,
+          failureReason: null,
+          ok: true,
+          pagination,
+          status: 200,
+          unsupported: false,
+        };
       }
     }
-    return { apps: null, completePagination: false, ok: true, status: 200, unsupported: false };
+    return {
+      apps: null,
+      completePagination: false,
+      failureReason: 'page_limit_exhausted',
+      ok: true,
+      pagination,
+      status: 200,
+      unsupported: false,
+    };
   }
 
   const [settings, organization] = await Promise.all([
@@ -191,6 +259,8 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
       completePagination: apps.completePagination,
       matchCount,
       matchingAppRoutes: routes?.routes ?? null,
+      pagination: apps.pagination,
+      paginationFailureReason: apps.failureReason,
       status: apps.status,
       unsupportedShapes: Boolean(audienceBinding.unsupported || teamBinding.unsupported || apps.unsupported || routes?.unsupported),
     },

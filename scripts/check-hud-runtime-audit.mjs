@@ -65,6 +65,12 @@ const zero = await audit({
   appsPages: [{ result: [], resultInfo: pageInfo() }],
 });
 assert.equal(zero.report.accessAppsRead.completePagination, true, 'A verified complete empty page is conclusive.');
+assert.equal(zero.report.accessAppsRead.paginationFailureReason, null, 'A documented empty result with complete pagination metadata is a valid empty list.');
+assert.deepEqual(
+  zero.report.accessAppsRead.pagination,
+  { accumulatedCount: 0, count: 0, page: 1, per_page: 100, resultIsArray: true, total_count: 0, total_pages: 1 },
+  'Successful pagination exposes only numeric metadata and the result-array shape.'
+);
 assert.equal(zero.report.accessAppsRead.matchCount, 0, 'A complete app list can conclusively report zero audience matches.');
 assert.equal(zero.report.accessAppsRead.audienceMatch, false, 'No exact app audience match is not mistaken for coverage.');
 assert.equal(zero.report.organizationRead.teamMatch, null, 'Team association is unknown without a unique matching HUD app.');
@@ -84,8 +90,22 @@ const missingPagination = await audit({
   appsPages: [{ result: [], resultInfo: {} }],
 });
 assert.equal(missingPagination.report.accessAppsRead.completePagination, null, 'Missing pagination metadata is explicitly unknown.');
+assert.equal(missingPagination.report.accessAppsRead.paginationFailureReason, 'empty_result_missing_pagination', 'An empty result without the documented pagination envelope stays unknown with a fixed diagnosis.');
+assert.deepEqual(
+  missingPagination.report.accessAppsRead.pagination,
+  { accumulatedCount: 0, count: 'undefined', page: 'undefined', per_page: 'undefined', resultIsArray: true, total_count: 'undefined', total_pages: 'undefined' },
+  'Malformed pagination exposes field types rather than raw values.'
+);
 assert.equal(missingPagination.report.accessAppsRead.matchCount, null, 'An incomplete list never claims absence or uniqueness.');
 assert.equal(missingPagination.report.accessAppsRead.unsupportedShapes, true, 'Unsupported pagination is recorded without logging raw API data.');
+
+const nonArrayResult = await audit({
+  appsPages: [{ result: { private: 'never emitted' }, resultInfo: pageInfo() }],
+});
+assert.equal(nonArrayResult.report.accessAppsRead.completePagination, null, 'A non-array Access result remains unknown.');
+assert.equal(nonArrayResult.report.accessAppsRead.paginationFailureReason, 'result_not_array', 'Non-array Access results have a fixed diagnostic.');
+assert.equal(nonArrayResult.report.accessAppsRead.pagination.resultIsArray, false, 'The result shape is exposed without serializing any result data.');
+assert(!JSON.stringify(nonArrayResult.report).includes('never emitted'), 'Malformed Access result content is never emitted.');
 
 const truncated = await audit({
   appsPages: [{
@@ -94,6 +114,7 @@ const truncated = await audit({
   }],
 });
 assert.equal(truncated.report.accessAppsRead.completePagination, false, 'The audit explicitly reports a list exceeding its ten-page bound as truncated.');
+assert.equal(truncated.report.accessAppsRead.paginationFailureReason, 'page_limit_exceeded', 'A bounded list reports its fixed truncation reason.');
 assert.equal(truncated.report.accessAppsRead.audienceMatch, null, 'A truncated list cannot establish a unique HUD app.');
 
 const organization403 = await audit({
@@ -152,6 +173,7 @@ assert(implementation.includes("method: 'GET'"), 'Every Cloudflare request is ex
 assert(implementation.includes('maxAppPages = 10') && implementation.includes('appPageSize = 100'), 'Access pagination is bounded to ten 100-record pages.');
 assert(implementation.includes('access/organizations'), 'The audit reads the account Access organization for an exact team comparison.');
 assert(implementation.includes('app.aud === audience'), 'The audit joins only apps with the configured HUD Access audience in memory.');
+assert(implementation.includes('sanitizedPagination') && implementation.includes('paginationFailureReason'), 'Pagination failures expose a fixed reason plus sanitized metadata only.');
 assert(implementation.includes('knownPublicHosts') && implementation.includes('omittedRouteCount'), 'Only permitted public routes are emitted and omitted routes are counted.');
 assert(!implementation.includes('app.name') && !implementation.includes('app.id') && !implementation.includes('policy'), 'The audit never selects or emits app names, IDs, or policies.');
 
