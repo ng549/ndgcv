@@ -12,6 +12,9 @@ assert(workflow.includes('workers/scripts/ndgcv/settings'), 'The runtime audit r
 assert(workflow.includes('access/apps?per_page=100'), 'The runtime audit reads Access application routes without policies.');
 assert(workflow.includes("'HUD_BACKEND_ORIGIN'"), 'The runtime audit reports the fixed backend-origin binding state.');
 assert(workflow.includes('routeCoverage'), 'The runtime audit reports only route-coverage booleans.');
+assert(workflow.includes("value.toLowerCase() === canonicalDomain"), 'The audit canonical-host validator matches the Worker’s case-insensitive host check.');
+assert(workflow.includes('app?.destinations') && workflow.includes('destination?.uri'), 'The audit evaluates Access destination URIs without printing them.');
+assert(workflow.includes('accessRuleFromUri') && workflow.includes('flatMap(normalizeAccessRules)'), 'The audit accounts for a path embedded in either an Access domain or destination URI.');
 assert(!workflow.includes('JSON.stringify(settings.result'), 'The runtime audit never prints complete Worker settings.');
 assert(!workflow.includes('JSON.stringify(accessApps.result'), 'The runtime audit never prints Access applications or policies.');
 console.log('HUD runtime audit workflow: manual-only, read-only, and sanitized.');

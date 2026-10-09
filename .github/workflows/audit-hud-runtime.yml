@@ -57,7 +57,7 @@ jobs:
           }
 
           function validCanonicalHost(value) {
-            return value === canonicalDomain;
+            return typeof value === 'string' && value.toLowerCase() === canonicalDomain;
           }
 
           function validTeamDomain(value) {
@@ -93,9 +93,29 @@ jobs:
             return { present: true, readable: value !== null, valid: value === null ? null : validator(value) };
           }
 
-          function normalizeAccessRule(app) {
-            if (typeof app?.domain !== 'string') return null;
-            return { domain: app.domain.toLowerCase(), path: typeof app.path === 'string' && app.path ? app.path : '/*' };
+          function normalizedAccessPath(value) {
+            const path = typeof value === 'string' ? value.trim() : '';
+            if (!path) return '/*';
+            return path.startsWith('/') ? path : `/${path}`;
+          }
+
+          function accessRuleFromUri(value, fallbackPath) {
+            if (typeof value !== 'string' || !value.trim()) return null;
+            try {
+              const raw = value.trim();
+              const url = new URL(/^[a-z][a-z\d+.-]*:\/\//i.test(raw) ? raw : `https://${raw}`);
+              if (url.protocol !== 'https:' || !url.hostname) return null;
+              const explicitPath = url.pathname && url.pathname !== '/' ? url.pathname : '';
+              return { domain: url.hostname.toLowerCase(), path: normalizedAccessPath(explicitPath || fallbackPath) };
+            } catch {
+              return null;
+            }
+          }
+
+          function normalizeAccessRules(app) {
+            const fallbackPath = normalizedAccessPath(app?.path);
+            const destinations = Array.isArray(app?.destinations) ? app.destinations.map(destination => destination?.uri) : [];
+            return [app?.domain, ...destinations].map(value => accessRuleFromUri(value, fallbackPath)).filter(Boolean);
           }
 
           function ruleMatchesPath(rule, pathname) {
@@ -124,7 +144,7 @@ jobs:
           const hudBindings = settings.ok
             ? Object.fromEntries(requiredBindings.map(name => [name, bindingSummary(bindings, name, bindingValidators[name])]))
             : null;
-          const accessRules = accessApps.ok && Array.isArray(accessApps.result) ? accessApps.result.map(normalizeAccessRule).filter(Boolean) : [];
+          const accessRules = accessApps.ok && Array.isArray(accessApps.result) ? accessApps.result.flatMap(normalizeAccessRules) : [];
           const accessRouteCoverage = accessApps.ok
             ? Object.fromEntries(['/hud', '/hud/', '/api/hud', '/api/hud/'].map(pathname => [pathname, accessRules.some(rule => ruleMatchesPath(rule, pathname))]))
             : null;
