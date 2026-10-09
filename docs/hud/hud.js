@@ -4,8 +4,10 @@ const state = {
   liveDrafts: new Map(),
   liveSaves: new Map(),
   connections: {
+    accessEpoch: 0,
     drafts: new Map(),
     phase: 'loading',
+    requestEpoch: 0,
     revision: null,
     sources: null,
     tests: new Map(),
@@ -484,9 +486,10 @@ function resetReferencesForSourceChange() {
   renderContacts();
 }
 
-function resetPrivatePhotoForSourceChange() {
+function resetPrivatePhotoForSourceChange({ queueReload = true } = {}) {
   photoSourceGeneration += 1;
-  if (photoRequestInFlight) photoReloadQueued = true;
+  if (photoRequestInFlight && queueReload) photoReloadQueued = true;
+  if (!queueReload) photoReloadQueued = false;
   if (activePhotoObjectUrl) URL.revokeObjectURL(activePhotoObjectUrl);
   activePhotoObjectUrl = null;
   activePhotoSlot = 'b';
@@ -497,20 +500,17 @@ function resetPrivatePhotoForSourceChange() {
   renderPrivatePhotoState('Checking private source');
 }
 
-async function refreshSourceAfterConnectionChange(source) {
+function resetSourceForConnectionChange(source, { queuePhotoReload = true } = {}) {
   if (source === 'opportunities') {
     resetOpportunitiesForSourceChange();
-    await loadOpportunities();
     return;
   }
   if (source === 'references') {
     resetReferencesForSourceChange();
-    await loadReferences();
     return;
   }
   if (source === 'photos') {
-    resetPrivatePhotoForSourceChange();
-    await loadPrivatePhoto();
+    resetPrivatePhotoForSourceChange({ queueReload: queuePhotoReload });
   }
 }
 
@@ -892,6 +892,7 @@ function renderConnections() {
   const unavailable = {
     loading: 'Checking private connection settings. No source link is shown until the owner-only settings response is valid.',
     access: 'Private access is required before connection settings can be shown or changed.',
+    unknown: 'A source save may have completed, but private settings could not be rechecked. Connection controls remain hidden until a valid owner-only settings response is available.',
     unconnected: 'Private setup support is not available. No source link was read or changed.',
     unavailable: 'Private connection settings are unavailable. No source link was read or changed.',
     invalid: 'Private connection settings could not be read safely. No source link was shown or changed.',
@@ -934,12 +935,41 @@ function setConnectionPhase(phase) {
   renderConnections();
 }
 
+function beginConnectionRequest() {
+  const token = {
+    accessEpoch: state.connections.accessEpoch,
+    requestEpoch: state.connections.requestEpoch + 1,
+  };
+  state.connections.requestEpoch = token.requestEpoch;
+  return token;
+}
+
+function connectionRequestIsCurrent(token) {
+  return Boolean(token
+    && token.accessEpoch === state.connections.accessEpoch
+    && token.requestEpoch === state.connections.requestEpoch);
+}
+
+function connectionAccessIsCurrent(accessEpoch) {
+  return accessEpoch === state.connections.accessEpoch;
+}
+
 function concealPrivateConnections() {
+  state.connections.accessEpoch += 1;
+  state.connections.requestEpoch += 1;
   state.connections.phase = 'access';
   state.connections.revision = null;
   state.connections.sources = null;
   state.connections.drafts.clear();
   state.connections.tests.clear();
+  CONNECTION_SOURCE_NAMES.forEach(source => resetSourceForConnectionChange(source, { queuePhotoReload: false }));
+  renderConnections();
+}
+
+function unknownConnectionSaveOutcome() {
+  state.connections.phase = 'unknown';
+  state.connections.revision = null;
+  state.connections.sources = null;
   renderConnections();
 }
 
@@ -952,9 +982,34 @@ function applyConnectionSettings(payload, { preserveDrafts = true } = {}) {
   return settings;
 }
 
+function connectionSourceChanged(previous, next, source) {
+  return Boolean(previous
+    && (previous[source]?.url !== next[source].url || previous[source]?.state !== next[source].state));
+}
+
+async function transitionConnectionSnapshot(payload, { preserveDrafts = true, token = null } = {}) {
+  if (token && !connectionRequestIsCurrent(token)) return null;
+  const previous = state.connections.sources
+    ? Object.fromEntries(CONNECTION_SOURCE_NAMES.map(source => [source, { ...state.connections.sources[source] }]))
+    : null;
+  const settings = applyConnectionSettings(payload, { preserveDrafts });
+  const changedSources = CONNECTION_SOURCE_NAMES.filter(source => connectionSourceChanged(previous, settings.sources, source));
+  if (changedSources.length) {
+    changedSources.forEach(source => resetSourceForConnectionChange(source));
+    await Promise.all(changedSources.map(source => {
+      if (source === 'opportunities') return loadOpportunities();
+      if (source === 'references') return loadReferences();
+      return loadPrivatePhoto();
+    }));
+  }
+  return token && !connectionRequestIsCurrent(token) ? null : settings;
+}
+
 async function loadConnections({ preserveDrafts = true } = {}) {
+  const token = beginConnectionRequest();
   const endpoint = connectionEndpoint();
   if (!endpoint) {
+    if (!connectionRequestIsCurrent(token)) return false;
     setConnectionPhase('unconnected');
     return false;
   }
@@ -966,13 +1021,16 @@ async function loadConnections({ preserveDrafts = true } = {}) {
       headers: { Accept: 'application/json' },
       redirect: 'error',
     });
+    if (!connectionRequestIsCurrent(token)) return false;
     if (response.status === 403) { concealPrivateConnections(); return false; }
     if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected'); return false; }
     if (!response.ok) { setConnectionPhase('unavailable'); return false; }
-    applyConnectionSettings(await responseJSON(response), { preserveDrafts });
+    const settings = await transitionConnectionSnapshot(await responseJSON(response), { preserveDrafts, token });
+    if (!settings) return false;
     renderConnections();
     return true;
   } catch {
+    if (!connectionRequestIsCurrent(token)) return false;
     setConnectionPhase('unavailable');
     return false;
   }
@@ -982,6 +1040,7 @@ async function testConnection(source) {
   const endpoint = connectionEndpoint(source, '/test');
   const url = connectionDraft(source).trim();
   if (!endpoint || !url) return;
+  const token = beginConnectionRequest();
   state.connections.tests.set(source, { phase: 'testing' });
   renderConnections();
   let response;
@@ -997,10 +1056,12 @@ async function testConnection(source) {
     });
     body = await responseJSON(response);
   } catch {
+    if (!connectionRequestIsCurrent(token)) return;
     state.connections.tests.set(source, { phase: 'test-unavailable' });
     renderConnections();
     return;
   }
+  if (!connectionRequestIsCurrent(token)) return;
   if (response.ok) {
     try {
       const result = normalizeConnectionTest(body, source);
@@ -1022,12 +1083,18 @@ async function testConnection(source) {
 }
 
 async function reconcileConnectionAfterSaveIssue(source) {
+  const accessEpoch = state.connections.accessEpoch;
+  if (!connectionAccessIsCurrent(accessEpoch)) return false;
   state.connections.tests.set(source, { phase: 'reconciling' });
   renderConnections();
   const refreshed = await loadConnections({ preserveDrafts: true });
-  if (state.connections.phase !== 'ready') return false;
+  if (!connectionAccessIsCurrent(accessEpoch)) return false;
+  if (state.connections.phase !== 'ready' || !refreshed) {
+    unknownConnectionSaveOutcome();
+    return false;
+  }
   state.connections.tests.set(source, {
-    phase: refreshed ? 'uncertain' : 'unavailable',
+    phase: 'uncertain',
   });
   renderConnections();
   return refreshed;
@@ -1037,7 +1104,7 @@ async function saveConnection(source) {
   const endpoint = connectionEndpoint(source);
   const url = connectionDraft(source).trim();
   if (!endpoint || !url || state.connections.revision === null || connectionTest(source).phase !== 'ready') return;
-  const before = state.connections.sources?.[source] ? { ...state.connections.sources[source] } : null;
+  const token = beginConnectionRequest();
   state.connections.tests.set(source, { phase: 'saving' });
   renderConnections();
   let response;
@@ -1053,19 +1120,21 @@ async function saveConnection(source) {
     });
     body = await responseJSON(response);
   } catch {
+    if (!connectionRequestIsCurrent(token)) return;
     await reconcileConnectionAfterSaveIssue(source);
     return;
   }
+  if (!connectionRequestIsCurrent(token)) return;
   if (response.ok) {
     try {
-      const settings = applyConnectionSettings(body, { preserveDrafts: true });
-      const changed = !before || before.url !== settings.sources[source].url || before.state !== settings.sources[source].state;
+      const settings = await transitionConnectionSnapshot(body, { preserveDrafts: true, token });
+      if (!settings) return;
       state.connections.drafts.delete(source);
       state.connections.tests.set(source, { phase: 'saved' });
       renderConnections();
       announce(`${CONNECTION_SOURCE_DETAILS[source].label} was connected to the protected source.`);
-      if (changed) await refreshSourceAfterConnectionChange(source);
     } catch {
+      if (!connectionRequestIsCurrent(token)) return;
       await reconcileConnectionAfterSaveIssue(source);
     }
     return;
@@ -1081,7 +1150,7 @@ async function saveConnection(source) {
   }
   if (response.status === 409) {
     const refreshed = await loadConnections({ preserveDrafts: true });
-    if (state.connections.phase === 'ready') {
+    if (connectionAccessIsCurrent(token.accessEpoch) && state.connections.phase === 'ready') {
       state.connections.tests.set(source, { phase: refreshed ? 'conflict' : 'unavailable' });
       renderConnections();
     }
@@ -1107,8 +1176,10 @@ function captureConnectionDraft(event) {
   if (save) save.disabled = true;
 }
 
-async function refreshAfterLiveSaveIssue(opportunityId, phase, command) {
+async function refreshAfterLiveSaveIssue(opportunityId, phase, command, sourceGeneration) {
+  if (sourceGeneration !== opportunitySourceGeneration) return;
   const refreshed = await loadOpportunities();
+  if (sourceGeneration !== opportunitySourceGeneration) return;
   const message = refreshed
     ? (phase === 'conflict' ? 'The source changed. Latest data is loaded; review your preserved draft before saving again.' : 'Save outcome is unknown. Latest data is loaded; review it before trying again.')
     : (phase === 'conflict' ? 'The source changed, but the latest data could not be loaded. Your draft is preserved.' : 'Save outcome is unknown and the latest data could not be loaded. Your draft is preserved.');
@@ -1119,6 +1190,7 @@ async function refreshAfterLiveSaveIssue(opportunityId, phase, command) {
 async function saveLiveOpportunity(opportunityId, form) {
   const opportunity = state.opportunities.find(item => item.id === opportunityId);
   if (!state.liveOpportunities || !opportunity || !form) return;
+  const sourceGeneration = opportunitySourceGeneration;
   const draft = {
     nextAction: recordText(form.elements.nextAction?.value),
     status: recordText(form.elements.status?.value),
@@ -1152,13 +1224,18 @@ async function saveLiveOpportunity(opportunityId, form) {
     });
     body = await responseJSON(response);
   } catch {
-    await refreshAfterLiveSaveIssue(opportunityId, 'uncertain', command);
+    if (sourceGeneration !== opportunitySourceGeneration) return;
+    await refreshAfterLiveSaveIssue(opportunityId, 'uncertain', command, sourceGeneration);
     return;
   }
 
+  if (sourceGeneration !== opportunitySourceGeneration) return;
+
   if (response.ok) {
     try {
+      if (sourceGeneration !== opportunitySourceGeneration) return;
       applyOpportunityPayload(body);
+      if (sourceGeneration !== opportunitySourceGeneration) return;
       state.liveDrafts.delete(opportunityId);
       state.liveSaves.set(opportunityId, {
         command,
@@ -1167,13 +1244,14 @@ async function saveLiveOpportunity(opportunityId, form) {
       });
       renderOpportunities();
     } catch {
+      if (sourceGeneration !== opportunitySourceGeneration) return;
       state.liveSaves.set(opportunityId, { command, phase: 'uncertain', message: 'The server confirmed a response, but the latest record could not be read. Your draft is preserved.' });
       renderOpportunities();
     }
     return;
   }
   if (response.status === 409 && body?.error === 'hud_conflict') {
-    await refreshAfterLiveSaveIssue(opportunityId, 'conflict', command);
+    await refreshAfterLiveSaveIssue(opportunityId, 'conflict', command, sourceGeneration);
     return;
   }
   const phase = response.status === 403 ? 'access'
@@ -1182,9 +1260,10 @@ async function saveLiveOpportunity(opportunityId, form) {
         : response.status === 502 || response.status === 500 ? 'uncertain'
           : response.status === 503 ? 'unavailable' : 'error';
   if (phase === 'uncertain') {
-    await refreshAfterLiveSaveIssue(opportunityId, phase, command);
+    await refreshAfterLiveSaveIssue(opportunityId, phase, command, sourceGeneration);
     return;
   }
+  if (sourceGeneration !== opportunitySourceGeneration) return;
   state.liveSaves.set(opportunityId, { command, phase });
   renderOpportunities();
 }
