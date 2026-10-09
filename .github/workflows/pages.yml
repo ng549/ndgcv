@@ -63,7 +63,7 @@ jobs:
           if(!cv.some(d=>d.hostname==='nicolasgoureau.com'&&d.service==='ndgcv'))throw new Error('Main CV target changed; review routing before publication');
           NODE
       - name: Deploy main CV custom-domain Worker
-        run: npx wrangler deploy --name ndgcv --keep-vars
+        run: npx wrangler deploy --name ndgcv --keep-vars --var HUD_BACKEND_ORIGIN:https://agency-nexus-command.fly.dev
       - name: Deploy Apps route Worker
         run: npx wrangler deploy --keep-vars
       - name: Verify live custom domain
