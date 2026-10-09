@@ -989,14 +989,21 @@ function connectionSourceChanged(previous, next, source) {
 
 async function transitionConnectionSnapshot(payload, { preserveDrafts = true, token = null } = {}) {
   if (token && !connectionRequestIsCurrent(token)) return null;
+  const previousRevision = state.connections.revision;
   const previous = state.connections.sources
     ? Object.fromEntries(CONNECTION_SOURCE_NAMES.map(source => [source, { ...state.connections.sources[source] }]))
     : null;
   const settings = applyConnectionSettings(payload, { preserveDrafts });
   const changedSources = CONNECTION_SOURCE_NAMES.filter(source => connectionSourceChanged(previous, settings.sources, source));
-  if (changedSources.length) {
-    changedSources.forEach(source => resetSourceForConnectionChange(source));
-    await Promise.all(changedSources.map(source => {
+  const opportunityRevisionAdvanced = previousRevision !== null && settings.revision > previousRevision;
+  const sourcesToReload = new Set(changedSources);
+  // The backend assigns opportunity row revisions from the global connection
+  // revision. A references/photos update can therefore invalidate a pending
+  // opportunity save even when its visible source URL has not changed.
+  if (opportunityRevisionAdvanced) sourcesToReload.add('opportunities');
+  if (sourcesToReload.size) {
+    sourcesToReload.forEach(source => resetSourceForConnectionChange(source));
+    await Promise.all([...sourcesToReload].map(source => {
       if (source === 'opportunities') return loadOpportunities();
       if (source === 'references') return loadReferences();
       return loadPrivatePhoto();

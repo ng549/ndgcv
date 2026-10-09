@@ -57,6 +57,17 @@ function settings(revision, url) {
   };
 }
 
+function settingsWithSources(revision, { opportunities, photos, references }) {
+  return {
+    revision,
+    sources: {
+      opportunities: { url: opportunities, state: 'active', status: 'ready' },
+      references: { url: references, state: 'active', status: 'ready' },
+      photos: { url: photos, state: 'active', status: 'ready' },
+    },
+  };
+}
+
 function opportunityPayload(company) {
   return {
     links: {},
@@ -249,4 +260,36 @@ await lostPatch;
 assert.equal(recoveryOpportunityReads, readsAfterActivation, 'A failed PATCH from source A cannot start a recovery GET against source B.');
 assert.equal(recoveryAfterActivation.hud.state.liveSaves.size, 0, 'A failed PATCH from source A cannot add a retry/save status after source B activation.');
 
-console.log('Career HUD connections races: deferred GET/PUT/PATCH responses, unknown save reconciliation, and source transitions verified.');
+const globalRevisionPatch = deferred();
+const globalRevisionCalls = [];
+const globalRevisionActivation = createRuntime((input, init) => {
+  const url = new URL(input);
+  globalRevisionCalls.push(`${init?.method || 'GET'} ${url.pathname}`);
+  if (url.pathname === '/api/hud/opportunities/opp_runtime_001' && init?.method === 'PATCH') return globalRevisionPatch.promise;
+  if (url.pathname === '/api/hud/opportunities' || url.pathname === '/api/hud/references') return response(409, { error: 'hud_not_connected' });
+  throw new Error(`Unexpected request ${init?.method} ${url.pathname}`);
+});
+globalRevisionActivation.hud.applyOpportunityPayload(opportunityPayload('Source A'));
+readyConnection(globalRevisionActivation.hud);
+globalRevisionActivation.hud.state.liveDrafts.set('opp_runtime_001', { nextAction: 'A stale draft', status: 'research' });
+globalRevisionActivation.hud.state.liveSaves.set('opp_runtime_001', { command: { actionId: 'stale-retry-token' }, phase: 'uncertain' });
+const staleGlobalRevisionPatch = globalRevisionActivation.hud.saveLiveOpportunity('opp_runtime_001', form);
+await globalRevisionActivation.hud.transitionConnectionSnapshot(settingsWithSources(1, {
+  opportunities: 'https://source-a.example',
+  references: 'https://references-b.example',
+  photos: 'https://source-a.example/photos',
+}));
+assert.equal(globalRevisionActivation.hud.state.liveOpportunities, false, 'A global connection revision advance invalidates opportunity rows even when their source URL is unchanged.');
+assert.equal(globalRevisionActivation.hud.state.liveDrafts.size, 0, 'A global connection revision advance clears stale opportunity drafts.');
+assert.equal(globalRevisionActivation.hud.state.liveSaves.size, 0, 'A global connection revision advance clears stale opportunity retry tokens.');
+assert.deepEqual(
+  globalRevisionCalls.filter(call => call.startsWith('GET /api/hud/')).sort(),
+  ['GET /api/hud/opportunities', 'GET /api/hud/references'],
+  'A references activation reloads opportunities once because the global revision changes, plus the changed references source.'
+);
+globalRevisionPatch.resolve(response(200, opportunityPayload('Source A stale response')));
+await staleGlobalRevisionPatch;
+assert.equal(globalRevisionActivation.hud.state.liveSaves.size, 0, 'A stale PATCH cannot reintroduce a save outcome after a global revision change.');
+assert.equal(globalRevisionActivation.hud.state.opportunities.some(opportunity => opportunity.company === 'Source A stale response'), false, 'A stale PATCH cannot restore opportunity rows after an unrelated source activation advances their revision.');
+
+console.log('Career HUD connections races: deferred GET/PUT/PATCH responses, global-revision source transitions, and unknown save reconciliation verified.');
