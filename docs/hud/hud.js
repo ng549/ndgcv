@@ -5,6 +5,7 @@ const state = {
   liveSaves: new Map(),
   connections: {
     accessEpoch: 0,
+    activeRequest: null,
     drafts: new Map(),
     phase: 'loading',
     requestEpoch: 0,
@@ -904,22 +905,22 @@ function renderConnections() {
   }
 
   summary.textContent = 'Private source settings are loaded for this owner session. Test a pasted link before connecting it; drafts stay only in memory until saved.';
+  const operationBusy = connectionOperationBusy();
   list.innerHTML = `<div class="connections-grid">${CONNECTION_SOURCE_NAMES.map(source => {
     const details = CONNECTION_SOURCE_DETAILS[source];
     const setting = state.connections.sources[source];
     const draft = connectionDraft(source);
     const test = connectionTest(source);
     const changed = draft !== setting.url;
-    const testing = test.phase === 'testing' || test.phase === 'saving' || test.phase === 'reconciling';
-    const canTest = Boolean(draft.trim()) && !testing;
-    const canSave = changed && test.phase === 'ready' && !testing;
+    const canTest = Boolean(draft.trim()) && !operationBusy;
+    const canSave = changed && test.phase === 'ready' && !operationBusy;
     return `<article class="connection-source" data-connection-source-card="${source}">
       <p class="eyebrow">${escapeHTML(details.type)}</p>
       <h4>${escapeHTML(details.label)}</h4>
       <p>${escapeHTML(details.help)}</p>
       <p class="connection-current">${setting.state === 'active' ? 'A private custom source is currently saved.' : 'The private default source is currently selected.'}</p>
       <label for="connection-${source}">${escapeHTML(details.type)}
-        <input id="connection-${source}" data-connection-source="${source}" type="url" inputmode="url" autocomplete="off" spellcheck="false" maxlength="${CONNECTION_URL_MAX_LENGTH}" value="${escapeHTML(draft)}" ${testing ? 'disabled' : ''}>
+        <input id="connection-${source}" data-connection-source="${source}" type="url" inputmode="url" autocomplete="off" spellcheck="false" maxlength="${CONNECTION_URL_MAX_LENGTH}" value="${escapeHTML(draft)}" ${operationBusy ? 'disabled' : ''}>
       </label>
       <p class="connection-test-status is-${escapeHTML(test.phase)}" id="connection-test-${source}" role="status" aria-live="polite">${escapeHTML(connectionTestMessage(test))}</p>
       <div class="connection-actions">
@@ -936,22 +937,41 @@ function setConnectionPhase(phase) {
 }
 
 function beginConnectionRequest() {
+  if (connectionOperationBusy()) return null;
   const token = {
     accessEpoch: state.connections.accessEpoch,
     requestEpoch: state.connections.requestEpoch + 1,
   };
   state.connections.requestEpoch = token.requestEpoch;
+  state.connections.activeRequest = token;
   return token;
+}
+
+function connectionOperationBusy() {
+  return state.connections.activeRequest !== null;
 }
 
 function connectionRequestIsCurrent(token) {
   return Boolean(token
     && token.accessEpoch === state.connections.accessEpoch
-    && token.requestEpoch === state.connections.requestEpoch);
+    && token.requestEpoch === state.connections.requestEpoch
+    && state.connections.activeRequest === token);
 }
 
 function connectionAccessIsCurrent(accessEpoch) {
   return accessEpoch === state.connections.accessEpoch;
+}
+
+function finishConnectionRequest(token) {
+  if (state.connections.activeRequest !== token) return false;
+  state.connections.activeRequest = null;
+  return true;
+}
+
+function concealConnectionAccessIfCurrent(token) {
+  if (!token || !connectionAccessIsCurrent(token.accessEpoch)) return false;
+  concealPrivateConnections();
+  return true;
 }
 
 function concealPrivateConnections() {
@@ -960,6 +980,7 @@ function concealPrivateConnections() {
   state.connections.phase = 'access';
   state.connections.revision = null;
   state.connections.sources = null;
+  state.connections.activeRequest = null;
   state.connections.drafts.clear();
   state.connections.tests.clear();
   CONNECTION_SOURCE_NAMES.forEach(source => resetSourceForConnectionChange(source, { queuePhotoReload: false }));
@@ -1014,9 +1035,11 @@ async function transitionConnectionSnapshot(payload, { preserveDrafts = true, to
 
 async function loadConnections({ preserveDrafts = true } = {}) {
   const token = beginConnectionRequest();
+  if (!token) return false;
   const endpoint = connectionEndpoint();
   if (!endpoint) {
     if (!connectionRequestIsCurrent(token)) return false;
+    finishConnectionRequest(token);
     setConnectionPhase('unconnected');
     return false;
   }
@@ -1028,8 +1051,8 @@ async function loadConnections({ preserveDrafts = true } = {}) {
       headers: { Accept: 'application/json' },
       redirect: 'error',
     });
+    if (response.status === 403 && concealConnectionAccessIfCurrent(token)) return false;
     if (!connectionRequestIsCurrent(token)) return false;
-    if (response.status === 403) { concealPrivateConnections(); return false; }
     if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected'); return false; }
     if (!response.ok) { setConnectionPhase('unavailable'); return false; }
     const settings = await transitionConnectionSnapshot(await responseJSON(response), { preserveDrafts, token });
@@ -1040,6 +1063,8 @@ async function loadConnections({ preserveDrafts = true } = {}) {
     if (!connectionRequestIsCurrent(token)) return false;
     setConnectionPhase('unavailable');
     return false;
+  } finally {
+    if (finishConnectionRequest(token)) renderConnections();
   }
 }
 
@@ -1048,6 +1073,7 @@ async function testConnection(source) {
   const url = connectionDraft(source).trim();
   if (!endpoint || !url) return;
   const token = beginConnectionRequest();
+  if (!token) return;
   state.connections.tests.set(source, { phase: 'testing' });
   renderConnections();
   let response;
@@ -1062,31 +1088,29 @@ async function testConnection(source) {
       redirect: 'error',
     });
     body = await responseJSON(response);
+    if (response.status === 403 && concealConnectionAccessIfCurrent(token)) return;
+    if (!connectionRequestIsCurrent(token)) return;
+    if (response.ok) {
+      try {
+        const result = normalizeConnectionTest(body, source);
+        state.connections.tests.set(source, { phase: result.status });
+      } catch {
+        state.connections.tests.set(source, { phase: 'error' });
+      }
+    } else {
+      const phase = response.status === 404 || response.status === 409 ? 'unconnected'
+        : response.status === 400 ? 'test-invalid'
+          : response.status === 502 || response.status === 503 ? 'test-unavailable' : 'test-error';
+      state.connections.tests.set(source, { phase });
+    }
+    renderConnections();
   } catch {
     if (!connectionRequestIsCurrent(token)) return;
     state.connections.tests.set(source, { phase: 'test-unavailable' });
     renderConnections();
-    return;
+  } finally {
+    if (finishConnectionRequest(token)) renderConnections();
   }
-  if (!connectionRequestIsCurrent(token)) return;
-  if (response.ok) {
-    try {
-      const result = normalizeConnectionTest(body, source);
-      state.connections.tests.set(source, { phase: result.status });
-    } catch {
-      state.connections.tests.set(source, { phase: 'error' });
-    }
-  } else {
-    if (response.status === 403) {
-      concealPrivateConnections();
-      return;
-    }
-    const phase = response.status === 404 || response.status === 409 ? 'unconnected'
-      : response.status === 400 ? 'test-invalid'
-        : response.status === 502 || response.status === 503 ? 'test-unavailable' : 'test-error';
-    state.connections.tests.set(source, { phase });
-  }
-  renderConnections();
 }
 
 async function reconcileConnectionAfterSaveIssue(source) {
@@ -1112,6 +1136,7 @@ async function saveConnection(source) {
   const url = connectionDraft(source).trim();
   if (!endpoint || !url || state.connections.revision === null || connectionTest(source).phase !== 'ready') return;
   const token = beginConnectionRequest();
+  if (!token) return;
   state.connections.tests.set(source, { phase: 'saving' });
   renderConnections();
   let response;
@@ -1126,50 +1151,52 @@ async function saveConnection(source) {
       redirect: 'error',
     });
     body = await responseJSON(response);
+    if (response.status === 403 && concealConnectionAccessIfCurrent(token)) return;
+    if (!connectionRequestIsCurrent(token)) return;
+    if (response.ok) {
+      try {
+        const settings = await transitionConnectionSnapshot(body, { preserveDrafts: true, token });
+        if (!settings) return;
+        state.connections.drafts.delete(source);
+        state.connections.tests.set(source, { phase: 'saved' });
+        renderConnections();
+        announce(`${CONNECTION_SOURCE_DETAILS[source].label} was connected to the protected source.`);
+      } catch {
+        if (!connectionRequestIsCurrent(token)) return;
+        finishConnectionRequest(token);
+        await reconcileConnectionAfterSaveIssue(source);
+      }
+      return;
+    }
+    if (response.status === 409 && body?.error === 'hud_not_connected') {
+      state.connections.tests.set(source, { phase: 'unconnected' });
+      renderConnections();
+      return;
+    }
+    if (response.status === 409) {
+      if (!finishConnectionRequest(token)) return;
+      const refreshed = await loadConnections({ preserveDrafts: true });
+      if (connectionAccessIsCurrent(token.accessEpoch) && state.connections.phase === 'ready') {
+        state.connections.tests.set(source, { phase: refreshed ? 'conflict' : 'unavailable' });
+        renderConnections();
+      }
+      return;
+    }
+    if (!finishConnectionRequest(token)) return;
+    await reconcileConnectionAfterSaveIssue(source);
   } catch {
     if (!connectionRequestIsCurrent(token)) return;
+    finishConnectionRequest(token);
     await reconcileConnectionAfterSaveIssue(source);
-    return;
+  } finally {
+    if (finishConnectionRequest(token)) renderConnections();
   }
-  if (!connectionRequestIsCurrent(token)) return;
-  if (response.ok) {
-    try {
-      const settings = await transitionConnectionSnapshot(body, { preserveDrafts: true, token });
-      if (!settings) return;
-      state.connections.drafts.delete(source);
-      state.connections.tests.set(source, { phase: 'saved' });
-      renderConnections();
-      announce(`${CONNECTION_SOURCE_DETAILS[source].label} was connected to the protected source.`);
-    } catch {
-      if (!connectionRequestIsCurrent(token)) return;
-      await reconcileConnectionAfterSaveIssue(source);
-    }
-    return;
-  }
-  if (response.status === 403) {
-    concealPrivateConnections();
-    return;
-  }
-  if (response.status === 409 && body?.error === 'hud_not_connected') {
-    state.connections.tests.set(source, { phase: 'unconnected' });
-    renderConnections();
-    return;
-  }
-  if (response.status === 409) {
-    const refreshed = await loadConnections({ preserveDrafts: true });
-    if (connectionAccessIsCurrent(token.accessEpoch) && state.connections.phase === 'ready') {
-      state.connections.tests.set(source, { phase: refreshed ? 'conflict' : 'unavailable' });
-      renderConnections();
-    }
-    return;
-  }
-  await reconcileConnectionAfterSaveIssue(source);
 }
 
 function captureConnectionDraft(event) {
   const input = event.target.closest?.('[data-connection-source]');
   const source = input?.dataset.connectionSource;
-  if (!input || !validConnectionSource(source)) return;
+  if (!input || !validConnectionSource(source) || connectionOperationBusy()) return;
   state.connections.drafts.set(source, input.value.slice(0, CONNECTION_URL_MAX_LENGTH));
   state.connections.tests.set(source, { phase: 'idle' });
   const status = $(`#connection-test-${source}`);

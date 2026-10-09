@@ -147,39 +147,52 @@ function response(status, body) {
   return new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' }, status });
 }
 
-const delayedGet = deferred();
-const getAfter403 = createRuntime((input, init) => {
+const delayedFirstTest = deferred();
+const concurrentTestCalls = [];
+const twoTests = createRuntime((input, init) => {
   const url = new URL(input);
-  if (url.pathname === '/api/hud/connections' && init?.method !== 'POST') return delayedGet.promise;
-  if (url.pathname === '/api/hud/connections/opportunities/test') return response(403, { error: 'hud_access_required' });
+  concurrentTestCalls.push(`${init?.method || 'GET'} ${url.pathname}`);
+  if (url.pathname === '/api/hud/connections/opportunities/test' && init?.method === 'POST') return delayedFirstTest.promise;
   throw new Error(`Unexpected request ${init?.method} ${url.pathname}`);
 });
-readyConnection(getAfter403.hud);
-const staleGet = getAfter403.hud.loadConnections();
-await getAfter403.hud.testConnection('opportunities');
-delayedGet.resolve(response(200, settings(1, 'https://stale.example')));
-await staleGet;
-assert.equal(getAfter403.hud.state.connections.phase, 'access', 'A delayed settings GET cannot restore ready state after a newer 403.');
-assert.equal(getAfter403.hud.state.connections.sources, null, 'A delayed settings GET cannot restore private URLs after a newer 403.');
+readyConnection(twoTests.hud);
+const firstTest = twoTests.hud.testConnection('opportunities');
+const testingMarkup = twoTests.elements.get('#connections-list').innerHTML;
+assert.match(testingMarkup, /data-test-connection="references" disabled/, 'A pending Test disables Test controls on every card.');
+assert.match(testingMarkup, /data-save-connection="references" disabled/, 'A pending Test disables Connect controls on every card.');
+await twoTests.hud.testConnection('references');
+assert.deepEqual(concurrentTestCalls, ['POST /api/hud/connections/opportunities/test'], 'A second Test cannot begin while another private connection operation is in flight.');
+assert.equal(twoTests.hud.state.connections.tests.get('opportunities')?.phase, 'testing', 'The first Test remains the only active card operation.');
+delayedFirstTest.resolve(response(403, { error: 'hud_access_required' }));
+await firstTest;
+assert.equal(twoTests.hud.state.connections.phase, 'access', 'A same-session Test 403 conceals every connection after a blocked concurrent Test click.');
+assert.equal(twoTests.hud.state.connections.sources, null, 'A Test 403 leaves no private URLs in memory.');
+assert.equal(twoTests.hud.state.connections.activeRequest, null, 'A Test 403 releases the serialized operation lock.');
 
 const delayedPut = deferred();
-let putPhase = 'put';
-const putAfter403 = createRuntime((input, init) => {
+const putWithTestAttemptCalls = [];
+const putWithTestAttempt = createRuntime((input, init) => {
   const url = new URL(input);
+  putWithTestAttemptCalls.push(`${init?.method || 'GET'} ${url.pathname}`);
   if (url.pathname === '/api/hud/connections/opportunities' && init?.method === 'PUT') return delayedPut.promise;
-  if (url.pathname === '/api/hud/connections' && (init?.method ?? 'GET') === 'GET' && putPhase === 'access') return response(403, { error: 'hud_access_required' });
+  if (['/api/hud/opportunities', '/api/hud/references', '/api/hud/photo'].includes(url.pathname)) return response(409, { error: 'hud_not_connected' });
   throw new Error(`Unexpected request ${init?.method} ${url.pathname}`);
 });
-readyConnection(putAfter403.hud);
-putAfter403.hud.state.connections.drafts.set('opportunities', 'https://source-b.example');
-putAfter403.hud.state.connections.tests.set('opportunities', { phase: 'ready' });
-const stalePut = putAfter403.hud.saveConnection('opportunities');
-putPhase = 'access';
-await putAfter403.hud.loadConnections();
+readyConnection(putWithTestAttempt.hud);
+putWithTestAttempt.hud.state.connections.drafts.set('opportunities', 'https://source-b.example');
+putWithTestAttempt.hud.state.connections.tests.set('opportunities', { phase: 'ready' });
+const pendingPut = putWithTestAttempt.hud.saveConnection('opportunities');
+const savingMarkup = putWithTestAttempt.elements.get('#connections-list').innerHTML;
+assert.match(savingMarkup, /data-test-connection="references" disabled/, 'A pending Connect disables Test controls on every card.');
+assert.match(savingMarkup, /data-save-connection="references" disabled/, 'A pending Connect disables Connect controls on every card.');
+await putWithTestAttempt.hud.testConnection('references');
+assert.deepEqual(putWithTestAttemptCalls, ['PUT /api/hud/connections/opportunities'], 'A Test cannot supersede an in-flight Connect request.');
+assert.equal(putWithTestAttempt.hud.state.connections.tests.get('opportunities')?.phase, 'saving', 'A blocked Test attempt cannot strand or replace the pending Connect state.');
 delayedPut.resolve(response(200, settings(1, 'https://source-b.example')));
-await stalePut;
-assert.equal(putAfter403.hud.state.connections.phase, 'access', 'A delayed successful PUT cannot restore ready state after a newer 403.');
-assert.equal(putAfter403.hud.state.connections.sources, null, 'A delayed successful PUT cannot restore private URLs after a newer 403.');
+await pendingPut;
+assert.equal(putWithTestAttempt.hud.state.connections.phase, 'ready', 'A successful Connect remains applied after a blocked concurrent Test attempt.');
+assert.equal(putWithTestAttempt.hud.state.connections.tests.get('opportunities')?.phase, 'saved', 'A successful Connect clears its saving state after the serialized operation completes.');
+assert.equal(putWithTestAttempt.hud.state.connections.activeRequest, null, 'A successful Connect releases the serialized operation lock.');
 
 const recoveryCalls = [];
 const lostPut = createRuntime((input, init) => {
@@ -292,4 +305,4 @@ await staleGlobalRevisionPatch;
 assert.equal(globalRevisionActivation.hud.state.liveSaves.size, 0, 'A stale PATCH cannot reintroduce a save outcome after a global revision change.');
 assert.equal(globalRevisionActivation.hud.state.opportunities.some(opportunity => opportunity.company === 'Source A stale response'), false, 'A stale PATCH cannot restore opportunity rows after an unrelated source activation advances their revision.');
 
-console.log('Career HUD connections races: deferred GET/PUT/PATCH responses, global-revision source transitions, and unknown save reconciliation verified.');
+console.log('Career HUD connections races: serialized cross-card operations, deferred GET/PUT/PATCH responses, global-revision source transitions, and unknown save reconciliation verified.');
