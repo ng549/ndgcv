@@ -88,6 +88,15 @@ const connections = normalizeConnectionSettings({
 });
 assert.equal(connections.revision, 0, 'Initial private connection settings accept revision zero.');
 assert.equal(connections.sources.photos.status, 'unavailable', 'Connection state comes only from the protected settings response.');
+const connectionsWithEmptyUrls = normalizeConnectionSettings({
+  revision: 1,
+  sources: {
+    opportunities: { url: '', state: 'default', status: 'not_tested' },
+    references: { url: '', state: 'default', status: 'not_tested' },
+    photos: { url: '', state: 'default', status: 'not_tested' },
+  },
+});
+assert.equal(connectionsWithEmptyUrls.sources.references.url, '', 'An unconfigured private source is represented as the contract’s empty string, not a fabricated link.');
 assert.throws(
   () => normalizeConnectionSettings({ ...connections, sources: { ...connections.sources, photos: { ...connections.sources.photos, status: 'connected' } } }),
   /Invalid private connection settings/,
@@ -104,14 +113,19 @@ assert.throws(
   'Negative connection revisions are rejected.'
 );
 assert.deepEqual(
-  JSON.parse(JSON.stringify(normalizeConnectionTest({ source: 'photos', status: 'ready' }, 'photos'))),
-  { source: 'photos', status: 'ready' },
-  'Only the fixed source name and approved test status are accepted from a private test response.'
+  JSON.parse(JSON.stringify(normalizeConnectionTest({ checkedAt: '2026-10-09T21:40:00Z', source: 'photos', status: 'ready' }, 'photos'))),
+  { checkedAt: '2026-10-09T21:40:00Z', source: 'photos', status: 'ready' },
+  'Only the fixed source name, ready status, and timestamp are accepted from a private test response.'
 );
 assert.throws(
   () => normalizeConnectionTest({ source: 'photos', status: 'saved' }, 'photos'),
   /Invalid private connection test/,
   'A test response cannot claim that a source was saved.'
+);
+assert.throws(
+  () => normalizeConnectionTest({ source: 'photos', status: 'ready' }, 'photos'),
+  /Invalid private connection test/,
+  'A test response without its timestamp cannot be treated as a completed private check.'
 );
 
 const references = normalizeLiveReferences({

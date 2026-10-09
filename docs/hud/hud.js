@@ -77,6 +77,13 @@ const state = {
   ]
 };
 
+const sampleSourceState = {
+  focusItems: JSON.parse(JSON.stringify(state.focusItems)),
+  opportunities: JSON.parse(JSON.stringify(state.opportunities)),
+  selectedOpportunity: state.selectedOpportunity,
+  expandedFocus: state.expandedFocus,
+};
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = value => String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
@@ -86,6 +93,10 @@ let photoTimer;
 let activePhotoSlot = 'b';
 let activePhotoObjectUrl = null;
 let photoRequestInFlight = false;
+let photoReloadQueued = false;
+let opportunitySourceGeneration = 0;
+let referenceSourceGeneration = 0;
+let photoSourceGeneration = 0;
 
 const PHOTO_ROTATION_MS = 20_000;
 const LIVE_STATUS_VALUES = ['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined'];
@@ -449,21 +460,80 @@ function applyOpportunityPayload(payload) {
   renderOpportunities();
 }
 
+function resetOpportunitiesForSourceChange() {
+  opportunitySourceGeneration += 1;
+  state.liveOpportunities = false;
+  state.liveDrafts.clear();
+  state.liveSaves.clear();
+  state.focusItems = JSON.parse(JSON.stringify(sampleSourceState.focusItems));
+  state.opportunities = JSON.parse(JSON.stringify(sampleSourceState.opportunities));
+  state.selectedOpportunity = sampleSourceState.selectedOpportunity;
+  state.expandedFocus = sampleSourceState.expandedFocus;
+  $('#hud-data-mode').textContent = 'Sample data';
+  $('#career-intro').textContent = 'Sample companies, conversations, and next steps for the preview.';
+  renderRuntimeStatus();
+  renderRuntimeLinks();
+  renderToday();
+  renderOpportunities();
+}
+
+function resetReferencesForSourceChange() {
+  referenceSourceGeneration += 1;
+  state.references = [];
+  state.referenceConnection = 'sample';
+  renderContacts();
+}
+
+function resetPrivatePhotoForSourceChange() {
+  photoSourceGeneration += 1;
+  if (photoRequestInFlight) photoReloadQueued = true;
+  if (activePhotoObjectUrl) URL.revokeObjectURL(activePhotoObjectUrl);
+  activePhotoObjectUrl = null;
+  activePhotoSlot = 'b';
+  $$('.private-photo-image').forEach(image => {
+    image.classList.remove('is-visible');
+    image.removeAttribute('src');
+  });
+  renderPrivatePhotoState('Checking private source');
+}
+
+async function refreshSourceAfterConnectionChange(source) {
+  if (source === 'opportunities') {
+    resetOpportunitiesForSourceChange();
+    await loadOpportunities();
+    return;
+  }
+  if (source === 'references') {
+    resetReferencesForSourceChange();
+    await loadReferences();
+    return;
+  }
+  if (source === 'photos') {
+    resetPrivatePhotoForSourceChange();
+    await loadPrivatePhoto();
+  }
+}
+
 async function loadOpportunities() {
   const endpoint = hudRuntimeEndpoint('hudOpportunitiesEndpoint', '/api/hud/opportunities');
   if (!endpoint) return;
+  const sourceGeneration = opportunitySourceGeneration;
   renderRuntimeStatus({ state: 'loading' });
   try {
     const response = await fetch(endpoint, { credentials: 'same-origin', cache: 'no-store', headers: { Accept: 'application/json' }, redirect: 'error' });
+    if (sourceGeneration !== opportunitySourceGeneration) return false;
     if (response.status === 204 || response.status === 404 || response.status === 409) {
       renderRuntimeStatus();
       renderRuntimeLinks();
       return;
     }
     if (!response.ok) throw new Error(`Private runtime request failed (${response.status}).`);
-    applyOpportunityPayload(await response.json());
+    const payload = await response.json();
+    if (sourceGeneration !== opportunitySourceGeneration) return false;
+    applyOpportunityPayload(payload);
     return true;
   } catch {
+    if (sourceGeneration !== opportunitySourceGeneration) return false;
     renderRuntimeStatus({ state: 'error' });
     renderRuntimeLinks();
   }
@@ -473,6 +543,7 @@ async function loadOpportunities() {
 async function loadReferences() {
   const endpoint = hudRuntimeEndpoint('hudReferencesEndpoint', '/api/hud/references');
   if (!endpoint) return false;
+  const sourceGeneration = referenceSourceGeneration;
   state.referenceConnection = 'loading';
   renderContacts();
   try {
@@ -482,6 +553,7 @@ async function loadReferences() {
       headers: { Accept: 'application/json' },
       redirect: 'error'
     });
+    if (sourceGeneration !== referenceSourceGeneration) return false;
     if (response.status === 204 || response.status === 404 || response.status === 409) {
       state.referenceConnection = 'unconnected';
       renderContacts();
@@ -493,11 +565,14 @@ async function loadReferences() {
       return false;
     }
     if (!response.ok) throw new Error(`Private references request failed (${response.status}).`);
-    state.references = normalizeLiveReferences(await readBoundedReferencesJson(response));
+    const references = normalizeLiveReferences(await readBoundedReferencesJson(response));
+    if (sourceGeneration !== referenceSourceGeneration) return false;
+    state.references = references;
     state.referenceConnection = 'connected';
     renderContacts();
     return true;
   } catch {
+    if (sourceGeneration !== referenceSourceGeneration) return false;
     state.referenceConnection = 'error';
     renderContacts();
   }
@@ -516,9 +591,14 @@ function photoContentType(response) {
 async function loadPrivatePhoto() {
   const endpoint = hudRuntimeEndpoint('hudPhotoEndpoint', '/api/hud/photo');
   const frame = $('#hud-private-photo-frame');
-  if (!endpoint || !frame || photoRequestInFlight) return;
+  if (!endpoint || !frame) return;
+  if (photoRequestInFlight) {
+    photoReloadQueued = true;
+    return;
+  }
 
   photoRequestInFlight = true;
+  const sourceGeneration = photoSourceGeneration;
   renderPrivatePhotoState('Checking private source');
   try {
     const response = await fetch(endpoint, {
@@ -527,6 +607,7 @@ async function loadPrivatePhoto() {
       redirect: 'error',
       headers: { Accept: 'image/jpeg' }
     });
+    if (sourceGeneration !== photoSourceGeneration) return;
     if (response.status === 403) {
       renderPrivatePhotoState('Private access required');
       return;
@@ -539,6 +620,7 @@ async function loadPrivatePhoto() {
 
     const blob = await response.blob();
     if (!blob.size || blob.type !== 'image/jpeg') throw new Error('Private photo response was not a JPEG.');
+    if (sourceGeneration !== photoSourceGeneration) return;
 
     const nextSlot = activePhotoSlot === 'a' ? 'b' : 'a';
     const incoming = $(`#hud-private-photo-${nextSlot}`);
@@ -549,6 +631,11 @@ async function loadPrivatePhoto() {
       incoming.onerror = () => reject(new Error('Private photo could not be rendered.'));
       incoming.src = nextObjectUrl;
     });
+    if (sourceGeneration !== photoSourceGeneration) {
+      if (incoming.src === nextObjectUrl) incoming.removeAttribute('src');
+      URL.revokeObjectURL(nextObjectUrl);
+      return;
+    }
 
     incoming.classList.add('is-visible');
     outgoing.classList.remove('is-visible');
@@ -561,9 +648,13 @@ async function loadPrivatePhoto() {
     }, 850);
     renderPrivatePhotoState('Private photo loaded');
   } catch {
-    renderPrivatePhotoState('Private source unavailable');
+    if (sourceGeneration === photoSourceGeneration) renderPrivatePhotoState('Private source unavailable');
   } finally {
     photoRequestInFlight = false;
+    if (photoReloadQueued) {
+      photoReloadQueued = false;
+      void loadPrivatePhoto();
+    }
   }
 }
 
@@ -747,8 +838,9 @@ function normalizeConnectionSettings(payload) {
 }
 
 function normalizeConnectionTest(payload, source) {
-  if (!payload || typeof payload !== 'object' || Array.isArray(payload) || payload.source !== source || !CONNECTION_STATUSES.has(payload.status)) throw new TypeError('Invalid private connection test.');
-  return { source, status: payload.status };
+  const checkedAt = connectionText(payload?.checkedAt, 128);
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload) || payload.source !== source || payload.status !== 'ready' || !checkedAt || Number.isNaN(Date.parse(checkedAt))) throw new TypeError('Invalid private connection test.');
+  return { checkedAt, source, status: 'ready' };
 }
 
 function connectionEndpoint(source = '', suffix = '') {
@@ -777,13 +869,17 @@ function connectionTestMessage(test) {
     testing: 'Testing this private source…',
     ready: 'Private test passed. The new link has not been saved.',
     saved: 'The source was connected after private validation. Change the link to test a replacement.',
-    unavailable: 'This source could not be reached. The saved setting was not changed.',
-    invalid: 'This link is not valid for this source. The saved setting was not changed.',
-    access: 'Private access is required before this source can be tested.',
+    'test-unavailable': 'This source could not be reached. Test the link again before connecting it.',
+    'test-invalid': 'This link is not valid for this source. Correct it and test again before connecting it.',
+    'test-error': 'This source could not be tested. Correct it or try again before connecting it.',
     unconnected: 'Private setup support is not available.',
     conflict: 'Settings changed elsewhere. Latest private settings were refreshed; test this draft again.',
     saving: 'Saving this tested source…',
-    error: 'This source could not be changed. The saved setting was not changed.',
+    reconciling: 'Save outcome is unknown. Checking the latest private settings before another attempt.',
+    uncertain: 'Save outcome was not confirmed. Latest private settings were refreshed; compare the setting with your preserved draft before trying again.',
+    unavailable: 'Save outcome is unknown and private settings could not be rechecked. Your draft is preserved in this session.',
+    invalid: 'This update was rejected, but its outcome is being reconciled before another attempt.',
+    error: 'Save outcome is unknown. Your draft is preserved in this session.',
   };
   return messages[test?.phase] || messages.error;
 }
@@ -813,7 +909,7 @@ function renderConnections() {
     const draft = connectionDraft(source);
     const test = connectionTest(source);
     const changed = draft !== setting.url;
-    const testing = test.phase === 'testing' || test.phase === 'saving';
+    const testing = test.phase === 'testing' || test.phase === 'saving' || test.phase === 'reconciling';
     const canTest = Boolean(draft.trim()) && !testing;
     const canSave = changed && test.phase === 'ready' && !testing;
     return `<article class="connection-source" data-connection-source-card="${source}">
@@ -835,6 +931,15 @@ function renderConnections() {
 
 function setConnectionPhase(phase) {
   state.connections.phase = phase;
+  renderConnections();
+}
+
+function concealPrivateConnections() {
+  state.connections.phase = 'access';
+  state.connections.revision = null;
+  state.connections.sources = null;
+  state.connections.drafts.clear();
+  state.connections.tests.clear();
   renderConnections();
 }
 
@@ -861,7 +966,7 @@ async function loadConnections({ preserveDrafts = true } = {}) {
       headers: { Accept: 'application/json' },
       redirect: 'error',
     });
-    if (response.status === 403) { setConnectionPhase('access'); return false; }
+    if (response.status === 403) { concealPrivateConnections(); return false; }
     if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected'); return false; }
     if (!response.ok) { setConnectionPhase('unavailable'); return false; }
     applyConnectionSettings(await responseJSON(response), { preserveDrafts });
@@ -892,7 +997,7 @@ async function testConnection(source) {
     });
     body = await responseJSON(response);
   } catch {
-    state.connections.tests.set(source, { phase: 'unavailable' });
+    state.connections.tests.set(source, { phase: 'test-unavailable' });
     renderConnections();
     return;
   }
@@ -904,19 +1009,35 @@ async function testConnection(source) {
       state.connections.tests.set(source, { phase: 'error' });
     }
   } else {
-    const phase = response.status === 403 ? 'access'
-      : response.status === 404 || response.status === 409 ? 'unconnected'
-        : response.status === 400 ? 'invalid'
-          : response.status === 502 || response.status === 503 ? 'unavailable' : 'error';
+    if (response.status === 403) {
+      concealPrivateConnections();
+      return;
+    }
+    const phase = response.status === 404 || response.status === 409 ? 'unconnected'
+      : response.status === 400 ? 'test-invalid'
+        : response.status === 502 || response.status === 503 ? 'test-unavailable' : 'test-error';
     state.connections.tests.set(source, { phase });
   }
   renderConnections();
+}
+
+async function reconcileConnectionAfterSaveIssue(source) {
+  state.connections.tests.set(source, { phase: 'reconciling' });
+  renderConnections();
+  const refreshed = await loadConnections({ preserveDrafts: true });
+  if (state.connections.phase !== 'ready') return false;
+  state.connections.tests.set(source, {
+    phase: refreshed ? 'uncertain' : 'unavailable',
+  });
+  renderConnections();
+  return refreshed;
 }
 
 async function saveConnection(source) {
   const endpoint = connectionEndpoint(source);
   const url = connectionDraft(source).trim();
   if (!endpoint || !url || state.connections.revision === null || connectionTest(source).phase !== 'ready') return;
+  const before = state.connections.sources?.[source] ? { ...state.connections.sources[source] } : null;
   state.connections.tests.set(source, { phase: 'saving' });
   renderConnections();
   let response;
@@ -932,21 +1053,25 @@ async function saveConnection(source) {
     });
     body = await responseJSON(response);
   } catch {
-    state.connections.tests.set(source, { phase: 'unavailable' });
-    renderConnections();
+    await reconcileConnectionAfterSaveIssue(source);
     return;
   }
   if (response.ok) {
     try {
-      applyConnectionSettings(body, { preserveDrafts: true });
+      const settings = applyConnectionSettings(body, { preserveDrafts: true });
+      const changed = !before || before.url !== settings.sources[source].url || before.state !== settings.sources[source].state;
       state.connections.drafts.delete(source);
       state.connections.tests.set(source, { phase: 'saved' });
       renderConnections();
       announce(`${CONNECTION_SOURCE_DETAILS[source].label} was connected to the protected source.`);
+      if (changed) await refreshSourceAfterConnectionChange(source);
     } catch {
-      state.connections.tests.set(source, { phase: 'error' });
-      renderConnections();
+      await reconcileConnectionAfterSaveIssue(source);
     }
+    return;
+  }
+  if (response.status === 403) {
+    concealPrivateConnections();
     return;
   }
   if (response.status === 409 && body?.error === 'hud_not_connected') {
@@ -955,17 +1080,14 @@ async function saveConnection(source) {
     return;
   }
   if (response.status === 409) {
-    await loadConnections({ preserveDrafts: true });
-    state.connections.tests.set(source, { phase: 'conflict' });
-    renderConnections();
+    const refreshed = await loadConnections({ preserveDrafts: true });
+    if (state.connections.phase === 'ready') {
+      state.connections.tests.set(source, { phase: refreshed ? 'conflict' : 'unavailable' });
+      renderConnections();
+    }
     return;
   }
-  const phase = response.status === 403 ? 'access'
-    : response.status === 404 ? 'unconnected'
-      : response.status === 400 ? 'invalid'
-        : response.status === 502 || response.status === 503 ? 'unavailable' : 'error';
-  state.connections.tests.set(source, { phase });
-  renderConnections();
+  await reconcileConnectionAfterSaveIssue(source);
 }
 
 function captureConnectionDraft(event) {
