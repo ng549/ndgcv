@@ -195,6 +195,7 @@ assert(hud.includes('Contacts &amp; references'),"Career HUD includes relationsh
 assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state");
 assert(hud.includes('not connected'),"Career HUD honestly labels disconnected integrations");
 assert(hud.includes('data-hud-opportunities-endpoint="/api/hud/opportunities"'),"Career HUD declares its protected opportunities endpoint");
+assert(hud.includes('data-hud-references-endpoint="/api/hud/references"'),"Career HUD declares only its fixed protected references endpoint");
 assert(hud.includes('data-hud-photo-endpoint="/api/hud/photo"'),"Career HUD declares only its fixed protected photo endpoint");
 assert(hud.includes('id="hud-runtime-status"'),"Career HUD includes the lower-rail connection status box");
 assert(hud.includes('Connection status'),"Career HUD labels the lower-rail connection status box");
@@ -216,6 +217,10 @@ assert(hudJS.includes("redirect: 'error'"),"Career HUD rejects a protected photo
 assert(hudJS.includes('const PHOTO_ROTATION_MS = 20_000'),"Career HUD refreshes its protected photo stream every twenty seconds");
 assert(!hudJS.includes('drive.google.com'),"Career HUD contains no Drive photo URL or client-selected source");
 assert(hudJS.includes('trustedCareerSheetUrl'),"Career HUD validates the runtime-only opportunities-sheet link");
+assert(hudJS.includes('normalizeLiveReferences')&&hudJS.includes('referenceConnection'),"Career HUD replaces sample contact cards only after a valid protected references response");
+assert(hudJS.includes('REFERENCE_PERMISSION_VALUES')&&hudJS.includes('Ask first'),"Career HUD renders only the approved reference permission vocabulary");
+assert(hudJS.includes('trustedReferenceEmail')&&hudJS.includes('trustedLinkedInUrl'),"Career HUD validates private contact links before rendering them");
+assert(!hudJS.includes('api/hud/references?'),"Career HUD does not construct a caller-selected references query");
 assert(hudJS.includes("method: 'PATCH'")&&hudJS.includes('expectedRevision')&&hudJS.includes('actionId'),"Career HUD saves only the revision-guarded live opportunity contract");
 assert(hudJS.includes('data-live-opportunity-form')&&hudJS.includes('Save changes'),"Career HUD exposes a bounded live status and next-action save control");
 assert(hudJS.includes('refreshAfterLiveSaveIssue'),"Career HUD refreshes after a live conflict or ambiguous save instead of claiming a clean failure");

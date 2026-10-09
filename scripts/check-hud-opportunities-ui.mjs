@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, localDateKey, mondayFor };'
+  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor };'
 );
 const context = {
   window: { location: { origin: 'https://nicolasgoureau.com' } },
@@ -20,7 +20,7 @@ const context = {
   URL
 };
 vm.runInNewContext(source, context, { filename: 'docs/hud/hud.js' });
-const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, localDateKey, mondayFor } = context.globalThis.__hudTest;
+const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor } = context.globalThis.__hudTest;
 
 const wednesday = new Date('2026-10-07T12:00:00');
 assert.equal(localDateKey(wednesday), '2026-10-07', 'The sample-week key is derived from the actual local date.');
@@ -76,4 +76,35 @@ assert.equal(
 assert.equal(trustedCareerSheetUrl('https://example.invalid/not-a-sheet'), null, 'Off-origin links are hidden.');
 assert.equal(trustedCareerSheetUrl('/spreadsheets/d/runtime_only_001/edit'), null, 'Relative links are hidden.');
 
-console.log('Career HUD opportunities UI: protected records, follow-ups, and only the runtime Sheet link are rendered.');
+const references = normalizeLiveReferences({
+  references: [{
+    referenceId: 'REF-TEST-001',
+    name: 'Example reference',
+    preferredName: '',
+    workEmail: '',
+    personalEmail: '',
+    phone: '',
+    linkedinUrl: '',
+    sharedCompanies: 'Example Company',
+    notes: '',
+    introductionDraft: '',
+    headsUpDraft: '',
+    permission: 'Ask first',
+  }]
+});
+assert.equal(references.length, 1, 'A valid owner-only references response replaces the sample contact state.');
+assert.equal(references[0].referenceId, 'REF-TEST-001', 'The existing external reference ID is preserved rather than converted to a HUD contact ID.');
+assert.equal(references[0].sharedCompanies, 'Example Company', 'The read-only references contract keeps sharedCompanies as a string.');
+assert.throws(
+  () => normalizeLiveReferences({ references: [{ ...references[0], permission: 'Unknown' }] }),
+  /Invalid references payload/,
+  'Unknown permission values cannot be rendered as private reference records.'
+);
+assert.equal(trustedReferenceEmail('example.reference@example.invalid'), 'mailto:example.reference%40example.invalid', 'A valid reference email becomes a user-initiated mail link.');
+assert.equal(trustedReferenceEmail('not an email'), null, 'Unsafe email text is not linked.');
+assert.equal(trustedReferencePhone('+1 (555) 010-0123'), 'tel:+15550100123', 'A valid reference phone number becomes a user-initiated telephone link.');
+assert.equal(trustedReferencePhone('javascript:alert(1)'), null, 'Unsafe phone text is not linked.');
+assert.equal(trustedLinkedInUrl('https://www.linkedin.com/in/example-reference/'), 'https://www.linkedin.com/in/example-reference/', 'Only HTTPS LinkedIn profile links are rendered.');
+assert.equal(trustedLinkedInUrl('https://example.invalid/reference'), null, 'Off-domain profile links are hidden.');
+
+console.log('Career HUD opportunities UI: protected opportunities, reference records, safe reference links, follow-ups, and only the runtime Sheet link are rendered.');

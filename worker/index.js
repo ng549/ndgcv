@@ -127,6 +127,10 @@ export async function proxyHudOpportunities(request, env, fetchImpl = fetch) {
   return proxyHudRequest(request, env, '/api/hud/opportunities', {}, fetchImpl);
 }
 
+export async function proxyHudReferences(request, env, fetchImpl = fetch) {
+  return proxyHudRequest(request, env, '/api/hud/references', {}, fetchImpl);
+}
+
 export async function proxyHudPhoto(request, env, fetchImpl = fetch) {
   return proxyHudRequest(request, env, '/api/hud/photo', {}, fetchImpl);
 }
@@ -154,6 +158,7 @@ export default {
       if (denied) return denied;
       if (hudApiRoute) {
         if (pathname === '/api/hud/opportunities' && request.method === 'GET' && !url.search) return proxyHudOpportunities(request, env);
+        if (pathname === '/api/hud/references' && request.method === 'GET' && !url.search) return proxyHudReferences(request, env);
         if (pathname === '/api/hud/photo' && request.method === 'GET' && !url.search) return proxyHudPhoto(request, env);
         const opportunityMatch = /^\/api\/hud\/opportunities\/(opp_[A-Za-z0-9_-]{8,128})$/.exec(pathname);
         if (opportunityMatch && request.method === 'PATCH' && !url.search) {

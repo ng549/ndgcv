@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { exportJWK, generateKeyPair, SignJWT } from 'jose';
-import worker, { proxyHudOpportunities } from '../worker/index.js';
+import worker, { proxyHudOpportunities, proxyHudReferences } from '../worker/index.js';
 import { isHudEncodedAlias, requireHudAccess, resetHudAccessKeyCacheForTests } from '../worker/hud-access.mjs';
 
 const issuer = 'https://career-hud-test.cloudflareaccess.com';
@@ -346,6 +346,41 @@ await withAccessJwks(async () => {
   });
   assert.equal(response.status, 502, 'A network failure becomes an honest unavailable state.');
   assertNoStore(response, 'Network failures are never cacheable.');
+
+  backendResponse = () => new Response(JSON.stringify({ references: [] }), {
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8' },
+    status: 200,
+  });
+  const referenceCallsBefore = backendCalls.length;
+  response = await worker.fetch(request('/api/hud/references', {
+    headers: { Cookie: 'untrusted=browser-cookie' },
+    token: ownerAssertion,
+  }), protectedEnv);
+  assert.equal(response.status, 200, 'The owner may read the one fixed references endpoint.');
+  assertNoStore(response, 'Proxied references are never cacheable.');
+  assert.equal(response.headers.get('Access-Control-Allow-Origin'), null, 'The references proxy does not add or relay CORS headers.');
+  assert.equal(backendCalls.length, referenceCallsBefore + 1, 'The protected references request reaches the backend once.');
+  const referenceCall = backendCalls.at(-1);
+  assert.equal(String(referenceCall.input), `${backendOrigin}/api/hud/references`, 'The references proxy cannot use a caller-selected backend path.');
+  assert.equal(referenceCall.init.method, 'GET', 'The references proxy permits only a GET read.');
+  assert.equal(new Headers(referenceCall.init.headers).get('Accept'), 'application/json');
+  assert.equal(new Headers(referenceCall.init.headers).get('cf-access-jwt-assertion'), ownerAssertion, 'The existing owner assertion is forwarded to the references backend.');
+  assert.equal(new Headers(referenceCall.init.headers).get('Cookie'), null, 'Browser cookies are never forwarded to the references backend.');
+
+  response = await worker.fetch(request('/api/hud/references?range=attacker', { token: await token() }), protectedEnv);
+  assert.equal(response.status, 404, 'A references query cannot select a private range.');
+  assert.equal(backendCalls.length, referenceCallsBefore + 1, 'A rejected references query never reaches the backend.');
+  response = await worker.fetch(request('/api/hud/references', { method: 'POST', token: await token() }), protectedEnv);
+  assert.equal(response.status, 404, 'The references proxy exposes no write route.');
+  assert.equal(backendCalls.length, referenceCallsBefore + 1, 'An unsupported references method never reaches the backend.');
+  response = await worker.fetch(request('/api/hud/references', { token: await token() }), { ...protectedEnv, HUD_BACKEND_ORIGIN: undefined });
+  assert.equal(response.status, 409, 'A missing backend origin keeps the owner references view truthfully unconnected.');
+  assert.equal(backendCalls.length, referenceCallsBefore + 1, 'An unconnected references read makes no backend request.');
+  response = await proxyHudReferences(request('/api/hud/references', { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: 'https://example.invalid' }, async () => {
+    assert.fail('An invalid backend origin must not be fetched for references.');
+  });
+  assert.equal(response.status, 409, 'An untrusted references origin fails closed.');
+
   response = await worker.fetch(request('/hud/', { host: 'www.nicolasgoureau.com', token: await token() }), protectedEnv);
   assert.equal(response.status, 404, 'Worker rejects alternate hosts even with a valid owner JWT');
   assertNoStore(response, 'Alternate-host Worker response is never cacheable.');

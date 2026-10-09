@@ -278,6 +278,19 @@ textarea { width: 100%; padding: 10px; resize: vertical; }
 .contact-card h3, .material-card h3, .integration-card h3 { margin: 10px 0 5px; font-family: Manrope, sans-serif; font-size: 25px; letter-spacing: -.06em; }
 .contact-card p, .material-card p, .integration-card p { color: #3f5e74; }
 .contact-card .text-action { padding-left: 0; color: var(--gold-dark); }
+.reference-card { display: grid; align-content: start; gap: 10px; }
+.reference-card p { margin: 0; }
+.reference-permission { color: #243845 !important; }
+.reference-preferred, .reference-muted { color: #486176 !important; }
+.reference-links { display: grid; gap: 3px; }
+.reference-links span { display: flex; flex-wrap: wrap; gap: 3px; }
+.reference-links a { color: #284f69; font-weight: 700; overflow-wrap: anywhere; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.reference-details { padding-top: 11px; border-top: 1px solid var(--line); }
+.reference-details summary { cursor: pointer; color: #14232e; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; }
+.reference-details[open] summary { margin-bottom: 10px; }
+.reference-details p { margin: 0 0 10px; overflow-wrap: anywhere; }
+.reference-details p:last-child { margin-bottom: 0; }
+.reference-empty { grid-column: 1 / -1; }
 .integration-card { margin-top: 24px; padding: 26px; }
 .materials-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .version-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--line); }

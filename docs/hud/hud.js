@@ -3,6 +3,8 @@ const state = {
   liveOpportunities: false,
   liveDrafts: new Map(),
   liveSaves: new Map(),
+  referenceConnection: 'sample',
+  references: [],
   selectedDay: '',
   renderedWeekDate: '',
   schedule: 'today',
@@ -81,6 +83,8 @@ let photoRequestInFlight = false;
 const PHOTO_ROTATION_MS = 20_000;
 const LIVE_STATUS_VALUES = ['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined'];
 const LIVE_REVISION_PATTERN = /^[a-f0-9]{64}$/;
+const REFERENCE_ID_PATTERN = /^REF-[A-Za-z0-9_-]{1,128}$/;
+const REFERENCE_PERMISSION_VALUES = new Set(['Agreed', 'Ask first', 'Unavailable']);
 
 function hudRuntimeEndpoint(dataKey, pathname) {
   const configured = document.documentElement.dataset[dataKey];
@@ -236,6 +240,67 @@ function recordText(value) {
   return value === undefined || value === null ? '' : String(value).trim();
 }
 
+function referenceText(value, maxLength) {
+  if (value === undefined || value === null) return '';
+  if (typeof value !== 'string') throw new TypeError('Invalid references payload.');
+  const text = value.trim();
+  if (text.length > maxLength) throw new TypeError('Invalid references payload.');
+  return text;
+}
+
+function normalizeLiveReferences(payload) {
+  if (!payload || typeof payload !== 'object' || !Array.isArray(payload.references)) throw new TypeError('Invalid references payload.');
+  const seen = new Set();
+  return payload.references.map(item => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new TypeError('Invalid references payload.');
+    const referenceId = referenceText(item.referenceId, 132);
+    const name = referenceText(item.name, 180);
+    const permission = referenceText(item.permission, 32);
+    if (!REFERENCE_ID_PATTERN.test(referenceId) || !name || !REFERENCE_PERMISSION_VALUES.has(permission) || seen.has(referenceId)) {
+      throw new TypeError('Invalid references payload.');
+    }
+    seen.add(referenceId);
+    return {
+      referenceId,
+      name,
+      preferredName: referenceText(item.preferredName, 120),
+      workEmail: referenceText(item.workEmail, 320),
+      personalEmail: referenceText(item.personalEmail, 320),
+      phone: referenceText(item.phone, 64),
+      linkedinUrl: referenceText(item.linkedinUrl, 2_048),
+      sharedCompanies: referenceText(item.sharedCompanies, 1_000),
+      notes: referenceText(item.notes, 4_000),
+      introductionDraft: referenceText(item.introductionDraft, 4_000),
+      headsUpDraft: referenceText(item.headsUpDraft, 4_000),
+      permission,
+    };
+  });
+}
+
+function trustedReferenceEmail(value) {
+  const email = recordText(value);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 320) return null;
+  return `mailto:${encodeURIComponent(email)}`;
+}
+
+function trustedReferencePhone(value) {
+  const phone = recordText(value);
+  if (!/^[0-9+().\s-]{3,64}$/.test(phone)) return null;
+  const destination = phone.replace(/[().\s-]/g, '');
+  return /^\+?\d{3,}$/.test(destination) ? `tel:${destination}` : null;
+}
+
+function trustedLinkedInUrl(value) {
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.toLowerCase();
+    if (url.protocol === 'https:' && (hostname === 'linkedin.com' || hostname.endsWith('.linkedin.com'))) return url.href;
+  } catch {
+    // Invalid or non-HTTPS outbound links are intentionally hidden.
+  }
+  return null;
+}
+
 function statusClass(value) {
   const status = recordText(value).toLowerCase();
   return LIVE_STATUS_VALUES.includes(status) ? status : 'research';
@@ -342,6 +407,40 @@ async function loadOpportunities() {
   } catch {
     renderRuntimeStatus({ state: 'error' });
     renderRuntimeLinks();
+  }
+  return false;
+}
+
+async function loadReferences() {
+  const endpoint = hudRuntimeEndpoint('hudReferencesEndpoint', '/api/hud/references');
+  if (!endpoint) return false;
+  state.referenceConnection = 'loading';
+  renderContacts();
+  try {
+    const response = await fetch(endpoint, {
+      credentials: 'same-origin',
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+      redirect: 'error'
+    });
+    if (response.status === 204 || response.status === 404 || response.status === 409) {
+      state.referenceConnection = 'unconnected';
+      renderContacts();
+      return false;
+    }
+    if (response.status === 403) {
+      state.referenceConnection = 'access';
+      renderContacts();
+      return false;
+    }
+    if (!response.ok) throw new Error(`Private references request failed (${response.status}).`);
+    state.references = normalizeLiveReferences(await response.json());
+    state.referenceConnection = 'connected';
+    renderContacts();
+    return true;
+  } catch {
+    state.referenceConnection = 'error';
+    renderContacts();
   }
   return false;
 }
@@ -703,7 +802,75 @@ function renderOpportunities() {
 }
 
 function renderContacts() {
-  $('#contacts-list').innerHTML = state.contacts.map(contact => `<article class="contact-card"><p class="eyebrow">${escapeHTML(contact.context)}</p><h3>${escapeHTML(contact.name)}</h3><p>${escapeHTML(contact.detail)}</p><p><strong>${escapeHTML(contact.permission)}</strong></p><button class="text-action" type="button" data-log-contact="${contact.id}">Log sample follow-up</button></article>`).join('');
+  const connected = state.referenceConnection === 'connected';
+  const list = $('#contacts-list');
+  if (connected) {
+    list.innerHTML = state.references.length
+      ? state.references.map(renderLiveReference).join('')
+      : '<article class="contact-card reference-empty" role="status"><p class="eyebrow">Private reference records</p><h3>No references available</h3><p>The protected source is connected but currently has no reference records to show.</p></article>';
+  } else {
+    list.innerHTML = state.contacts.map(contact => `<article class="contact-card"><p class="eyebrow">${escapeHTML(contact.context)}</p><h3>${escapeHTML(contact.name)}</h3><p>${escapeHTML(contact.detail)}</p><p><strong>${escapeHTML(contact.permission)}</strong></p><button class="text-action" type="button" data-log-contact="${contact.id}">Log sample follow-up</button></article>`).join('');
+  }
+
+  const copy = {
+    sample: {
+      detail: 'The approved future source is a Google Sheet. This preview does not read its rows, create a connection, or contact anyone.',
+      heading: 'Google Sheet connection is not set up',
+      intro: 'Sample relationship context only. Existing reference records remain unconnected.',
+      action: 'Connect references later',
+    },
+    loading: {
+      detail: 'Checking the private reference source. Sample relationship cards remain visible until a valid response is received.',
+      heading: 'Checking private reference source',
+      intro: 'Sample relationship context remains visible while the private source is checked.',
+      action: 'Checking references',
+    },
+    connected: {
+      detail: 'Read-only private reference records are shown here. Contact links open only on your action; drafts are not sent from the HUD.',
+      heading: state.references.length ? 'Private reference records loaded' : 'Private reference source is connected',
+      intro: state.references.length ? 'Private reference context is loaded for this visit. Drafts remain read-only and unsent.' : 'The private source returned no reference records for this visit.',
+      action: 'Sending is not connected',
+    },
+    unconnected: {
+      detail: 'The private reference source is not connected. Sample relationship cards remain local to this preview.',
+      heading: 'Reference source is not connected',
+      intro: 'Sample relationship context is visible because private reference records are unavailable.',
+      action: 'References unavailable',
+    },
+    access: {
+      detail: 'Private access is required before reference records can be shown. No reference was contacted or changed.',
+      heading: 'Private access required',
+      intro: 'Sample relationship context is visible because private reference access was not granted.',
+      action: 'References unavailable',
+    },
+    error: {
+      detail: 'The private reference source is unavailable. Sample relationship cards remain local to this preview.',
+      heading: 'Private reference source is unavailable',
+      intro: 'Sample relationship context is visible because no valid private reference response was received.',
+      action: 'References unavailable',
+    },
+  }[state.referenceConnection] || null;
+  if (!copy) return;
+  $('#references-intro').textContent = copy.intro;
+  $('#reference-sync-heading').textContent = copy.heading;
+  $('#reference-sync-detail').textContent = copy.detail;
+  $('#reference-sync-action').textContent = copy.action;
+}
+
+function renderLiveReference(reference) {
+  const contactLinks = [
+    [trustedReferenceEmail(reference.workEmail), 'Work email'],
+    [trustedReferenceEmail(reference.personalEmail), 'Personal email'],
+    [trustedReferencePhone(reference.phone), 'Phone'],
+    [trustedLinkedInUrl(reference.linkedinUrl), 'LinkedIn'],
+  ].filter(([href]) => href);
+  const details = [
+    reference.sharedCompanies ? `<p><strong>Shared companies</strong><br>${escapeHTML(reference.sharedCompanies)}</p>` : '',
+    reference.notes ? `<p><strong>Relationship notes</strong><br>${escapeHTML(reference.notes)}</p>` : '',
+    reference.introductionDraft ? `<p><strong>Introduction draft — not sent</strong><br>${escapeHTML(reference.introductionDraft)}</p>` : '',
+    reference.headsUpDraft ? `<p><strong>Heads-up draft — not sent</strong><br>${escapeHTML(reference.headsUpDraft)}</p>` : '',
+  ].filter(Boolean).join('');
+  return `<article class="contact-card reference-card"><p class="eyebrow">Reference ${escapeHTML(reference.referenceId)}</p><h3>${escapeHTML(reference.name)}</h3>${reference.preferredName && reference.preferredName !== reference.name ? `<p class="reference-preferred">Preferred name: ${escapeHTML(reference.preferredName)}</p>` : ''}<p class="reference-permission"><strong>Permission: ${escapeHTML(reference.permission)}</strong></p>${contactLinks.length ? `<p class="reference-links"><strong>Contact</strong><span>${contactLinks.map(([href, label]) => `<a href="${escapeHTML(href)}"${label === 'LinkedIn' ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHTML(label)}</a>`).join(' · ')}</span></p>` : ''}${details ? `<details class="reference-details"><summary>Read-only reference context</summary>${details}</details>` : '<p class="reference-muted">No additional reference context was supplied.</p>'}</article>`;
 }
 
 function renderMaterials() {
@@ -912,6 +1079,7 @@ function init() {
   renderMaterials();
   renderDirection();
   loadOpportunities();
+  loadReferences();
   loadPrivatePhoto();
   photoTimer = window.setInterval(loadPrivatePhoto, PHOTO_ROTATION_MS);
   document.addEventListener('click', handleClick);

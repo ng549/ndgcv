@@ -40,9 +40,15 @@ The reserved photo frame requests only the fixed same-origin `/api/hud/photo` en
 
 The image endpoint must remain fixed and owner-gated, return only `image/jpeg` bytes with `Cache-Control: no-store`, and decide image selection server-side. The client rejects redirects, does not send arbitrary source URLs, and does not attempt to pick or retain a photo.
 
+### Private reference contacts
+
+The Contacts & references panel asks only the fixed same-origin `/api/hud/references` endpoint for owner-authorized, read-only reference records. A missing endpoint (`404`) or unavailable private connection (`409`) leaves the local sample cards visible and states that the private source is not connected. A valid `200` response—including `{"references": []}`—replaces those sample cards with the protected source state, so an empty private source is never represented as sample data.
+
+The endpoint returns only `{ references: [...] }`, where every reference has the existing external `referenceId` (for example `REF-001`), `name`, `preferredName`, `workEmail`, `personalEmail`, `phone`, `linkedinUrl`, `sharedCompanies`, `notes`, `introductionDraft`, `headsUpDraft`, and one permission value: `Agreed`, `Ask first`, or `Unavailable`. The HUD creates no persistent contact ID, has no write or send route, and never changes a permission. Contact links require a user action; introduction and heads-up drafts are displayed only as read-only, explicitly unsent text.
+
 ## Deliberate limits
 
 - Google Sheets, Drive, photos, email, and calendars are private sources. This release only reads the protected opportunities response and the fixed protected photo stream when those backend routes are available.
 - Email and Google/iCloud calendar functions are not connected here.
-- Contacts, materials, and controls outside the protected opportunities response remain fictional sample records. When the protected response is available, only an opportunity's status and next action may be saved; its follow-ups remain view-only.
+- Materials and controls outside the protected opportunities response remain fictional sample records. Contacts remain sample-only unless the fixed protected references endpoint returns a valid read-only response. When the protected response is available, only an opportunity's status and next action may be saved; its follow-ups remain view-only.
 - In this repository's protected `/hud/` release, the HUD remains a sample experience rather than a private-data workspace. Local static opening has no access control; access is enforced by the deployed Worker.

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities" data-hud-photo-endpoint="/api/hud/photo">
+<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities" data-hud-photo-endpoint="/api/hud/photo" data-hud-references-endpoint="/api/hud/references">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -174,16 +174,16 @@
           <div>
             <p class="eyebrow">Relationships</p>
             <h2 id="contacts-heading">Contacts &amp; references</h2>
-            <p>Sample relationship context only. Existing reference records remain unconnected.</p>
+            <p id="references-intro">Sample relationship context only. Existing reference records remain unconnected.</p>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="action">Log a follow-up</button>
         </header>
         <div id="contacts-list" class="contacts-grid"></div>
-        <section class="integration-card panel" aria-labelledby="reference-sync-heading">
+        <section class="integration-card panel" aria-labelledby="reference-sync-heading" aria-live="polite">
           <p class="eyebrow">Reference records</p>
           <h3 id="reference-sync-heading">Google Sheet connection is not set up</h3>
-          <p>The approved future source is a Google Sheet. This preview does not read its rows, create a connection, or contact anyone.</p>
-          <button class="button button-disabled" type="button" disabled>Connect references later</button>
+          <p id="reference-sync-detail">The approved future source is a Google Sheet. This preview does not read its rows, create a connection, or contact anyone.</p>
+          <button id="reference-sync-action" class="button button-disabled" type="button" disabled>Connect references later</button>
         </section>
       </section>
 
