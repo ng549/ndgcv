@@ -3,6 +3,13 @@ const state = {
   liveOpportunities: false,
   liveDrafts: new Map(),
   liveSaves: new Map(),
+  connections: {
+    drafts: new Map(),
+    phase: 'loading',
+    revision: null,
+    sources: null,
+    tests: new Map(),
+  },
   referenceConnection: 'sample',
   references: [],
   selectedDay: '',
@@ -87,6 +94,16 @@ const REFERENCE_ID_PATTERN = /^REF-[A-Za-z0-9_-]{1,128}$/;
 const REFERENCE_PERMISSION_VALUES = new Set(['Agreed', 'Ask first', 'Unavailable']);
 const REFERENCES_MAX_BYTES = 2 * 1024 * 1024;
 const REFERENCES_MAX_RECORDS = 999;
+const CONNECTION_SOURCE_DETAILS = Object.freeze({
+  opportunities: { help: 'Paste the Google Sheet link that backs private opportunities.', label: 'Opportunities Sheet', type: 'Google Sheet link' },
+  references: { help: 'Paste the Google Sheet link that backs private references.', label: 'References Sheet', type: 'Google Sheet link' },
+  photos: { help: 'Paste the Google Drive folder link for private photos.', label: 'Private Photos folder', type: 'Google Drive folder link' },
+});
+const CONNECTION_SOURCE_NAMES = Object.keys(CONNECTION_SOURCE_DETAILS);
+const CONNECTION_STATES = new Set(['default', 'active']);
+const CONNECTION_STATUSES = new Set(['not_tested', 'ready', 'unavailable', 'invalid']);
+const CONNECTION_URL_MAX_LENGTH = 4096;
+const CONNECTION_REVISION_MAX_LENGTH = 512;
 
 function hudRuntimeEndpoint(dataKey, pathname) {
   const configured = document.documentElement.dataset[dataKey];
@@ -704,6 +721,267 @@ async function responseJSON(response) {
   try { return await response.json(); } catch { return null; }
 }
 
+function connectionText(value, maxLength = CONNECTION_URL_MAX_LENGTH) {
+  return typeof value === 'string' && value.length <= maxLength ? value : null;
+}
+
+function validConnectionSource(source) {
+  return CONNECTION_SOURCE_NAMES.includes(source);
+}
+
+function normalizeConnectionSettings(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new TypeError('Invalid private connection settings.');
+  const revision = connectionText(payload.revision, CONNECTION_REVISION_MAX_LENGTH);
+  if (!revision || !payload.sources || typeof payload.sources !== 'object' || Array.isArray(payload.sources)) throw new TypeError('Invalid private connection settings.');
+  const sources = {};
+  for (const source of CONNECTION_SOURCE_NAMES) {
+    const item = payload.sources[source];
+    const url = connectionText(item?.url);
+    if (!item || typeof item !== 'object' || Array.isArray(item) || url === null || !CONNECTION_STATES.has(item.state) || !CONNECTION_STATUSES.has(item.status)) throw new TypeError('Invalid private connection settings.');
+    sources[source] = { state: item.state, status: item.status, url };
+  }
+  return { revision, sources };
+}
+
+function normalizeConnectionTest(payload, source) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload) || payload.source !== source || !CONNECTION_STATUSES.has(payload.status)) throw new TypeError('Invalid private connection test.');
+  return { source, status: payload.status };
+}
+
+function connectionEndpoint(source = '', suffix = '') {
+  const endpoint = hudRuntimeEndpoint('hudConnectionsEndpoint', '/api/hud/connections');
+  if (!endpoint || (source && !validConnectionSource(source))) return null;
+  return new URL(`/api/hud/connections${source ? `/${source}` : ''}${suffix}`, window.location.origin);
+}
+
+function connectionDraft(source) {
+  if (!validConnectionSource(source)) return '';
+  if (state.connections.drafts.has(source)) return state.connections.drafts.get(source);
+  return state.connections.sources?.[source]?.url || '';
+}
+
+function connectionTest(source) {
+  const existing = state.connections.tests.get(source);
+  if (existing) return existing;
+  const status = state.connections.sources?.[source]?.status;
+  return { phase: status === 'ready' ? 'saved' : status || 'idle' };
+}
+
+function connectionTestMessage(test) {
+  const messages = {
+    idle: 'Test the pasted link before connecting it.',
+    not_tested: 'This source has not been tested yet.',
+    testing: 'Testing this private source…',
+    ready: 'Private test passed. The new link has not been saved.',
+    saved: 'The source was connected after private validation. Change the link to test a replacement.',
+    unavailable: 'This source could not be reached. The saved setting was not changed.',
+    invalid: 'This link is not valid for this source. The saved setting was not changed.',
+    access: 'Private access is required before this source can be tested.',
+    unconnected: 'Private setup support is not available.',
+    conflict: 'Settings changed elsewhere. Latest private settings were refreshed; test this draft again.',
+    saving: 'Saving this tested source…',
+    error: 'This source could not be changed. The saved setting was not changed.',
+  };
+  return messages[test?.phase] || messages.error;
+}
+
+function renderConnections() {
+  const summary = $('#connections-summary');
+  const list = $('#connections-list');
+  if (!summary || !list) return;
+  const phase = state.connections.phase;
+  const unavailable = {
+    loading: 'Checking private connection settings. No source link is shown until the owner-only settings response is valid.',
+    access: 'Private access is required before connection settings can be shown or changed.',
+    unconnected: 'Private setup support is not available. No source link was read or changed.',
+    unavailable: 'Private connection settings are unavailable. No source link was read or changed.',
+    invalid: 'Private connection settings could not be read safely. No source link was shown or changed.',
+  };
+  if (phase !== 'ready') {
+    summary.textContent = unavailable[phase] || unavailable.unavailable;
+    list.innerHTML = '<p class="connection-unavailable">Connection controls appear only after the protected settings source returns a valid owner response.</p>';
+    return;
+  }
+
+  summary.textContent = 'Private source settings are loaded for this owner session. Test a pasted link before connecting it; drafts stay only in memory until saved.';
+  list.innerHTML = `<div class="connections-grid">${CONNECTION_SOURCE_NAMES.map(source => {
+    const details = CONNECTION_SOURCE_DETAILS[source];
+    const setting = state.connections.sources[source];
+    const draft = connectionDraft(source);
+    const test = connectionTest(source);
+    const changed = draft !== setting.url;
+    const testing = test.phase === 'testing' || test.phase === 'saving';
+    const canTest = Boolean(draft.trim()) && !testing;
+    const canSave = changed && test.phase === 'ready' && !testing;
+    return `<article class="connection-source" data-connection-source-card="${source}">
+      <p class="eyebrow">${escapeHTML(details.type)}</p>
+      <h4>${escapeHTML(details.label)}</h4>
+      <p>${escapeHTML(details.help)}</p>
+      <p class="connection-current">${setting.state === 'active' ? 'A private custom source is currently saved.' : 'The private default source is currently selected.'}</p>
+      <label for="connection-${source}">${escapeHTML(details.type)}
+        <input id="connection-${source}" data-connection-source="${source}" type="url" inputmode="url" autocomplete="off" spellcheck="false" maxlength="${CONNECTION_URL_MAX_LENGTH}" value="${escapeHTML(draft)}" ${testing ? 'disabled' : ''}>
+      </label>
+      <p class="connection-test-status is-${escapeHTML(test.phase)}" id="connection-test-${source}" role="status" aria-live="polite">${escapeHTML(connectionTestMessage(test))}</p>
+      <div class="connection-actions">
+        <button class="button button-quiet" type="button" data-test-connection="${source}" ${canTest ? '' : 'disabled'}>${test.phase === 'testing' ? 'Testing…' : 'Test source'}</button>
+        <button class="button button-navy" type="button" data-save-connection="${source}" ${canSave ? '' : 'disabled'}>${test.phase === 'saving' ? 'Connecting…' : 'Connect source'}</button>
+      </div>
+    </article>`;
+  }).join('')}</div>`;
+}
+
+function setConnectionPhase(phase) {
+  state.connections.phase = phase;
+  renderConnections();
+}
+
+function applyConnectionSettings(payload, { preserveDrafts = true } = {}) {
+  const settings = normalizeConnectionSettings(payload);
+  state.connections.phase = 'ready';
+  state.connections.revision = settings.revision;
+  state.connections.sources = settings.sources;
+  if (!preserveDrafts) state.connections.drafts.clear();
+  return settings;
+}
+
+async function loadConnections({ preserveDrafts = true } = {}) {
+  const endpoint = connectionEndpoint();
+  if (!endpoint) {
+    setConnectionPhase('unconnected');
+    return false;
+  }
+  setConnectionPhase('loading');
+  try {
+    const response = await fetch(endpoint, {
+      cache: 'no-store',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+      redirect: 'error',
+    });
+    if (response.status === 403) { setConnectionPhase('access'); return false; }
+    if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected'); return false; }
+    if (!response.ok) { setConnectionPhase('unavailable'); return false; }
+    applyConnectionSettings(await responseJSON(response), { preserveDrafts });
+    renderConnections();
+    return true;
+  } catch {
+    setConnectionPhase('unavailable');
+    return false;
+  }
+}
+
+async function testConnection(source) {
+  const endpoint = connectionEndpoint(source, '/test');
+  const url = connectionDraft(source).trim();
+  if (!endpoint || !url) return;
+  state.connections.tests.set(source, { phase: 'testing' });
+  renderConnections();
+  let response;
+  let body;
+  try {
+    response = await fetch(endpoint, {
+      body: JSON.stringify({ url }),
+      cache: 'no-store',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      method: 'POST',
+      redirect: 'error',
+    });
+    body = await responseJSON(response);
+  } catch {
+    state.connections.tests.set(source, { phase: 'unavailable' });
+    renderConnections();
+    return;
+  }
+  if (response.ok) {
+    try {
+      const result = normalizeConnectionTest(body, source);
+      state.connections.tests.set(source, { phase: result.status });
+    } catch {
+      state.connections.tests.set(source, { phase: 'error' });
+    }
+  } else {
+    const phase = response.status === 403 ? 'access'
+      : response.status === 404 || response.status === 409 ? 'unconnected'
+        : response.status === 400 ? 'invalid'
+          : response.status === 502 || response.status === 503 ? 'unavailable' : 'error';
+    state.connections.tests.set(source, { phase });
+  }
+  renderConnections();
+}
+
+async function saveConnection(source) {
+  const endpoint = connectionEndpoint(source);
+  const url = connectionDraft(source).trim();
+  if (!endpoint || !url || !state.connections.revision || connectionTest(source).phase !== 'ready') return;
+  state.connections.tests.set(source, { phase: 'saving' });
+  renderConnections();
+  let response;
+  let body;
+  try {
+    response = await fetch(endpoint, {
+      body: JSON.stringify({ expectedRevision: state.connections.revision, url }),
+      cache: 'no-store',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      method: 'PUT',
+      redirect: 'error',
+    });
+    body = await responseJSON(response);
+  } catch {
+    state.connections.tests.set(source, { phase: 'unavailable' });
+    renderConnections();
+    return;
+  }
+  if (response.ok) {
+    try {
+      applyConnectionSettings(body, { preserveDrafts: true });
+      state.connections.drafts.delete(source);
+      state.connections.tests.set(source, { phase: 'saved' });
+      renderConnections();
+      announce(`${CONNECTION_SOURCE_DETAILS[source].label} was connected to the protected source.`);
+    } catch {
+      state.connections.tests.set(source, { phase: 'error' });
+      renderConnections();
+    }
+    return;
+  }
+  if (response.status === 409 && body?.error === 'hud_not_connected') {
+    state.connections.tests.set(source, { phase: 'unconnected' });
+    renderConnections();
+    return;
+  }
+  if (response.status === 409) {
+    await loadConnections({ preserveDrafts: true });
+    state.connections.tests.set(source, { phase: 'conflict' });
+    renderConnections();
+    return;
+  }
+  const phase = response.status === 403 ? 'access'
+    : response.status === 404 ? 'unconnected'
+      : response.status === 400 ? 'invalid'
+        : response.status === 502 || response.status === 503 ? 'unavailable' : 'error';
+  state.connections.tests.set(source, { phase });
+  renderConnections();
+}
+
+function captureConnectionDraft(event) {
+  const input = event.target.closest?.('[data-connection-source]');
+  const source = input?.dataset.connectionSource;
+  if (!input || !validConnectionSource(source)) return;
+  state.connections.drafts.set(source, input.value.slice(0, CONNECTION_URL_MAX_LENGTH));
+  state.connections.tests.set(source, { phase: 'idle' });
+  const status = $(`#connection-test-${source}`);
+  const save = $(`[data-save-connection="${source}"]`);
+  const test = $(`[data-test-connection="${source}"]`);
+  if (status) {
+    status.className = 'connection-test-status is-idle';
+    status.textContent = connectionTestMessage({ phase: 'idle' });
+  }
+  if (test) test.disabled = !input.value.trim();
+  if (save) save.disabled = true;
+}
+
 async function refreshAfterLiveSaveIssue(opportunityId, phase, command) {
   const refreshed = await loadOpportunities();
   const message = refreshed
@@ -1072,6 +1350,10 @@ function handleClick(event) {
     });
     return;
   }
+  const connectionTest = event.target.closest('[data-test-connection]');
+  if (connectionTest) { testConnection(connectionTest.dataset.testConnection); return; }
+  const connectionSave = event.target.closest('[data-save-connection]');
+  if (connectionSave) { saveConnection(connectionSave.dataset.saveConnection); return; }
   const openDialogButton = event.target.closest('[data-open-dialog]');
   if (openDialogButton) { openDialog(openDialogButton.dataset.openDialog, openDialogButton.dataset.editOpportunity); return; }
   if (event.target.closest('[data-close-dialog]')) { closeDialog(); return; }
@@ -1123,6 +1405,7 @@ function init() {
   renderDirection();
   loadOpportunities();
   loadReferences();
+  loadConnections();
   loadPrivatePhoto();
   photoTimer = window.setInterval(loadPrivatePhoto, PHOTO_ROTATION_MS);
   document.addEventListener('click', handleClick);
@@ -1138,6 +1421,7 @@ function init() {
   });
   document.addEventListener('input', event => {
     captureLiveDraft(event);
+    captureConnectionDraft(event);
     if (event.target.matches('#opportunity-search')) renderOpportunities();
   });
   document.addEventListener('submit', event => {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities" data-hud-photo-endpoint="/api/hud/photo" data-hud-references-endpoint="/api/hud/references">
+<html lang="en" data-hud-opportunities-endpoint="/api/hud/opportunities" data-hud-photo-endpoint="/api/hud/photo" data-hud-references-endpoint="/api/hud/references" data-hud-connections-endpoint="/api/hud/connections">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -195,10 +195,11 @@
           </div>
         </header>
         <div id="materials-list" class="materials-grid"></div>
-        <section class="integration-card panel">
-          <p class="eyebrow">Future connections</p>
-          <h3>Drive, email, and calendar are not connected</h3>
-          <p>Drafts, sending, inbox reading, Google Calendar, and iCloud Calendar parity need secure setup outside this public preview.</p>
+        <section class="integration-card panel connections-panel" aria-labelledby="connections-heading">
+          <p class="eyebrow">Private source connections</p>
+          <h3 id="connections-heading">Connect your private sources</h3>
+          <p id="connections-summary" role="status" aria-live="polite">Checking private connection settings.</p>
+          <div id="connections-list"></div>
         </section>
       </section>
 

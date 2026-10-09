@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS };'
+  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, normalizeConnectionSettings, normalizeConnectionTest, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS };'
 );
 const context = {
   window: { location: { origin: 'https://nicolasgoureau.com' } },
@@ -22,7 +22,7 @@ const context = {
   Uint8Array
 };
 vm.runInNewContext(source, context, { filename: 'docs/hud/hud.js' });
-const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS } = context.globalThis.__hudTest;
+const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, normalizeConnectionSettings, normalizeConnectionTest, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS } = context.globalThis.__hudTest;
 
 const wednesday = new Date('2026-10-07T12:00:00');
 assert.equal(localDateKey(wednesday), '2026-10-07', 'The sample-week key is derived from the actual local date.');
@@ -77,6 +77,31 @@ assert.equal(
 );
 assert.equal(trustedCareerSheetUrl('https://example.invalid/not-a-sheet'), null, 'Off-origin links are hidden.');
 assert.equal(trustedCareerSheetUrl('/spreadsheets/d/runtime_only_001/edit'), null, 'Relative links are hidden.');
+
+const connections = normalizeConnectionSettings({
+  revision: 'settings_revision_001',
+  sources: {
+    opportunities: { url: 'https://docs.google.com/spreadsheets/d/opportunities/edit', state: 'active', status: 'ready' },
+    references: { url: 'https://docs.google.com/spreadsheets/d/references/edit', state: 'default', status: 'not_tested' },
+    photos: { url: 'https://drive.google.com/drive/folders/photos', state: 'active', status: 'unavailable' },
+  },
+});
+assert.equal(connections.sources.photos.status, 'unavailable', 'Connection state comes only from the protected settings response.');
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, sources: { ...connections.sources, photos: { ...connections.sources.photos, status: 'connected' } } }),
+  /Invalid private connection settings/,
+  'Unrecognized connection states are not rendered as successful private setup.'
+);
+assert.deepEqual(
+  JSON.parse(JSON.stringify(normalizeConnectionTest({ source: 'photos', status: 'ready' }, 'photos'))),
+  { source: 'photos', status: 'ready' },
+  'Only the fixed source name and approved test status are accepted from a private test response.'
+);
+assert.throws(
+  () => normalizeConnectionTest({ source: 'photos', status: 'saved' }, 'photos'),
+  /Invalid private connection test/,
+  'A test response cannot claim that a source was saved.'
+);
 
 const references = normalizeLiveReferences({
   references: [{
