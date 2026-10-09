@@ -40,6 +40,15 @@ function validPageMetadata(info, page, totalPages) {
     && Number.isSafeInteger(info?.count) && info.count >= 0;
 }
 
+function exactZeroPageEmptyList(info, result) {
+  return Array.isArray(result) && result.length === 0
+    && info?.page === 1
+    && info?.per_page === appPageSize
+    && info?.count === 0
+    && info?.total_count === 0
+    && info?.total_pages === 0;
+}
+
 function safeNumberOrType(value) {
   if (Number.isSafeInteger(value)) return value;
   if (value === null) return 'null';
@@ -185,6 +194,17 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
           .some(field => info[field] !== undefined);
         if (!hasPaginationField) {
           return unknown(readResult.result.length === 0 ? 'empty_result_missing_pagination' : 'missing_pagination_metadata');
+        }
+        if (exactZeroPageEmptyList(info, readResult.result)) {
+          return {
+            apps: [],
+            completePagination: true,
+            failureReason: null,
+            ok: true,
+            pagination,
+            status: 200,
+            unsupported: false,
+          };
         }
         if (!Number.isSafeInteger(info.total_pages) || info.total_pages < 1) return unknown('invalid_total_pages');
         totalPages = info.total_pages;

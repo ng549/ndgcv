@@ -76,6 +76,30 @@ assert.equal(zero.report.accessAppsRead.audienceMatch, false, 'No exact app audi
 assert.equal(zero.report.organizationRead.teamMatch, null, 'Team association is unknown without a unique matching HUD app.');
 assert.equal(zero.calls.filter(call => call.pathname.endsWith('/access/organizations')).length, 1, 'The organization read remains a fixed audit fact.');
 
+const zeroPageEmpty = await audit({
+  appsPages: [{ result: [], resultInfo: pageInfo({ count: 0, totalCount: 0, totalPages: 0 }) }],
+});
+assert.equal(zeroPageEmpty.report.accessAppsRead.completePagination, true, 'Cloudflare\'s exact zero-page empty-list envelope is a conclusive empty result.');
+assert.equal(zeroPageEmpty.report.accessAppsRead.matchCount, 0, 'The exact zero-page empty-list envelope has no HUD audience match.');
+assert.equal(zeroPageEmpty.report.accessAppsRead.paginationFailureReason, null, 'The exact zero-page empty-list envelope is not treated as malformed.');
+assert.deepEqual(
+  zeroPageEmpty.report.accessAppsRead.pagination,
+  { accumulatedCount: 0, count: 0, page: 1, per_page: 100, resultIsArray: true, total_count: 0, total_pages: 0 },
+  'The accepted zero-page envelope still emits only sanitized numeric metadata.'
+);
+
+const malformedZeroPageCount = await audit({
+  appsPages: [{ result: [], resultInfo: pageInfo({ count: 1, totalCount: 0, totalPages: 0 }) }],
+});
+assert.equal(malformedZeroPageCount.report.accessAppsRead.completePagination, null, 'A zero-page envelope with a nonzero count remains unknown.');
+assert.equal(malformedZeroPageCount.report.accessAppsRead.paginationFailureReason, 'invalid_total_pages', 'A near-match zero-page envelope is rejected with a fixed reason.');
+
+const malformedZeroPageItems = await audit({
+  appsPages: [{ result: [{ aud: targetAudience }], resultInfo: pageInfo({ count: 1, totalCount: 1, totalPages: 0 }) }],
+});
+assert.equal(malformedZeroPageItems.report.accessAppsRead.completePagination, null, 'A zero-page envelope with an item remains unknown.');
+assert.equal(malformedZeroPageItems.report.accessAppsRead.paginationFailureReason, 'invalid_total_pages', 'A nonempty zero-page envelope is never accepted as complete.');
+
 const multiple = await audit({
   appsPages: [{
     result: [{ aud: targetAudience }, { aud: targetAudience }],
@@ -173,6 +197,7 @@ assert(implementation.includes("method: 'GET'"), 'Every Cloudflare request is ex
 assert(implementation.includes('maxAppPages = 10') && implementation.includes('appPageSize = 100'), 'Access pagination is bounded to ten 100-record pages.');
 assert(implementation.includes('access/organizations'), 'The audit reads the account Access organization for an exact team comparison.');
 assert(implementation.includes('app.aud === audience'), 'The audit joins only apps with the configured HUD Access audience in memory.');
+assert(implementation.includes('exactZeroPageEmptyList'), 'Only the exact documented zero-page empty-list envelope is accepted without relaxing malformed pagination checks.');
 assert(implementation.includes('sanitizedPagination') && implementation.includes('paginationFailureReason'), 'Pagination failures expose a fixed reason plus sanitized metadata only.');
 assert(implementation.includes('knownPublicHosts') && implementation.includes('omittedRouteCount'), 'Only permitted public routes are emitted and omitted routes are counted.');
 assert(!implementation.includes('app.name') && !implementation.includes('app.id') && !implementation.includes('policy'), 'The audit never selects or emits app names, IDs, or policies.');
