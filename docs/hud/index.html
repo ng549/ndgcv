@@ -39,14 +39,6 @@
           <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
         </div>
 
-        <section class="private-photo-slot" aria-label="Private photo">
-          <div class="private-photo-frame" id="hud-private-photo-frame" aria-hidden="true">
-            <img id="hud-private-photo-a" class="private-photo-image" alt="">
-            <img id="hud-private-photo-b" class="private-photo-image" alt="">
-          </div>
-          <p><strong>Private photo</strong><span id="hud-private-photo-state">Not connected</span></p>
-        </section>
-
         <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
           <p class="eyebrow">Connection status</p>
           <strong id="hud-runtime-title">Not connected</strong>
@@ -64,6 +56,13 @@
     <main id="hud-main" class="hud-main">
       <header class="hero" aria-labelledby="workspace-title">
         <div class="hero-photo" aria-hidden="true"></div>
+        <section class="private-photo-slot private-photo-hero" aria-label="Private photo">
+          <div class="private-photo-frame" id="hud-private-photo-frame" aria-hidden="true">
+            <img id="hud-private-photo-a" class="private-photo-image" alt="">
+            <img id="hud-private-photo-b" class="private-photo-image" alt="">
+          </div>
+          <p><strong>Private photo</strong><span id="hud-private-photo-state">Not connected</span></p>
+        </section>
         <div class="hero-content">
           <div>
             <p class="date-line"><time id="hud-current-date">Loading date</time></p>
