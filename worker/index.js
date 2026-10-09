@@ -17,6 +17,12 @@ const noStoreHeaders = {
 const hudOpportunityIdPattern = /^opp_[A-Za-z0-9_-]{8,128}$/;
 const hudUpdateContentType = /^application\/json(?:\s*;\s*charset=utf-8)?$/i;
 const hudUpdateMaxBytes = 16 * 1024;
+export const HUD_REFERENCES_MAX_BYTES = 2 * 1024 * 1024;
+
+function declaredBodyExceedsLimit(response, maxBytes) {
+  const declaredLength = response.headers.get('Content-Length');
+  return Boolean(declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > maxBytes);
+}
 
 function hudBackendOrigin(env) {
   const raw = typeof env?.HUD_BACKEND_ORIGIN === 'string' ? env.HUD_BACKEND_ORIGIN.trim() : '';
@@ -39,15 +45,60 @@ function hudBackendOrigin(env) {
   }
 }
 
-function proxyResponse(upstream) {
+function proxyResponse(upstream, body = upstream.body) {
   const contentType = upstream.headers.get('Content-Type');
   const headers = new Headers(noStoreHeaders);
   if (contentType) headers.set('Content-Type', contentType);
-  return new Response(upstream.body, {
+  return new Response(body, {
     headers,
     status: upstream.status,
     statusText: upstream.statusText,
   });
+}
+
+async function cancelHudResponseBody(body) {
+  try {
+    await body?.cancel();
+  } catch {
+    // The upstream body may already have ended or failed.
+  }
+}
+
+async function boundedHudReferencesResponse(upstream) {
+  if (declaredBodyExceedsLimit(upstream, HUD_REFERENCES_MAX_BYTES)) {
+    await cancelHudResponseBody(upstream.body);
+    return hudBackendUnavailableResponse();
+  }
+  if (!upstream.body) return proxyResponse(upstream, null);
+
+  const reader = upstream.body.getReader();
+  const chunks = [];
+  let byteLength = 0;
+  let cancelled = false;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      byteLength += value.byteLength;
+      if (byteLength > HUD_REFERENCES_MAX_BYTES) {
+        await reader.cancel();
+        cancelled = true;
+        return hudBackendUnavailableResponse();
+      }
+      chunks.push(value);
+    }
+  } catch {
+    if (!cancelled) await cancelHudResponseBody(reader);
+    return hudBackendUnavailableResponse();
+  }
+
+  const body = new Uint8Array(byteLength);
+  let offset = 0;
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return proxyResponse(upstream, body);
 }
 
 function hudInvalidUpdateResponse() {
@@ -128,7 +179,24 @@ export async function proxyHudOpportunities(request, env, fetchImpl = fetch) {
 }
 
 export async function proxyHudReferences(request, env, fetchImpl = fetch) {
-  return proxyHudRequest(request, env, '/api/hud/references', {}, fetchImpl);
+  const origin = hudBackendOrigin(env);
+  if (!origin) return hudNotConnectedResponse();
+
+  const assertion = request.headers.get('cf-access-jwt-assertion');
+  if (!assertion) return hudNotConnectedResponse();
+  try {
+    const upstream = await fetchImpl(new URL('/api/hud/references', origin), {
+      headers: new Headers({
+        Accept: 'application/json',
+        'cf-access-jwt-assertion': assertion,
+      }),
+      method: 'GET',
+      redirect: 'error',
+    });
+    return boundedHudReferencesResponse(upstream);
+  } catch {
+    return hudBackendUnavailableResponse();
+  }
 }
 
 export async function proxyHudPhoto(request, env, fetchImpl = fetch) {

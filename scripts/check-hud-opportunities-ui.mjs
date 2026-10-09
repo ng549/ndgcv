@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor };'
+  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS };'
 );
 const context = {
   window: { location: { origin: 'https://nicolasgoureau.com' } },
@@ -17,10 +17,12 @@ const context = {
   String,
   Array,
   RegExp,
-  URL
+  URL,
+  TextDecoder,
+  Uint8Array
 };
 vm.runInNewContext(source, context, { filename: 'docs/hud/hud.js' });
-const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor } = context.globalThis.__hudTest;
+const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS } = context.globalThis.__hudTest;
 
 const wednesday = new Date('2026-10-07T12:00:00');
 assert.equal(localDateKey(wednesday), '2026-10-07', 'The sample-week key is derived from the actual local date.');
@@ -100,6 +102,72 @@ assert.throws(
   /Invalid references payload/,
   'Unknown permission values cannot be rendered as private reference records.'
 );
+const referenceAtLimit = `{"references":[]}${' '.repeat(REFERENCES_MAX_BYTES - new TextEncoder().encode('{"references":[]}').byteLength)}`;
+assert.deepEqual(
+  JSON.parse(JSON.stringify(await readBoundedReferencesJson(new Response(referenceAtLimit, { headers: { 'Content-Length': String(REFERENCES_MAX_BYTES) } })))),
+  { references: [] },
+  'The browser accepts a complete references JSON response exactly at its byte limit.'
+);
+let chunkedReferencesCancelled = false;
+const oversizedReferencesStream = new ReadableStream({
+  cancel() { chunkedReferencesCancelled = true; },
+  start(controller) {
+    controller.enqueue(new Uint8Array(REFERENCES_MAX_BYTES));
+    controller.enqueue(new Uint8Array(1));
+  },
+});
+await assert.rejects(
+  () => readBoundedReferencesJson(new Response(oversizedReferencesStream, { headers: { 'Content-Length': '1' } })),
+  /too large/,
+  'The browser counts actual references bytes when a declared length is wrong.'
+);
+assert.equal(chunkedReferencesCancelled, true, 'The browser cancels an oversized references stream before parsing or rendering it.');
+await assert.rejects(
+  () => readBoundedReferencesJson(new Response('x'.repeat(REFERENCES_MAX_BYTES + 1), { headers: { 'Content-Length': String(REFERENCES_MAX_BYTES + 1) } })),
+  /too large/,
+  'The browser rejects an oversized declared references response before parsing it.'
+);
+await assert.rejects(
+  () => readBoundedReferencesJson(new Response(null)),
+  /empty/,
+  'The browser treats an empty references response as unavailable rather than partial data.'
+);
+const referenceRecord = index => ({
+  referenceId: `REF-TEST-${index}`,
+  name: 'Example reference',
+  preferredName: '',
+  workEmail: '',
+  personalEmail: '',
+  phone: '',
+  linkedinUrl: '',
+  sharedCompanies: '',
+  notes: '',
+  introductionDraft: '',
+  headsUpDraft: '',
+  permission: 'Ask first',
+});
+assert.equal(normalizeLiveReferences({ references: Array.from({ length: REFERENCES_MAX_RECORDS }, (_, index) => referenceRecord(index)) }).length, REFERENCES_MAX_RECORDS, 'The browser accepts the 999 data rows available below the References!A1:L1000 header.');
+assert.throws(
+  () => normalizeLiveReferences({ references: Array.from({ length: REFERENCES_MAX_RECORDS + 1 }, (_, index) => referenceRecord(index)) }),
+  /Invalid references payload/,
+  'The browser rejects more records than the protected References range can contain.'
+);
+const maximalReferenceRecord = index => ({
+  referenceId: `REF-${String(index).padStart(3, '0')}${'a'.repeat(125)}`,
+  name: 'n'.repeat(180),
+  preferredName: 'p'.repeat(120),
+  workEmail: 'w'.repeat(320),
+  personalEmail: 'e'.repeat(320),
+  phone: '1'.repeat(64),
+  linkedinUrl: 'h'.repeat(2_048),
+  sharedCompanies: 'c'.repeat(1_000),
+  notes: 'n'.repeat(4_000),
+  introductionDraft: 'i'.repeat(4_000),
+  headsUpDraft: 'h'.repeat(4_000),
+  permission: 'Ask first',
+});
+const sixteenRecordEnvelope = { references: Array.from({ length: 16 }, (_, index) => maximalReferenceRecord(index)) };
+assert(new TextEncoder().encode(JSON.stringify(sixteenRecordEnvelope)).byteLength < REFERENCES_MAX_BYTES, 'The 2 MiB limit safely accommodates 16 records at the UI field limits without using private source values.');
 assert.equal(trustedReferenceEmail('example.reference@example.invalid'), 'mailto:example.reference%40example.invalid', 'A valid reference email becomes a user-initiated mail link.');
 assert.equal(trustedReferenceEmail('not an email'), null, 'Unsafe email text is not linked.');
 assert.equal(trustedReferencePhone('+1 (555) 010-0123'), 'tel:+15550100123', 'A valid reference phone number becomes a user-initiated telephone link.');

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { exportJWK, generateKeyPair, SignJWT } from 'jose';
-import worker, { proxyHudOpportunities, proxyHudReferences } from '../worker/index.js';
+import worker, { HUD_REFERENCES_MAX_BYTES, proxyHudOpportunities, proxyHudReferences } from '../worker/index.js';
 import { isHudEncodedAlias, requireHudAccess, resetHudAccessKeyCacheForTests } from '../worker/hud-access.mjs';
 
 const issuer = 'https://career-hud-test.cloudflareaccess.com';
@@ -367,6 +367,44 @@ await withAccessJwks(async () => {
   assert.equal(new Headers(referenceCall.init.headers).get('cf-access-jwt-assertion'), ownerAssertion, 'The existing owner assertion is forwarded to the references backend.');
   assert.equal(new Headers(referenceCall.init.headers).get('Cookie'), null, 'Browser cookies are never forwarded to the references backend.');
 
+  const referencesRequest = request('/api/hud/references', { token: ownerAssertion });
+  const proxyReferenceBody = async (body, headers = {}) => proxyHudReferences(
+    referencesRequest,
+    { HUD_BACKEND_ORIGIN: backendOrigin },
+    async () => new Response(body, { headers, status: 200 })
+  );
+  response = await proxyReferenceBody('{"references":[]}');
+  assert.equal(response.status, 200, 'A normal private references JSON response is proxied after buffering.');
+  assert.equal(await response.text(), '{"references":[]}', 'The buffered normal references response remains complete.');
+
+  response = await proxyReferenceBody(null, { 'Content-Type': 'application/json' });
+  assert.equal(response.status, 200, 'An empty upstream references response is forwarded without inventing data.');
+  assert.equal(await response.text(), '', 'An empty references response contains no partial data.');
+
+  const boundaryBody = `{"references":[]}${' '.repeat(HUD_REFERENCES_MAX_BYTES - new TextEncoder().encode('{"references":[]}').byteLength)}`;
+  response = await proxyReferenceBody(boundaryBody, { 'Content-Length': String(HUD_REFERENCES_MAX_BYTES) });
+  assert.equal(response.status, 200, 'A references response exactly at the byte limit is accepted.');
+  assert.equal((await response.arrayBuffer()).byteLength, HUD_REFERENCES_MAX_BYTES, 'The exact-limit references response is preserved in full.');
+
+  const oversizedReferences = async (declaredLength, message) => {
+    let cancelled = false;
+    const stream = new ReadableStream({
+      cancel() { cancelled = true; },
+      start(controller) {
+        controller.enqueue(new Uint8Array(HUD_REFERENCES_MAX_BYTES));
+        controller.enqueue(new Uint8Array(1));
+      },
+    });
+    const headers = declaredLength === null ? {} : { 'Content-Length': declaredLength };
+    response = await proxyReferenceBody(stream, headers);
+    assert.equal(response.status, 502, message);
+    assertNoStore(response, message);
+    assert.equal(cancelled, true, `${message} cancels the upstream stream without exposing partial contacts.`);
+  };
+  await oversizedReferences(String(HUD_REFERENCES_MAX_BYTES + 1), 'An oversized declared references response is rejected before forwarding.');
+  await oversizedReferences(null, 'An oversized chunked references response is counted and rejected without a declared length.');
+  await oversizedReferences('1', 'An oversized references response is counted and rejected when its declared length is wrong.');
+
   response = await worker.fetch(request('/api/hud/references?range=attacker', { token: await token() }), protectedEnv);
   assert.equal(response.status, 404, 'A references query cannot select a private range.');
   assert.equal(backendCalls.length, referenceCallsBefore + 1, 'A rejected references query never reaches the backend.');
@@ -390,4 +428,4 @@ await withAccessJwks(async () => {
   return backendResponse();
 });
 
-console.log('Career HUD Access gate: missing configuration, alternate and encoded aliases, raw identity header, unsigned/tampered/expired/wrong-owner/wrong-audience/wrong-issuer/non-app tokens, HEAD, valid signed owner token, protected no-store HUD assets, public-site and Apps-proxy preservation, and the bounded opportunities proxy passed.');
+console.log('Career HUD Access gate: missing configuration, alternate and encoded aliases, raw identity header, unsigned/tampered/expired/wrong-owner/wrong-audience/wrong-issuer/non-app tokens, HEAD, valid signed owner token, protected no-store HUD assets, public-site and Apps-proxy preservation, bounded opportunities writes, and bounded references responses passed.');

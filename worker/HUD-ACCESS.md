@@ -25,7 +25,7 @@ After that gate succeeds, the Worker may proxy only these fixed backend paths:
 - `PATCH /api/hud/opportunities/<stable opp_ id>`, with the same assertion and a bounded (16 KiB), same-origin `application/json` body; and
 - `GET /api/hud/photo`, with the same assertion and `Accept: image/jpeg`.
 
-It never forwards browser cookies, caller-selected paths, arbitrary URLs, or CORS headers. The opportunities, references, and photo routes reject query strings. The PATCH route rejects non-JSON bodies, cross-origin or origin-less browser writes, and oversized bodies before contacting the backend. Any other `/api/hud/*` request remains a no-store `404`.
+It never forwards browser cookies, caller-selected paths, arbitrary URLs, or CORS headers. The opportunities, references, and photo routes reject query strings. The references proxy buffers the complete JSON response and cancels it above 2 MiB (whether or not its declared length is accurate), returning a no-store unavailable response rather than partial private data. The PATCH route rejects non-JSON bodies, cross-origin or origin-less browser writes, and oversized bodies before contacting the backend. Any other `/api/hud/*` request remains a no-store `404`.
 
 The current Google identity-provider `invalid_client` error must be resolved in Cloudflare using the real matching Google OAuth client ID and secret before these values are enabled. This repository contains neither OAuth credentials nor Access metadata.
 

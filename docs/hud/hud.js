@@ -85,6 +85,8 @@ const LIVE_STATUS_VALUES = ['research', 'research_lead', 'interested', 'conversa
 const LIVE_REVISION_PATTERN = /^[a-f0-9]{64}$/;
 const REFERENCE_ID_PATTERN = /^REF-[A-Za-z0-9_-]{1,128}$/;
 const REFERENCE_PERMISSION_VALUES = new Set(['Agreed', 'Ask first', 'Unavailable']);
+const REFERENCES_MAX_BYTES = 2 * 1024 * 1024;
+const REFERENCES_MAX_RECORDS = 999;
 
 function hudRuntimeEndpoint(dataKey, pathname) {
   const configured = document.documentElement.dataset[dataKey];
@@ -248,8 +250,49 @@ function referenceText(value, maxLength) {
   return text;
 }
 
+async function readBoundedReferencesJson(response) {
+  const declaredLength = response.headers.get('Content-Length');
+  if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > REFERENCES_MAX_BYTES) {
+    try { await response.body?.cancel(); } catch { /* The response body may already have ended or failed. */ }
+    throw new TypeError('Private references response is too large.');
+  }
+  if (!response.body) throw new TypeError('Private references response is empty.');
+
+  const reader = response.body.getReader();
+  const chunks = [];
+  let byteLength = 0;
+  let cancelled = false;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      byteLength += value.byteLength;
+      if (byteLength > REFERENCES_MAX_BYTES) {
+        await reader.cancel();
+        cancelled = true;
+        throw new TypeError('Private references response is too large.');
+      }
+      chunks.push(value);
+    }
+  } catch (error) {
+    if (!cancelled) {
+      try { await reader.cancel(); } catch { /* The response stream already ended or failed. */ }
+    }
+    throw error;
+  }
+
+  const body = new Uint8Array(byteLength);
+  let offset = 0;
+  for (const chunk of chunks) {
+    body.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return JSON.parse(new TextDecoder().decode(body));
+}
+
 function normalizeLiveReferences(payload) {
   if (!payload || typeof payload !== 'object' || !Array.isArray(payload.references)) throw new TypeError('Invalid references payload.');
+  if (payload.references.length > REFERENCES_MAX_RECORDS) throw new TypeError('Invalid references payload.');
   const seen = new Set();
   return payload.references.map(item => {
     if (!item || typeof item !== 'object' || Array.isArray(item)) throw new TypeError('Invalid references payload.');
@@ -434,7 +477,7 @@ async function loadReferences() {
       return false;
     }
     if (!response.ok) throw new Error(`Private references request failed (${response.status}).`);
-    state.references = normalizeLiveReferences(await response.json());
+    state.references = normalizeLiveReferences(await readBoundedReferencesJson(response));
     state.referenceConnection = 'connected';
     renderContacts();
     return true;
