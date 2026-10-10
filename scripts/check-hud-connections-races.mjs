@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudRaceTest = { applyOpportunityPayload, loadConnections, saveConnection, saveLiveOpportunity, state, testConnection, transitionConnectionSnapshot };'
+  '\nglobalThis.__hudRaceTest = { applyOpportunityPayload, loadConnections, renderReadiness, saveConnection, saveLiveOpportunity, state, testConnection, transitionConnectionSnapshot };'
 );
 
 function element() {
@@ -147,15 +147,24 @@ function response(status, body) {
   return new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' }, status });
 }
 
+const readiness = createRuntime(() => response(409, { error: 'hud_not_connected' }));
+readiness.hud.state.referenceConnection = 'connected';
+readiness.hud.renderReadiness();
+assert.equal(readiness.elements.get('#readiness-contacts-source').textContent, 'Protected source connected', 'Readiness reflects an actually connected protected references adapter.');
+assert.equal(readiness.elements.get('#readiness-contacts-verified').textContent, 'Current response', 'Readiness distinguishes a current protected response from a global sync claim.');
+readiness.hud.state.referenceConnection = 'unconnected';
+readiness.hud.renderReadiness();
+assert.equal(readiness.elements.get('#readiness-contacts-source').textContent, 'Protected source unavailable', 'Readiness reflects the adapter’s actual unavailable state rather than hardcoding all sessions as disconnected.');
+
 const sanitizedHttp = createRuntime(() => response(502, {
-  error: 'hud_backend_unavailable',
+  error: 'hud_unavailable',
   detail: 'private upstream body must never reach the HUD',
   sourceUrl: 'https://private.example/should-not-render',
 }));
 await sanitizedHttp.hud.loadConnections();
 assert.equal(sanitizedHttp.hud.state.connections.phase, 'unavailable', 'A settings 502 remains an unavailable state.');
-assert.equal(sanitizedHttp.hud.state.connections.diagnostic?.errorCode, 'hud_backend_unavailable', 'Only an allowlisted backend code is retained for the diagnostic.');
-assert.match(sanitizedHttp.elements.get('#connections-summary').textContent, /Diagnostic: HTTP 502 · JSON · hud_backend_unavailable\./, 'The HUD reports only status, content type classification, and allowlisted code.');
+assert.equal(sanitizedHttp.hud.state.connections.diagnostic?.errorCode, 'hud_unavailable', 'The actual allowlisted backend code is retained for the diagnostic.');
+assert.match(sanitizedHttp.elements.get('#connections-summary').textContent, /Diagnostic: HTTP 502 · JSON · hud_unavailable\./, 'The HUD reports only status, content type classification, and allowlisted code.');
 assert.doesNotMatch(sanitizedHttp.elements.get('#connections-summary').textContent, /private upstream|private\.example/, 'The HUD never renders a raw private backend body or source URL.');
 
 const unsupportedContent = createRuntime(() => new Response('sensitive plaintext response', {

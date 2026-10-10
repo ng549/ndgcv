@@ -117,8 +117,8 @@ const CONNECTION_SOURCE_DETAILS = Object.freeze({
 const CONNECTION_SOURCE_NAMES = Object.keys(CONNECTION_SOURCE_DETAILS);
 const CONNECTION_STATES = new Set(['default', 'active']);
 const CONNECTION_STATUSES = new Set(['not_tested', 'ready', 'unavailable', 'invalid']);
-const CONNECTION_ERROR_CODES = new Set(['hud_access_required', 'hud_backend_unavailable', 'hud_invalid_request', 'hud_not_connected', 'hud_source_unavailable']);
-const HUD_VIEWS = new Set(['today', 'calendar', 'email', 'career', 'contacts', 'applications', 'interviews', 'materials', 'direction', 'readiness', 'paid-work', 'personal', 'scout']);
+const CONNECTION_ERROR_CODES = new Set(['hud_access_required', 'hud_backend_unavailable', 'hud_invalid_request', 'hud_not_connected', 'hud_source_unavailable', 'hud_unavailable']);
+const HUD_VIEWS = new Set(['today', 'calendar', 'email', 'career', 'contacts', 'applications', 'interviews', 'materials', 'direction', 'readiness', 'paid-work', 'personal', 'scout', 'media-os', 'sourcing-os', 'appdev-os']);
 const CONNECTION_URL_MAX_LENGTH = 4096;
 
 function hudRuntimeEndpoint(dataKey, pathname) {
@@ -728,6 +728,7 @@ function showView(view, { historyMode = 'push', focus = true } = {}) {
   if (view === 'contacts') renderContacts();
   if (view === 'materials') renderMaterials();
   if (view === 'direction') renderDirection();
+  if (view === 'readiness') renderReadiness();
   if (view === 'today') renderToday();
   updateViewHistory(view, historyMode);
   if (focus) $('#hud-main').focus({ preventScroll: true });
@@ -1464,6 +1465,22 @@ function renderContacts() {
   $('#reference-sync-heading').textContent = copy.heading;
   $('#reference-sync-detail').textContent = copy.detail;
   $('#reference-sync-action').textContent = copy.action;
+  renderReadiness();
+}
+
+function renderReadiness() {
+  const source = $('#readiness-contacts-source');
+  const verified = $('#readiness-contacts-verified');
+  if (!source || !verified) return;
+  const status = {
+    sample: ['Protected source when available', 'Not yet'],
+    loading: ['Checking protected source', 'Pending'],
+    connected: ['Protected source connected', 'Current response'],
+    unconnected: ['Protected source unavailable', 'Not connected'],
+    access: ['Private access required', 'Not verified'],
+    error: ['Protected source unavailable', 'Not verified'],
+  }[state.referenceConnection] || ['Protected source when available', 'Not yet'];
+  [source.textContent, verified.textContent] = status;
 }
 
 function renderLiveReference(reference) {

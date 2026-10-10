@@ -1221,3 +1221,31 @@ select option { color: #14232e; background: #f4f0e8; }
 .opportunity-detail h4,
 .detail-section strong { color: #f4f0e8 !important; }
 #career-intro { color: rgba(244,240,232,.76) !important; }
+
+dialog#hud-dialog {
+  border-color: rgba(244,240,232,.22);
+  color: #f4f0e8;
+  background: #192c38;
+  box-shadow: 0 22px 80px rgba(0,0,0,.52);
+}
+dialog#hud-dialog::backdrop { background: rgba(4,13,20,.74); }
+dialog#hud-dialog .dialog-heading h2 { color: #f4f0e8; }
+dialog#hud-dialog .dialog-close,
+dialog#hud-dialog .dialog-note { color: #d5c3a6; }
+
+.view-heading > div > p:last-child { color: rgba(244,240,232,.76) !important; }
+.connection-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  width: max-content;
+  padding: 4px 9px;
+  border: 1px solid rgba(239,198,143,.45);
+  border-radius: 999px;
+  color: #efc68f;
+  background: rgba(239,198,143,.11);
+  font-family: Manrope, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+}

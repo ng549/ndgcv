@@ -50,6 +50,13 @@
           <button class="nav-item is-muted" type="button" data-view="scout">Scout <small>Not connected</small></button>
         </div>
 
+        <div class="module-nav app-nav" aria-label="Later app entry points">
+          <p class="nav-group-label">Apps</p>
+          <button class="nav-item is-muted" type="button" data-view="media-os">MediaOS <small>Later</small></button>
+          <button class="nav-item is-muted" type="button" data-view="sourcing-os">SourcingOS <small>Later</small></button>
+          <button class="nav-item is-muted" type="button" data-view="appdev-os">AppDevOS <small>Later</small></button>
+        </div>
+
         <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
           <p class="eyebrow">Connection status</p>
           <strong id="hud-runtime-title">Not connected</strong>
@@ -327,7 +334,7 @@
             <tbody>
               <tr><th scope="row">Today &amp; tasks</th><td>Built</td><td>Sample / not connected</td><td>Not yet</td></tr>
               <tr><th scope="row">Opportunities &amp; fit</th><td>Built</td><td>Protected source when available</td><td>Per source</td></tr>
-              <tr><th scope="row">Contacts &amp; ReferenceSheet</th><td>Built</td><td>Not connected</td><td>Not yet</td></tr>
+              <tr><th scope="row">Contacts &amp; ReferenceSheet</th><td>Built</td><td id="readiness-contacts-source">Protected source when available</td><td id="readiness-contacts-verified">Not yet</td></tr>
               <tr><th scope="row">Calendar &amp; email</th><td>Built</td><td>Not connected</td><td>Not yet</td></tr>
               <tr><th scope="row">Applications, interviews &amp; offers</th><td>Built</td><td>Not wired</td><td>Not yet</td></tr>
               <tr><th scope="row">Materials &amp; CV</th><td>Built</td><td>Public CV link only</td><td>Not a sync</td></tr>
@@ -350,6 +357,21 @@
       <section class="view-panel workspace-panel module-panel" data-view-panel="scout" aria-labelledby="scout-heading" hidden>
         <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="scout-heading">Scout interface</h2><p>A future research and sourcing workspace. It is not connected to private data, browser capture, LinkedIn, or job sites.</p></div><span class="connection-chip is-offline">Not connected</span></header>
         <section class="empty-workspace panel"><h3>Scout is not searching yet</h3><p>Source capture and research workflows will be added one verified input at a time. No search result is implied here.</p></section>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="media-os" aria-labelledby="media-os-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="media-os-heading">MediaOS</h2><p>A future workspace for media planning and asset operations. It has no connected library, analytics, publication, or customer data.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>MediaOS is planned, not operating</h3><p>Its interface entry exists for the full plan, but no media engine, source, or workflow is wired in this HUD.</p></section>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="sourcing-os" aria-labelledby="sourcing-os-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="sourcing-os-heading">SourcingOS</h2><p>A future sourcing workspace. It is not connected to browser capture, LinkedIn, job sites, vendors, or private research records.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>SourcingOS is not researching yet</h3><p>Search, capture, ranking, and outreach workflows remain unavailable until each source is separately reviewed and connected.</p></section>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="appdev-os" aria-labelledby="appdev-os-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="appdev-os-heading">AppDevOS</h2><p>A future application-development workspace. It has no connected repositories, deployment tools, credentials, or production controls.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>AppDevOS is an entry point only</h3><p>Planning can begin here later; no code engine, integration, deployment action, or runtime status is implied today.</p></section>
       </section>
     </main>
   </div>
