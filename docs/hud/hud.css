@@ -1356,3 +1356,182 @@ dialog#hud-dialog .form-error { color: #d5c3a6; }
   .readiness-table td { display: grid; grid-template-columns: minmax(78px, .62fr) minmax(0, 1fr); gap: 12px; }
   .readiness-table td::before { content: attr(data-label); color: #d5c3a6; font-family: Manrope, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 }
+
+/* Measured section, type, and photo pass: retain the CV canvas while making
+   functional boundaries easier to scan. */
+body,
+input,
+select,
+textarea,
+.workspace-card,
+.empty-workspace,
+.opportunity-card,
+.opportunity-detail,
+.contact-card,
+.material-card,
+.integration-card,
+.readiness-table {
+  font-family: "Source Sans 3", sans-serif;
+}
+
+.brand,
+.nav-item,
+.nav-group-label,
+.eyebrow,
+.hero-copy h1,
+.view-heading h2,
+.section-header h2,
+.working-note h2,
+.opportunity-card h3,
+.opportunity-detail h3,
+.workspace-card h3,
+.empty-workspace h3,
+.contact-card h3,
+.material-card h3,
+.integration-card h3,
+.readiness-table th,
+.button,
+.connection-chip {
+  font-family: Manrope, sans-serif;
+}
+
+.nav-item { font-weight: 400; }
+.nav-item.is-active,
+.nav-item:hover:not(:disabled),
+.nav-item:focus-visible { font-weight: 600; }
+.hero-copy h1,
+.view-heading h2,
+.section-header h2,
+.working-note h2,
+.opportunity-card h3,
+.opportunity-detail h3,
+.workspace-card h3,
+.empty-workspace h3,
+.contact-card h3,
+.material-card h3,
+.integration-card h3 { font-weight: 750; }
+
+.hero { grid-template-columns: minmax(0, 1fr) clamp(420px, 38vw, 600px); background: #14232e; }
+.hero::before { background: linear-gradient(115deg, rgba(20,35,46,.97), rgba(36,56,69,.72)); }
+.hero-copy h1 { max-width: 12ch; font-size: clamp(36px, 4.2vw, 54px); letter-spacing: -.052em; line-height: 1.04; }
+.hero-copy p { display: none; }
+
+.private-photo-hero {
+  justify-self: end;
+  width: min(100%, clamp(420px, 38vw, 600px));
+  margin: 28px 28px 28px 0;
+}
+.private-photo-hero .private-photo-frame {
+  height: auto;
+  aspect-ratio: 3 / 2;
+  background: #14232e;
+}
+.private-photo-hero .private-photo-image {
+  object-fit: contain;
+  object-position: 50% 50%;
+  background: #14232e;
+}
+
+.week-strip {
+  border-top: 1px solid rgba(217,184,139,.34);
+  border-bottom: 1px solid rgba(217,184,139,.34);
+  background: #293e4c;
+}
+.week-days button.is-selected,
+.week-day.is-selected,
+.week-days button:hover,
+.week-day:hover {
+  border-color: #d9b88b;
+  background: #2d4757;
+}
+
+.view-panel,
+.view-panel[data-view-panel="career"] { border-top: 1px solid rgba(82,103,116,.72); }
+.view-panel.workspace-panel,
+.view-panel[data-view-panel="contacts"],
+.view-panel[data-view-panel="materials"],
+.view-panel[data-view-panel="readiness"] { background: #243845; }
+.view-heading,
+.view-panel[data-view-panel="career"] .view-heading,
+.filters,
+.view-panel[data-view-panel="career"] .filters {
+  border: 1px solid #526774;
+  border-radius: 6px;
+  background: #243845;
+}
+.view-heading,
+.view-panel[data-view-panel="career"] .view-heading { margin: 0 0 16px; padding: 20px 22px; }
+.filters,
+.view-panel[data-view-panel="career"] .filters { margin: 0 0 20px; padding: 16px 18px; }
+.view-heading h2,
+.section-header h2,
+.working-note h2 { font-size: clamp(28px, 3.2vw, 42px); letter-spacing: -.042em; line-height: 1.12; }
+.view-heading > div > p:last-child,
+#career-intro { margin-top: 5px; color: #d5c3a6 !important; font-size: 16px; line-height: 1.4; }
+
+.panel,
+.opportunity-card,
+.opportunity-detail,
+.contact-card,
+.material-card,
+.integration-card,
+.workspace-card,
+.empty-workspace,
+.readiness-table-wrap {
+  border-color: #526774;
+  background: #192c38;
+}
+.opportunity-card:hover,
+.opportunity-card.is-selected,
+.nav-item.is-active {
+  border-color: #d9b88b;
+  background: #2d4757;
+}
+.opportunity-card h3,
+.workspace-card h3,
+.empty-workspace h3,
+.contact-card h3,
+.material-card h3,
+.integration-card h3 { font-size: clamp(19px, 1.7vw, 24px); letter-spacing: -.025em; line-height: 1.2; }
+.opportunity-detail h3 { font-size: clamp(24px, 2.35vw, 32px); letter-spacing: -.034em; line-height: 1.14; }
+.filters label,
+.live-opportunity-editor label,
+.form-field { font-family: "Source Sans 3", sans-serif; font-size: 15px; font-weight: 600; }
+.filters input,
+.filters select,
+.live-opportunity-editor input,
+.live-opportunity-editor select,
+.live-opportunity-editor textarea,
+.form-field input,
+.form-field select,
+.form-field textarea { font-family: "Source Sans 3", sans-serif; font-size: 17px; }
+.readiness-table th { font-size: 13px; font-weight: 750; letter-spacing: .04em; }
+
+@media (max-width: 1000px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "content" "photo" "actions";
+    min-height: 0;
+  }
+  .private-photo-hero {
+    justify-self: start;
+    width: min(calc(100% - 44px), 600px);
+    margin: 0 22px 24px;
+  }
+  .private-photo-hero .private-photo-frame { aspect-ratio: 3 / 2; }
+}
+
+@media (max-width: 760px) {
+  .hero-copy h1,
+  .view-heading h2,
+  .section-header h2,
+  .working-note h2 { font-size: clamp(27px, 7vw, 34px); }
+  .view-heading,
+  .view-panel[data-view-panel="career"] .view-heading { padding: 18px; }
+  .filters,
+  .view-panel[data-view-panel="career"] .filters { padding: 14px; }
+}
+
+@media (max-width: 480px) {
+  .private-photo-hero { width: calc(100% - 36px); margin: 0 18px 22px; }
+}

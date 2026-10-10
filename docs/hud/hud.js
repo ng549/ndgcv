@@ -233,11 +233,11 @@ function renderRuntimeStatus({ state: syncState = 'unconnected', lastSuccessfulA
   const allowedStates = new Set(['loading', 'fresh', 'stale', 'error']);
   const phase = allowedStates.has(syncState) ? syncState : 'unconnected';
   const copy = {
-    loading: ['Checking private source', 'No sync result is available yet.'],
-    fresh: ['Private opportunities loaded', 'Records came from the protected source for this visit.'],
-    stale: ['Private source needs refresh', 'The last successful refresh is older than the source policy.'],
-    error: ['Private source is unavailable', 'No new data or links were loaded.'],
-    unconnected: ['Not connected', 'Live records and private links are unavailable in this preview.']
+    loading: ['Checking private source', 'No result yet.'],
+    fresh: ['Private opportunities loaded', 'Current for this visit.'],
+    stale: ['Private source needs refresh', 'Last refresh is older than policy.'],
+    error: ['Private source is unavailable', 'No new records loaded.'],
+    unconnected: ['Not connected', 'Live records are unavailable.']
   }[phase];
   const status = $('#hud-runtime-status');
   const lastSuccess = formatActualSyncTime(lastSuccessfulAt);
@@ -461,7 +461,7 @@ function applyOpportunityPayload(payload) {
   state.focusItems = normalizeLiveToday(payload.today);
   state.expandedFocus = state.focusItems[0]?.id ?? '';
   $('#hud-data-mode').textContent = 'Private source connected';
-  $('#career-intro').textContent = 'Protected opportunities, conversations, and next steps from the connected source.';
+  $('#career-intro').textContent = 'Private source connected';
   renderRuntimeStatus({ state: 'fresh' });
   renderRuntimeLinks(payload.links);
   renderToday();
@@ -478,7 +478,7 @@ function resetOpportunitiesForSourceChange() {
   state.selectedOpportunity = sampleSourceState.selectedOpportunity;
   state.expandedFocus = sampleSourceState.expandedFocus;
   $('#hud-data-mode').textContent = 'Sample data';
-  $('#career-intro').textContent = 'Sample companies, conversations, and next steps for the preview.';
+  $('#career-intro').textContent = 'Sample data';
   renderRuntimeStatus();
   renderRuntimeLinks();
   renderToday();
@@ -1467,39 +1467,39 @@ function renderContacts() {
 
   const copy = {
     sample: {
-      detail: 'The approved future source is a Google Sheet. This preview does not read its rows, create a connection, or contact anyone.',
-      heading: 'Google Sheet connection is not set up',
-      intro: 'Sample relationship context only. Existing reference records remain unconnected.',
+      detail: 'No private reference records are loaded.',
+      heading: 'Reference source not connected',
+      intro: 'Sample data. References not connected.',
       action: 'Connect references later',
     },
     loading: {
-      detail: 'Checking the private reference source. Sample relationship cards remain visible until a valid response is received.',
+      detail: 'Checking the private reference source.',
       heading: 'Checking private reference source',
-      intro: 'Sample relationship context remains visible while the private source is checked.',
+      intro: 'Checking private references.',
       action: 'Checking references',
     },
     connected: {
-      detail: 'Read-only private reference records are shown here. Contact links open only on your action; drafts are not sent from the HUD.',
+      detail: 'Read-only records. Drafts are not sent.',
       heading: state.references.length ? 'Private reference records loaded' : 'Private reference source is connected',
-      intro: state.references.length ? 'Private reference context is loaded for this visit. Drafts remain read-only and unsent.' : 'The private source returned no reference records for this visit.',
+      intro: state.references.length ? 'Private references loaded.' : 'No private references returned.',
       action: 'Sending is not connected',
     },
     unconnected: {
-      detail: 'The private reference source is not connected. Sample relationship cards remain local to this preview.',
+      detail: 'No private reference records are loaded.',
       heading: 'Reference source is not connected',
-      intro: 'Sample relationship context is visible because private reference records are unavailable.',
+      intro: 'Sample data. References unavailable.',
       action: 'References unavailable',
     },
     access: {
-      detail: 'Private access is required before reference records can be shown. No reference was contacted or changed.',
+      detail: 'Private access is required.',
       heading: 'Private access required',
-      intro: 'Sample relationship context is visible because private reference access was not granted.',
+      intro: 'Sample data. Private access required.',
       action: 'References unavailable',
     },
     error: {
-      detail: 'The private reference source is unavailable. Sample relationship cards remain local to this preview.',
+      detail: 'No private reference records are loaded.',
       heading: 'Private reference source is unavailable',
-      intro: 'Sample relationship context is visible because no valid private reference response was received.',
+      intro: 'Sample data. Reference source unavailable.',
       action: 'References unavailable',
     },
   }[state.referenceConnection] || null;

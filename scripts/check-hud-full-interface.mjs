@@ -18,16 +18,15 @@ for (const [view, label] of Object.entries({
 for (const category of ['Interviews', 'Networking', 'Client work', 'Sourcing', 'Personal', 'Focus']) {
   assert(hud.includes(`>${category}</li>`), `HUD shows the ${category} calendar category.`);
 }
-assert(hud.includes('iCloud Calendar is the planned default source'), 'Calendar names iCloud as its planned default without claiming connection.');
-assert(hud.includes('Gmail and iCloud Mail'), 'Email names its planned sources without loading messages.');
+assert(hud.includes('<h2 id="calendar-heading">Calendar</h2>') && hud.includes('<h2 id="email-heading">Email</h2>'), 'Calendar and Email use direct, readable panel titles.');
 assert(hud.includes('Current implementation order'), 'Readiness is presented as current implementation order.');
 assert(hud.includes('Protected source when available'), 'Readiness labels live-source availability truthfully.');
 assert(hud.includes('data-label="Verified"') && hud.includes('data-label="Source"'), 'Readiness cells carry responsive labels rather than relying on clipped table headers.');
-assert(hud.includes('No applications are connected'), 'Application capture does not invent an application history.');
-assert(hud.includes('No interview plans yet') && hud.includes('No offers to review'), 'Interview and offer views remain empty until connected.');
-assert(hud.includes('No personal data is shown') && hud.includes('Scout is not searching yet'), 'Module entry screens avoid claiming private data or search results.');
+assert(hud.includes('No applications</h3>'), 'Application capture does not invent an application history.');
+assert(hud.includes('No interview plans</h3>') && hud.includes('No offers to review'), 'Interview and offer views remain empty until connected.');
+assert(hud.includes('No personal data</h3>') && hud.includes('No research source</h3>'), 'Module entry screens avoid claiming private data or search results.');
 assert(hud.includes('aria-label="Later app entry points"'), 'Later app navigation is grouped separately from connected workspace sections.');
-assert(hud.includes('MediaOS is planned, not operating') && hud.includes('SourcingOS is not researching yet') && hud.includes('AppDevOS is an entry point only'), 'Later app panels do not claim engines, integrations, or live records.');
+assert(hud.includes('data-view-panel="media-os"') && hud.includes('data-view-panel="sourcing-os"') && hud.includes('data-view-panel="appdev-os"'), 'Later app panels remain available without claiming engines, integrations, or live records.');
 assert(hud.includes('id="readiness-contacts-source"') && !hud.includes('<tr><th scope="row">Contacts &amp; ReferenceSheet</th><td>Built</td><td>Not connected</td>'), 'Readiness does not hardcode contacts as globally disconnected.');
 assert(!hud.includes('Connected to Gmail') && !hud.includes('Connected to iCloud'), 'Unwired sources are not represented as connected.');
 assert(js.includes('const HUD_VIEWS'), 'HUD has an allowlisted view registry.');
@@ -39,6 +38,9 @@ assert(css.includes('CV-aligned HUD shell'), 'HUD has the CV-aligned style layer
 assert(css.includes('width: 224px') && css.includes('background: var(--hud-cv-charcoal)'), 'Desktop HUD uses the public-site-style charcoal rail.');
 assert(css.includes('max-height: calc(100dvh - 68px)'), 'Mobile HUD menu is bounded below the 68px top bar.');
 assert(css.includes('min-height: 44px'), 'HUD controls preserve touch target sizing.');
+assert(css.includes('background: #293e4c') && css.includes('border-color: #526774') && css.includes('background: #2d4757'), 'HUD section bands, cards, and selections retain the reviewed dark CV contrast palette.');
+assert(css.includes('aspect-ratio: 3 / 2') && css.includes('object-fit: contain') && css.includes('object-position: 50% 50%'), 'Private photo frame preserves whole portrait or landscape images in the reviewed 3:2 viewport.');
+assert(hud.includes('Manrope:wght@400;750') && hud.includes('Source+Sans+3:wght@400;600;700'), 'HUD imports the CV heading/navigation and body/form font weights.');
 assert(css.includes('dialog#hud-dialog'), 'The actual HUD dialog element receives the CV dark-theme selector.');
 assert(css.includes('worker_transport_failure') === false, 'Visual styles do not interpolate private connection diagnostics.');
 assert(css.includes('max-width: 1280px') && css.includes('.today-grid { grid-template-columns: minmax(0, 1fr);'), 'Today stacks deliberately at tablet widths instead of crowding its controls.');

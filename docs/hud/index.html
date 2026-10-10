@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Sample-only Career HUD preview for Nicolas Goureau.">
-  <title>Career HUD — Sample Preview</title>
+  <meta name="description" content="Private Career HUD for Nicolas Goureau.">
+  <title>Career HUD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;750&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="hud.css">
   <script src="hud.js" defer></script>
 </head>
@@ -28,8 +28,8 @@
         <nav class="primary-nav" aria-label="Workspace sections">
           <p class="nav-group-label">Now</p>
           <button class="nav-item" type="button" data-view="today">Today</button>
-          <button class="nav-item" type="button" data-view="calendar">Calendar <small>iCloud default</small></button>
-          <button class="nav-item" type="button" data-view="email">Email <small>Gmail + iCloud Mail</small></button>
+          <button class="nav-item" type="button" data-view="calendar">Calendar</button>
+          <button class="nav-item" type="button" data-view="email">Email</button>
           <p class="nav-group-label">Career</p>
           <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Opportunities</button>
           <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
@@ -60,7 +60,7 @@
         <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
           <p class="eyebrow">Connection status</p>
           <strong id="hud-runtime-title">Not connected</strong>
-          <span id="hud-runtime-detail">Live opportunities and the protected source link are unavailable in this preview.</span>
+          <span id="hud-runtime-detail">Live records are unavailable.</span>
           <time id="hud-runtime-last-success" hidden></time>
         </section>
         <nav class="hud-runtime-links" id="hud-runtime-links" aria-label="Private workspace links" hidden>
@@ -93,8 +93,7 @@
             <p class="eyebrow sample-badge" id="hud-data-mode">Sample data</p>
           </div>
           <div class="hero-copy">
-            <h1 id="workspace-title">Today, in focus.</h1>
-            <p>A clear plan, with room to adjust.</p>
+            <h1 id="workspace-title">Today</h1>
           </div>
         </div>
         <div class="hero-actions">
@@ -160,21 +159,19 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Calendar</p>
-            <h2 id="calendar-heading">Time, clearly held.</h2>
-            <p>iCloud Calendar is the planned default source. Google Calendar visibility is planned separately. Neither is connected in this HUD yet.</p>
+            <h2 id="calendar-heading">Calendar</h2>
           </div>
           <span class="connection-chip is-offline">Not connected</span>
         </header>
         <div class="workspace-grid calendar-grid">
           <section class="workspace-card panel">
             <p class="eyebrow">Schedule</p>
-            <h3>No calendar events are loaded</h3>
-            <p>There are no appointments to show until a private calendar source is connected and verified.</p>
+            <h3>No calendar events</h3>
             <button class="button button-disabled" type="button" disabled>Connect calendar later</button>
           </section>
           <section class="workspace-card panel">
             <p class="eyebrow">Categories</p>
-            <h3>Planned calendar colors</h3>
+            <h3>Calendar categories</h3>
             <ul class="category-list" aria-label="Planned calendar categories">
               <li><span class="category-swatch interviews"></span>Interviews</li>
               <li><span class="category-swatch networking"></span>Networking</li>
@@ -191,22 +188,19 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Email</p>
-            <h2 id="email-heading">Inbox and outreach, deliberately connected.</h2>
-            <p>Gmail and iCloud Mail can be added one at a time for private read, analysis, and sending workflows. No mailbox is connected and no message can be sent here.</p>
+            <h2 id="email-heading">Email</h2>
           </div>
           <span class="connection-chip is-offline">Not connected</span>
         </header>
         <div class="workspace-grid">
           <section class="workspace-card panel">
             <p class="eyebrow">Inbox</p>
-            <h3>No messages loaded</h3>
-            <p>Connecting a mailbox later will require a separate, reviewed source and authorization step.</p>
+            <h3>No messages</h3>
             <button class="button button-disabled" type="button" disabled>Analyze email later</button>
           </section>
           <section class="workspace-card panel">
             <p class="eyebrow">Outreach</p>
-            <h3>Nothing queued or sent</h3>
-            <p>Drafts, follow-ups, and sends remain unavailable until an email source and explicit sending workflow are wired.</p>
+            <h3>Nothing queued</h3>
             <button class="button button-disabled" type="button" disabled>Draft outreach later</button>
           </section>
         </div>
@@ -216,8 +210,8 @@
         <header class="view-heading">
           <div>
             <p class="eyebrow">Career workspace</p>
-            <h2 id="career-heading">Opportunities with room to build.</h2>
-            <p id="career-intro">Sample companies, conversations, and next steps for the preview.</p>
+            <h2 id="career-heading">Opportunities</h2>
+            <p id="career-intro">Sample data</p>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="opportunity">Add opportunity</button>
         </header>
@@ -245,14 +239,12 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Applications</p>
-            <h2 id="applications-heading">A clean record of what has actually moved.</h2>
-            <p>LinkedIn and job-site capture are planned inputs. No applications, job captures, or submission dates are loaded in this preview.</p>
+            <h2 id="applications-heading">Applications</h2>
           </div>
           <span class="connection-chip is-offline">Not wired</span>
         </header>
         <section class="empty-workspace panel">
-          <h3>No applications are connected</h3>
-          <p>When a source is connected, this area will distinguish saved leads, applications in progress, submitted applications, and closed outcomes. It does not invent an application history.</p>
+          <h3>No applications</h3>
           <div class="empty-actions"><button class="button button-disabled" type="button" disabled>Capture from LinkedIn later</button><button class="button button-disabled" type="button" disabled>Capture from a job site later</button></div>
         </section>
       </section>
@@ -261,14 +253,13 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Interview prep &amp; offers</p>
-            <h2 id="interviews-heading">Prepare evidence. Keep decisions clear.</h2>
-            <p>There are no interviews, offers, compensation figures, or negotiations loaded. These private records will be connected only when their source is ready.</p>
+            <h2 id="interviews-heading">Interviews &amp; offers</h2>
           </div>
           <span class="connection-chip is-offline">Not connected</span>
         </header>
         <div class="workspace-grid">
-          <section class="workspace-card panel"><p class="eyebrow">Interview preparation</p><h3>No interview plans yet</h3><p>Leadership evidence, role research, and question preparation will appear here after an opportunity is deliberately connected.</p></section>
-          <section class="workspace-card panel"><p class="eyebrow">Offers &amp; negotiation</p><h3>No offers to review</h3><p>Terms, tradeoffs, and negotiation notes stay empty until a private source exists. No compensation estimate is shown.</p></section>
+          <section class="workspace-card panel"><p class="eyebrow">Interview preparation</p><h3>No interview plans</h3></section>
+          <section class="workspace-card panel"><p class="eyebrow">Offers &amp; negotiation</p><h3>No offers to review</h3></section>
         </div>
       </section>
 
@@ -277,7 +268,7 @@
           <div>
             <p class="eyebrow">Relationships</p>
             <h2 id="contacts-heading">Contacts &amp; references</h2>
-            <p id="references-intro">Sample relationship context only. Existing reference records remain unconnected.</p>
+            <p id="references-intro">Sample data. References not connected.</p>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="action">Log a follow-up</button>
         </header>
@@ -294,8 +285,7 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Approved source materials</p>
-            <h2 id="materials-heading">Versions ready to use.</h2>
-            <p>Sample tracking only. Files will live in Drive when a private backend is connected.</p>
+            <h2 id="materials-heading">Materials</h2>
           </div>
         </header>
         <div id="materials-list" class="materials-grid"></div>
@@ -311,8 +301,7 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Career direction</p>
-            <h2 id="direction-heading">What to build toward.</h2>
-            <p>Keep the search focused on situations where operating leadership can make a difference.</p>
+            <h2 id="direction-heading">Career direction</h2>
           </div>
           <button class="button button-gold" type="button" data-open-dialog="company">Add target company</button>
         </header>
@@ -323,8 +312,7 @@
         <header class="view-heading compact-heading">
           <div>
             <p class="eyebrow">Current implementation order</p>
-            <h2 id="readiness-heading">Build first. Connect one source at a time.</h2>
-            <p>This is a readiness view, not a sync report. “Built” means the interface exists; it does not mean a private source is connected or verified.</p>
+            <h2 id="readiness-heading">Readiness</h2>
           </div>
         </header>
         <div class="readiness-table-wrap panel" tabindex="0">
@@ -344,33 +332,33 @@
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="paid-work" aria-labelledby="paid-work-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="paid-work-heading">Paid work</h2><p>A future module for active client work, commitments, and sourcing. It has no connected client data in this HUD.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>Module entry is ready for planning</h3><p>Work records, time, files, and client communications stay unavailable until a separate source design is reviewed.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="paid-work-heading">Paid work</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>No work records</h3></section>
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="personal" aria-labelledby="personal-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="personal-heading">Personal</h2><p>A separate private space for personal planning. This career HUD does not load or retain personal records.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>No personal data is shown</h3><p>This module is intentionally empty until it has its own reviewed privacy and source boundaries.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="personal-heading">Personal</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>No personal data</h3></section>
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="scout" aria-labelledby="scout-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="scout-heading">Scout interface</h2><p>A future research and sourcing workspace. It is not connected to private data, browser capture, LinkedIn, or job sites.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>Scout is not searching yet</h3><p>Source capture and research workflows will be added one verified input at a time. No search result is implied here.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="scout-heading">Scout</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>No research source</h3></section>
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="media-os" aria-labelledby="media-os-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="media-os-heading">MediaOS</h2><p>A future workspace for media planning and asset operations. It has no connected library, analytics, publication, or customer data.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>MediaOS is planned, not operating</h3><p>Its interface entry exists for the full plan, but no media engine, source, or workflow is wired in this HUD.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="media-os-heading">MediaOS</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>Not connected</h3></section>
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="sourcing-os" aria-labelledby="sourcing-os-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="sourcing-os-heading">SourcingOS</h2><p>A future sourcing workspace. It is not connected to browser capture, LinkedIn, job sites, vendors, or private research records.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>SourcingOS is not researching yet</h3><p>Search, capture, ranking, and outreach workflows remain unavailable until each source is separately reviewed and connected.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="sourcing-os-heading">SourcingOS</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>Not connected</h3></section>
       </section>
 
       <section class="view-panel workspace-panel module-panel" data-view-panel="appdev-os" aria-labelledby="appdev-os-heading" hidden>
-        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="appdev-os-heading">AppDevOS</h2><p>A future application-development workspace. It has no connected repositories, deployment tools, credentials, or production controls.</p></div><span class="connection-chip is-offline">Not connected</span></header>
-        <section class="empty-workspace panel"><h3>AppDevOS is an entry point only</h3><p>Planning can begin here later; no code engine, integration, deployment action, or runtime status is implied today.</p></section>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Later app</p><h2 id="appdev-os-heading">AppDevOS</h2></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>Not connected</h3></section>
       </section>
     </main>
   </div>
