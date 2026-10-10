@@ -295,6 +295,21 @@ textarea { width: 100%; padding: 10px; resize: vertical; }
 .materials-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .version-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--line); }
 .version-row strong { font-family: Manrope, sans-serif; }
+.connections-panel { margin-top: 24px; }
+.connections-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+.connection-source { display: grid; align-content: start; gap: 10px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.36); }
+.connection-source h4 { margin: 0; color: #14232e; font-family: Manrope, sans-serif; font-size: 20px; letter-spacing: -.04em; }
+.connection-source p { margin: 0; color: #3f5e74; font-size: 15px; line-height: 1.45; }
+.connection-source .connection-current { color: #243845; font-weight: 700; }
+.connection-source label { display: grid; gap: 5px; color: #14232e; font-family: Manrope, sans-serif; font-size: 14px; font-weight: 800; }
+.connection-source input { width: 100%; min-width: 0; font-size: 15px; }
+.connection-test-status { min-height: 42px; padding: 9px 10px; border-left: 3px solid #8098a8; background: rgba(143,176,216,.16); }
+.connection-test-status.is-ready, .connection-test-status.is-saved { border-color: #3f765a; background: rgba(77,136,100,.12); color: #275f4a; }
+.connection-test-status.is-invalid, .connection-test-status.is-unavailable, .connection-test-status.is-access, .connection-test-status.is-unconnected, .connection-test-status.is-error { border-color: #9f5656; background: rgba(159,86,86,.1); color: #842e2e; }
+.connection-test-status.is-conflict { border-color: #b07a35; background: rgba(239,198,143,.24); color: #7a4b16; }
+.connection-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.connection-actions .button { min-height: 42px; flex: 1 1 120px; padding: 9px 12px; font-size: 14px; }
+.connection-unavailable { margin: 18px 0 0; color: #3f5e74; }
 
 .direction-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(290px, .9fr); gap: 24px; }
 .mandate-card, .targets-card { padding: 28px; }
@@ -361,7 +376,7 @@ dialog form { display: grid; gap: 16px; padding: 8px; }
   .focus-expanded { margin-left: 82px; }
   .working-note { padding: 23px; }
   .filters { grid-template-columns: 1fr; }
-  .contacts-grid, .materials-grid { grid-template-columns: 1fr; }
+  .contacts-grid, .materials-grid, .connections-grid { grid-template-columns: 1fr; }
   .view-heading h2 { font-size: 37px; }
 }
 

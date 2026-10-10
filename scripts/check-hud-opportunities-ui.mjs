@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const source = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS };'
+  '\nglobalThis.__hudTest = { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, normalizeConnectionSettings, normalizeConnectionTest, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS };'
 );
 const context = {
   window: { location: { origin: 'https://nicolasgoureau.com' } },
@@ -22,7 +22,7 @@ const context = {
   Uint8Array
 };
 vm.runInNewContext(source, context, { filename: 'docs/hud/hud.js' });
-const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS } = context.globalThis.__hudTest;
+const { trustedCareerSheetUrl, normalizeLiveOpportunities, normalizeLiveToday, normalizeLiveReferences, normalizeConnectionSettings, normalizeConnectionTest, readBoundedReferencesJson, trustedReferenceEmail, trustedReferencePhone, trustedLinkedInUrl, localDateKey, mondayFor, REFERENCES_MAX_BYTES, REFERENCES_MAX_RECORDS } = context.globalThis.__hudTest;
 
 const wednesday = new Date('2026-10-07T12:00:00');
 assert.equal(localDateKey(wednesday), '2026-10-07', 'The sample-week key is derived from the actual local date.');
@@ -77,6 +77,56 @@ assert.equal(
 );
 assert.equal(trustedCareerSheetUrl('https://example.invalid/not-a-sheet'), null, 'Off-origin links are hidden.');
 assert.equal(trustedCareerSheetUrl('/spreadsheets/d/runtime_only_001/edit'), null, 'Relative links are hidden.');
+
+const connections = normalizeConnectionSettings({
+  revision: 0,
+  sources: {
+    opportunities: { url: 'https://docs.google.com/spreadsheets/d/opportunities/edit', state: 'active', status: 'ready' },
+    references: { url: 'https://docs.google.com/spreadsheets/d/references/edit', state: 'default', status: 'not_tested' },
+    photos: { url: 'https://drive.google.com/drive/folders/photos', state: 'active', status: 'unavailable' },
+  },
+});
+assert.equal(connections.revision, 0, 'Initial private connection settings accept revision zero.');
+assert.equal(connections.sources.photos.status, 'unavailable', 'Connection state comes only from the protected settings response.');
+const connectionsWithEmptyUrls = normalizeConnectionSettings({
+  revision: 1,
+  sources: {
+    opportunities: { url: '', state: 'default', status: 'not_tested' },
+    references: { url: '', state: 'default', status: 'not_tested' },
+    photos: { url: '', state: 'default', status: 'not_tested' },
+  },
+});
+assert.equal(connectionsWithEmptyUrls.sources.references.url, '', 'An unconfigured private source is represented as the contract’s empty string, not a fabricated link.');
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, sources: { ...connections.sources, photos: { ...connections.sources.photos, status: 'connected' } } }),
+  /Invalid private connection settings/,
+  'Unrecognized connection states are not rendered as successful private setup.'
+);
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, revision: '0' }),
+  /Invalid private connection settings/,
+  'Connection revisions are safe integers, not opaque strings.'
+);
+assert.throws(
+  () => normalizeConnectionSettings({ ...connections, revision: -1 }),
+  /Invalid private connection settings/,
+  'Negative connection revisions are rejected.'
+);
+assert.deepEqual(
+  JSON.parse(JSON.stringify(normalizeConnectionTest({ checkedAt: '2026-10-09T21:40:00Z', source: 'photos', status: 'ready' }, 'photos'))),
+  { checkedAt: '2026-10-09T21:40:00Z', source: 'photos', status: 'ready' },
+  'Only the fixed source name, ready status, and timestamp are accepted from a private test response.'
+);
+assert.throws(
+  () => normalizeConnectionTest({ source: 'photos', status: 'saved' }, 'photos'),
+  /Invalid private connection test/,
+  'A test response cannot claim that a source was saved.'
+);
+assert.throws(
+  () => normalizeConnectionTest({ source: 'photos', status: 'ready' }, 'photos'),
+  /Invalid private connection test/,
+  'A test response without its timestamp cannot be treated as a completed private check.'
+);
 
 const references = normalizeLiveReferences({
   references: [{
