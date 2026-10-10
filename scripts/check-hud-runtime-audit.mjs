@@ -34,7 +34,7 @@ function errorResponse(status) {
   });
 }
 
-function auditFetch({ appsPages, organizationResult = organization, organizationStatus = 200, settings = settingsResponse() }) {
+function auditFetch({ appsPages, organizationResult = organization, organizationStatus = 200, settings = settingsResponse(), zoneAppsPages = appsPages }) {
   const calls = [];
   const fetchImpl = async (input, init) => {
     const url = new URL(input);
@@ -46,7 +46,9 @@ function auditFetch({ appsPages, organizationResult = organization, organization
     if (url.pathname.endsWith('/access/apps')) {
       const page = Number(url.searchParams.get('page'));
       assert.equal(url.searchParams.get('per_page'), '100', 'Access app pages are bounded to 100 records.');
-      const item = appsPages[page - 1];
+      const item = url.pathname.includes('/zones/84d2ac9d51a9fcf04f7ef0b1a01ff85c/')
+        ? zoneAppsPages[page - 1]
+        : appsPages[page - 1];
       if (!item) return errorResponse(404);
       return jsonResponse(item.result, item.resultInfo);
     }
@@ -75,6 +77,50 @@ assert.equal(zero.report.accessAppsRead.matchCount, 0, 'A complete app list can 
 assert.equal(zero.report.accessAppsRead.audienceMatch, false, 'No exact app audience match is not mistaken for coverage.');
 assert.equal(zero.report.organizationRead.teamMatch, null, 'Team association is unknown without a unique matching HUD app.');
 assert.equal(zero.calls.filter(call => call.pathname.endsWith('/access/organizations')).length, 1, 'The organization read remains a fixed audit fact.');
+
+const zoneScoped = await audit({
+  appsPages: [{ result: [], resultInfo: pageInfo() }],
+  zoneAppsPages: [{
+    result: [{
+      aud: targetAudience,
+      destinations: [
+        { uri: 'https://nicolasgoureau.com/hud/*' },
+        { uri: 'https://nicolasgoureau.com/api/hud' },
+        { uri: 'https://private.example/hud/*' },
+      ],
+      domain: 'nicolasgoureau.com',
+      id: 'never-emit-app-id',
+      path: '/hud',
+      policy: 'never-emit-policy',
+      self_hosted_domains: ['www.nicolasgoureau.com'],
+    }],
+    resultInfo: pageInfo({ count: 1 }),
+  }],
+});
+assert.equal(zoneScoped.report.accessAppsRead.audienceMatch, false, 'The account-level result remains independent from the zone-scoped result.');
+assert.equal(zoneScoped.report.zoneAccessAppsRead.audienceMatch, true, 'The zone-scoped list joins only the configured HUD audience in memory.');
+assert.deepEqual(
+  zoneScoped.report.zoneAccessAppsRead.matchingAppRoutes,
+  {
+    domain: 'nicolasgoureau.com/hud',
+    destinations: ['https://nicolasgoureau.com/hud/*', 'https://nicolasgoureau.com/api/hud'],
+    omittedRouteCount: 1,
+    selfHostedDomains: ['www.nicolasgoureau.com/hud'],
+  },
+  'Zone output contains only public HUD/API route evidence from the matched app.'
+);
+assert.equal(zoneScoped.report.organizationRead.teamMatch, true, 'The organization match is based on the zone-scoped HUD app identity.');
+assert(zoneScoped.calls.some(call => call.pathname.endsWith('/zones/84d2ac9d51a9fcf04f7ef0b1a01ff85c/access/apps')), 'The audit reads the fixed deployed CV zone Access-app endpoint.');
+assert(!JSON.stringify(zoneScoped.report).includes('never-emit-app-id'), 'Zone app IDs are never emitted.');
+assert(!JSON.stringify(zoneScoped.report).includes('never-emit-policy'), 'Zone policies are never emitted.');
+assert(!JSON.stringify(zoneScoped.report).includes(targetAudience), 'The configured Access audience remains in memory only for the zone join.');
+
+const malformedZoneZeroPage = await audit({
+  appsPages: [{ result: [], resultInfo: pageInfo() }],
+  zoneAppsPages: [{ result: [], resultInfo: pageInfo({ count: 1, totalCount: 0, totalPages: 0 }) }],
+});
+assert.equal(malformedZoneZeroPage.report.zoneAccessAppsRead.completePagination, null, 'Zone-scoped malformed zero-page metadata remains unknown.');
+assert.equal(malformedZoneZeroPage.report.zoneAccessAppsRead.paginationFailureReason, 'invalid_total_pages', 'Zone-scoped pagination follows the strict empty-list rule.');
 
 const zeroPageEmpty = await audit({
   appsPages: [{ result: [], resultInfo: pageInfo({ count: 0, totalCount: 0, totalPages: 0 }) }],
@@ -162,7 +208,7 @@ const publicRoutes = await audit({
         { public: true, type: 'legacy', uri: 'www.nicolasgoureau.com/hud/*' },
         { public: false, type: 'private', uri: 'https://private.example/hud/*' },
       ],
-      path: '/*',
+      path: '/hud',
       self_hosted_domains: ['www.nicolasgoureau.com', 'internal.example'],
     }],
     resultInfo: pageInfo({ count: 1 }),
@@ -171,13 +217,13 @@ const publicRoutes = await audit({
 assert.deepEqual(
   publicRoutes.report.accessAppsRead.matchingAppRoutes,
   {
-    domain: 'nicolasgoureau.com/*',
+    domain: 'nicolasgoureau.com/hud',
     destinations: [
-      { public: true, type: 'public', uri: 'https://nicolasgoureau.com/api/hud/*' },
-      { public: true, type: 'legacy', uri: 'www.nicolasgoureau.com/hud/*' },
+      'https://nicolasgoureau.com/api/hud/*',
+      'www.nicolasgoureau.com/hud/*',
     ],
     omittedRouteCount: 2,
-    selfHostedDomains: ['www.nicolasgoureau.com/*'],
+    selfHostedDomains: ['www.nicolasgoureau.com/hud'],
   },
   'Only known public HUD routes from the unique audience-matched app are emitted; wildcard and legacy destination facts survive.'
 );
@@ -197,6 +243,7 @@ assert(implementation.includes("method: 'GET'"), 'Every Cloudflare request is ex
 assert(implementation.includes('maxAppPages = 10') && implementation.includes('appPageSize = 100'), 'Access pagination is bounded to ten 100-record pages.');
 assert(implementation.includes('access/organizations'), 'The audit reads the account Access organization for an exact team comparison.');
 assert(implementation.includes('app.aud === audience'), 'The audit joins only apps with the configured HUD Access audience in memory.');
+assert(implementation.includes('readApps(`zones/${hudZoneId}`)'), 'The audit reads the fixed deployed CV zone Access-app endpoint.');
 assert(implementation.includes('exactZeroPageEmptyList'), 'Only the exact documented zero-page empty-list envelope is accepted without relaxing malformed pagination checks.');
 assert(implementation.includes('sanitizedPagination') && implementation.includes('paginationFailureReason'), 'Pagination failures expose a fixed reason plus sanitized metadata only.');
 assert(implementation.includes('knownPublicHosts') && implementation.includes('omittedRouteCount'), 'Only permitted public routes are emitted and omitted routes are counted.');

@@ -1,5 +1,6 @@
 const cloudflareApi = 'https://api.cloudflare.com/client/v4/';
 const expectedTeamAuthDomain = 'billowing-darkness-b12a.cloudflareaccess.com';
+const hudZoneId = '84d2ac9d51a9fcf04f7ef0b1a01ff85c';
 const knownPublicHosts = new Set(['nicolasgoureau.com', 'www.nicolasgoureau.com']);
 const appPageSize = 100;
 const maxAppPages = 10;
@@ -71,9 +72,8 @@ function sanitizedPagination(readResult, accumulatedCount) {
 
 function hudRelevantPath(pathname) {
   const path = pathname || '/';
-  return path === '/' || path === '/*'
-    || path === '/hud' || path === '/hud/*' || path.startsWith('/hud/')
-    || path === '/api/hud' || path === '/api/hud/*' || path.startsWith('/api/hud/');
+  return path === '/hud' || path === '/hud/*'
+    || path === '/api/hud' || path === '/api/hud/*';
 }
 
 function publicHudRoute(value, fallbackPath = '') {
@@ -127,10 +127,7 @@ function publicRoutesForMatchedApp(app) {
         else unsupported = true;
         continue;
       }
-      const safeDestination = { uri };
-      if (typeof destination.type === 'string') safeDestination.type = destination.type;
-      if (typeof destination.public === 'boolean') safeDestination.public = destination.public;
-      destinations.push(safeDestination);
+      destinations.push(uri);
     }
   }
   return {
@@ -142,6 +139,24 @@ function publicRoutesForMatchedApp(app) {
 function organizationDomain(result) {
   if (!result || typeof result !== 'object' || Array.isArray(result) || typeof result.auth_domain !== 'string') return null;
   return result.auth_domain.trim().toLowerCase() || null;
+}
+
+function summarizeAppRead(apps, audience, bindingUnsupported) {
+  const complete = apps.completePagination === true && Boolean(audience);
+  const matches = complete ? apps.apps.filter(app => app && typeof app === 'object' && !Array.isArray(app) && app.aud === audience) : null;
+  const matchCount = matches ? matches.length : null;
+  const audienceMatch = matchCount === null ? null : matchCount === 1;
+  const routes = audienceMatch ? publicRoutesForMatchedApp(matches[0]) : null;
+  return {
+    audienceMatch,
+    completePagination: apps.completePagination,
+    matchCount,
+    matchingAppRoutes: routes?.routes ?? null,
+    pagination: apps.pagination,
+    paginationFailureReason: apps.failureReason,
+    status: apps.status,
+    unsupportedShapes: Boolean(bindingUnsupported || apps.unsupported || routes?.unsupported),
+  };
 }
 
 export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, token }) {
@@ -166,7 +181,7 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
     }
   }
 
-  async function readApps() {
+  async function readApps(scopePath) {
     const pages = [];
     let totalPages = null;
     let totalCount = null;
@@ -181,7 +196,7 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
       unsupported,
     });
     for (let page = 1; page <= maxAppPages; page += 1) {
-      const readResult = await read(`accounts/${accountId}/access/apps?per_page=${appPageSize}&page=${page}`);
+      const readResult = await read(`${scopePath}/access/apps?per_page=${appPageSize}&page=${page}`);
       pagination = sanitizedPagination(readResult, pages.length);
       if (!readResult.ok) return unknown('request_failed', { ok: false, status: readResult.status, unsupported: false });
       if (!Array.isArray(readResult.result)) return unknown('result_not_array');
@@ -252,39 +267,30 @@ export async function runHudRuntimeIdentityAudit({ account, fetchImpl = fetch, t
     };
   }
 
-  const [settings, organization] = await Promise.all([
+  const [settings, organization, apps, zoneApps] = await Promise.all([
     read(`accounts/${accountId}/workers/scripts/ndgcv/settings`),
     read(`accounts/${accountId}/access/organizations`),
+    readApps(`accounts/${accountId}`),
+    readApps(`zones/${hudZoneId}`),
   ]);
-  const apps = await readApps();
   const audienceBinding = bindingText(settings, 'HUD_ACCESS_AUD');
   const teamBinding = bindingText(settings, 'HUD_ACCESS_TEAM_DOMAIN');
   const audience = validAudience(audienceBinding.value);
-  const complete = apps.completePagination === true && Boolean(audience);
-  const matches = complete ? apps.apps.filter(app => app && typeof app === 'object' && !Array.isArray(app) && app.aud === audience) : null;
-  const matchCount = matches ? matches.length : null;
-  const audienceMatch = matchCount === null ? null : matchCount === 1;
-  const routes = audienceMatch ? publicRoutesForMatchedApp(matches[0]) : null;
+  const bindingUnsupported = audienceBinding.unsupported || teamBinding.unsupported;
+  const accountAppRead = summarizeAppRead(apps, audience, bindingUnsupported);
+  const zoneAppRead = summarizeAppRead(zoneApps, audience, bindingUnsupported);
   const configuredTeam = configuredTeamHost(teamBinding.value);
   const organizationTeam = organization.ok ? organizationDomain(organization.result) : null;
-  const teamMatch = audienceMatch !== true || !organization.ok || !configuredTeam || !organizationTeam
+  const teamMatch = zoneAppRead.audienceMatch !== true || !organization.ok || !configuredTeam || !organizationTeam
     ? null
     : configuredTeam === expectedTeamAuthDomain && organizationTeam === expectedTeamAuthDomain && configuredTeam === organizationTeam;
 
   return {
     audit: 'read-only-identity-join',
     settingsRead: { status: auditStatus(settings) },
-    accessAppsRead: {
-      audienceMatch,
-      completePagination: apps.completePagination,
-      matchCount,
-      matchingAppRoutes: routes?.routes ?? null,
-      pagination: apps.pagination,
-      paginationFailureReason: apps.failureReason,
-      status: apps.status,
-      unsupportedShapes: Boolean(audienceBinding.unsupported || teamBinding.unsupported || apps.unsupported || routes?.unsupported),
-    },
+    accessAppsRead: accountAppRead,
     organizationRead: { status: auditStatus(organization), teamMatch },
+    zoneAccessAppsRead: zoneAppRead,
   };
 }
 
@@ -299,6 +305,6 @@ if (import.meta.url === new URL(process.argv[1], 'file:').href) {
       token,
     });
     console.log(JSON.stringify(report));
-    if (report.settingsRead.status !== 200 || report.accessAppsRead.status !== 200 || report.organizationRead.status !== 200) process.exitCode = 1;
+    if (report.settingsRead.status !== 200 || report.accessAppsRead.status !== 200 || report.organizationRead.status !== 200 || report.zoneAccessAppsRead.status !== 200) process.exitCode = 1;
   }
 }
