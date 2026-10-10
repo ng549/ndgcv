@@ -1535,3 +1535,59 @@ textarea,
 @media (max-width: 480px) {
   .private-photo-hero { width: calc(100% - 36px); margin: 0 18px 22px; }
 }
+
+/* Keep the private photo compact and independent of the header's text rhythm. */
+@media (min-width: 1001px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "content"
+      "actions";
+  }
+  .private-photo-hero {
+    position: absolute;
+    z-index: 2;
+    top: 28px;
+    right: 28px;
+    width: min(100%, clamp(210px, 19vw, 300px));
+    margin: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .private-photo-hero {
+    justify-self: center;
+    width: min(calc(100% - 44px), 240px);
+    margin: 0 auto 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .private-photo-hero {
+    width: min(calc(100% - 36px), 240px);
+    margin: 0 auto 22px;
+  }
+}
+
+/* Native selects keep keyboard semantics while their affordance is consistently inset. */
+select,
+.filters select,
+.live-opportunity-editor select,
+.form-field select {
+  appearance: none;
+  min-height: 44px;
+  padding: 9px 42px 9px 14px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWZjNjhmIiBzdHJva2Utd2lkdGg9IjEuOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJtNCA2IDQgNCA0LTQiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px 14px;
+}
+select:focus-visible {
+  outline: 2px solid var(--hud-cv-gold);
+  outline-offset: 2px;
+}
+select:disabled {
+  color: rgba(244, 240, 232, .48);
+  cursor: not-allowed;
+  opacity: 1;
+}

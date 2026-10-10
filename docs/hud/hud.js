@@ -3,6 +3,12 @@ const state = {
   liveOpportunities: false,
   liveDrafts: new Map(),
   liveSaves: new Map(),
+  location: {
+    permission: 'unknown',
+    requestEpoch: 0,
+    requestInFlight: false,
+    startupStarted: false,
+  },
   connections: {
     accessEpoch: 0,
     activeRequest: null,
@@ -103,6 +109,7 @@ let referenceSourceGeneration = 0;
 let photoSourceGeneration = 0;
 
 const PHOTO_ROTATION_MS = 20_000;
+const LOCATION_MAX_AGE_MS = 15 * 60 * 1000;
 const LIVE_STATUS_VALUES = ['research', 'research_lead', 'interested', 'conversation', 'applied', 'interview', 'offer', 'paused', 'closed', 'declined'];
 const LIVE_REVISION_PATTERN = /^[a-f0-9]{64}$/;
 const REFERENCE_ID_PATTERN = /^REF-[A-Za-z0-9_-]{1,128}$/;
@@ -197,29 +204,116 @@ function setManualLocation() {
   const value = window.prompt('Enter a city or location for this private HUD.');
   const location = value?.trim();
   if (!location) return;
+  state.location.requestEpoch += 1;
+  state.location.requestInFlight = false;
   $('#hud-location').textContent = location;
   announce('Manual location saved in this browser session. Weather remains unavailable.');
 }
 
-function requestDeviceLocation() {
+function setLocationControlState({ disabled = false } = {}) {
+  const button = $('#hud-use-location');
+  if (button) button.disabled = disabled;
+}
+
+function setLocationUnavailable(message) {
+  state.location.requestEpoch += 1;
+  state.location.requestInFlight = false;
+  setLocationControlState({ disabled: true });
+  const location = $('#hud-location');
+  if (location) location.textContent = message;
+}
+
+function locationRequestIsCurrent(epoch) {
+  return epoch === state.location.requestEpoch;
+}
+
+function isFreshLocationPosition(position) {
+  const timestamp = Number(position?.timestamp);
+  return Number.isFinite(timestamp) && timestamp <= Date.now() && Date.now() - timestamp <= LOCATION_MAX_AGE_MS;
+}
+
+function readDeviceLocation({ announceResult = true } = {}) {
   if (!navigator.geolocation) {
-    announce('Device location is unavailable in this browser. Set a location manually instead.');
+    state.location.permission = 'unavailable';
+    setLocationUnavailable('Device location unavailable');
+    if (announceResult) announce('Device location is unavailable in this browser. Set a location manually instead.');
+    return false;
+  }
+
+  if (state.location.permission === 'denied') {
+    setLocationUnavailable('Location permission is off');
+    if (announceResult) announce('Location permission is off. Set a location manually instead.');
+    return false;
+  }
+
+  if (state.location.requestInFlight) return false;
+  const epoch = state.location.requestEpoch + 1;
+  state.location.requestEpoch = epoch;
+  state.location.requestInFlight = true;
+  setLocationControlState({ disabled: true });
+  $('#hud-location').textContent = 'Checking device location';
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      if (!locationRequestIsCurrent(epoch)) return;
+      state.location.requestInFlight = false;
+      setLocationControlState();
+      if (!isFreshLocationPosition(position)) {
+        $('#hud-location').textContent = 'Device location needs refresh';
+        if (announceResult) announce('The available device location is too old. Refresh it or set a location manually.');
+        return;
+      }
+      // Coordinates are intentionally neither stored nor sent to a geocoder.
+      $('#hud-location').textContent = 'Device location available';
+      if (announceResult) announce('Device location is available for this browser session. Weather remains unavailable.');
+    },
+    error => {
+      if (!locationRequestIsCurrent(epoch)) return;
+      state.location.requestInFlight = false;
+      setLocationControlState();
+      if (error?.code === 1) {
+        state.location.permission = 'denied';
+        setLocationUnavailable('Location permission is off');
+        if (announceResult) announce('Location permission was not granted. Set a location manually instead.');
+        return;
+      }
+      $('#hud-location').textContent = error?.code === 3 ? 'Device location timed out' : 'Device location unavailable';
+      if (announceResult) announce('Device location is unavailable right now. Set a location manually instead.');
+    },
+    { enableHighAccuracy: false, maximumAge: LOCATION_MAX_AGE_MS, timeout: 10_000 }
+  );
+  return true;
+}
+
+async function startAutomaticLocation() {
+  if (state.location.startupStarted) return;
+  state.location.startupStarted = true;
+  if (!navigator.geolocation) {
+    state.location.permission = 'unavailable';
+    setLocationUnavailable('Device location unavailable');
     return;
   }
-  const button = $('#hud-use-location');
-  button.disabled = true;
-  navigator.geolocation.getCurrentPosition(
-    () => {
-      $('#hud-location').textContent = 'Device location available';
-      button.disabled = false;
-      announce('Device location is available for this browser session. Weather remains unavailable.');
-    },
-    () => {
-      button.disabled = false;
-      announce('Location permission was not granted. Set a location manually instead.');
-    },
-    { enableHighAccuracy: false, maximumAge: 15 * 60 * 1000, timeout: 10_000 }
-  );
+
+  const epoch = state.location.requestEpoch;
+  let permission = 'prompt';
+  try {
+    if (navigator.permissions?.query) {
+      const status = await navigator.permissions.query({ name: 'geolocation' });
+      permission = status?.state || permission;
+      status?.addEventListener?.('change', () => {
+        state.location.permission = status.state;
+        if (status.state === 'denied') setLocationUnavailable('Location permission is off');
+      });
+    }
+  } catch {
+    // A missing Permissions API is not a denial; the browser remains the permission authority.
+  }
+  if (epoch !== state.location.requestEpoch) return;
+  state.location.permission = permission;
+  if (permission === 'denied') {
+    setLocationUnavailable('Location permission is off');
+    return;
+  }
+  readDeviceLocation({ announceResult: false });
 }
 
 function formatActualSyncTime(value) {
@@ -1808,6 +1902,7 @@ function init() {
   }));
   $('#hud-use-location').addEventListener('click', requestDeviceLocation);
   $('#hud-manual-location').addEventListener('click', setManualLocation);
+  void startAutomaticLocation();
   setupParallax();
 }
 
