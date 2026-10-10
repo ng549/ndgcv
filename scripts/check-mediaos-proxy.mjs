@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { exportJWK, generateKeyPair, SignJWT } from 'jose';
 import worker from '../worker/index.js';
 import { resetHudAccessKeyCacheForTests } from '../worker/hud-access.mjs';
-import { isMediaOsEncodedAlias, isMediaOsPath, mediaOsOrigin, proxyMediaOs } from '../worker/mediaos-proxy.mjs';
+import { isIntakePath, isMediaOsEncodedAlias, isMediaOsPath, mediaOsOrigin, proxyMediaOs } from '../worker/mediaos-proxy.mjs';
 
 const issuer = 'https://career-hud-test.cloudflareaccess.com';
 const audience = 'career-hud-test-audience';
@@ -140,6 +140,31 @@ await withNetwork(async () => new Response(null, { status: 302, headers: { Locat
 await withNetwork(async () => { throw new Error('down'); }, async () => {
   const response = await worker.fetch(new Request('https://nicolasgoureau.com/mediaos', { headers: { 'cf-access-jwt-assertion': await token() } }), env);
   assert.equal(response.status, 502);
+});
+
+// Guest interview links: no Access login needed, still get the proxy secret,
+// never carry an Access assertion upstream, and are not indexable.
+assert.equal(isIntakePath('/intake/abc'), true);
+assert.equal(isIntakePath('/intake'), false);
+assert.equal(isIntakePath('/intakes/abc'), false);
+assert.equal(isMediaOsEncodedAlias('/%69ntake/abc'), true);
+await withNetwork(async () => new Response('<p>chat</p>', { headers: { 'Content-Type': 'text/html' } }), async (calls) => {
+  const response = await worker.fetch(new Request('https://nicolasgoureau.com/intake/tok123?x=1', { headers: { 'cf-access-jwt-assertion': 'should-not-forward' } }), env);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+  assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+  assert.equal(calls[0].url, `${origin}/intake/tok123?x=1`);
+  assert.equal(calls[0].init.headers.get('x-mediaos-proxy-secret'), secret);
+  assert.equal(calls[0].init.headers.get('cf-access-jwt-assertion'), null);
+});
+await withNetwork(async (input, init) => new Response(await new Response(init.body).text(), { status: 201 }), async () => {
+  const response = await worker.fetch(new Request('https://nicolasgoureau.com/intake/api/tok123/files?name=a.png', { method: 'POST', body: 'png-bytes', headers: { 'Content-Type': 'image/png' } }), env);
+  assert.equal(response.status, 201);
+  assert.equal(await response.text(), 'png-bytes');
+});
+// The owner area still requires Access even with an intake-looking suffix.
+await withNetwork(null, async () => {
+  assert.equal((await worker.fetch(new Request('https://nicolasgoureau.com/mediaos/intake/tok123'), env)).status, 403);
 });
 
 console.log('Media OS proxy checks passed.');

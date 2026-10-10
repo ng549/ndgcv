@@ -29,6 +29,13 @@ export function isMediaOsPath(pathname) {
   return pathname === '/mediaos' || pathname.startsWith('/mediaos/');
 }
 
+// Guest interview links (nicolasgoureau.com/intake/<private token>) are for
+// people without a Cloudflare Access login. The app checks the token; the
+// Worker still adds the proxy secret so only this site can reach the app.
+export function isIntakePath(pathname) {
+  return pathname.startsWith('/intake/');
+}
+
 // Mirrors isHudEncodedAlias: refuse percent-encoded spellings of /mediaos so
 // they cannot reach the static asset layer under a different decoding order.
 export function isMediaOsEncodedAlias(pathname) {
@@ -40,7 +47,7 @@ export function isMediaOsEncodedAlias(pathname) {
     } catch {
       return false;
     }
-    if (isMediaOsPath(decoded)) return true;
+    if (isMediaOsPath(decoded) || isIntakePath(decoded)) return true;
     if (!decoded.includes('%')) return false;
   }
   return false;
@@ -90,22 +97,23 @@ function safeLocation(location, requestUrl) {
   try {
     const target = new URL(location, requestUrl);
     const canonical = new URL(requestUrl);
-    if (target.origin !== canonical.origin || !isMediaOsPath(target.pathname)) return null;
+    if (target.origin !== canonical.origin || !(isMediaOsPath(target.pathname) || isIntakePath(target.pathname))) return null;
     return `${target.pathname}${target.search}`;
   } catch {
     return null;
   }
 }
 
-// Callers must run requireHudAccess first; this function trusts that the
-// request already passed the owner check.
-export async function proxyMediaOs(request, env, fetchImpl = fetch) {
+// For /mediaos, callers must run requireHudAccess first; this function trusts
+// that the request already passed the owner check. Guest /intake/ requests
+// pass { guest: true } and carry no Access assertion.
+export async function proxyMediaOs(request, env, fetchImpl = fetch, { guest = false } = {}) {
   const origin = mediaOsOrigin(env);
   const secret = proxySecret(env);
   if (!origin || !secret) return textResponse('Media OS is not connected yet.', 503);
 
-  const assertion = request.headers.get('cf-access-jwt-assertion');
-  if (!assertion) return textResponse('Private workspace access required.', 403);
+  const assertion = guest ? null : request.headers.get('cf-access-jwt-assertion');
+  if (!guest && !assertion) return textResponse('Private workspace access required.', 403);
 
   const url = new URL(request.url);
   const headers = new Headers();
@@ -113,7 +121,7 @@ export async function proxyMediaOs(request, env, fetchImpl = fetch) {
     const value = request.headers.get(name);
     if (value) headers.set(name, value);
   }
-  headers.set('cf-access-jwt-assertion', assertion);
+  if (assertion) headers.set('cf-access-jwt-assertion', assertion);
   headers.set('x-mediaos-proxy-secret', secret);
   headers.set('x-forwarded-prefix', '/mediaos');
 
@@ -139,7 +147,8 @@ export async function proxyMediaOs(request, env, fetchImpl = fetch) {
   if (!responseHeaders.has('cache-control')) responseHeaders.set('Cache-Control', cacheControl);
   responseHeaders.set('X-Content-Type-Options', 'nosniff');
   responseHeaders.set('X-Frame-Options', 'DENY');
-  responseHeaders.set('Referrer-Policy', 'same-origin');
+  responseHeaders.set('Referrer-Policy', guest ? 'no-referrer' : 'same-origin');
+  if (guest) responseHeaders.set('X-Robots-Tag', 'noindex, nofollow');
 
   if (upstream.status >= 300 && upstream.status < 400) {
     const location = safeLocation(upstream.headers.get('location'), request.url);

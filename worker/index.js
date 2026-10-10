@@ -1,4 +1,4 @@
-import { isMediaOsEncodedAlias, isMediaOsPath, proxyMediaOs } from './mediaos-proxy.mjs';
+import { isIntakePath, isMediaOsEncodedAlias, isMediaOsPath, proxyMediaOs } from './mediaos-proxy.mjs';
 import { hudBackendUnavailableResponse, hudNotConnectedResponse, hudNotFoundResponse, isHudApiPath, isHudEncodedAlias, isHudPath, noStoreHudResponse, requireHudAccess } from './hud-access.mjs';
 
 const appRoutes = [
@@ -265,6 +265,8 @@ export default {
       if (denied) return denied;
       return proxyMediaOs(request, env);
     }
+
+    if (isIntakePath(pathname)) return proxyMediaOs(request, env, fetch, { guest: true });
 
     if (hudRoute || hudApiRoute) {
       const denied = await requireHudAccess(request, env);
