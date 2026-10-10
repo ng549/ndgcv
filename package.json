@@ -7,7 +7,7 @@
     "build": "node scripts/build.mjs && node scripts/package.mjs",
     "deploy:preview": "npm run build && wrangler deploy --config wrangler.preview.jsonc",
     "verify:hud-release": "node scripts/check-hud-release.mjs",
-    "test": "node scripts/check.mjs && node scripts/check-hud-full-interface.mjs && node scripts/check-hud-access.mjs && node scripts/check-hud-data-contract.mjs && node scripts/check-hud-sheets-reader.mjs && node scripts/check-hud-opportunities-ui.mjs && node scripts/check-hud-connections-contract.mjs && node scripts/check-hud-connections-races.mjs && node scripts/check-hud-runtime-audit.mjs && node scripts/check-hud-visual-style.mjs && node scripts/check-hud-runtime-binding.mjs"
+    "test": "node scripts/check.mjs && node scripts/check-hud-full-interface.mjs && node scripts/check-hud-access.mjs && node scripts/check-hud-worker-redirect-runtime.mjs && node scripts/check-hud-data-contract.mjs && node scripts/check-hud-sheets-reader.mjs && node scripts/check-hud-opportunities-ui.mjs && node scripts/check-hud-connections-contract.mjs && node scripts/check-hud-connections-races.mjs && node scripts/check-hud-runtime-audit.mjs && node scripts/check-hud-visual-style.mjs && node scripts/check-hud-runtime-binding.mjs"
   },
   "devDependencies": {
     "wrangler": "4.147.0"

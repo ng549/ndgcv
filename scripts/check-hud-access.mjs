@@ -336,6 +336,49 @@ await withAccessJwks(async () => {
   });
   assert.equal(response.status, 409, 'An untrusted backend origin fails closed.');
 
+  const redirectProxies = [
+    ['shared HUD proxy', proxyHudOpportunities, '/api/hud/opportunities'],
+    ['references proxy', proxyHudReferences, '/api/hud/references'],
+  ];
+  for (const [label, proxy, path] of redirectProxies) {
+    for (const status of [301, 302, 303, 307, 308]) {
+      let cancelled = false;
+      let calls = 0;
+      const upstream = new Response(new ReadableStream({
+        cancel() { cancelled = true; },
+        start(controller) { controller.enqueue(new TextEncoder().encode('private redirect body')); },
+      }), {
+        headers: { Location: 'https://attacker.invalid/private-redirect' },
+        status,
+      });
+      response = await proxy(request(path, { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: backendOrigin }, async (input, init) => {
+        calls += 1;
+        assert.equal(String(input), `${backendOrigin}${path}`, `${label} preserves the fixed backend route for a ${status} redirect.`);
+        assert.equal(init.redirect, 'manual', `${label} asks workerd to expose rather than follow a ${status} redirect.`);
+        assert.equal(new Headers(init.headers).get('cf-access-jwt-assertion'), ownerAssertion, `${label} forwards the assertion only to the fixed backend request.`);
+        return upstream;
+      });
+      assert.equal(response.status, 502, `${label} rejects upstream ${status} before forwarding it.`);
+      assertNoStore(response, `${label} redirect failures remain no-store.`);
+      assert.equal(calls, 1, `${label} never makes a second fetch to a redirect destination.`);
+      assert.equal(cancelled, true, `${label} cancels an upstream ${status} body without buffering it.`);
+      assert.equal(response.headers.get('Location'), null, `${label} never relays a redirect Location header.`);
+      assert.doesNotMatch(await response.text(), /private redirect body|attacker\.invalid/, `${label} never exposes redirect body bytes or destination details.`);
+    }
+  }
+
+  for (const [label, proxy, path] of redirectProxies) {
+    for (const status of [200, 403, 502]) {
+      const body = `normal ${label} upstream ${status}`;
+      response = await proxy(request(path, { token: ownerAssertion }), { HUD_BACKEND_ORIGIN: backendOrigin }, async (_input, init) => {
+        assert.equal(init.redirect, 'manual', `Normal ${label} requests still use workerd-compatible manual redirects.`);
+        return new Response(body, { status });
+      });
+      assert.equal(response.status, status, `A normal ${label} upstream ${status} remains unchanged.`);
+      assert.equal(await response.text(), body, `A normal ${label} upstream ${status} body remains unchanged.`);
+    }
+  }
+
   backendResponse = () => new Response(JSON.stringify({ error: 'hud_source_unavailable' }), { status: 502 });
   response = await worker.fetch(request('/api/hud/opportunities', { token: await token() }), protectedEnv);
   assert.equal(response.status, 502, 'An upstream source error remains an honest unavailable state.');

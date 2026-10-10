@@ -66,6 +66,12 @@ async function cancelHudResponseBody(body) {
   }
 }
 
+async function rejectHudRedirect(upstream) {
+  if (upstream.status < 300 || upstream.status >= 400) return null;
+  await cancelHudResponseBody(upstream.body);
+  return hudBackendUnavailableResponse();
+}
+
 async function boundedHudReferencesResponse(upstream) {
   if (declaredBodyExceedsLimit(upstream, HUD_REFERENCES_MAX_BYTES)) {
     await cancelHudResponseBody(upstream.body);
@@ -169,8 +175,10 @@ async function proxyHudRequest(request, env, pathname, { method = 'GET', body = 
       body,
       headers,
       method,
-      redirect: 'error',
+      redirect: 'manual',
     });
+    const rejectedRedirect = await rejectHudRedirect(upstream);
+    if (rejectedRedirect) return rejectedRedirect;
     return proxyResponse(upstream);
   } catch {
     return hudBackendUnavailableResponse();
@@ -203,8 +211,10 @@ export async function proxyHudReferences(request, env, fetchImpl = fetch) {
         'cf-access-jwt-assertion': assertion,
       }),
       method: 'GET',
-      redirect: 'error',
+      redirect: 'manual',
     });
+    const rejectedRedirect = await rejectHudRedirect(upstream);
+    if (rejectedRedirect) return rejectedRedirect;
     return boundedHudReferencesResponse(upstream);
   } catch {
     return hudBackendUnavailableResponse();

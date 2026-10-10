@@ -41,7 +41,7 @@ assert.equal(new Headers(calls[0].init.headers).get('Accept'), 'application/json
 assert.equal(new Headers(calls[0].init.headers).get('cf-access-jwt-assertion'), assertion, 'The verified Access assertion is forwarded upstream.');
 assert.equal(new Headers(calls[0].init.headers).get('Cookie'), null, 'Browser cookies are never forwarded upstream.');
 assert.equal(new Headers(calls[0].init.headers).get('Origin'), null, 'Browser Origin is checked at the Worker and never forwarded.');
-assert.equal(calls[0].init.redirect, 'error', 'Connections proxy rejects upstream redirects.');
+assert.equal(calls[0].init.redirect, 'manual', 'Connections proxy receives redirects without following them so the Worker can reject them safely.');
 
 const testBody = new TextEncoder().encode(JSON.stringify({ url: 'https://docs.google.com/spreadsheets/d/private-source/edit' }));
 response = await proxyHudConnectionTest(request('/api/hud/connections/opportunities/test', { body: testBody, method: 'POST' }), env, 'opportunities', testBody, fetchImpl);
