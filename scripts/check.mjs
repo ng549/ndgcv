@@ -190,7 +190,7 @@ const hudCSS=fs.readFileSync('dist/hud/hud.css','utf8');
 const hudJS=fs.readFileSync('dist/hud/hud.js','utf8');
 assert(hud.includes('data-hud-preview="sample-only"'),"Career HUD is explicitly sample-only");
 assert(hud.includes('Today, in focus.'),"Career HUD includes the Today view");
-assert(hud.includes('Career &amp; direction'),"Career HUD includes career navigation");
+assert(hud.includes('Opportunities'),"Career HUD includes career navigation");
 assert(hud.includes('Contacts &amp; references'),"Career HUD includes relationship navigation");
 assert(hud.includes('Sample data'),"Career HUD visibly labels its sample state");
 assert(hud.includes('id="connections-list"'),"Career HUD includes a private connection setup region");

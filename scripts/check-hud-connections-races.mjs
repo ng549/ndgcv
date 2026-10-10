@@ -147,6 +147,35 @@ function response(status, body) {
   return new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' }, status });
 }
 
+const sanitizedHttp = createRuntime(() => response(502, {
+  error: 'hud_backend_unavailable',
+  detail: 'private upstream body must never reach the HUD',
+  sourceUrl: 'https://private.example/should-not-render',
+}));
+await sanitizedHttp.hud.loadConnections();
+assert.equal(sanitizedHttp.hud.state.connections.phase, 'unavailable', 'A settings 502 remains an unavailable state.');
+assert.equal(sanitizedHttp.hud.state.connections.diagnostic?.errorCode, 'hud_backend_unavailable', 'Only an allowlisted backend code is retained for the diagnostic.');
+assert.match(sanitizedHttp.elements.get('#connections-summary').textContent, /Diagnostic: HTTP 502 · JSON · hud_backend_unavailable\./, 'The HUD reports only status, content type classification, and allowlisted code.');
+assert.doesNotMatch(sanitizedHttp.elements.get('#connections-summary').textContent, /private upstream|private\.example/, 'The HUD never renders a raw private backend body or source URL.');
+
+const unsupportedContent = createRuntime(() => new Response('sensitive plaintext response', {
+  headers: { 'Content-Type': 'text/plain; charset=utf-8' }, status: 503,
+}));
+await unsupportedContent.hud.loadConnections();
+assert.match(unsupportedContent.elements.get('#connections-summary').textContent, /HTTP 503 · an unsupported content type\./, 'Non-JSON settings failures use a normalized content-type label.');
+assert.doesNotMatch(unsupportedContent.elements.get('#connections-summary').textContent, /sensitive plaintext/, 'Unsupported response bytes are never exposed.');
+
+const protectedAccess = createRuntime(() => response(403, { error: 'hud_access_required', secret: 'never display' }));
+await protectedAccess.hud.loadConnections();
+assert.equal(protectedAccess.hud.state.connections.phase, 'access', 'A settings 403 retains its private access state.');
+assert.equal(protectedAccess.hud.state.connections.diagnostic, null, 'A settings 403 clears rather than surfaces a diagnostic.');
+assert.doesNotMatch(protectedAccess.elements.get('#connections-summary').textContent, /Diagnostic:|hud_access_required|never display/, 'Private access concealment never exposes status details or body content.');
+
+const blockedNetwork = createRuntime(() => { throw new Error('sensitive transport detail'); });
+await blockedNetwork.hud.loadConnections();
+assert.match(blockedNetwork.elements.get('#connections-summary').textContent, /network or redirect blocked/, 'A failed request has a generic network diagnostic.');
+assert.doesNotMatch(blockedNetwork.elements.get('#connections-summary').textContent, /sensitive transport detail/, 'Network exception text is never exposed.');
+
 const delayedFirstTest = deferred();
 const concurrentTestCalls = [];
 const twoTests = createRuntime((input, init) => {

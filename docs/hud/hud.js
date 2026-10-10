@@ -6,6 +6,7 @@ const state = {
   connections: {
     accessEpoch: 0,
     activeRequest: null,
+    diagnostic: null,
     drafts: new Map(),
     phase: 'loading',
     requestEpoch: 0,
@@ -116,6 +117,8 @@ const CONNECTION_SOURCE_DETAILS = Object.freeze({
 const CONNECTION_SOURCE_NAMES = Object.keys(CONNECTION_SOURCE_DETAILS);
 const CONNECTION_STATES = new Set(['default', 'active']);
 const CONNECTION_STATUSES = new Set(['not_tested', 'ready', 'unavailable', 'invalid']);
+const CONNECTION_ERROR_CODES = new Set(['hud_access_required', 'hud_backend_unavailable', 'hud_invalid_request', 'hud_not_connected', 'hud_source_unavailable']);
+const HUD_VIEWS = new Set(['today', 'calendar', 'email', 'career', 'contacts', 'applications', 'interviews', 'materials', 'direction', 'readiness', 'paid-work', 'personal', 'scout']);
 const CONNECTION_URL_MAX_LENGTH = 4096;
 
 function hudRuntimeEndpoint(dataKey, pathname) {
@@ -693,7 +696,21 @@ function setHudMenu(open) {
   toggle.setAttribute('aria-expanded', String(open));
 }
 
-function showView(view) {
+function historyView() {
+  const view = window.location?.hash?.replace(/^#/, '');
+  return HUD_VIEWS.has(view) ? view : null;
+}
+
+function updateViewHistory(view, mode) {
+  if (mode === 'none' || !window.history) return;
+  const url = new URL(window.location.href);
+  url.hash = view;
+  if (mode === 'replace') window.history.replaceState({ hudView: view }, '', url);
+  else if (window.location.hash !== `#${view}`) window.history.pushState({ hudView: view }, '', url);
+}
+
+function showView(view, { historyMode = 'push', focus = true } = {}) {
+  if (!HUD_VIEWS.has(view)) return;
   setHudMenu(false);
   state.activeView = view;
   $$('[data-view-panel]').forEach(panel => {
@@ -712,7 +729,8 @@ function showView(view) {
   if (view === 'materials') renderMaterials();
   if (view === 'direction') renderDirection();
   if (view === 'today') renderToday();
-  $('#hud-main').focus({ preventScroll: true });
+  updateViewHistory(view, historyMode);
+  if (focus) $('#hud-main').focus({ preventScroll: true });
 }
 
 function renderToday() {
@@ -899,7 +917,8 @@ function renderConnections() {
     invalid: 'Private connection settings could not be read safely. No source link was shown or changed.',
   };
   if (phase !== 'ready') {
-    summary.textContent = unavailable[phase] || unavailable.unavailable;
+    const diagnostic = connectionDiagnosticMessage(state.connections.diagnostic);
+    summary.textContent = `${unavailable[phase] || unavailable.unavailable}${diagnostic ? ` ${diagnostic}` : ''}`;
     list.innerHTML = '<p class="connection-unavailable">Connection controls appear only after the protected settings source returns a valid owner response.</p>';
     return;
   }
@@ -931,8 +950,34 @@ function renderConnections() {
   }).join('')}</div>`;
 }
 
-function setConnectionPhase(phase) {
+function safeConnectionContentType(response) {
+  const type = response.headers?.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase();
+  if (type === 'application/json') return 'JSON';
+  if (!type) return 'no content type';
+  return 'an unsupported content type';
+}
+
+async function connectionDiagnosticFromResponse(response) {
+  let errorCode = null;
+  if (safeConnectionContentType(response) === 'JSON') {
+    const body = await responseJSON(response);
+    if (CONNECTION_ERROR_CODES.has(body?.error)) errorCode = body.error;
+  }
+  return { contentType: safeConnectionContentType(response), errorCode, kind: 'http', status: response.status };
+}
+
+function connectionDiagnosticMessage(diagnostic) {
+  if (!diagnostic) return '';
+  if (diagnostic.kind === 'network') return 'The request did not complete (network or redirect blocked).';
+  if (diagnostic.kind === 'invalid') return 'The protected response could not be read safely.';
+  if (diagnostic.kind !== 'http' || !Number.isSafeInteger(diagnostic.status)) return '';
+  const error = diagnostic.errorCode ? ` · ${diagnostic.errorCode}` : '';
+  return `Diagnostic: HTTP ${diagnostic.status} · ${diagnostic.contentType}${error}.`;
+}
+
+function setConnectionPhase(phase, diagnostic = null) {
   state.connections.phase = phase;
+  state.connections.diagnostic = diagnostic;
   renderConnections();
 }
 
@@ -981,6 +1026,7 @@ function concealPrivateConnections() {
   state.connections.revision = null;
   state.connections.sources = null;
   state.connections.activeRequest = null;
+  state.connections.diagnostic = null;
   state.connections.drafts.clear();
   state.connections.tests.clear();
   CONNECTION_SOURCE_NAMES.forEach(source => resetSourceForConnectionChange(source, { queuePhotoReload: false }));
@@ -989,6 +1035,7 @@ function concealPrivateConnections() {
 
 function unknownConnectionSaveOutcome() {
   state.connections.phase = 'unknown';
+  state.connections.diagnostic = null;
   state.connections.revision = null;
   state.connections.sources = null;
   renderConnections();
@@ -999,6 +1046,7 @@ function applyConnectionSettings(payload, { preserveDrafts = true } = {}) {
   state.connections.phase = 'ready';
   state.connections.revision = settings.revision;
   state.connections.sources = settings.sources;
+  state.connections.diagnostic = null;
   if (!preserveDrafts) state.connections.drafts.clear();
   return settings;
 }
@@ -1044,6 +1092,7 @@ async function loadConnections({ preserveDrafts = true } = {}) {
     return false;
   }
   setConnectionPhase('loading');
+  let receivedResponse = false;
   try {
     const response = await fetch(endpoint, {
       cache: 'no-store',
@@ -1051,17 +1100,18 @@ async function loadConnections({ preserveDrafts = true } = {}) {
       headers: { Accept: 'application/json' },
       redirect: 'error',
     });
+    receivedResponse = true;
     if (response.status === 403 && concealConnectionAccessIfCurrent(token)) return false;
     if (!connectionRequestIsCurrent(token)) return false;
-    if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected'); return false; }
-    if (!response.ok) { setConnectionPhase('unavailable'); return false; }
+    if (response.status === 404 || response.status === 409) { setConnectionPhase('unconnected', await connectionDiagnosticFromResponse(response)); return false; }
+    if (!response.ok) { setConnectionPhase('unavailable', await connectionDiagnosticFromResponse(response)); return false; }
     const settings = await transitionConnectionSnapshot(await responseJSON(response), { preserveDrafts, token });
     if (!settings) return false;
     renderConnections();
     return true;
   } catch {
     if (!connectionRequestIsCurrent(token)) return false;
-    setConnectionPhase('unavailable');
+    setConnectionPhase('unavailable', receivedResponse ? { kind: 'invalid' } : { kind: 'network' });
     return false;
   } finally {
     if (finishConnectionRequest(token)) renderConnections();
@@ -1635,7 +1685,9 @@ function captureLiveDraft(event) {
 function init() {
   updateHeaderContext();
   clockTimer = window.setInterval(updateHeaderContext, 30_000);
-  showView(state.activeView);
+  const initialView = historyView();
+  if (initialView) state.activeView = initialView;
+  showView(state.activeView, { historyMode: 'replace', focus: false });
   renderToday();
   renderOpportunities();
   renderContacts();
@@ -1674,6 +1726,14 @@ function init() {
   });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') setHudMenu(false);
+  });
+  window.addEventListener('popstate', () => {
+    const view = historyView();
+    if (view) showView(view, { historyMode: 'none' });
+  });
+  window.addEventListener('hashchange', () => {
+    const view = historyView();
+    if (view && view !== state.activeView) showView(view, { historyMode: 'none' });
   });
   $('#filter-toggle').addEventListener('click', event => {
     const form = $('#focus-filter');

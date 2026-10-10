@@ -26,17 +26,28 @@
 
       <div class="hud-mobile-menu" id="hud-mobile-menu">
         <nav class="primary-nav" aria-label="Workspace sections">
+          <p class="nav-group-label">Now</p>
           <button class="nav-item" type="button" data-view="today">Today</button>
-          <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Career &amp; direction</button>
+          <button class="nav-item" type="button" data-view="calendar">Calendar <small>iCloud default</small></button>
+          <button class="nav-item" type="button" data-view="email">Email <small>Gmail + iCloud Mail</small></button>
+          <p class="nav-group-label">Career</p>
+          <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Opportunities</button>
           <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
+          <button class="nav-item" type="button" data-view="applications">Applications</button>
+          <button class="nav-item" type="button" data-view="interviews">Interviews &amp; offers</button>
+          <p class="nav-group-label">Library</p>
           <button class="nav-item" type="button" data-view="materials">Materials</button>
+          <button class="nav-item" type="button" data-view="direction">Career direction</button>
+          <button class="nav-item" type="button" data-view="readiness">Readiness</button>
         </nav>
 
         <div class="rail-divider"></div>
 
-        <div class="future-nav" aria-label="Future workspaces">
-          <button class="nav-item is-muted" type="button" disabled>Paid work <small>Coming later</small></button>
-          <button class="nav-item is-muted" type="button" disabled>Personal <small>Coming later</small></button>
+        <div class="module-nav" aria-label="Module entry points">
+          <p class="nav-group-label">Modules</p>
+          <button class="nav-item is-muted" type="button" data-view="paid-work">Paid work <small>Not connected</small></button>
+          <button class="nav-item is-muted" type="button" data-view="personal">Personal <small>Not connected</small></button>
+          <button class="nav-item is-muted" type="button" data-view="scout">Scout <small>Not connected</small></button>
         </div>
 
         <section class="hud-runtime-status" id="hud-runtime-status" data-sync-state="unconnected" aria-live="polite" aria-label="Connection status">
@@ -53,7 +64,7 @@
       </div>
     </aside>
 
-    <main id="hud-main" class="hud-main">
+    <main id="hud-main" class="hud-main" tabindex="-1">
       <header class="hero" aria-labelledby="workspace-title">
         <div class="hero-photo" aria-hidden="true"></div>
         <section class="private-photo-slot private-photo-hero" aria-label="Private photo">
@@ -139,6 +150,62 @@
         </div>
       </section>
 
+      <section class="view-panel workspace-panel" data-view-panel="calendar" aria-labelledby="calendar-heading" hidden>
+        <header class="view-heading compact-heading">
+          <div>
+            <p class="eyebrow">Calendar</p>
+            <h2 id="calendar-heading">Time, clearly held.</h2>
+            <p>iCloud Calendar is the planned default source. Google Calendar visibility is planned separately. Neither is connected in this HUD yet.</p>
+          </div>
+          <span class="connection-chip is-offline">Not connected</span>
+        </header>
+        <div class="workspace-grid calendar-grid">
+          <section class="workspace-card panel">
+            <p class="eyebrow">Schedule</p>
+            <h3>No calendar events are loaded</h3>
+            <p>There are no appointments to show until a private calendar source is connected and verified.</p>
+            <button class="button button-disabled" type="button" disabled>Connect calendar later</button>
+          </section>
+          <section class="workspace-card panel">
+            <p class="eyebrow">Categories</p>
+            <h3>Planned calendar colors</h3>
+            <ul class="category-list" aria-label="Planned calendar categories">
+              <li><span class="category-swatch interviews"></span>Interviews</li>
+              <li><span class="category-swatch networking"></span>Networking</li>
+              <li><span class="category-swatch client-work"></span>Client work</li>
+              <li><span class="category-swatch sourcing"></span>Sourcing</li>
+              <li><span class="category-swatch personal"></span>Personal</li>
+              <li><span class="category-swatch focus"></span>Focus</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
+      <section class="view-panel workspace-panel" data-view-panel="email" aria-labelledby="email-heading" hidden>
+        <header class="view-heading compact-heading">
+          <div>
+            <p class="eyebrow">Email</p>
+            <h2 id="email-heading">Inbox and outreach, deliberately connected.</h2>
+            <p>Gmail and iCloud Mail can be added one at a time for private read, analysis, and sending workflows. No mailbox is connected and no message can be sent here.</p>
+          </div>
+          <span class="connection-chip is-offline">Not connected</span>
+        </header>
+        <div class="workspace-grid">
+          <section class="workspace-card panel">
+            <p class="eyebrow">Inbox</p>
+            <h3>No messages loaded</h3>
+            <p>Connecting a mailbox later will require a separate, reviewed source and authorization step.</p>
+            <button class="button button-disabled" type="button" disabled>Analyze email later</button>
+          </section>
+          <section class="workspace-card panel">
+            <p class="eyebrow">Outreach</p>
+            <h3>Nothing queued or sent</h3>
+            <p>Drafts, follow-ups, and sends remain unavailable until an email source and explicit sending workflow are wired.</p>
+            <button class="button button-disabled" type="button" disabled>Draft outreach later</button>
+          </section>
+        </div>
+      </section>
+
       <section class="view-panel is-active" data-view-panel="career" aria-labelledby="career-heading">
         <header class="view-heading">
           <div>
@@ -165,6 +232,37 @@
         <div class="opportunity-layout">
           <div id="opportunity-list" class="opportunity-list" aria-live="polite"></div>
           <aside id="opportunity-detail" class="opportunity-detail panel" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="view-panel workspace-panel" data-view-panel="applications" aria-labelledby="applications-heading" hidden>
+        <header class="view-heading compact-heading">
+          <div>
+            <p class="eyebrow">Applications</p>
+            <h2 id="applications-heading">A clean record of what has actually moved.</h2>
+            <p>LinkedIn and job-site capture are planned inputs. No applications, job captures, or submission dates are loaded in this preview.</p>
+          </div>
+          <span class="connection-chip is-offline">Not wired</span>
+        </header>
+        <section class="empty-workspace panel">
+          <h3>No applications are connected</h3>
+          <p>When a source is connected, this area will distinguish saved leads, applications in progress, submitted applications, and closed outcomes. It does not invent an application history.</p>
+          <div class="empty-actions"><button class="button button-disabled" type="button" disabled>Capture from LinkedIn later</button><button class="button button-disabled" type="button" disabled>Capture from a job site later</button></div>
+        </section>
+      </section>
+
+      <section class="view-panel workspace-panel" data-view-panel="interviews" aria-labelledby="interviews-heading" hidden>
+        <header class="view-heading compact-heading">
+          <div>
+            <p class="eyebrow">Interview prep &amp; offers</p>
+            <h2 id="interviews-heading">Prepare evidence. Keep decisions clear.</h2>
+            <p>There are no interviews, offers, compensation figures, or negotiations loaded. These private records will be connected only when their source is ready.</p>
+          </div>
+          <span class="connection-chip is-offline">Not connected</span>
+        </header>
+        <div class="workspace-grid">
+          <section class="workspace-card panel"><p class="eyebrow">Interview preparation</p><h3>No interview plans yet</h3><p>Leadership evidence, role research, and question preparation will appear here after an opportunity is deliberately connected.</p></section>
+          <section class="workspace-card panel"><p class="eyebrow">Offers &amp; negotiation</p><h3>No offers to review</h3><p>Terms, tradeoffs, and negotiation notes stay empty until a private source exists. No compensation estimate is shown.</p></section>
         </div>
       </section>
 
@@ -213,6 +311,45 @@
           <button class="button button-gold" type="button" data-open-dialog="company">Add target company</button>
         </header>
         <div id="direction-content" class="direction-layout"></div>
+      </section>
+
+      <section class="view-panel workspace-panel" data-view-panel="readiness" aria-labelledby="readiness-heading" hidden>
+        <header class="view-heading compact-heading">
+          <div>
+            <p class="eyebrow">Current implementation order</p>
+            <h2 id="readiness-heading">Build first. Connect one source at a time.</h2>
+            <p>This is a readiness view, not a sync report. “Built” means the interface exists; it does not mean a private source is connected or verified.</p>
+          </div>
+        </header>
+        <div class="readiness-table-wrap panel" tabindex="0">
+          <table class="readiness-table">
+            <thead><tr><th scope="col">Area</th><th scope="col">UI</th><th scope="col">Source</th><th scope="col">Verified</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Today &amp; tasks</th><td>Built</td><td>Sample / not connected</td><td>Not yet</td></tr>
+              <tr><th scope="row">Opportunities &amp; fit</th><td>Built</td><td>Protected source when available</td><td>Per source</td></tr>
+              <tr><th scope="row">Contacts &amp; ReferenceSheet</th><td>Built</td><td>Not connected</td><td>Not yet</td></tr>
+              <tr><th scope="row">Calendar &amp; email</th><td>Built</td><td>Not connected</td><td>Not yet</td></tr>
+              <tr><th scope="row">Applications, interviews &amp; offers</th><td>Built</td><td>Not wired</td><td>Not yet</td></tr>
+              <tr><th scope="row">Materials &amp; CV</th><td>Built</td><td>Public CV link only</td><td>Not a sync</td></tr>
+              <tr><th scope="row">Paid Work, Personal &amp; Scout</th><td>Entry screens built</td><td>Not connected</td><td>Not yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="paid-work" aria-labelledby="paid-work-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="paid-work-heading">Paid work</h2><p>A future module for active client work, commitments, and sourcing. It has no connected client data in this HUD.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>Module entry is ready for planning</h3><p>Work records, time, files, and client communications stay unavailable until a separate source design is reviewed.</p></section>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="personal" aria-labelledby="personal-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="personal-heading">Personal</h2><p>A separate private space for personal planning. This career HUD does not load or retain personal records.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>No personal data is shown</h3><p>This module is intentionally empty until it has its own reviewed privacy and source boundaries.</p></section>
+      </section>
+
+      <section class="view-panel workspace-panel module-panel" data-view-panel="scout" aria-labelledby="scout-heading" hidden>
+        <header class="view-heading compact-heading"><div><p class="eyebrow">Module entry</p><h2 id="scout-heading">Scout interface</h2><p>A future research and sourcing workspace. It is not connected to private data, browser capture, LinkedIn, or job sites.</p></div><span class="connection-chip is-offline">Not connected</span></header>
+        <section class="empty-workspace panel"><h3>Scout is not searching yet</h3><p>Source capture and research workflows will be added one verified input at a time. No search result is implied here.</p></section>
       </section>
     </main>
   </div>
