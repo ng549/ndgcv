@@ -40,7 +40,7 @@ assert(css.includes('max-height: calc(100dvh - 68px)'), 'Mobile HUD menu is boun
 assert(css.includes('min-height: 44px'), 'HUD controls preserve touch target sizing.');
 assert(css.includes('background: #293e4c') && css.includes('border-color: #526774') && css.includes('background: #2d4757'), 'HUD section bands, cards, and selections retain the reviewed dark CV contrast palette.');
 assert(css.includes('aspect-ratio: 3 / 2') && css.includes('object-fit: contain') && css.includes('object-position: 50% 50%'), 'Private photo frame preserves whole portrait or landscape images in the reviewed 3:2 viewport.');
-assert(hud.includes('Manrope:wght@400;750') && hud.includes('Source+Sans+3:wght@400;600;700'), 'HUD imports the CV heading/navigation and body/form font weights.');
+assert(hud.includes('Manrope:wght@400;500;600;650;700;750;800') && hud.includes('Source+Sans+3:wght@400;600;700'), 'HUD imports every CV heading/navigation and body/form font weight it uses.');
 assert(css.includes('dialog#hud-dialog'), 'The actual HUD dialog element receives the CV dark-theme selector.');
 assert(css.includes('worker_transport_failure') === false, 'Visual styles do not interpolate private connection diagnostics.');
 assert(css.includes('max-width: 1280px') && css.includes('.today-grid { grid-template-columns: minmax(0, 1fr);'), 'Today stacks deliberately at tablet widths instead of crowding its controls.');
