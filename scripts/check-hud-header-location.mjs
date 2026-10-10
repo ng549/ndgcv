@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const js = fs.readFileSync('docs/hud/hud.js', 'utf8').replace(
   '\ninit();',
-  '\nglobalThis.__hudHeaderLocationTest = { isFreshLocationPosition, readDeviceLocation, setManualLocation, startAutomaticLocation, state };'
+  '\nglobalThis.__hudHeaderLocationTest = { init, isFreshLocationPosition, readDeviceLocation, requestDeviceLocation, setManualLocation, startAutomaticLocation, state };'
 );
 const css = fs.readFileSync('docs/hud/hud.css', 'utf8');
 const html = fs.readFileSync('docs/hud/index.html', 'utf8');
@@ -12,19 +12,25 @@ const html = fs.readFileSync('docs/hud/index.html', 'utf8');
 function element() {
   return {
     addEventListener() {},
-    classList: { add() {}, remove() {} },
+    classList: { add() {}, remove() {}, toggle() {} },
     dataset: {},
     disabled: false,
+    focus() {},
     hidden: false,
+    innerHTML: '',
+    options: [],
+    removeAttribute() {},
     setAttribute() {},
     style: { setProperty() {} },
     textContent: '',
+    value: '',
   };
 }
 
 function createRuntime({ permission = 'granted', geolocation = true, promptValue = 'Manual place' } = {}) {
   const elements = new Map();
   const positionRequests = [];
+  let permissionChange = null;
   const getElement = selector => {
     if (!elements.has(selector)) elements.set(selector, element());
     return elements.get(selector);
@@ -35,7 +41,7 @@ function createRuntime({ permission = 'granted', geolocation = true, promptValue
     },
     permissions: {
       async query() {
-        return { state: permission, addEventListener() {} };
+        return { get state() { return permission; }, addEventListener(event, listener) { if (event === 'change') permissionChange = listener; } };
       },
     },
   } : {};
@@ -49,19 +55,27 @@ function createRuntime({ permission = 'granted', geolocation = true, promptValue
     String,
     URL,
     console,
-    document: { querySelector: getElement, querySelectorAll: () => [] },
+    document: { addEventListener() {}, querySelector: getElement, querySelectorAll: () => [] },
+    AbortController,
+    Response,
+    fetch: async () => new Response('', { status: 404 }),
     globalThis: {},
     navigator,
     setTimeout() { return 0; },
     clearTimeout() {},
     window: {
-      location: { origin: 'https://nicolasgoureau.com' },
+      addEventListener() {},
+      history: { pushState() {}, replaceState() {} },
+      location: { hash: '', href: 'https://nicolasgoureau.com/hud/', origin: 'https://nicolasgoureau.com' },
+      matchMedia() { return { matches: true }; },
       prompt() { return promptValue; },
+      setInterval() { return 0; },
       setTimeout() { return 0; },
     },
   };
   vm.runInNewContext(js, context, { filename: 'docs/hud/hud.js' });
-  return { elements, hud: context.globalThis.__hudHeaderLocationTest, positionRequests };
+  context.document.documentElement = { dataset: { hudConnectionsEndpoint: '/api/hud/connections', hudOpportunitiesEndpoint: '/api/hud/opportunities', hudPhotoEndpoint: '/api/hud/photo', hudReferencesEndpoint: '/api/hud/references' } };
+  return { changePermission(next) { permission = next; permissionChange?.(); }, elements, hud: context.globalThis.__hudHeaderLocationTest, positionRequests };
 }
 
 const freshPosition = () => ({ timestamp: Date.now() });
@@ -95,11 +109,26 @@ stale.positionRequests[0].success(freshPosition());
 assert.equal(stale.elements.get('#hud-location').textContent, 'Atlanta, GA', 'A stale location callback cannot overwrite a newer manual choice.');
 assert.equal(stale.hud.isFreshLocationPosition({ timestamp: Date.now() - (15 * 60 * 1000 + 1) }), false, 'Expired cached positions are rejected.');
 assert.equal(stale.hud.isFreshLocationPosition(freshPosition()), true, 'Fresh positions are accepted.');
+assert.equal(stale.elements.get('#hud-use-location').disabled, false, 'A manual override re-enables a pending refresh when permission remains available.');
+
+const permissionChange = createRuntime({ permission: 'denied' });
+await permissionChange.hud.startAutomaticLocation();
+permissionChange.changePermission('granted');
+assert.equal(permissionChange.elements.get('#hud-use-location').disabled, false, 'A denied-to-granted permission change restores the refresh control.');
+assert.equal(permissionChange.positionRequests.length, 0, 'A granted permission change restores explicit refresh without queuing another background read.');
+
+const initSmoke = createRuntime({ permission: 'granted' });
+assert.doesNotThrow(() => initSmoke.hud.init(), 'The real application initializer binds location controls without a ReferenceError.');
+assert.equal(initSmoke.positionRequests.length, 0, 'Startup waits for the permission query before reading location.');
+await new Promise(resolve => setImmediate(resolve));
+assert.equal(initSmoke.positionRequests.length, 1, 'The real initializer starts the permission-aware location flow.');
+assert.equal(typeof initSmoke.hud.requestDeviceLocation, 'function', 'The manually triggered location handler remains defined at initialization time.');
 
 assert(html.includes('id="hud-location" aria-live="polite"'), 'Location updates are announced without claiming a city name.');
 assert(!js.includes('.coords'), 'Coordinates are not stored or transmitted by the HUD location view.');
 assert(css.includes('clamp(210px, 19vw, 300px)'), 'Desktop photo width is approximately half its prior 420–600px range.');
 assert(css.includes('position: absolute;') && css.includes('grid-template-areas:\n      "content"\n      "actions";'), 'Desktop photo no longer participates in header alignment.');
+assert(css.includes('@media (min-width: 1001px) and (max-width: 1240px)') && css.includes('padding-right: clamp(244px, 28vw, 324px);'), 'The desktop crossover reserves text clearance from the floating photo without returning it to the header grid.');
 assert(css.includes('width: min(calc(100% - 44px), 240px)'), 'Tablet/mobile photo size remains bounded and centered.');
 assert(css.includes('aspect-ratio: 3 / 2') && css.includes('object-fit: contain') && css.includes('object-position: 50% 50%'), 'The 3:2 photo frame remains centered and uncropped.');
 assert(css.includes('appearance: none;') && css.includes('padding: 9px 42px 9px 14px;') && css.includes('background-position: right 14px center;'), 'Native selects use one inset chevron with adequate text clearance.');

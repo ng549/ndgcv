@@ -206,6 +206,7 @@ function setManualLocation() {
   if (!location) return;
   state.location.requestEpoch += 1;
   state.location.requestInFlight = false;
+  setLocationControlState({ disabled: ['denied', 'unavailable'].includes(state.location.permission) });
   $('#hud-location').textContent = location;
   announce('Manual location saved in this browser session. Weather remains unavailable.');
 }
@@ -230,6 +231,10 @@ function locationRequestIsCurrent(epoch) {
 function isFreshLocationPosition(position) {
   const timestamp = Number(position?.timestamp);
   return Number.isFinite(timestamp) && timestamp <= Date.now() && Date.now() - timestamp <= LOCATION_MAX_AGE_MS;
+}
+
+function requestDeviceLocation() {
+  return readDeviceLocation();
 }
 
 function readDeviceLocation({ announceResult = true } = {}) {
@@ -302,6 +307,10 @@ async function startAutomaticLocation() {
       status?.addEventListener?.('change', () => {
         state.location.permission = status.state;
         if (status.state === 'denied') setLocationUnavailable('Location permission is off');
+        else {
+          setLocationControlState({ disabled: false });
+          if (status.state === 'granted' && $('#hud-location')?.textContent === 'Location permission is off') $('#hud-location').textContent = 'Location permission granted';
+        }
       });
     }
   } catch {

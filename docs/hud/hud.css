@@ -1554,6 +1554,11 @@ textarea,
   }
 }
 
+@media (min-width: 1001px) and (max-width: 1240px) {
+  .hero-content,
+  .hero-actions { padding-right: clamp(244px, 28vw, 324px); }
+}
+
 @media (max-width: 1000px) {
   .private-photo-hero {
     justify-self: center;
