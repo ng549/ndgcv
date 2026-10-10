@@ -22,6 +22,7 @@ assert(hud.includes('iCloud Calendar is the planned default source'), 'Calendar 
 assert(hud.includes('Gmail and iCloud Mail'), 'Email names its planned sources without loading messages.');
 assert(hud.includes('Current implementation order'), 'Readiness is presented as current implementation order.');
 assert(hud.includes('Protected source when available'), 'Readiness labels live-source availability truthfully.');
+assert(hud.includes('data-label="Verified"') && hud.includes('data-label="Source"'), 'Readiness cells carry responsive labels rather than relying on clipped table headers.');
 assert(hud.includes('No applications are connected'), 'Application capture does not invent an application history.');
 assert(hud.includes('No interview plans yet') && hud.includes('No offers to review'), 'Interview and offer views remain empty until connected.');
 assert(hud.includes('No personal data is shown') && hud.includes('Scout is not searching yet'), 'Module entry screens avoid claiming private data or search results.');
@@ -39,4 +40,6 @@ assert(css.includes('width: 224px') && css.includes('background: var(--hud-cv-ch
 assert(css.includes('max-height: calc(100dvh - 68px)'), 'Mobile HUD menu is bounded below the 68px top bar.');
 assert(css.includes('min-height: 44px'), 'HUD controls preserve touch target sizing.');
 assert(css.includes('dialog#hud-dialog'), 'The actual HUD dialog element receives the CV dark-theme selector.');
+assert(css.includes('worker_transport_failure') === false, 'Visual styles do not interpolate private connection diagnostics.');
+assert(css.includes('max-width: 1280px') && css.includes('.today-grid { grid-template-columns: minmax(0, 1fr);'), 'Today stacks deliberately at tablet widths instead of crowding its controls.');
 console.log('HUD full interface: CV shell, view coverage, truthful empty states, and responsive navigation checked.');

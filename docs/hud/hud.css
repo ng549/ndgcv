@@ -1249,3 +1249,110 @@ dialog#hud-dialog .dialog-note { color: #d5c3a6; }
   font-weight: 700;
   line-height: 1.25;
 }
+
+.hud-context-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+.hud-context-actions::after { display: none; }
+
+/* Final contrast and responsive reading pass for the inherited Today, dialog,
+   week, and readiness rules on the charcoal CV shell. */
+.week-days button span,
+.week-day span { color: #d5c3a6 !important; }
+.week-days button.is-selected span,
+.week-day.is-selected span { color: #f4f0e8 !important; }
+
+.today-grid { gap: 26px; }
+.today-grid .focus-panel,
+.today-grid .working-note { color: #f4f0e8; }
+.today-grid .section-header,
+.today-grid .note-heading-row { align-items: flex-start; flex-wrap: wrap; }
+.today-grid .section-header h2,
+.today-grid .working-note h2 { color: #f4f0e8; white-space: normal; }
+.today-grid .section-header .eyebrow,
+.today-grid .working-note .eyebrow { color: #d5c3a6 !important; }
+.schedule-controls { flex-wrap: wrap; gap: 8px 14px; margin-left: auto; }
+.segmented-control { border-color: rgba(244,240,232,.25); background: #293e4c; box-shadow: none; }
+.segmented-control button { min-height: 44px; color: #f4f0e8; }
+.segmented-control button.is-selected { color: #14232e; background: #efc68f; box-shadow: none; }
+.focus-filter label { color: #d5c3a6; }
+.focus-list::before { background: #8fb0d8; }
+.focus-item { border-color: rgba(244,240,232,.18); }
+.focus-item::before { background: #8fb0d8; box-shadow: 0 0 0 3px #192c38; }
+.focus-item.is-active::before { background: #efc68f; }
+.focus-item.is-complete::before { background: #b7cbb9; }
+.focus-toggle,
+.focus-time,
+.focus-toggle strong { color: #f4f0e8; }
+.focus-toggle span:last-child { color: #d5c3a6; }
+.focus-expanded { border: 1px solid rgba(244,240,232,.22); background: #293e4c; color: #f4f0e8; }
+.focus-expanded p,
+.note-prompt { color: #d5c3a6 !important; }
+.complete-link,
+.add-focus { color: #efc68f; }
+.note-tabs { border-color: rgba(244,240,232,.22); }
+.note-tabs button { color: #d5c3a6; }
+.note-tabs button.is-selected { color: #f4f0e8; }
+.note-tabs button.is-selected::after { background: #efc68f; }
+.check-list label { color: #f4f0e8; }
+
+dialog#hud-dialog .form-field { color: #f4f0e8; }
+dialog#hud-dialog .form-field input,
+dialog#hud-dialog .form-field select,
+dialog#hud-dialog .form-field textarea { color: #f4f0e8; }
+dialog#hud-dialog .form-field input::placeholder,
+dialog#hud-dialog .form-field textarea::placeholder { color: rgba(244,240,232,.64); }
+dialog#hud-dialog .dialog-note,
+dialog#hud-dialog [role="alert"],
+dialog#hud-dialog .form-error { color: #d5c3a6; }
+
+.readiness-table { width: 100%; border-collapse: collapse; }
+.readiness-table th,
+.readiness-table td { padding: 14px 16px; text-align: left; vertical-align: top; line-height: 1.48; }
+.readiness-table td { color: rgba(244,240,232,.82); }
+
+/* These detail states originated in the earlier light panel cascade. Keep each
+   status legible without changing what a status means. */
+.live-opportunity-editor label,
+.reference-details summary { color: #f4f0e8 !important; }
+.reference-permission { color: #d5c3a6 !important; }
+.reference-preferred,
+.reference-muted,
+.mandate-card p,
+.target-list span { color: #d5c3a6 !important; }
+.live-save-status,
+.live-save-status.is-saving { color: #d5c3a6; }
+.live-save-status.is-saved { color: #b7cbb9; }
+.live-save-status.is-conflict,
+.live-save-status.is-uncertain { color: #efc68f; }
+.live-save-status.is-access,
+.live-save-status.is-unavailable,
+.live-save-status.is-unconnected,
+.live-save-status.is-invalid,
+.live-save-status.is-error { color: #f0b0b0; }
+
+@media (max-width: 1280px) {
+  .today-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .today-grid .working-note { max-width: none; }
+}
+
+@media (max-width: 760px) {
+  .schedule-controls { width: 100%; justify-content: space-between; margin-left: 0; }
+  .readiness-table-wrap { overflow: visible; }
+  .readiness-table,
+  .readiness-table tbody,
+  .readiness-table tr,
+  .readiness-table th,
+  .readiness-table td { display: block; width: 100%; }
+  .readiness-table thead { display: none; }
+  .readiness-table tr { padding: 15px 0; border-bottom: 1px solid rgba(244,240,232,.18); }
+  .readiness-table tr:last-child { border-bottom: 0; }
+  .readiness-table th,
+  .readiness-table td { border: 0; padding: 4px 0; }
+  .readiness-table th { color: #f4f0e8; font-family: Manrope, sans-serif; font-size: 16px; }
+  .readiness-table td { display: grid; grid-template-columns: minmax(78px, .62fr) minmax(0, 1fr); gap: 12px; }
+  .readiness-table td::before { content: attr(data-label); color: #d5c3a6; font-family: Manrope, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+}

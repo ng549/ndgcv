@@ -120,6 +120,8 @@ const CONNECTION_STATUSES = new Set(['not_tested', 'ready', 'unavailable', 'inva
 const CONNECTION_ERROR_CODES = new Set(['hud_access_required', 'hud_backend_unavailable', 'hud_invalid_request', 'hud_not_connected', 'hud_source_unavailable', 'hud_unavailable']);
 const HUD_VIEWS = new Set(['today', 'calendar', 'email', 'career', 'contacts', 'applications', 'interviews', 'materials', 'direction', 'readiness', 'paid-work', 'personal', 'scout', 'media-os', 'sourcing-os', 'appdev-os']);
 const CONNECTION_URL_MAX_LENGTH = 4096;
+const CONNECTION_DIAGNOSTIC_MAX_BYTES = 512;
+const WORKER_TRANSPORT_FAILURE_TEXT = 'HUD opportunities are unavailable.';
 
 function hudRuntimeEndpoint(dataKey, pathname) {
   const configured = document.documentElement.dataset[dataKey];
@@ -958,13 +960,53 @@ function safeConnectionContentType(response) {
   return 'an unsupported content type';
 }
 
+async function boundedConnectionDiagnosticText(response) {
+  const declaredLength = response.headers?.get('content-length');
+  if (declaredLength && /^\d+$/.test(declaredLength) && Number(declaredLength) > CONNECTION_DIAGNOSTIC_MAX_BYTES) {
+    try { await response.body?.cancel?.(); } catch {}
+    return null;
+  }
+  const reader = response.body?.getReader?.();
+  if (!reader) return null;
+  const chunks = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value?.byteLength || 0;
+      if (size > CONNECTION_DIAGNOSTIC_MAX_BYTES) {
+        try { await reader.cancel(); } catch {}
+        return null;
+      }
+      chunks.push(value);
+    }
+    const body = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) {
+      body.set(chunk, offset);
+      offset += chunk.byteLength;
+    }
+    return new TextDecoder().decode(body);
+  } catch {
+    return null;
+  } finally {
+    try { reader.releaseLock(); } catch {}
+  }
+}
+
 async function connectionDiagnosticFromResponse(response) {
   let errorCode = null;
-  if (safeConnectionContentType(response) === 'JSON') {
+  const contentType = safeConnectionContentType(response);
+  let transport = null;
+  if (contentType === 'JSON') {
     const body = await responseJSON(response);
     if (CONNECTION_ERROR_CODES.has(body?.error)) errorCode = body.error;
+  } else {
+    const text = await boundedConnectionDiagnosticText(response);
+    transport = text === WORKER_TRANSPORT_FAILURE_TEXT ? 'worker_transport_failure' : 'upstream_non_json';
   }
-  return { contentType: safeConnectionContentType(response), errorCode, kind: 'http', status: response.status };
+  return { contentType, errorCode, kind: 'http', status: response.status, transport };
 }
 
 function connectionDiagnosticMessage(diagnostic) {
@@ -973,7 +1015,8 @@ function connectionDiagnosticMessage(diagnostic) {
   if (diagnostic.kind === 'invalid') return 'The protected response could not be read safely.';
   if (diagnostic.kind !== 'http' || !Number.isSafeInteger(diagnostic.status)) return '';
   const error = diagnostic.errorCode ? ` · ${diagnostic.errorCode}` : '';
-  return `Diagnostic: HTTP ${diagnostic.status} · ${diagnostic.contentType}${error}.`;
+  const transport = diagnostic.transport === 'worker_transport_failure' || diagnostic.transport === 'upstream_non_json' ? ` · ${diagnostic.transport}` : '';
+  return `Diagnostic: HTTP ${diagnostic.status} · ${diagnostic.contentType}${error}${transport}.`;
 }
 
 function setConnectionPhase(phase, diagnostic = null) {

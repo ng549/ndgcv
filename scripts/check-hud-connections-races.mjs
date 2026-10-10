@@ -111,6 +111,7 @@ function createRuntime(handler) {
     Object,
     Promise,
     RegExp,
+    ReadableStream,
     Response,
     Set,
     String,
@@ -171,8 +172,25 @@ const unsupportedContent = createRuntime(() => new Response('sensitive plaintext
   headers: { 'Content-Type': 'text/plain; charset=utf-8' }, status: 503,
 }));
 await unsupportedContent.hud.loadConnections();
-assert.match(unsupportedContent.elements.get('#connections-summary').textContent, /HTTP 503 · an unsupported content type\./, 'Non-JSON settings failures use a normalized content-type label.');
+assert.match(unsupportedContent.elements.get('#connections-summary').textContent, /HTTP 503 · an unsupported content type · upstream_non_json\./, 'Non-JSON settings failures use a normalized content-type and fixed transport classification.');
 assert.doesNotMatch(unsupportedContent.elements.get('#connections-summary').textContent, /sensitive plaintext/, 'Unsupported response bytes are never exposed.');
+
+const workerTransport = createRuntime(() => new Response('HUD opportunities are unavailable.', {
+  headers: { 'Content-Type': 'text/plain; charset=utf-8' }, status: 502,
+}));
+await workerTransport.hud.loadConnections();
+assert.match(workerTransport.elements.get('#connections-summary').textContent, /HTTP 502 · an unsupported content type · worker_transport_failure\./, 'Only the exact bounded Worker failure text receives the fixed transport classification.');
+assert.doesNotMatch(workerTransport.elements.get('#connections-summary').textContent, /HUD opportunities are unavailable/, 'The recognized Worker body is classified but never rendered.');
+
+let oversizedCancelled = false;
+const oversizedNonJson = createRuntime(() => new Response(new ReadableStream({
+  start(controller) { controller.enqueue(new TextEncoder().encode('x'.repeat(513))); },
+  cancel() { oversizedCancelled = true; },
+}), { headers: { 'Content-Type': 'text/plain; charset=utf-8' }, status: 502 }));
+await oversizedNonJson.hud.loadConnections();
+assert.equal(oversizedCancelled, true, 'Oversized chunked non-JSON diagnostics are cancelled at the bounded byte limit.');
+assert.match(oversizedNonJson.elements.get('#connections-summary').textContent, /upstream_non_json\./, 'Oversized non-JSON diagnostics preserve only the fixed upstream classification.');
+assert.doesNotMatch(oversizedNonJson.elements.get('#connections-summary').textContent, /x{8}/, 'Oversized diagnostic bytes are never exposed.');
 
 const protectedAccess = createRuntime(() => response(403, { error: 'hud_access_required', secret: 'never display' }));
 await protectedAccess.hud.loadConnections();

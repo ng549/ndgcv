@@ -88,8 +88,7 @@
               <span id="hud-location">Location not set</span>
               <span id="hud-current-time">Loading time</span>
               <span id="hud-weather">Weather unavailable</span>
-              <button id="hud-use-location" type="button">Use device location</button>
-              <button id="hud-manual-location" type="button">Set location</button>
+              <span class="hud-context-actions"><button id="hud-use-location" type="button">Use device location</button><button id="hud-manual-location" type="button">Set location</button></span>
             </div>
             <p class="eyebrow sample-badge" id="hud-data-mode">Sample data</p>
           </div>
@@ -332,13 +331,13 @@
           <table class="readiness-table">
             <thead><tr><th scope="col">Area</th><th scope="col">UI</th><th scope="col">Source</th><th scope="col">Verified</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Today &amp; tasks</th><td>Built</td><td>Sample / not connected</td><td>Not yet</td></tr>
-              <tr><th scope="row">Opportunities &amp; fit</th><td>Built</td><td>Protected source when available</td><td>Per source</td></tr>
-              <tr><th scope="row">Contacts &amp; ReferenceSheet</th><td>Built</td><td id="readiness-contacts-source">Protected source when available</td><td id="readiness-contacts-verified">Not yet</td></tr>
-              <tr><th scope="row">Calendar &amp; email</th><td>Built</td><td>Not connected</td><td>Not yet</td></tr>
-              <tr><th scope="row">Applications, interviews &amp; offers</th><td>Built</td><td>Not wired</td><td>Not yet</td></tr>
-              <tr><th scope="row">Materials &amp; CV</th><td>Built</td><td>Public CV link only</td><td>Not a sync</td></tr>
-              <tr><th scope="row">Paid Work, Personal &amp; Scout</th><td>Entry screens built</td><td>Not connected</td><td>Not yet</td></tr>
+              <tr><th scope="row">Today &amp; tasks</th><td data-label="UI">Built</td><td data-label="Source">Sample / not connected</td><td data-label="Verified">Not yet</td></tr>
+              <tr><th scope="row">Opportunities &amp; fit</th><td data-label="UI">Built</td><td data-label="Source">Protected source when available</td><td data-label="Verified">Per source</td></tr>
+              <tr><th scope="row">Contacts &amp; ReferenceSheet</th><td data-label="UI">Built</td><td data-label="Source" id="readiness-contacts-source">Protected source when available</td><td data-label="Verified" id="readiness-contacts-verified">Not yet</td></tr>
+              <tr><th scope="row">Calendar &amp; email</th><td data-label="UI">Built</td><td data-label="Source">Not connected</td><td data-label="Verified">Not yet</td></tr>
+              <tr><th scope="row">Applications, interviews &amp; offers</th><td data-label="UI">Built</td><td data-label="Source">Not wired</td><td data-label="Verified">Not yet</td></tr>
+              <tr><th scope="row">Materials &amp; CV</th><td data-label="UI">Built</td><td data-label="Source">Public CV link only</td><td data-label="Verified">Not a sync</td></tr>
+              <tr><th scope="row">Paid Work, Personal &amp; Scout</th><td data-label="UI">Entry screens built</td><td data-label="Source">Not connected</td><td data-label="Verified">Not yet</td></tr>
             </tbody>
           </table>
         </div>
