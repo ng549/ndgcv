@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-private-runtime-endpoint="/api/hud/connections">
+<html lang="en" data-private-runtime-endpoint="/api/hud/connections" data-private-photo-endpoint="/api/hud/photo">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,8 @@
         </a>
 
         <nav class="primary-nav" aria-label="Workspace sections">
-          <button class="nav-item is-active" type="button" data-view="today" aria-current="page">Today</button>
-          <button class="nav-item" type="button" data-view="career">Career &amp; direction</button>
+          <button class="nav-item" type="button" data-view="today">Today</button>
+          <button class="nav-item is-active" type="button" data-view="career" aria-current="page">Career &amp; direction</button>
           <button class="nav-item" type="button" data-view="contacts">Contacts &amp; references</button>
           <button class="nav-item" type="button" data-view="materials">Materials</button>
         </nav>
@@ -46,13 +46,13 @@
           </div>
           <figcaption class="memory-frame-copy">
             <p class="eyebrow">Private memories</p>
-            <strong id="memory-frame-title">Photos are not connected</strong>
-            <span id="photo-frame-detail">This protected preview does not load personal photos.</span>
+          <strong id="memory-frame-title">Private photo</strong>
+          <span id="photo-frame-detail">Not connected</span>
           </figcaption>
         </figure>
 
         <section class="sync-status glass-panel" id="sync-status" data-sync-state="unconnected" aria-live="polite" aria-label="Private source status">
-          <p class="eyebrow">Live sync</p>
+          <p class="eyebrow">Connection status</p>
           <strong id="sync-status-title">Not connected</strong>
           <span id="sync-status-detail">No private source is available in this preview.</span>
           <time id="sync-last-success" hidden></time>
@@ -73,6 +73,8 @@
           <p class="eyebrow sample-badge">Sample data · live sources unavailable</p>
           <div class="context-line">
             <time id="current-date" datetime="">Loading today…</time>
+            <span aria-hidden="true">·</span>
+            <time id="current-time" datetime="">Loading time…</time>
             <span aria-hidden="true">·</span>
             <span id="location-display">Location not set</span>
             <span aria-hidden="true">·</span>
@@ -108,7 +110,7 @@
         </div>
       </section>
 
-      <section class="view-panel is-active" data-view-panel="today" aria-labelledby="today-heading">
+      <section class="view-panel" data-view-panel="today" aria-labelledby="today-heading" hidden>
         <div class="hud-overview" aria-label="Preview summary">
           <article class="overview-card glass-panel"><p class="eyebrow">Opportunity status</p><strong id="opportunity-status-count">Sample data</strong><span>Live opportunities unavailable</span></article>
           <article class="overview-card glass-panel"><p class="eyebrow">Next action</p><strong id="next-action-title">Loading sample focus…</strong><span>Local preview state only</span></article>
@@ -162,7 +164,7 @@
         </div>
       </section>
 
-      <section class="view-panel" data-view-panel="career" aria-labelledby="career-heading" hidden>
+      <section class="view-panel is-active" data-view-panel="career" aria-labelledby="career-heading">
         <header class="view-heading glass-panel">
           <div>
             <p class="eyebrow">Career workspace · sample only</p>

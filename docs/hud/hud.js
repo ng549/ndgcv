@@ -1,5 +1,5 @@
 const state = {
-  activeView: 'today',
+  activeView: 'career',
   selectedDay: 'Tue',
   schedule: 'today',
   focusFilter: 'all',
@@ -65,10 +65,11 @@ const state = {
 };
 
 const privateMedia = {
-  currentIndex: -1,
   visibleLayer: 0,
-  slides: [],
-  timer: 0
+  fingerprint: '',
+  objectUrls: [null, null],
+  timer: 0,
+  loading: false
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -152,9 +153,12 @@ function renderToday() {
 function setCurrentDate() {
   const now = new Date();
   const date = $('#current-date');
+  const time = $('#current-time');
   const month = $('#month-label');
-  date.dateTime = now.toISOString().slice(0, 10);
+  date.dateTime = now.toISOString();
   date.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(now);
+  time.dateTime = now.toISOString();
+  time.textContent = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(now);
   month.textContent = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' }).format(now);
   const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(now);
   if ($(`[data-day="${day}"]`)) setDay(day, { announceSelection: false });
@@ -235,65 +239,133 @@ function renderSyncStatus({ state: syncState = 'unconnected', lastSuccessfulAt =
   }
 }
 
-function normalizedPrivateSlides(value) {
-  if (!Array.isArray(value)) return [];
-  return value.filter(item => item && typeof item.src === 'string' && /^https:\/\//.test(item.src)).map(item => ({
-    id: typeof item.id === 'string' ? item.id : item.src,
-    src: item.src,
-    alt: typeof item.alt === 'string' ? item.alt : ''
-  }));
+const PRIVATE_PHOTO_INTERVAL_MS = 20000;
+
+function privatePhotoEndpoint() {
+  const value = document.documentElement.dataset.privatePhotoEndpoint;
+  if (!value) return null;
+  try {
+    const url = new URL(value, window.location.origin);
+    if (url.origin !== window.location.origin || url.pathname !== '/api/hud/photo' || url.search || url.hash) return null;
+    return url.href;
+  } catch {
+    return null;
+  }
 }
 
-function chooseNextPrivateSlide() {
-  if (!privateMedia.slides.length) return -1;
-  if (privateMedia.currentIndex < 0) return Math.floor(Math.random() * privateMedia.slides.length);
-  if (privateMedia.slides.length < 2) return privateMedia.currentIndex;
-  const options = privateMedia.slides.map((_, index) => index).filter(index => index !== privateMedia.currentIndex);
-  return options[Math.floor(Math.random() * options.length)];
-}
-
-function showPrivateSlide(index, { initial = false } = {}) {
-  const slide = privateMedia.slides[index];
-  if (!slide) return;
-  const layers = $$('[data-photo-layer]');
-  const previousLayer = privateMedia.visibleLayer;
-  const nextLayer = initial ? 0 : 1 - privateMedia.visibleLayer;
-  const image = layers[nextLayer];
-  image.src = slide.src;
-  image.alt = slide.alt;
-  image.referrerPolicy = 'no-referrer';
-  image.decoding = 'async';
-  image.hidden = false;
-  if (initial) image.classList.add('is-visible');
-  else requestAnimationFrame(() => {
-    image.classList.add('is-visible');
-    layers[previousLayer].classList.remove('is-visible');
-  });
-  privateMedia.visibleLayer = nextLayer;
-  privateMedia.currentIndex = index;
-}
-
-function installPrivateSlides(slides, { sourceConfigured = false } = {}) {
-  window.clearInterval(privateMedia.timer);
-  privateMedia.timer = 0;
-  privateMedia.currentIndex = -1;
-  privateMedia.visibleLayer = 0;
-  privateMedia.slides = normalizedPrivateSlides(slides);
+function setPrivatePhotoState(phase, { preserveImage = true } = {}) {
   const frame = $('.memory-frame');
-  const layers = $$('[data-photo-layer]');
-  layers.forEach(layer => { layer.removeAttribute('src'); layer.alt = ''; layer.hidden = true; layer.classList.remove('is-visible'); });
-  if (!privateMedia.slides.length) {
-    frame.dataset.privatePhotoState = sourceConfigured ? 'empty' : 'unconnected';
-    $('#memory-frame-title').textContent = sourceConfigured ? 'No authorized photos available' : 'Photos are not connected';
-    $('#photo-frame-detail').textContent = sourceConfigured ? 'The protected source returned no photos for this session.' : 'This protected preview does not load personal photos.';
+  const copy = {
+    access: ['Private photo', 'Private access is required.'],
+    loading: ['Private photo', 'Checking the protected source…'],
+    ready: ['Private photo', 'Protected source connected.'],
+    unconnected: ['Private photo', 'Not connected.'],
+    unavailable: ['Private photo', 'Protected source unavailable.']
+  }[phase] || ['Private photo', 'Not connected.'];
+  frame.dataset.privatePhotoState = phase;
+  $('#memory-frame-title').textContent = copy[0];
+  $('#photo-frame-detail').textContent = copy[1];
+  if (!preserveImage) {
+    $$('[data-photo-layer]').forEach((layer, index) => {
+      if (privateMedia.objectUrls[index]) URL.revokeObjectURL(privateMedia.objectUrls[index]);
+      privateMedia.objectUrls[index] = null;
+      layer.removeAttribute('src');
+      layer.hidden = true;
+      layer.classList.remove('is-visible');
+    });
+    privateMedia.fingerprint = '';
+  }
+}
+
+async function photoFingerprint(blob) {
+  if (!globalThis.crypto?.subtle) return `${blob.type}:${blob.size}`;
+  const bytes = await blob.arrayBuffer();
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function imageReady(image) {
+  if (typeof image.decode === 'function') return image.decode();
+  return new Promise((resolve, reject) => {
+    image.addEventListener('load', resolve, { once: true });
+    image.addEventListener('error', reject, { once: true });
+  });
+}
+
+async function showProtectedPhoto(blob, fingerprint) {
+  if (fingerprint && fingerprint === privateMedia.fingerprint) {
+    setPrivatePhotoState('ready');
     return;
   }
-  frame.dataset.privatePhotoState = 'ready';
-  $('#memory-frame-title').textContent = 'Private photos connected';
-  $('#photo-frame-detail').textContent = 'Shown only by the protected HUD session.';
-  showPrivateSlide(chooseNextPrivateSlide(), { initial: true });
-  if (privateMedia.slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    privateMedia.timer = window.setInterval(() => showPrivateSlide(chooseNextPrivateSlide()), 20000);
+  const layers = $$('[data-photo-layer]');
+  const previousLayer = privateMedia.visibleLayer;
+  const nextLayer = layers[previousLayer]?.classList.contains('is-visible') ? 1 - previousLayer : 0;
+  const image = layers[nextLayer];
+  const objectUrl = URL.createObjectURL(blob);
+  image.src = objectUrl;
+  image.alt = '';
+  image.decoding = 'async';
+  image.hidden = false;
+  try {
+    await imageReady(image);
+  } catch {
+    URL.revokeObjectURL(objectUrl);
+    image.removeAttribute('src');
+    image.hidden = true;
+    throw new Error('Private photo could not be decoded.');
+  }
+  if (privateMedia.objectUrls[nextLayer]) URL.revokeObjectURL(privateMedia.objectUrls[nextLayer]);
+  privateMedia.objectUrls[nextLayer] = objectUrl;
+  const hasVisibleImage = layers[previousLayer]?.classList.contains('is-visible');
+  if (hasVisibleImage) {
+    requestAnimationFrame(() => {
+      image.classList.add('is-visible');
+      layers[previousLayer].classList.remove('is-visible');
+    });
+  } else {
+    image.classList.add('is-visible');
+  }
+  privateMedia.visibleLayer = nextLayer;
+  privateMedia.fingerprint = fingerprint;
+  setPrivatePhotoState('ready');
+}
+
+async function loadProtectedPhoto() {
+  if (privateMedia.loading) return;
+  const endpoint = privatePhotoEndpoint();
+  if (!endpoint) {
+    setPrivatePhotoState('unconnected', { preserveImage: false });
+    return;
+  }
+  privateMedia.loading = true;
+  const hasVisibleImage = $$('[data-photo-layer]').some(layer => layer.classList.contains('is-visible'));
+  if (!hasVisibleImage) setPrivatePhotoState('loading', { preserveImage: true });
+  try {
+    const response = await fetch(endpoint, {
+      credentials: 'same-origin',
+      cache: 'no-store',
+      redirect: 'error',
+      headers: { Accept: 'image/jpeg' }
+    });
+    if (response.status === 403) {
+      setPrivatePhotoState('access', { preserveImage: hasVisibleImage });
+      return;
+    }
+    if (response.status === 404 || response.status === 409) {
+      setPrivatePhotoState('unconnected', { preserveImage: hasVisibleImage });
+      return;
+    }
+    if (!response.ok || !/^image\/jpeg(?:;|$)/i.test(response.headers.get('Content-Type') || '')) {
+      setPrivatePhotoState('unavailable', { preserveImage: hasVisibleImage });
+      return;
+    }
+    const blob = await response.blob();
+    if (!blob.size || !/^image\/jpeg$/i.test(blob.type || 'image/jpeg')) throw new Error('Invalid protected photo response.');
+    await showProtectedPhoto(blob, await photoFingerprint(blob));
+  } catch {
+    setPrivatePhotoState('unavailable', { preserveImage: hasVisibleImage });
+  } finally {
+    privateMedia.loading = false;
   }
 }
 
@@ -325,9 +397,8 @@ function renderPrivateLinks(links) {
 }
 
 function applyPrivateRuntime(payload) {
-  if (!payload || typeof payload !== 'object' || !payload.sync || typeof payload.sync !== 'object' || !Array.isArray(payload.photos)) throw new TypeError('Invalid private runtime payload.');
+  if (!payload || typeof payload !== 'object' || !payload.sync || typeof payload.sync !== 'object') throw new TypeError('Invalid private runtime payload.');
   renderSyncStatus(payload.sync);
-  installPrivateSlides(payload.photos, { sourceConfigured: true });
   renderPrivateLinks(payload.links);
 }
 
@@ -339,7 +410,6 @@ async function loadPrivateRuntime() {
     const response = await fetch(endpoint, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
     if (response.status === 204 || response.status === 404) {
       renderSyncStatus();
-      installPrivateSlides([]);
       renderPrivateLinks();
       return;
     }
@@ -347,23 +417,16 @@ async function loadPrivateRuntime() {
     applyPrivateRuntime(await response.json());
   } catch {
     renderSyncStatus({ state: 'error' });
-    installPrivateSlides([]);
     renderPrivateLinks();
   }
 }
 
 function setupPrivateMedia() {
-  const supplied = window.__CAREER_HUD_PRIVATE_MEDIA__;
-  if (!supplied || typeof supplied !== 'object') {
-    loadPrivateRuntime();
-    return;
-  }
-  try {
-    applyPrivateRuntime(supplied);
-  } catch {
-    renderSyncStatus({ state: 'error' });
-    installPrivateSlides([]);
-    renderPrivateLinks();
+  setPrivatePhotoState('unconnected', { preserveImage: false });
+  loadPrivateRuntime();
+  loadProtectedPhoto();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    privateMedia.timer = window.setInterval(loadProtectedPhoto, PRIVATE_PHOTO_INTERVAL_MS);
   }
 }
 
@@ -603,6 +666,7 @@ function init() {
   renderMaterials();
   renderDirection();
   setCurrentDate();
+  window.setInterval(setCurrentDate, 60000);
   setupLocationControls();
   setupPrivateMedia();
   setupGlassDepth();
